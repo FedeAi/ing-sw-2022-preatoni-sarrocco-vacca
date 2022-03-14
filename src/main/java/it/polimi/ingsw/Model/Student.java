@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model;
 
 public class Student {
-    Color color;
+    private Color color;
 
     public Color getColor() {
         return color;
