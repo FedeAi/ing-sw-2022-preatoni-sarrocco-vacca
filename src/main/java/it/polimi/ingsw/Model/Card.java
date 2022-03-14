@@ -1,4 +1,4 @@
 package it.polimi.ingsw.Model;
 
-public class Game {
+public interface Card {
 }
