@@ -4,35 +4,36 @@ import java.util.ArrayList;
 
 public class Game {
 
-    int maxplayer = 4;
-    int maxisland = 12;
+    static final int maxPlayer = 4;
+    static final int maxIsland = 12;
+
     Table table; //table of the game
     ArrayList<Player> players;
     ArrayList<Magician> magicians;
-    Boolean expertmode;
+    boolean expertMode;
 
 
-    public  void startgame(){ //method for starting the game
+    public  void startGame(){ //method for starting the game
 
     }
-    public void endgame(){ //if win conditions then endgame()
+    public void endGame(){ //if win conditions then endgame()
 
     }
     public String getPlayerNickname(Player player){
 
-            return this.getPlayerNickname();
+            return player.getNickname();
 
     }
-    public ArrayList<String> getAvaliableMagicinas() {
+    public ArrayList<String> getAvailableMagicians() { //choice for available magicians; main character
 
         assert false;
-        return 0;
+        return null;
 
     }
-    public ArrayList<String> isNicknameTaken() {
+    public ArrayList<String> isNicknameTaken() { //Control of the choice of nickname must be unique
 
         assert false;
-        return 0;
+        return null;
 
     }
 
