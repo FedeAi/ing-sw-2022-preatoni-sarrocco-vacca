@@ -30,7 +30,7 @@ public class Game {
         return null;
 
     }
-    public ArrayList<String> isNicknameTaken() { //Control of the choice of nickname must be unique
+    public ArrayList<String> isNicknameTaken() { //Control the choice of nickname must be unique
 
         assert false;
         return null;
