@@ -2,14 +2,14 @@ package it.polimi.ingsw.Model;
 
 public class MotherNature {
 
-    Island current;
+    Island currentIsland;
 
     public Island getCurrent() {
-        return current;
+        return currentIsland;
     }
 
-    public void setCurrent(Island current) {
-        this.current = current;
+    public void setIsland(Island nextIsland) {
+        this.currentIsland = nextIsland;
     }
 
 }

@@ -7,7 +7,7 @@ public class Island {
     ArrayList<Student> students;
     ArrayList<Tower> towers;
     Island nextIsland;
-    Player Owner;
+    Player owner;
 
 
     public ArrayList<Student> getStudents() {
@@ -19,6 +19,6 @@ public class Island {
     }
 
     public Player getOwner() {
-        return Owner;
+        return owner;
     }
 }

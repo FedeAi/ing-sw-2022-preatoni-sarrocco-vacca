@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Model;
 
 public class Tower {
-    TowerColor Color;
+    TowerColor color;
 
     public TowerColor getColor() {
-        return Color;
+        return color;
     }
 }
