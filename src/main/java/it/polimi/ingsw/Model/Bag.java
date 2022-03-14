@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Bag {
 
-   ArrayList<Student> students = new ArrayList<>();
+   ArrayList<Student> students;
 
 
    public ArrayList<Student> getStudents() {
