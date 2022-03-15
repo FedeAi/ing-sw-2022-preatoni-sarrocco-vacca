@@ -4,9 +4,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Turn {
-    Player currentPlayer;
-    ArrayList<AssistantCard> cards;
-    ArrayList<Cloud> clouds;
+    private Player currentPlayer;
+    private ArrayList<AssistantCard> cards;
+    private ArrayList<Cloud> clouds;
 
     public Player getCurrentPlayer() {
         return currentPlayer;

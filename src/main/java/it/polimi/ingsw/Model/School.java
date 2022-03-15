@@ -3,11 +3,11 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 
 public class School {
-    ArrayList<Tower> towers;
-    ArrayList<Student> studentsHall;
-    ArrayList<Student> studentsEntry;
-    ArrayList<Professor> professors;
-    final int laneSize = 9;
+    private ArrayList<Tower> towers;
+    private ArrayList<Student> studentsHall;
+    private ArrayList<Student> studentsEntry;
+    private ArrayList<Professor> professors;
+    private final int laneSize = 9;
 
     public int getNumTowers(){
         return towers.size();
@@ -26,6 +26,6 @@ public class School {
         assert false;
         return false;
     }
-    
+
 
 }
