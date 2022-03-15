@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Model;
 
 public class CharacterCard implements Card{
-    int price;
-    Character character;
+    private int price;
+    private Character character;
 
     public int getPrice() {
         return price;
