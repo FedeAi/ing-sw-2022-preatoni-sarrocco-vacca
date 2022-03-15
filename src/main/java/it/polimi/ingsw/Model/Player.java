@@ -3,11 +3,11 @@ package it.polimi.ingsw.Model;
 import java.util.List;
 
 public class Player {
-    String nickname;
-    boolean connected;
-    School school;
-    List<AssistantCard> cards;
-    Magician magician;
+    private String nickname;
+    private boolean connected;
+    private School school;
+    private List<AssistantCard> cards;
+    private Magician magician;
 
     public String getNickname() {
         return nickname;

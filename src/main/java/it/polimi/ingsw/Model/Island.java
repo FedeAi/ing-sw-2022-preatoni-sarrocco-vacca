@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Island {
 
-    ArrayList<Student> students;
-    ArrayList<Tower> towers;
-    Island nextIsland;
-    Player owner;
+    private ArrayList<Student> students;
+    private ArrayList<Tower> towers;
+    private Island nextIsland;
+    private Player owner;
 
 
     public ArrayList<Student> getStudents() {

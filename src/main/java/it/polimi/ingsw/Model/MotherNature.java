@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 public class MotherNature {
 
-    Island currentIsland;
+    private Island currentIsland;
 
     public Island getCurrent() {
         return currentIsland;

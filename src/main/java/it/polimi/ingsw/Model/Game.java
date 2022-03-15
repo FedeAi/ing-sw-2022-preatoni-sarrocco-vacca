@@ -7,10 +7,10 @@ public class Game {
     static final int maxPlayer = 4;
     static final int maxIsland = 12;
 
-    Table table; //table of the game
-    ArrayList<Player> players;
-    ArrayList<Magician> magicians;
-    boolean expertMode;
+    private Table table; //table of the game
+    private ArrayList<Player> players;
+    private ArrayList<Magician> magicians;
+    private boolean expertMode;
 
 
     public  void startGame(){ //method for starting the game
