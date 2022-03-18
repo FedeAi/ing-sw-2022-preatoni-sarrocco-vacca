@@ -10,7 +10,13 @@ public class Player {
     private School school;
     private List<AssistantCard> cards;
     private Magician magician;
-
+/*
+    public Player(String nickname){
+        this.nickname = nickname;
+        connected = true;
+        manca school, cards, magician
+    }
+*/
     public String getNickname() {
         return nickname;
     }
