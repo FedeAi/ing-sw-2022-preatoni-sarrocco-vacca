@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enumerations.Color;
+
 import java.util.ArrayList;
 
 public class School {

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enumerations.Magician;
+
 import java.util.ArrayList;
 
 public class Game {
