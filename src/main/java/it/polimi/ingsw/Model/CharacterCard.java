@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Model.Enumerations.Character;
 
 public class CharacterCard extends Card {
+
     private int price;
     private Character character;
 
