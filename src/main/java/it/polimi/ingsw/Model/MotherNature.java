@@ -4,6 +4,10 @@ public class MotherNature {
 
     private Island currentIsland;
 
+    public MotherNature(Island currentIsland) {
+        this.currentIsland = currentIsland;
+    }
+
     public Island getCurrent() {
         return currentIsland;
     }
@@ -11,5 +15,4 @@ public class MotherNature {
     public void setIsland(Island nextIsland) {
         this.currentIsland = nextIsland;
     }
-
 }

@@ -14,7 +14,6 @@ public class Turn {
 
     // Returns a list of cards that have already been played
     // Useful for the next player at the beginning of his turn
-
     public ArrayList<AssistantCard> getPlayedCards() {
         return cards;
     }

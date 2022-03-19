@@ -9,7 +9,7 @@ public class Table {
     private Bag bag;
     private Turn turn;
 
-    // Rather than returning the reference to the bag, we expose the extraction of the student itself dello student direttamente
+    // Rather than returning the reference to the bag, we expose the extraction of the student itself
     public Bag getBag() {
         return bag;
     }

@@ -26,7 +26,7 @@ public class BagTest {
     @Test
     public void extract() {
         int numStudentEachColor = 5;
-        Bag myBag = new Bag( numStudentEachColor);
+        Bag myBag = new Bag(numStudentEachColor);
         int initialSize = myBag.getStudents().size();
         ArrayList<Student> out = myBag.extract(8);
         assertEquals("control out dim ",out.size(), 8 );
