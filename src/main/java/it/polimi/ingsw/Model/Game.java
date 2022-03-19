@@ -14,7 +14,6 @@ public class Game {
     private ArrayList<Magician> magicians;
     private boolean expertMode;
 
-
     public  void startGame(){ //method for starting the game
 
     }
