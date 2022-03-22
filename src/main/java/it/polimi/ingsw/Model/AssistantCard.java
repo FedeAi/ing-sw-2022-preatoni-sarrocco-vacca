@@ -12,6 +12,8 @@ public class AssistantCard extends Card{
         super(imagePath);
         this.value = value;
 
+      //  maxMoves = (int) (value+1)/2; il cast forse non serve, nel test
+
         switch(value) {
             case 1:
                 maxMoves = 1;

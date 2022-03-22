@@ -37,5 +37,10 @@ public class Game {
         return null;
 
     }
+   /* public void setExpertMode(boolean expertMode) {
+        this.expertMode = expertMode;
+    }
+    */
+
 
 }
