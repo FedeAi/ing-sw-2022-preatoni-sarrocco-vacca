@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Table {
@@ -8,25 +7,32 @@ public class Table {
     private MotherNature motherNature;
     private ArrayList<CharacterCard> characterCards; //array, fixed size = 3
     private Bag bag;
-    private Turn turn;
+    private ActionPhase actionPhase;
 
 
     // The table constructor creates the bag with the specified students inside. It then initializes the islands.
     // Proper testing to be added
     public Table(int motherNatureIsland) {
         bag = new Bag(2);
+        int opposite = (motherNatureIsland + 6) % 12;
+
         for(int i = 0; i < 12; i++) {
-            // Properly treat the MNI's opposite (different init)
+            islands.add(new Island());
             if(i == motherNatureIsland) {
-                islands.add(new Island());
                 motherNature = new MotherNature(islands.get(i));
             }
-            else {
+            else if(i != opposite) {
                 ArrayList<Student> students = bag.extract(2);
-                islands.add(new Island());
                 islands.get(i).addStudents(students);
             }
         }
+
+        // Setting all the next islands.
+        for(int i = 0; i < 11; i++) {
+            islands.get(i).setNextIsland(islands.get(i + 1));
+        }
+        islands.get(11).setNextIsland(islands.get(0));
+
         // Recreate the bag with the correct amount of students after the initial setup
         bag = new Bag(24);
     }

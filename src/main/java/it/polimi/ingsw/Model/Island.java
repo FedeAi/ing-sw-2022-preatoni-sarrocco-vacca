@@ -25,6 +25,7 @@ public class Island {
         this.students.addAll(students);
     }
 
+    // setTower and setOwner are inherently connected, if someone can put a tower on a certain island, we are sure he is the owner.
     public void setTower(Tower tower) {
         this.tower = tower;
     }

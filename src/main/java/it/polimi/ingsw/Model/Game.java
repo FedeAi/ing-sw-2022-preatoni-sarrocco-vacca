@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Game {
 
-    static final int maxPlayer = 4;
-    static final int maxIsland = 12;
+    static final int maxPlayers = 4;
+    static final int maxIslands = 12;
 
     private Table table; //table of the game
     private ArrayList<Player> players;
