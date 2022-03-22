@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+
     private String nickname;
     private boolean connected;
     private School school;
     private List<AssistantCard> cards;
+    private AssistantCard playedCard;
     private Magician magician;
 
     public Player(String nickname, int number, int numPlayers, Magician magician){
@@ -46,5 +48,12 @@ public class Player {
         for(int i = 1; i <= 10; i++) {
             cards.add(new AssistantCard("", i));
         }
+    }
+    public AssistantCard getPlayedCard() {
+        return playedCard;
+    }
+
+    public void setPlayedCard(AssistantCard playedCard) {
+        this.playedCard = playedCard;
     }
 }
