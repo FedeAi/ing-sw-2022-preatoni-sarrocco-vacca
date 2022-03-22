@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Game {
 
-    static final int maxPlayer = 4;
-    static final int maxIsland = 12;
+    static final int maxPlayers = 4;
+    static final int maxIslands = 12;
 
     //private Table table; //table of the game
     private List<Player> players;
@@ -43,33 +43,6 @@ public class Game {
 
     public void addPlayer(Player player){
         players.add(player);
-    }
-    public List<Player> getPlayers(){
-        return players;
-    }
-
-    public MotherNature getMotherNature() {
-        return motherNature;
-    }
-
-    public void setMotherNature(MotherNature motherNature) {
-        this.motherNature = motherNature;
-    }
-
-    public ArrayList<Island> getIslands() {
-        return islands;
-    }
-
-    public void setIslands(ArrayList<Island> islands) {
-        this.islands = islands;
-    }
-
-    public ArrayList<CharacterCard> getCharacterCards() {
-        return characterCards;
-    }
-
-    public void setCharacterCards(ArrayList<CharacterCard> characterCards) {
-        this.characterCards = characterCards;
     }
 
 }

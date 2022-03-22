@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enumerations.Magician;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -10,6 +11,14 @@ public class Player {
     private School school;
     private List<AssistantCard> cards;
     private Magician magician;
+
+    public Player(String nickname, int number, int numPlayers, Magician magician){
+        this.nickname = nickname;
+        connected = true;
+        school = new School(numPlayers, number);
+        createHand();
+        this.magician = magician;
+    }
 
     public String getNickname() {
         return nickname;
@@ -29,5 +38,13 @@ public class Player {
 
     public Magician getMagician() {
         return magician;
+    }
+
+    // empty string in AC constructor, this needs to be sorted
+    private void createHand(){
+        cards = new ArrayList<>();
+        for(int i = 1; i <= 10; i++) {
+            cards.add(new AssistantCard("", i));
+        }
     }
 }
