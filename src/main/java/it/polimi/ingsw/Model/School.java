@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.TowerColor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class School {
     private ArrayList<Tower> towers;
@@ -47,13 +48,14 @@ public class School {
         professors = new ArrayList<>();
     }
 
-    public int getNumTowers(){
-        return towers.size();
+    public List<Tower> getTowers(){
+        return towers;
     }
 
-    public int getNumStudentsHall(Color color) {
+    public List<Student> getStudentsHall(Color color) {
         assert false;
-        return 0;
+
+        return null;
     }
 
     public ArrayList<Student> getStudentsEntry() {

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Enumerations.GameStates;
+import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Enumerations.Magician;
 
 import java.util.ArrayList;
@@ -14,17 +14,17 @@ public class Game {
     private static Game instance;
 
     private List<Player> players;
-    //private Player prevPlayer;  // player who played first the previous turn TODO ADD UML
-    private List<Player> orderedPlayersActionPhase; // Ordered list of players for the action phase TODO ADD UML
+    private List<Player> playersActionPhase; // Ordered list of players for the action phase TODO ADD UML
 
     private List<Magician> magicians;
     private boolean expertMode;
 
     private MotherNature motherNature;
-    private ArrayList<Island> islands;
-    private ArrayList<CharacterCard> characterCards; //array, fixed size = 3
-    private GameStates gameState;
-    private RoundState roundState;
+    private List<Island> islands;
+    private List<Cloud> clouds;
+
+    private List<CharacterCard> characterCards; //array, fixed size = 3
+    private GameState gameState;
     private Player roundOwner; // TODO add uml
 
 
@@ -62,7 +62,7 @@ public class Game {
      */
     public List<Player> getOrderedPlanningPlayers(){
         ArrayList<Player> orderedPlanningPLayers = new ArrayList<Player>();
-        int playerIndex = players.indexOf(orderedPlayersAction.get(0));
+        int playerIndex = players.indexOf(playersActionPhase.get(0));
         for(int i = 0; i < players.size(); i++){
             orderedPlanningPLayers.add(players.get((playerIndex + i) % players.size()));
         }
@@ -97,15 +97,14 @@ public class Game {
         this.roundOwner = roundOwner;
     }
 
-
-    public GameStates getGameState() {
+    public GameState getGameState() {
         return gameState;
     }
-    public void setGameState(GameStates gameState){
+    public void setGameState(GameState gameState){
         this.gameState = gameState;
     }
 
-    public void setOrderedPlayersActionPhase(List<Player> orderedPlayersActionPhase) {
-        this.orderedPlayersActionPhase = orderedPlayersActionPhase;
+    public void setPlayersActionPhase(List<Player> playersActionPhase) {
+        this.playersActionPhase = playersActionPhase;
     }
 }

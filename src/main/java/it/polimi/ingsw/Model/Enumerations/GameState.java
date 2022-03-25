@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.Enumerations;
 
-public enum GameStates {
+public enum GameState {
 
     GAME_ROOM,
     GAME_STARTED,

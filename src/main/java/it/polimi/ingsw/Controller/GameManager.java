@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.Model.Enumerations.GameStates;
+import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
@@ -13,7 +13,7 @@ public class GameManager {
 
     public GameManager() {
         this.gameInstance = Game.getInstance();
-        this.gameInstance.setGameState(GameStates.GAME_ROOM);
+        this.gameInstance.setGameState(GameState.GAME_ROOM);
         //this.roundManager = new RoundManager(this);
     }
 
@@ -23,9 +23,9 @@ public class GameManager {
         this.gameInstance.addPlayer(player);
     }
 
-    public RoundManager getRoundManager() {//TODO controllare
-        return this.roundManager;
-    }
+//    public RoundManager getRoundManager() {//TODO controllare
+//        return this.roundManager;
+//    }
 
 
 
