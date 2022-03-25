@@ -11,6 +11,8 @@ public class Game {
     static final int maxPlayers = 4;
     static final int maxIslands = 12;
 
+    private static Game instance;
+
     //private Table table; //table of the game
     private List<Player> players;
     private List<Magician> magicians;
@@ -22,17 +24,19 @@ public class Game {
     private GameStates gameStatus;
 
 
-//    public  void startGame(){ //method for starting the game
-//
-//    }
-//    public void endGame(){ //if win conditions then endgame()
-//
-//    }
+    /**
+     * The singleton instance of the game returns, if it has not been created it allocates it as well
+     *
+     * @return the singleton instance
+     */
+    public static Game getInstance() {
+        if (instance == null)
+            instance = new Game();
+    return instance;
+}
 
     public String getPlayerNickname(Player player){
-
             return player.getNickname();
-
     }
     public List<String> getAvailableMagicians() { //choice for available magicians; main character
         assert false;
