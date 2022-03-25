@@ -1,20 +1,35 @@
 package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.MotherNature;
 import it.polimi.ingsw.Model.Player;
 
-import java.util.List;
-
 public class GameManager {
+
+    private static final int MIN_PLAYERS = 2;
+    private static final int MAX_PLAYERS = 3;
     private Game game;
+    private final Game gameInstance = null;
+    private RoundManager roundManager;
+
+    public GameManager(Game game) {
+        this.game = game;
+
+    }
+
 
     public void addPlayer(Player player){
         game.addPlayer(player);
     }
 
-    public Game getGameIstance(){
-        return game;    // todo make sigleton GP
+    public Game getGameInstance() {
+        return this.gameInstance;
     }
+    public RoundManager getRoundManager() {
+        return this.roundManager;
+    }
+
+
+
+
 
 }

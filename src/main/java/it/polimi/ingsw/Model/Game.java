@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Enumerations.GameStates;
 import it.polimi.ingsw.Model.Enumerations.Magician;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Game {
     private MotherNature motherNature;
     private ArrayList<Island> islands;
     private ArrayList<CharacterCard> characterCards; //array, fixed size = 3
+    private GameStates gameStatus;
 
 
 //    public  void startGame(){ //method for starting the game
@@ -45,4 +47,7 @@ public class Game {
         players.add(player);
     }
 
+    public GameStates getGameStatus() {
+        return gameStatus;
+    }
 }
