@@ -19,7 +19,7 @@ public class Game {
     private MotherNature motherNature;
     private ArrayList<Island> islands;
     private ArrayList<CharacterCard> characterCards; //array, fixed size = 3
-    private GameStates gameStatus;
+    private GameStates gameState;
 
 
 //    public  void startGame(){ //method for starting the game
@@ -47,7 +47,10 @@ public class Game {
         players.add(player);
     }
 
-    public GameStates getGameStatus() {
-        return gameStatus;
+    public GameStates getGameState() {
+        return gameState;
+    }
+    public void setGameState(GameStates gameState){
+        this.gameState = gameState;
     }
 }
