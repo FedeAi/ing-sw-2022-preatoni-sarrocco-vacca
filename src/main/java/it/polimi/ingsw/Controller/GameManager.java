@@ -8,17 +8,13 @@ public class GameManager {
 
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 3;
-    private final Game gameInstance = null;
     private Game game;
+    private final Game gameInstance = null;
     private RoundManager roundManager;
 
-
-    public GameManager() {
-
+    public GameManager(Game game) {
+        this.game = game;
         this.gameInstance.setGameStatus(GameStates.GAME_ROOM);
-        this.gameInstance = Game.getInstance();
-        this.roundManager = new RoundManager(this);
-
 
     }
 

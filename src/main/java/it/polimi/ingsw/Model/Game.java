@@ -22,6 +22,12 @@ public class Game {
     private GameStates gameStatus;
 
 
+//    public  void startGame(){ //method for starting the game
+//
+//    }
+//    public void endGame(){ //if win conditions then endgame()
+//
+//    }
 
     public String getPlayerNickname(Player player){
 
