@@ -11,7 +11,7 @@ public class Player {
     private boolean connected;
     private School school;
     private List<AssistantCard> cards;
-    private AssistantCard playedCard;
+    private AssistantCard playedCard; // last played card
     private Magician magician;
 
     public Player(String nickname, int number, int numPlayers, Magician magician){
@@ -49,11 +49,22 @@ public class Player {
             cards.add(new AssistantCard("", i));
         }
     }
+
+    public boolean hasCard(AssistantCard card){
+        return cards.contains(card);
+    }
+
     public AssistantCard getPlayedCard() {
         return playedCard;
     }
 
-    public void setPlayedCard(AssistantCard playedCard) {
+    /**
+     * set played card and removes from available cards
+     * @param playedCard
+     */
+    public void setAndRemovePlayedCard(AssistantCard playedCard) {
         this.playedCard = playedCard;
+        cards.remove(playedCard);
     }
+
 }

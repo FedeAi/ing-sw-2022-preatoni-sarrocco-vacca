@@ -6,6 +6,8 @@ public enum GameStates {
     GAME_STARTED,
     GAME_ENDED,
     ROUND_STARTED,
+    PLANNING_PHASE,
+    ACTION_PHASE,
     ROUND_ENDED,
     TURN_STARTED,
     TURN_ENDED,
