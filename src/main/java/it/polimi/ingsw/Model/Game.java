@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.Enumerations.Magician;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Game {
 
@@ -69,20 +70,25 @@ public class Game {
         return orderedPlanningPLayers;
     }
 
-    public String getPlayerNickname(Player player){
+    public String getPlayerNickname(Player player){ //ottengo il nickname
             return player.getNickname();
     }
-    public List<String> getAvailableMagicians() { //choice for available magicians; main character
-        assert false;
-        return null;
+    public List<Magician> getAvailableMagicians() { //choice for available magicians; main character
+        return magicians;
     }
-    public List<String> isNicknameTaken() { //Control the choice of nickname must be unique
-        assert false;
-        return null;
+    public void removeMagician(Magician magician){ //delete the magicians from the possible choice
+        magicians.remove(magician);
+
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
+    public boolean addPlayer(Player player){ //adding the player if the name isn't already taken
+            boolean flag = false;
+            if (!(isNicknameTaken(player.getNickname()))) {
+                players.add(player);
+                flag= true;
+            }
+            return flag;
+
     }
 
     public List<Player> getPlayers(){
@@ -106,5 +112,25 @@ public class Game {
 
     public void setPlayersActionPhase(List<Player> playersActionPhase) {
         this.playersActionPhase = playersActionPhase;
+    }
+    public Optional<Player> getPlayerByNickname(String name){ //getting the object player by nickname
+        Player player = null; 
+        for(Player p: players){
+            if(p.getNickname().equals(name)){
+                player = p;
+            }
+        }
+        return Optional.ofNullable(player);
+    }
+
+    private boolean isNicknameTaken(String name){ //check if the name is available
+        boolean flag = true;
+        for(Player p: players){
+            if(p.getNickname().equals(name)){
+                flag = false;
+            }
+        }
+        return flag;
+
     }
 }

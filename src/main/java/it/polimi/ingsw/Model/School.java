@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class School {
-    private List<TowerColor> towers;
+   // private List<TowerColor> towers;
     private Map<Color, Integer> studentsHall;
     private Map<Color, Integer> studentsEntry;
     // TODO MOVE PROFESSORS TO GAME CLASS
@@ -17,7 +17,7 @@ public class School {
 
     // implement 4 player version (?), exceptions
     public School(int players, int playerNum) {
-        towers = new ArrayList<TowerColor>();
+       // towers = new ArrayList<TowerColor>();
         TowerColor color = null;
 
         if (playerNum == 0) {
@@ -61,8 +61,5 @@ public class School {
         studentsHall.put(color, 1);
     }
 
-    public boolean hasProfessor(Color color) {
-        assert false;
-        return false;
-    }
+
 }
