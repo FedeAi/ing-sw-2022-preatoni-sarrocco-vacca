@@ -27,13 +27,15 @@ public class RoundManager {
 
     // TODO ASK PARAMETER, player is contained in players?
     // TODO ASK SE HAS CARD é MEGLIO METTERLO QUI O IN PLAYER
-    public void playCard(Player player, AssistantCard choice) {
-        if (!gameInstance.getPlayers().contains(player)) {
+    public void playCard(String player, AssistantCard choice) {
+
+        if (!gameInstance.getPlayers().contains(gameInstance.getPlayerByNickname(player))) {
             // Throw excp
         }
         if (player.equals(gameInstance.getRoundOwner()) &&
                 gameInstance.getGameState().equals(GameState.PLANNING_PHASE) &&
-                player.hasCard(choice)
+                gameInstance.getPlayerByNickname(player).hasCard();
+
         ) {
 
             // checks if the choice has already been played, or if I have no other choices
@@ -70,6 +72,7 @@ public class RoundManager {
         gameInstance.setPlayersActionPhase(planningPhasePlayers);
 
     }
+
 
 
 }

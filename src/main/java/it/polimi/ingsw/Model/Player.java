@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.Enumerations.Magician;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Player {
 
@@ -53,7 +54,8 @@ public class Player {
     }
 
     public boolean hasCard(AssistantCard card) {
-        return cards.contains(card);
+        return false;
+       // return Optional.ofNullable(cards.contains(card));
     }
 
     public AssistantCard getPlayedCard() {

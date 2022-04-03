@@ -23,11 +23,6 @@ public class GameManager {
         this.gameInstance.addPlayer(player);
     }
 
-//    public RoundManager getRoundManager() {//TODO controllare
-//        return this.roundManager;
-//    }
-
-
 
 
 
