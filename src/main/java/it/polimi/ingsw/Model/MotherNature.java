@@ -8,7 +8,7 @@ public class MotherNature {
         this.currentIsland = currentIsland;
     }
 
-    public Island getCurrent() {
+    public Island getPosition() {
         return currentIsland;
     }
 

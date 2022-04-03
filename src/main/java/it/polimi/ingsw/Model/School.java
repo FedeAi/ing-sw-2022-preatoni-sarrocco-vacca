@@ -5,64 +5,63 @@ import it.polimi.ingsw.Model.Enumerations.TowerColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class School {
-    private ArrayList<Tower> towers;
-    private ArrayList<Student> studentsHall;
-    private ArrayList<Student> studentsEntry;
-    private ArrayList<Professor> professors;
+    private List<TowerColor> towers;
+    private Map<Color, Integer> studentsHall;
+    private Map<Color, Integer> studentsEntry;
+    // TODO MOVE PROFESSORS TO GAME CLASS
+    // private ArrayList<> professors;
     private final int laneSize = 9;
 
     // implement 4 player version (?), exceptions
     public School(int players, int playerNum) {
-        towers = new ArrayList<Tower>();
+        towers = new ArrayList<TowerColor>();
         TowerColor color = null;
 
-        if(playerNum == 0) {
+        if (playerNum == 0) {
             color = TowerColor.BLACK;
-        }
-
-        else if(playerNum == 1) {
+        } else if (playerNum == 1) {
             color = TowerColor.WHITE;
-        }
-
-        else if(playerNum == 2) {
+        } else if (playerNum == 2) {
             color = TowerColor.GRAY;
         }
 
-        if(players == 2) {
-            for(int i = 0; i < 8; i++) {
-                towers.add(new Tower(color));
+        if (players == 2) {
+            for (int i = 0; i < 8; i++) {
+                towers.add(color);
             }
-        }
-
-        else if(players == 3) {
-            for(int i = 0; i < 6; i++) {
-                towers.add(new Tower(color));
+        } else if (players == 3) {
+            for (int i = 0; i < 6; i++) {
+                towers.add(color);
             }
         }
         //else
-            //throw new InvalidPlayersException;
-        studentsEntry = new ArrayList<>();
-        studentsHall = new ArrayList<>();
-        professors = new ArrayList<>();
+        //throw new InvalidPlayersException;
     }
 
-    public List<Tower> getTowers(){
+    public List<TowerColor> getTowers() {
         return towers;
     }
 
-    public List<Student> getStudentsHall(Color color) {
-        assert false;
-
-        return null;
-    }
-
-    public ArrayList<Student> getStudentsEntry() {
+    public Map<Color, Integer> getStudentsEntry() {
         return studentsEntry;
     }
 
-    public boolean hasProfessor(Color color){
+    public void addStudentEntry(Color color) {
+        studentsEntry.put(color, 1);
+    }
+
+    public Map<Color, Integer> getStudentsHall() {
+        return studentsHall;
+    }
+
+    public void addStudentHall(Color color) {
+        studentsHall.put(color, 1);
+    }
+
+    public boolean hasProfessor(Color color) {
         assert false;
         return false;
     }

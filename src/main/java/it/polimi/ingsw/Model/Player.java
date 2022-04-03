@@ -14,7 +14,7 @@ public class Player {
     private AssistantCard playedCard; // last played card
     private Magician magician;
 
-    public Player(String nickname, int number, int numPlayers, Magician magician){
+    public Player(String nickname, int number, int numPlayers, Magician magician) {
         this.nickname = nickname;
         connected = true;
         school = new School(numPlayers, number);
@@ -43,14 +43,14 @@ public class Player {
     }
 
     // empty string in AC constructor, this needs to be sorted
-    private void createHand(){
+    private void createHand() {
         cards = new ArrayList<>();
-        for(int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 10; i++) {
             cards.add(new AssistantCard("", i));
         }
     }
 
-    public boolean hasCard(AssistantCard card){
+    public boolean hasCard(AssistantCard card) {
         return cards.contains(card);
     }
 
@@ -60,11 +60,11 @@ public class Player {
 
     /**
      * set played card and removes from available cards
+     *
      * @param playedCard
      */
     public void setAndRemovePlayedCard(AssistantCard playedCard) {
         this.playedCard = playedCard;
         cards.remove(playedCard);
     }
-
 }

@@ -9,7 +9,6 @@ public class Table {
     private MotherNature motherNature;
     private ArrayList<CharacterCard> characterCards; //array, fixed size = 3
     private Bag bag;
-    private ActionPhase actionPhase;
 
 
     // The table constructor creates the bag with the specified students inside. It then initializes the islands.
