@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class School {
-   // private List<TowerColor> towers;
+    private List<TowerColor> towers;
     private Map<Color, Integer> studentsHall;
     private Map<Color, Integer> studentsEntry;
     // TODO MOVE PROFESSORS TO GAME CLASS

@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
+import it.polimi.ingsw.Model.Enumerations.Color;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -14,7 +15,7 @@ class IslandTest {
         Island islandTest = new Island();
         Bag myBag = new Bag(numStudents);
         // extraction of numStudents students to be added to the island, in order to test the method
-        ArrayList<Student> students = new ArrayList<>(myBag.extract(numStudents));
+        ArrayList<Color> students = new ArrayList<>(myBag.extract(numStudents));
         int initialSize = islandTest.getStudents().size();
         islandTest.addStudents(students);
         int finalSize = islandTest.getStudents().size();

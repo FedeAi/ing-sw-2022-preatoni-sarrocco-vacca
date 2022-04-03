@@ -1,15 +1,17 @@
 package it.polimi.ingsw.Model;
 
-import java.util.ArrayList;
+import it.polimi.ingsw.Model.Enumerations.Color;
+
+import java.util.Map;
 
 public class Cloud {
-    private ArrayList<Student> students;
+    private Map<Color, Integer> students;
 
-    public Cloud(ArrayList<Student> students) {
-        this.students = students;
+    public Map<Color, Integer> getStudents() {
+        return students;
     }
 
-    public ArrayList<Student> getStudents() {
-        return students;
+    public void addStudents(Color color) {
+        students.put(color, 1);
     }
 }
