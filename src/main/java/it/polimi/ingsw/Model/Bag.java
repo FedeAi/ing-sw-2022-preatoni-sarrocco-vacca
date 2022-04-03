@@ -6,26 +6,26 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Bag {
-   private ArrayList<Student> students;
+   private ArrayList<Color> students;
 
    public Bag(int numStudentEachColor){
       students = new ArrayList<>();
       for(int i = 0; i < numStudentEachColor * Color.values().length; i++){
-         students.add(new Student(Color.values()[i % Color.values().length]));
+         students.add(Color.values()[i % Color.values().length]);
       }
    }
 
-   public ArrayList<Student> getStudents() {
+   public ArrayList<Color> getStudents() {
       return students;
    }
 
-   public ArrayList<Student> extract( int numStudent){
-      ArrayList<Student> out = new ArrayList<Student>();
+   public ArrayList<Color> extract( int numStudent){
+      ArrayList<Color> out = new ArrayList<Color>();
 
       Random rand = new Random();
       for (int i = 0; i < numStudent; i++) {
          int randomIndex = rand.nextInt(students.size());
-         Student randomElement = students.get(randomIndex);
+         Color randomElement = students.get(randomIndex);
          students.remove(randomIndex);
          out.add(randomElement);
       }

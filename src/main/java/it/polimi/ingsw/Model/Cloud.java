@@ -12,6 +12,6 @@ public class Cloud {
     }
 
     public void addStudents(Color color) {
-        students.put(color, 1);
+        students.put(color, students.getOrDefault(color, 0) + 1);
     }
 }

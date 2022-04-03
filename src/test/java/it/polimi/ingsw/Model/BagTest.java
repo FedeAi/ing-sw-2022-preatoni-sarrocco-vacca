@@ -19,7 +19,7 @@ public class BagTest {
         assertEquals("size check", Color.values().length * numStudentEachColor, myBag.getStudents().size());
         //assertTrue(false);
         for(final Color color : Color.values()){
-            assertEquals("color check", numStudentEachColor, myBag.getStudents().stream().filter( student -> student.getColor().equals(color)).count());
+            assertEquals("color check", numStudentEachColor, myBag.getStudents().stream().filter( student -> student.equals(color)).count());
         }
     }
 
@@ -28,7 +28,7 @@ public class BagTest {
         int numStudentEachColor = 5;
         Bag myBag = new Bag(numStudentEachColor);
         int initialSize = myBag.getStudents().size();
-        ArrayList<Student> out = myBag.extract(8);
+        ArrayList<Color> out = myBag.extract(8);
         assertEquals("control out dim ",out.size(), 8 );
         assertEquals("control bag dim ",myBag.getStudents().size(), initialSize - 8);
 

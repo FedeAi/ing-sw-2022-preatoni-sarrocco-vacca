@@ -50,7 +50,7 @@ public class School {
     }
 
     public void addStudentEntry(Color color) {
-        studentsEntry.put(color, 1);
+        studentsEntry.put(color, studentsEntry.getOrDefault(color, 0) + 1);
     }
 
     public Map<Color, Integer> getStudentsHall() {
@@ -58,7 +58,7 @@ public class School {
     }
 
     public void addStudentHall(Color color) {
-        studentsHall.put(color, 1);
+        studentsHall.put(color, studentsEntry.getOrDefault(color, 0) + 1);
     }
 
 
