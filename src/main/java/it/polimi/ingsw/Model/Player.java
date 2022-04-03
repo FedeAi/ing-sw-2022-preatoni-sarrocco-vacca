@@ -14,12 +14,11 @@ public class Player {
     private AssistantCard playedCard; // last played card
     private Magician magician;
 
-    public Player(String nickname, int number, int numPlayers, Magician magician) {
+    public Player(String nickname, int number, int numPlayers){
         this.nickname = nickname;
         connected = true;
         school = new School(numPlayers, number);
         createHand();
-        this.magician = magician;
     }
 
     public String getNickname() {
@@ -38,6 +37,9 @@ public class Player {
         return cards;
     }
 
+    public void setMagician(Magician magician){
+        this.magician = magician;
+    }
     public Magician getMagician() {
         return magician;
     }

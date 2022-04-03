@@ -12,9 +12,8 @@ class PlayerTest {
         String path = "";
         int numPlayer = 2;
         int playerNumber = 1;
-        Magician magician  = Magician.KING;
 
-        Player player = new Player(path, 1, 2, magician);
+        Player player = new Player(path, 1, 2);
         int i = 1;
         for(AssistantCard c : player.getCards()) {
             assertEquals("Check if hand is properly initialized", i, c.getValue());
