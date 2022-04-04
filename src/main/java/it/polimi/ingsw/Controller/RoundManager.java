@@ -10,7 +10,7 @@ public class RoundManager {
 
     public RoundManager(GameManager gameManager) {
         this.gameManager = gameManager;
-        this.gameInstance = Game.getInstance();
+        this.gameInstance = gameManager.getGameIstance();
     }
 
 

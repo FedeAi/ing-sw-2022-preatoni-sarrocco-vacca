@@ -6,7 +6,6 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,7 @@ public class PlayCard implements Performable{
         if(!player.equals(game.getRoundOwner()))
             return false;
 
-        if(!game.getGameState().equals(GameState.PLANNING_PHASE))
+        if(!game.getGameState().equals(GameState.PLANNING_PHASE_MOVE_STUDENTS_TO_HALL))
             return false;
 
 

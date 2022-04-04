@@ -8,11 +8,6 @@ import java.util.*;
 
 public class Game {
 
-    static final int maxPlayers = 4;
-    static final int maxIslands = 12;
-
-    private static Game instance;
-
     private List<Player> players;
     private List<Player> playersActionPhase; // Ordered list of players for the action phase TODO ADD UML
 
@@ -23,12 +18,14 @@ public class Game {
     private MotherNature motherNature;
     private List<Cloud> clouds;
     private EnumMap<Color, Integer> professors;
+    private Bag bag;
 
     private List<CharacterCard> characterCards; //array, fixed size = 3
     private GameState gameState;
     private Player roundOwner;
 
-    private Game(){
+    public Game(Bag bag){
+        this.bag = bag;
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
         magicians = new ArrayList<>();
@@ -46,16 +43,6 @@ public class Game {
             // set 1 professor per color, initial state
             professors.put(c,1);
         }
-    }
-    /**
-     * The singleton instance of the game returns, if it has not been created it allocates it as well
-     *
-     * @return the singleton instance
-     */
-    public static Game getInstance() {
-        if (instance == null)
-            instance = new Game();
-        return instance;
     }
 
     /**
@@ -157,4 +144,13 @@ public class Game {
     public void setProfessors(EnumMap<Color, Integer> professors) {
         this.professors = professors;
     }
+
+    public Bag getBag() {
+        return bag;
+    }
+
+    public int numPlayers(){
+        return players.size();
+    }
+
 }

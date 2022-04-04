@@ -6,38 +6,27 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayCardTest {
-    /**
-     * Used to create different objects from singleton pattern, just for test purposes
-     * @return
-     */
-    private Game getGameIstance() throws Exception{
-        Game gameInstance;
-        Class<Game> clazz = Game.class;
-        Constructor<Game> cons = clazz.getDeclaredConstructor();
-        cons.setAccessible(true);
-        gameInstance = cons.newInstance();
-        return gameInstance;
-    }
+
     @Test
     void canPerformExt() throws Exception{
 
+        GameManager gameManager = new GameManager();
+        Player p1 = new Player("fede");
+        Player p2 = new Player("gianfranco");
 
-        Game gameInstance = getGameIstance();
-        Player p1 = new Player("fede",0,2);
-        Player p2 = new Player("gianfranco",1,2);
-        gameInstance.addPlayer(p1);
-        gameInstance.addPlayer(p2);
+        gameManager.addPlayer(p1);
+        gameManager.addPlayer(p2);
+        gameManager.initGame();
+        Game gameInstance = gameManager.getGameIstance();
 
         gameInstance.setRoundOwner(p1);
-        gameInstance.setGameState(GameState.PLANNING_PHASE);
+        gameInstance.setGameState(GameState.PLANNING_PHASE_MOVE_STUDENTS_TO_HALL);
 
 
 
@@ -49,7 +38,7 @@ class PlayCardTest {
         //wrong game phase
         gameInstance.setGameState(GameState.ACTION_PHASE);
         assertFalse(playCard.canPerformExt(gameInstance));
-        gameInstance.setGameState(GameState.PLANNING_PHASE);
+        gameInstance.setGameState(GameState.PLANNING_PHASE_MOVE_STUDENTS_TO_HALL);
 
         // is round owner
         assertTrue(playCard.canPerformExt(gameInstance));
@@ -62,20 +51,21 @@ class PlayCardTest {
 
         // All player's cards are on table -> he can make that choice
         // todo
-
-
     }
 
     @Test
     void performMove() throws Exception{
-        Game gameInstance = getGameIstance();
-        Player p1 = new Player("fede",0,2);
-        Player p2 = new Player("gianfranco",1,2);
-        gameInstance.addPlayer(p1);
-        gameInstance.addPlayer(p2);
+        GameManager gameManager = new GameManager();
+        Player p1 = new Player("fede");
+        Player p2 = new Player("gianfranco");
+
+        gameManager.addPlayer(p1);
+        gameManager.addPlayer(p2);
+        gameManager.initGame();
+        Game gameInstance = gameManager.getGameIstance();
 
         gameInstance.setRoundOwner(p1);
-        gameInstance.setGameState(GameState.PLANNING_PHASE);
+        gameInstance.setGameState(GameState.PLANNING_PHASE_MOVE_STUDENTS_TO_HALL);
 
         AssistantCard choice = p1.getCards().get(0);
         Performable playCard = new PlayCard("fede", choice);

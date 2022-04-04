@@ -3,12 +3,6 @@ package it.polimi.ingsw.Controller;
 import it.polimi.ingsw.Model.Game;
 
 public interface Performable {
-    /**
-     * Perform move method.
-     *
-     * @param game of type GameExt: the game
-     */
-    void performMove(Game game);
 
     /**
      * Can perform ext boolean.
@@ -17,6 +11,13 @@ public interface Performable {
      * @return the boolean
      */
     boolean canPerformExt(Game game);
+
+    /**
+     * Perform move method.
+     *
+     * @param game of type GameExt: the game
+     */
+    void performMove(Game game);
 
     /**
      * Gets NickName player.

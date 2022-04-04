@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model;
 
-import java.util.ArrayList;
+import java.util.EnumMap;
 
 import it.polimi.ingsw.Model.Enumerations.Color;
 import org.junit.Test;
@@ -15,7 +15,7 @@ class IslandTest {
         Island islandTest = new Island();
         Bag myBag = new Bag(numStudents);
         // extraction of numStudents students to be added to the island, in order to test the method
-        ArrayList<Color> students = new ArrayList<>(myBag.extract(numStudents)); // FIXME
+        EnumMap<Color, Integer> students = new EnumMap<Color,Integer>(myBag.extract(numStudents)); // FIXME
         int initialSize = islandTest.getStudents().size();
         //islandTest.addStudents(students);     // FIXME
         int finalSize = islandTest.getStudents().size();

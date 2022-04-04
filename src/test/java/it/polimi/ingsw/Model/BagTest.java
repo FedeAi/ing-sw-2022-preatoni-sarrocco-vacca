@@ -1,10 +1,9 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enumerations.Color;
-import junit.framework.TestCase;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,8 +27,8 @@ public class BagTest {
         int numStudentEachColor = 5;
         Bag myBag = new Bag(numStudentEachColor);
         int initialSize = myBag.getStudents().size();
-        ArrayList<Color> out = myBag.extract(8);
-        assertEquals("control out dim ",out.size(), 8 );
+        Map<Color, Integer> out = myBag.extract(8);
+        assertEquals("control out dim ",out.values().stream().reduce(0, Integer::sum).intValue(), 8 );
         assertEquals("control bag dim ",myBag.getStudents().size(), initialSize - 8);
 
     }

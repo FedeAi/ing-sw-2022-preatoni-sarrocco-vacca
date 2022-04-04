@@ -16,11 +16,14 @@ public class Player {
     private AssistantCard playedCard; // last played card
     private Magician magician;
 
-    public Player(String nickname, int number, int numPlayers){ // FIXME: number numPlayers, higher order data, not relatives to Player
+    public Player(String nickname){ // FIXME: number numPlayers, higher order data, not relatives to Player
         this.nickname = nickname;
         connected = true;
-        school = new School(numPlayers, number);
         createHand();
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
     }
 
     public String getNickname() {

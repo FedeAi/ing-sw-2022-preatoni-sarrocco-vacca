@@ -13,7 +13,7 @@ class PlayerTest {
         int numPlayer = 2;
         int playerNumber = 1;
 
-        Player player = new Player(path, 1, 2);
+        Player player = new Player(path);
         int i = 1;
         for(AssistantCard c : player.getCards()) {
             assertEquals("Check if hand is properly initialized", i, c.getValue());
