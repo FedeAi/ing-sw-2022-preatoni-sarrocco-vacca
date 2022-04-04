@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model.Enumerations;
 
 public enum GameState {
-
+    GAME_CREATED, // GAME_ROOM equivalent, but we do not have a room riight now
     GAME_ROOM,
     GAME_STARTED,
     GAME_ENDED,

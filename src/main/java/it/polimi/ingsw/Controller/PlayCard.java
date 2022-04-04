@@ -22,11 +22,12 @@ public class PlayCard implements Performable{
 
     @Override
     public boolean canPerformExt(Game game) {
-        Optional<Player> player = game.getPlayerByNickname(myNickName);
+        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
 
-        if(player.isEmpty())
+        if(player_opt.isEmpty())
             return  false;
 
+        Player player = player_opt.get();
         if(!player.equals(game.getRoundOwner()))
             return false;
 
@@ -34,12 +35,12 @@ public class PlayCard implements Performable{
             return false;
 
 
-        if(!player.get().hasCard(choice))
+        if(!player.hasCard(choice))
             return false;
 
 
         // checks if the choice has already been played, or if I have no other choices
-        if (!game.getPlayedCards().contains(choice) || game.getPlayedCards().containsAll(player.get().getCards())) {
+        if (!game.getPlayedCards().contains(choice) || game.getPlayedCards().containsAll(player.getCards())) {
             return true;
         }else{
             return false;

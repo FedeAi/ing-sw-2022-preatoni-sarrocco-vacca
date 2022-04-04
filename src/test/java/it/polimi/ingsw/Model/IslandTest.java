@@ -15,9 +15,9 @@ class IslandTest {
         Island islandTest = new Island();
         Bag myBag = new Bag(numStudents);
         // extraction of numStudents students to be added to the island, in order to test the method
-        ArrayList<Color> students = new ArrayList<>(myBag.extract(numStudents));
+        ArrayList<Color> students = new ArrayList<>(myBag.extract(numStudents)); // FIXME
         int initialSize = islandTest.getStudents().size();
-        islandTest.addStudents(students);
+        //islandTest.addStudents(students);     // FIXME
         int finalSize = islandTest.getStudents().size();
         Assertions.assertEquals(initialSize + numStudents, finalSize, "Check if final size is equals to initial size + add size");
     }

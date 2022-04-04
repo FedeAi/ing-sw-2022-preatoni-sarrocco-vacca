@@ -19,16 +19,34 @@ public class Game {
     private List<Magician> magicians;
     private boolean expertMode;
 
-    private MotherNature motherNature;
     private List<Island> islands;
+    private MotherNature motherNature;
     private List<Cloud> clouds;
     private EnumMap<Color, Integer> professors;
 
     private List<CharacterCard> characterCards; //array, fixed size = 3
     private GameState gameState;
-    private Player roundOwner; // TODO add uml
+    private Player roundOwner;
 
+    public Game(){
+        players = new ArrayList<>();
+        playersActionPhase = new ArrayList<>();
+        magicians = new ArrayList<>();
+        // islands = TODO
+        // motherNature = new MotherNature(); TODO
+        clouds = new ArrayList<>();
+        initProfessors();
+        // characterCards = TODO
+        gameState = GameState.GAME_CREATED;
+    }
 
+    public void initProfessors(){
+        professors = new EnumMap<>(Color.class);
+        for(Color c : Color.values()){
+            // set 1 professor per color, initial state
+            professors.put(c,1);
+        }
+    }
     /**
      * The singleton instance of the game returns, if it has not been created it allocates it as well
      *
@@ -81,13 +99,12 @@ public class Game {
     }
 
     public boolean addPlayer(Player player) { //adding the player if the name isn't already taken
-        boolean flag = false;
         if (!(isNicknameTaken(player.getNickname()))) {
             players.add(player);
-            flag = true;
+            playersActionPhase = players;   // initialize players for action phase
+            return true;
         }
-        return flag;
-
+        return false;
     }
 
     public List<Player> getPlayers() {
@@ -125,14 +142,12 @@ public class Game {
     }
 
     private boolean isNicknameTaken(String name) { //check if the name is available
-        boolean flag = true;
         for (Player p : players) {
-            if (p.getNickname().equals(name)) {
-                flag = false;
+            if(p.getNickname().equals(name)) {
+                return true;
             }
         }
-        return flag;
-
+        return false;
     }
 
     public EnumMap<Color, Integer> getProfessors() {

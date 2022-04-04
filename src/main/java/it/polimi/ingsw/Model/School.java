@@ -17,7 +17,7 @@ public class School {
 
     // implement 4 player version (?), exceptions
     public School(int players, int playerNum) {
-       // towers = new ArrayList<TowerColor>();
+       towers = new ArrayList<TowerColor>();
         TowerColor color = null;
 
         if (playerNum == 0) {
