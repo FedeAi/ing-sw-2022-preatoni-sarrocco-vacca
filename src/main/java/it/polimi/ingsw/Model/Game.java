@@ -28,7 +28,7 @@ public class Game {
     private GameState gameState;
     private Player roundOwner;
 
-    public Game(){
+    private Game(){
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
         magicians = new ArrayList<>();

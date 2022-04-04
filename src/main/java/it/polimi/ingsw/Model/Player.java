@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.Enumerations.Magician;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Player {
@@ -15,7 +16,7 @@ public class Player {
     private AssistantCard playedCard; // last played card
     private Magician magician;
 
-    public Player(String nickname, int number, int numPlayers){
+    public Player(String nickname, int number, int numPlayers){ // FIXME: number numPlayers, higher order data, not relatives to Player
         this.nickname = nickname;
         connected = true;
         school = new School(numPlayers, number);
@@ -69,5 +70,18 @@ public class Player {
     public void setAndRemovePlayedCard(AssistantCard playedCard) {
         this.playedCard = playedCard;
         cards.remove(playedCard);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return nickname.equals(player.nickname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nickname);
     }
 }

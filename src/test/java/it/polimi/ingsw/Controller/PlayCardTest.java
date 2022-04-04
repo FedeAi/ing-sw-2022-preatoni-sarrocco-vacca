@@ -6,16 +6,31 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayCardTest {
-
+    /**
+     * Used to create different objects from singleton pattern, just for test purposes
+     * @return
+     */
+    private Game getGameIstance() throws Exception{
+        Game gameInstance;
+        Class<Game> clazz = Game.class;
+        Constructor<Game> cons = clazz.getDeclaredConstructor();
+        cons.setAccessible(true);
+        gameInstance = cons.newInstance();
+        return gameInstance;
+    }
     @Test
-    void canPerformExt() {
-        Game gameInstance = Game.getInstance();
+    void canPerformExt() throws Exception{
+
+
+        Game gameInstance = getGameIstance();
         Player p1 = new Player("fede",0,2);
         Player p2 = new Player("gianfranco",1,2);
         gameInstance.addPlayer(p1);
@@ -52,8 +67,8 @@ class PlayCardTest {
     }
 
     @Test
-    void performMove() {
-        Game gameInstance = Game.getInstance();
+    void performMove() throws Exception{
+        Game gameInstance = getGameIstance();
         Player p1 = new Player("fede",0,2);
         Player p2 = new Player("gianfranco",1,2);
         gameInstance.addPlayer(p1);
