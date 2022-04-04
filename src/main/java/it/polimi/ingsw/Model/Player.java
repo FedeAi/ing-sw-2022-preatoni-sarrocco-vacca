@@ -54,8 +54,7 @@ public class Player {
     }
 
     public boolean hasCard(AssistantCard card) {
-        return false;
-       // return Optional.ofNullable(cards.contains(card));
+        return cards.contains(card);
     }
 
     public AssistantCard getPlayedCard() {
