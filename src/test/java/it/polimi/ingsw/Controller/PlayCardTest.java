@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Controller;
 
+import it.polimi.ingsw.Controller.Actions.Performable;
+import it.polimi.ingsw.Controller.Actions.PlayCard;
 import it.polimi.ingsw.Model.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -26,7 +28,7 @@ class PlayCardTest {
         Game gameInstance = gameManager.getGameIstance();
 
         gameInstance.setRoundOwner(p1);
-        gameInstance.setGameState(GameState.PLANNING_PHASE_MOVE_STUDENTS_TO_HALL);
+        gameInstance.setGameState(GameState.ACTION_PHASE_MOVE_STUDENTS);
 
 
 
@@ -38,7 +40,7 @@ class PlayCardTest {
         //wrong game phase
         gameInstance.setGameState(GameState.ACTION_PHASE);
         assertFalse(playCard.canPerformExt(gameInstance));
-        gameInstance.setGameState(GameState.PLANNING_PHASE_MOVE_STUDENTS_TO_HALL);
+        gameInstance.setGameState(GameState.ACTION_PHASE_MOVE_STUDENTS);
 
         // is round owner
         assertTrue(playCard.canPerformExt(gameInstance));
@@ -65,7 +67,7 @@ class PlayCardTest {
         Game gameInstance = gameManager.getGameIstance();
 
         gameInstance.setRoundOwner(p1);
-        gameInstance.setGameState(GameState.PLANNING_PHASE_MOVE_STUDENTS_TO_HALL);
+        gameInstance.setGameState(GameState.ACTION_PHASE_MOVE_STUDENTS);
 
         AssistantCard choice = p1.getCards().get(0);
         Performable playCard = new PlayCard("fede", choice);

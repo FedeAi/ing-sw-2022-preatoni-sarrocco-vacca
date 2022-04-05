@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Controller;
+package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Model.Game;
 

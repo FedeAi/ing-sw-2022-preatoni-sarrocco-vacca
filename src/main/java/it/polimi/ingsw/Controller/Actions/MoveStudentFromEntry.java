@@ -1,5 +1,6 @@
-package it.polimi.ingsw.Controller;
+package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.Rules;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -7,10 +8,12 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
-public class MoveStudentFromEntryToHall implements Performable{
+public abstract class MoveStudentFromEntry implements Performable{
+
     private final String myNickName;
     private final Color color;
-    MoveStudentFromEntryToHall(String player, Color color){
+
+    MoveStudentFromEntry(String player, Color color){
         this.myNickName = player;
         this.color = color;
     }
@@ -26,11 +29,11 @@ public class MoveStudentFromEntryToHall implements Performable{
             return false;
         }
 
-        if(!game.getGameState().equals(GameState.PLANNING_PHASE_MOVE_STUDENTS_TO_HALL)){
+        if(!game.getGameState().equals(GameState.ACTION_PHASE_MOVE_STUDENTS)){
             return false;
         }
 
-        // if the player has already moved the 4 students
+        // if the player has already moved the Rules.getStudentsPerTurn students
         if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getStudentsEntry().size() >= Rules.getStudentsPerTurn(game.numPlayers())){
             return false;
         }
@@ -43,22 +46,8 @@ public class MoveStudentFromEntryToHall implements Performable{
     }
 
     @Override
-    public void performMove(Game game) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if(player_opt.isEmpty())    // if there is no Player with that nick
-            return;
-        Player player = player_opt.get();
-
-        player.getSchool().moveStudentFromEntryToHall(color);   // model modification
-        // todo check professors
-
-        if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getStudentsEntry().size() >= Rules.getStudentsPerTurn(game.numPlayers())){
-            // todo change phase
-        }
-    }
-
-    @Override
     public String getNickNamePlayer() {
         return myNickName;
     }
+
 }

@@ -6,8 +6,7 @@ public enum GameState {
     GAME_STARTED,
     GAME_ENDED,
     ROUND_STARTED,
-    PLANNING_PHASE_MOVE_STUDENTS_TO_HALL,
-    ACTION_PHASE,
+
     ROUND_ENDED,
     TURN_STARTED,
     TURN_ENDED,
@@ -15,9 +14,10 @@ public enum GameState {
     /* planning */
 
     BAG_CLOUDS, //moving student by bag to cloud
-    CHOICE_CARD, //choosing assistant card -->3 consequence
+    PLANNING_PHASE_CHOICE_CARD, //choosing assistant card -->3 consequence
     /*action phase */
-    PICK_STUDENT, // entry to hall
+    ACTION_PHASE,
+    ACTION_PHASE_MOVE_STUDENTS,
     MOVE_MOTHER,
     CHOICE_CLOUD,
 

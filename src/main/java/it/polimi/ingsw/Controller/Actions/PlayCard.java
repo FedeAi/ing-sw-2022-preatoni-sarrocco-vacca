@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Controller;
+package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Model.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.GameState;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class PlayCard implements Performable{
+
     private final String myNickName;
     private final AssistantCard choice;
 
@@ -30,7 +31,7 @@ public class PlayCard implements Performable{
         if(!player.equals(game.getRoundOwner()))
             return false;
 
-        if(!game.getGameState().equals(GameState.PLANNING_PHASE_MOVE_STUDENTS_TO_HALL))
+        if(!game.getGameState().equals(GameState.PLANNING_PHASE_CHOICE_CARD))
             return false;
 
 
@@ -39,7 +40,7 @@ public class PlayCard implements Performable{
 
 
         // checks if the choice has already been played, or if I have no other choices
-        if (!game.getPlayedCards().contains(choice) || game.getPlayedCards().containsAll(player.getCards())) {
+        if(!game.getPlayedCards().contains(choice) || game.getPlayedCards().containsAll(player.getCards())) {
             return true;
         }else{
             return false;
