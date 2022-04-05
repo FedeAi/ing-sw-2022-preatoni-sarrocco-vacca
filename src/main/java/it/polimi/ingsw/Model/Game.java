@@ -24,6 +24,8 @@ public class Game {
     private GameState gameState;
     private Player roundOwner;
 
+    //private Comparator<Integer> influenceComparator = Comparator.comparing((i1,i2)->(i1.intValue()-i2));
+
     public Game(Bag bag){
         this.bag = bag;
         players = new ArrayList<>();
@@ -166,5 +168,19 @@ public class Game {
 
     public LinkedList<Island> getIslands() {
         return islands;
+    }
+
+    public boolean checkProfessorInfluence(Color color) {
+        String playerNickname = roundOwner.getNickname();
+        String ownerNickname = professors.get(color);
+        if (ownerNickname == null) {
+            professors.put(color, playerNickname);
+            return true;
+        } else if (playerNickname.equals(ownerNickname)) {
+            return false;
+        } else {
+            // TODO FINISH
+            Color.
+        }
     }
 }

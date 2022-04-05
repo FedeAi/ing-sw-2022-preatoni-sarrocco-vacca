@@ -23,6 +23,7 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
 
         player.getSchool().moveStudentFromEntryToHall(color);   // model modification
         // todo check professors
+        boolean flag = game.checkProfessorInfluence(color);
         if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getStudentsEntry().size() >= Rules.getStudentsPerTurn(game.numPlayers())){
             game.setGameState(GameState.ACTION_MOVE_MOTHER);
         }
