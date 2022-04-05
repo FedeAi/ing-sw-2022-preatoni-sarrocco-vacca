@@ -12,20 +12,20 @@ public class BagTest {
     @Test
     public void createNewBag(){
 
-        int numStudentEachColor = 5;
-        Bag myBag = new Bag(numStudentEachColor);
+        int numStudents = 5 * Color.values().length;
+        Bag myBag = new Bag(numStudents);
 
-        assertEquals("size check", Color.values().length * numStudentEachColor, myBag.getStudents().size());
-        //assertTrue(false);
+        assertEquals("size check",numStudents, myBag.getStudents().size());
+
         for(final Color color : Color.values()){
-            assertEquals("color check", numStudentEachColor, myBag.getStudents().stream().filter( student -> student.equals(color)).count());
+            assertEquals("color check", numStudents / Color.values().length, myBag.getStudents().stream().filter( student -> student.equals(color)).count());
         }
     }
 
     @Test
     public void extract() {
-        int numStudentEachColor = 5;
-        Bag myBag = new Bag(numStudentEachColor);
+        int numStudents = 5 * Color.values().length;
+        Bag myBag = new Bag(numStudents);
         int initialSize = myBag.getStudents().size();
         Map<Color, Integer> out = myBag.extract(8);
         assertEquals("control out dim ",out.values().stream().reduce(0, Integer::sum).intValue(), 8 );

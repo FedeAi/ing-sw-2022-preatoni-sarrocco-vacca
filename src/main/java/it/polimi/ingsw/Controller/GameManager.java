@@ -18,7 +18,7 @@ public class GameManager {
 
     public GameManager() {
 
-        this.gameInstance = new Game(new Bag(22));
+        this.gameInstance = new Game(new Bag(Rules.initialBagSize));
         this.gameInstance.setGameState(GameState.GAME_ROOM);
         //this.roundManager = new RoundManager(this);
     }
@@ -35,6 +35,7 @@ public class GameManager {
         initSchools();
         initMotherNature();
         initIslands();
+        fillBag();
     }
 
 
@@ -70,5 +71,9 @@ public class GameManager {
         int motherNaturePosition = rand.nextInt(1, Rules.maxIslands);
         MotherNature motherNature = new MotherNature(motherNaturePosition);
         gameInstance.initMotherNature(motherNature);
+    }
+
+    private void fillBag() {
+        gameInstance.getBag().extendBag(Rules.bagSize - Rules.initialBagSize);
     }
 }

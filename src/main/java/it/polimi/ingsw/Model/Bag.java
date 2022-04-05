@@ -10,9 +10,16 @@ import java.util.Random;
 public class Bag {
     private final ArrayList<Color> students;
 
-    public Bag(int numStudentEachColor) {
+    public Bag(int size) {
         students = new ArrayList<>();
-        for (int i = 0; i < numStudentEachColor * Color.values().length; i++) {
+        for (int i = 0; i < size; i++) {
+            students.add(Color.values()[i % Color.values().length]);
+        }
+    }
+
+    // TODO TESTING
+    public void extendBag(int extensionSize) {
+        for (int i = 0; i < extensionSize; i++) {
             students.add(Color.values()[i % Color.values().length]);
         }
     }
@@ -33,6 +40,7 @@ public class Bag {
         return out;
     }
 
+    // TODO TESTING
     public Color extractOne() {
         Random rand = new Random();
         int randomIndex = rand.nextInt(students.size());
