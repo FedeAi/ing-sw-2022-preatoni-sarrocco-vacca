@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public abstract class MoveStudentFromEntry implements Performable{
 
-    private final String myNickName;
-    private final Color color;
+    protected final String myNickName;
+    protected final Color color;
 
     MoveStudentFromEntry(String player, Color color){
         this.myNickName = player;

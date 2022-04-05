@@ -10,13 +10,8 @@ import java.util.Optional;
 
 public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
 
-    private final String myNickName;
-    private final Color color;
-    
     MoveStudentFromEntryToHall(String player, Color color){
         super(player, color);
-        this.myNickName = player;
-        this.color = color;
     }
 
     @Override
@@ -28,11 +23,8 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
 
         player.getSchool().moveStudentFromEntryToHall(color);   // model modification
         // todo check professors
-
         if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getStudentsEntry().size() >= Rules.getStudentsPerTurn(game.numPlayers())){
             game.setGameState(GameState.ACTION_MOVE_MOTHER);
         }
     }
-
-
 }

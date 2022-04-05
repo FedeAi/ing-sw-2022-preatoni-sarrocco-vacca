@@ -163,4 +163,8 @@ public class Game {
     public void initMotherNature(MotherNature motherNature) {
         this.motherNature = motherNature;
     }
+
+    public LinkedList<Island> getIslands() {
+        return islands;
+    }
 }

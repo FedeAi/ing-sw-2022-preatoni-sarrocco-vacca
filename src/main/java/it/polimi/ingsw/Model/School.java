@@ -79,4 +79,14 @@ public class School {
         }
     }
 
+    // TODO TESTING
+    public boolean removeStudentFromEntry(Color student) {
+        boolean isRemoved = false;
+        Integer numStudents  = studentsEntry.get(student);
+        if(numStudents != null && numStudents > 0) {
+            studentsEntry.put(student, studentsEntry.get(student) - 1);
+            isRemoved = true;
+        }
+        return isRemoved;
+    }
 }
