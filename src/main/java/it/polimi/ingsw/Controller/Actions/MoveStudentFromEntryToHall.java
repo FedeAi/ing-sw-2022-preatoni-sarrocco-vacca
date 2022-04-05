@@ -30,7 +30,7 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
         // todo check professors
 
         if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getStudentsEntry().size() >= Rules.getStudentsPerTurn(game.numPlayers())){
-            game.setGameState(GameState.MOVE_MOTHER);
+            game.setGameState(GameState.ACTION_MOVE_MOTHER);
         }
     }
 

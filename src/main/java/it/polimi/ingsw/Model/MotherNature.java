@@ -2,17 +2,17 @@ package it.polimi.ingsw.Model;
 
 public class MotherNature {
 
-    private Island currentIsland;
+    private int currentIsland;
 
-    public MotherNature(Island currentIsland) {
+    public MotherNature(int currentIsland) {
         this.currentIsland = currentIsland;
     }
 
-    public Island getPosition() {
+    public int getPosition() {
         return currentIsland;
     }
 
-    public void setIsland(Island nextIsland) {
-        this.currentIsland = nextIsland;
+    public void setIsland(int index) {
+        this.currentIsland = index;
     }
 }

@@ -27,7 +27,7 @@ public class School {
         //throw new InvalidPlayersException;
     }
 
-    public void initEntry( Map<Color, Integer> studentsEntry){
+    public void initEntry(Map<Color, Integer> studentsEntry){
         this.studentsEntry = studentsEntry;
     }
     public List<TowerColor> getTowers() {

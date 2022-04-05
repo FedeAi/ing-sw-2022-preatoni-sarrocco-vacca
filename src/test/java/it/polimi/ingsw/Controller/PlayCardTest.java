@@ -25,10 +25,10 @@ class PlayCardTest {
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        Game gameInstance = gameManager.getGameIstance();
+        Game gameInstance = gameManager.getGameInstance();
 
         gameInstance.setRoundOwner(p1);
-        gameInstance.setGameState(GameState.ACTION_PHASE_MOVE_STUDENTS);
+        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
 
 
 
@@ -38,9 +38,9 @@ class PlayCardTest {
         assertTrue(playCard.canPerformExt(gameInstance));
 
         //wrong game phase
-        gameInstance.setGameState(GameState.ACTION_PHASE);
+        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
         assertFalse(playCard.canPerformExt(gameInstance));
-        gameInstance.setGameState(GameState.ACTION_PHASE_MOVE_STUDENTS);
+        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
 
         // is round owner
         assertTrue(playCard.canPerformExt(gameInstance));
@@ -64,10 +64,10 @@ class PlayCardTest {
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        Game gameInstance = gameManager.getGameIstance();
+        Game gameInstance = gameManager.getGameInstance();
 
         gameInstance.setRoundOwner(p1);
-        gameInstance.setGameState(GameState.ACTION_PHASE_MOVE_STUDENTS);
+        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
 
         AssistantCard choice = p1.getCards().get(0);
         Performable playCard = new PlayCard("fede", choice);

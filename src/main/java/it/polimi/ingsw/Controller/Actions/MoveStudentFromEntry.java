@@ -29,7 +29,7 @@ public abstract class MoveStudentFromEntry implements Performable{
             return false;
         }
 
-        if(!game.getGameState().equals(GameState.ACTION_PHASE_MOVE_STUDENTS)){
+        if(!game.getGameState().equals(GameState.ACTION_MOVE_STUDENTS)){
             return false;
         }
 

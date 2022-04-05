@@ -10,7 +10,6 @@ public class Island {
 
     private Map<Color, Integer> students;
     private TowerColor tower;
-    private Island nextIsland;
     private Player owner;
 
     public Island() {}
@@ -36,7 +35,4 @@ public class Island {
         this.tower = tower;
     }
 
-    public void setNextIsland(Island nextIsland) {
-        this.nextIsland = nextIsland;
-    }
 }

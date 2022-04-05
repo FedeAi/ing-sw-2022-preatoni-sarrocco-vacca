@@ -14,10 +14,10 @@ public class Game {
     private List<Magician> magicians;
     private boolean expertMode;
 
-    private List<Island> islands;
+    private LinkedList<Island> islands;
     private MotherNature motherNature;
     private List<Cloud> clouds;
-    private EnumMap<Color, Integer> professors;
+    private EnumMap<Color, String> professors;
     private Bag bag;
 
     private List<CharacterCard> characterCards; //array, fixed size = 3
@@ -29,19 +29,18 @@ public class Game {
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
         magicians = new ArrayList<>();
-        // islands = TODO
+        islands = new LinkedList<>();
         // motherNature = new MotherNature(); TODO
         clouds = new ArrayList<>();
         initProfessors();
         // characterCards = TODO
-        gameState = GameState.GAME_CREATED;
     }
 
     public void initProfessors(){
-        professors = new EnumMap<>(Color.class);
+        professors = new EnumMap<Color, String>(Color.class);
         for(Color c : Color.values()){
             // set 1 professor per color, initial state
-            professors.put(c,1);
+            professors.put(c, null);
         }
     }
 
@@ -137,11 +136,11 @@ public class Game {
         return false;
     }
 
-    public EnumMap<Color, Integer> getProfessors() {
+    public EnumMap<Color, String> getProfessors() {
         return professors;
     }
 
-    public void setProfessors(EnumMap<Color, Integer> professors) {
+    public void setProfessors(EnumMap<Color, String> professors) {
         this.professors = professors;
     }
 
@@ -153,4 +152,15 @@ public class Game {
         return players.size();
     }
 
+    public void initIslands(LinkedList<Island> islands) {
+        this.islands = islands;
+    }
+
+    public MotherNature getMotherNature() {
+        return motherNature;
+    }
+
+    public void initMotherNature(MotherNature motherNature) {
+        this.motherNature = motherNature;
+    }
 }

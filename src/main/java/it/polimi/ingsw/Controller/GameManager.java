@@ -1,14 +1,13 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.Model.Bag;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Model.School;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class GameManager {
 
@@ -25,7 +24,7 @@ public class GameManager {
     }
 
 
-    public Game getGameIstance(){ return gameInstance; }
+    public Game getGameInstance(){ return gameInstance; }
 
     public void addPlayer(Player player){
         this.gameInstance.addPlayer(player);
@@ -34,6 +33,8 @@ public class GameManager {
     public void initGame(){
         // init Model
         initSchools();
+        initMotherNature();
+        initIslands();
     }
 
 
@@ -50,6 +51,24 @@ public class GameManager {
         }
     }
 
+    private void initIslands() {
+        int motherNaturePosition = gameInstance.getMotherNature().getPosition();
+        int opposite = (motherNaturePosition + 6) % 12;
+        LinkedList<Island> islands = new LinkedList<>();
+        MotherNature motherNature;
 
-
+        for(int i = 0; i < Rules.maxIslands; i++) {
+            Island island = new Island();
+            if(i != opposite || i != motherNaturePosition) {
+                island.addStudent(gameInstance.getBag().extractOne());
+            }
+            islands.add(island);
+        }
+    }
+    private void initMotherNature() {
+        Random rand = new Random();
+        int motherNaturePosition = rand.nextInt(1, Rules.maxIslands);
+        MotherNature motherNature = new MotherNature(motherNaturePosition);
+        gameInstance.initMotherNature(motherNature);
+    }
 }
