@@ -14,4 +14,20 @@ public class Rules {
     public static int getStudentsPerTurn(int numPlayers){
         return 4;
     }
+    public static int getTowersPerPlayer(int numPlayers){
+        int towers = 8;
+        switch(numPlayers){
+
+            case 2:
+                towers = 8;
+                break;
+            case 3:
+                towers = 6;
+                break;
+            default:
+                towers = 8;
+        }
+        return towers;
+
+    }
 }

@@ -3,11 +3,9 @@ package it.polimi.ingsw.Controller;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Model.Enumerations.TowerColor;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class GameManager {
 
@@ -76,4 +74,16 @@ public class GameManager {
     private void fillBag() {
         gameInstance.getBag().extendBag(Rules.bagSize - Rules.initialBagSize);
     }
-}
+    private void initTowers(){
+        List<Player> players = gameInstance.getPlayers();
+        List<TowerColor> towerColors = null;
+        for( TowerColor colors: towerColors){ //for each color, based on rules create the right number of towerscolors
+                for (int j = 0; j < Rules.getTowersPerPlayer(players.size()) && colors.ordinal() <= players.size(); j++) { //check the right number and right number of players
+                    towerColors.add(colors);
+                   // gameInstance.init
+                }
+            }
+        }
+
+    }
+
