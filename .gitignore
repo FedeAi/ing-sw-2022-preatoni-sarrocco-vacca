@@ -1,5 +1,6 @@
 /*
 !.gitignore
+!.github
 !README.md
 !pom.xml
 !resources/

@@ -180,7 +180,7 @@ public class Game {
             return false;
         } else {
             // TODO FINISH
-            Color.
+            return false;
         }
     }
 }
