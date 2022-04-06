@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
-import it.polimi.ingsw.Model.AssistantCard;
+import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
@@ -48,7 +49,7 @@ public class PlayCard implements Performable {
 
 
     @Override
-    public void performMove(Game game) {
+    public void performMove(Game game, Rules rules) {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
         if (player_opt.isEmpty())
             return;

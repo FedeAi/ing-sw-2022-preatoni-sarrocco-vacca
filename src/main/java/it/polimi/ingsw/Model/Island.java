@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.TowerColor;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class Island {
@@ -12,7 +13,9 @@ public class Island {
     private TowerColor tower;
     private Player owner;
 
-    public Island() {}
+    public Island() {
+        students = new EnumMap<Color, Integer>(Color.class);
+    }
 
     public Map<Color, Integer> getStudents() {
         return students;

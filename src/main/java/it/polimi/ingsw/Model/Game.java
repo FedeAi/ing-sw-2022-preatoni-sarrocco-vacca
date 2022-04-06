@@ -1,8 +1,11 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.Cards.AssistantCard;
+import it.polimi.ingsw.Model.Cards.CharacterCard;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Enumerations.Magician;
+import it.polimi.ingsw.Controller.Rules.DynamicRules.DynamicRules;
 
 import java.util.*;
 
@@ -73,10 +76,6 @@ public class Game {
         return orderedPlanningPLayers;
     }
 
-    public String getPlayerNickname(Player player) { //ottengo il nickname
-        return player.getNickname();
-    }
-
     public List<Magician> getAvailableMagicians() { //choice for available magicians; main character
         return magicians;
     }
@@ -142,8 +141,8 @@ public class Game {
         return professors;
     }
 
-    public void setProfessors(EnumMap<Color, String> professors) {
-        this.professors = professors;
+    public void setProfessor(Color professor, String player) {
+        this.professors.put(professor, player);
     }
 
     public Bag getBag() {
@@ -170,17 +169,6 @@ public class Game {
         return islands;
     }
 
-    public boolean checkProfessorInfluence(Color color) {
-        String playerNickname = roundOwner.getNickname();
-        String ownerNickname = professors.get(color);
-        if (ownerNickname == null) {
-            professors.put(color, playerNickname);
-            return true;
-        } else if (playerNickname.equals(ownerNickname)) {
-            return false;
-        } else {
-            // TODO FINISH
-            Color.
-        }
-    }
+
+
 }

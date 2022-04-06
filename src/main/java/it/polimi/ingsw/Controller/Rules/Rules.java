@@ -1,0 +1,39 @@
+package it.polimi.ingsw.Controller.Rules;
+
+import it.polimi.ingsw.Controller.Rules.DynamicRules.DynamicRules;
+import it.polimi.ingsw.Model.Enumerations.Color;
+
+
+public class Rules {
+    public static final int maxPlayers = 4;
+    public static final int maxIslands = 12;
+    public static final int initialBagSize = 2 * Color.values().length;
+    public static final int bagSize = 130;
+
+    private DynamicRules dynamicRules;
+
+    public static int getEntrySize(int numPlayers) {
+        return 9;
+    }
+
+    public static int getStudentsPerTurn(int numPlayers) {
+        return 4;
+    }
+
+    public static int getTowersPerPlayer(int numPlayers) {
+        return switch (numPlayers) {
+            case 2 -> 8;
+            case 3 -> 6;
+            default -> 8;
+        };
+
+    }
+
+    public DynamicRules getDynamicRules() {
+        return dynamicRules;
+    }
+
+    public void setDynamicRules(DynamicRules dynamicRules) {
+        this.dynamicRules = dynamicRules;
+    }
+}

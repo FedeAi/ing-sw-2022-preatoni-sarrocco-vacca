@@ -1,10 +1,8 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Enumerations.Magician;
-import org.junit.Assert;
+import it.polimi.ingsw.Model.Cards.AssistantCard;
 
 import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     @org.junit.jupiter.api.Test

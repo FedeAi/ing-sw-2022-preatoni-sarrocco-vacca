@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
-import it.polimi.ingsw.Controller.Rules;
+import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -18,7 +18,7 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
     }
 
     @Override
-    public void performMove(Game game) {
+    public void performMove(Game game, Rules rules) {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
         if (player_opt.isEmpty())    // if there is no Player with that nick
             return;

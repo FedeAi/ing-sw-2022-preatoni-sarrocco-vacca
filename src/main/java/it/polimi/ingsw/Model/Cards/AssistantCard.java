@@ -1,10 +1,10 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Cards;
 
 import it.polimi.ingsw.Model.Enumerations.Animals;
 
 import java.util.Objects;
 
-public class AssistantCard extends Card{
+public class AssistantCard extends Card {
 
     private int maxMoves;
     private int value;

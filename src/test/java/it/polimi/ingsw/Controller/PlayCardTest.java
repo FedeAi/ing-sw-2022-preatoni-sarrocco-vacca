@@ -2,7 +2,7 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Actions.PlayCard;
-import it.polimi.ingsw.Model.AssistantCard;
+import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
@@ -76,7 +76,7 @@ class PlayCardTest {
         List<AssistantCard> prev_cards = new ArrayList<>(p1.getCards());
 
         //!* PERFORM MOVE
-        playCard.performMove(gameInstance);
+        playCard.performMove(gameInstance,gameManager.getRules() );
 
         assertFalse(p1.hasCard(choice));
         assertEquals(p1.getPlayedCard(), choice);

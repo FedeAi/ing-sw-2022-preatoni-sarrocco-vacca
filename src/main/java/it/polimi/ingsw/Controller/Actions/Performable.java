@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Game;
 
 public interface Performable {
@@ -14,10 +15,10 @@ public interface Performable {
 
     /**
      * Perform move method.
-     *
-     * @param game of type GameExt: the game
+     *  @param game of type GameExt: the game
+     * @param rules
      */
-    void performMove(Game game);
+    void performMove(Game game, Rules rules);
 
     /**
      * Gets NickName player.
