@@ -12,7 +12,7 @@ class IslandTest {
     @Test
     public void addStudentsTest() {
         int numStudents = 5;
-        Island islandTest = new Island();
+        BaseIsland islandTest = new BaseIsland();
         Bag myBag = new Bag(numStudents);
         // extraction of numStudents students to be added to the island, in order to test the method
         EnumMap<Color, Integer> students = new EnumMap<Color,Integer>(myBag.extract(numStudents)); // FIXME
