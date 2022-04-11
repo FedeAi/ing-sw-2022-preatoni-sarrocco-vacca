@@ -25,7 +25,7 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
         Player player = player_opt.get();
 
         player.getSchool().removeStudentFromEntry(color);
-        game.getIslands().get(islandIndex).addStudent(color);
+        game.getIslandContainer().get(islandIndex).addStudent(color);
 
         if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getStudentsEntry().size() >= Rules.getStudentsPerTurn(game.numPlayers())){
             game.setGameState(GameState.ACTION_MOVE_MOTHER);
@@ -36,7 +36,7 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
     public boolean canPerformExt(Game game) {
         super.canPerformExt(game);
         boolean isPossible = false;
-        if(islandIndex > 0 && islandIndex < game.getIslands().size()) {
+        if(islandIndex > 0 && islandIndex < game.getIslandContainer().size()) {
             isPossible = true;
         }
         return isPossible;

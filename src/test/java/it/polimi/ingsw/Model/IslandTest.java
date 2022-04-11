@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Model;
 
-import java.util.EnumMap;
-
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Model.Islands.BaseIsland;
+import it.polimi.ingsw.Model.Islands.Island;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

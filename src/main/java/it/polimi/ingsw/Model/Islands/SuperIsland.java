@@ -1,16 +1,26 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Islands;
 
 import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Model.Islands.Island;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 public class SuperIsland implements Island {
     private String owner;
-    List<Island> islands;
+    List<BaseIsland> islands;
     SuperIsland(List<Island> islands){
-        this.islands = islands;
+        this.islands = new ArrayList<>();
+        for(Island island : islands){
+            if(island instanceof SuperIsland){
+                this.islands.addAll(((SuperIsland)island).islands);
+            }else if (island instanceof BaseIsland){
+                this.islands.add((BaseIsland)island);
+            }
+        }
+
     }
 
     @Override

@@ -1,6 +1,7 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.Islands;
 
 import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Model.Islands.Island;
 
 import java.util.EnumMap;
 import java.util.Map;

@@ -5,6 +5,8 @@ import it.polimi.ingsw.Model.Cards.CharacterCard;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Enumerations.Magician;
+import it.polimi.ingsw.Model.Islands.Island;
+import it.polimi.ingsw.Model.Islands.IslandContainer;
 
 import java.util.*;
 
@@ -16,7 +18,7 @@ public class Game {
     private List<Magician> magicians;
     private boolean expertMode;
 
-    private LinkedList<Island> islands;
+    private IslandContainer islandContainer;
     private MotherNature motherNature;
     private List<Cloud> clouds;
     private EnumMap<Color, String> professors;
@@ -33,7 +35,7 @@ public class Game {
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
         magicians = new ArrayList<>();
-        islands = new LinkedList<>();
+        islandContainer = new IslandContainer();
         // motherNature = new MotherNature(); TODO
         clouds = new ArrayList<>();
         initProfessors();
@@ -153,7 +155,7 @@ public class Game {
     }
 
     public void initIslands(LinkedList<Island> islands) {
-        this.islands = islands;
+        this.islandContainer = new IslandContainer(islands);
     }
 
     public MotherNature getMotherNature() {
@@ -164,13 +166,13 @@ public class Game {
         this.motherNature = motherNature;
     }
 
-    public LinkedList<Island> getIslands() {
-        return islands;
+    public IslandContainer getIslandContainer() {
+        return islandContainer;
     }
 
     public void moveMotherNature(int deltaPositions) {
         int newPosition = motherNature.getPosition() + deltaPositions;
-        newPosition = newPosition % islands.size();
+        newPosition = newPosition % islandContainer.size();
         motherNature.setIsland(newPosition);
     }
 

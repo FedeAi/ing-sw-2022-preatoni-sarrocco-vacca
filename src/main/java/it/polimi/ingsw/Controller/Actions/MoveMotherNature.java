@@ -4,7 +4,8 @@ import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Island;
+import it.polimi.ingsw.Model.Islands.Island;
+import it.polimi.ingsw.Model.Islands.IslandContainer;
 import it.polimi.ingsw.Model.Player;
 
 import java.util.HashMap;
@@ -51,13 +52,12 @@ public class MoveMotherNature implements Performable {
         Player player = player_opt.get();
 
         game.moveMotherNature(movement);
-
+        int newMotherPosition = game.getMotherNature().getPosition();
+        Island island = game.getIslandContainer().get(newMotherPosition);
         // set owner
         Optional<String> islandNewOwner_opt = computeInfluence(game);
         if (islandNewOwner_opt.isPresent()) {
-            Island island = game.getIslands().get(game.getMotherNature().getPosition());
             String islandPrevOwner = island.getOwner();
-
             if (!islandNewOwner_opt.get().equals(islandPrevOwner)) {
                 island.setOwner(islandNewOwner_opt.get());
                 // remove tower to the player
@@ -69,17 +69,32 @@ public class MoveMotherNature implements Performable {
             }
         }
 
+        // SuperIsland creation
+        IslandContainer islandContainer = game.getIslandContainer();
+        Island prevIsland = islandContainer.prevIsland(newMotherPosition);
+        if(checkJoin(prevIsland,island)) {
+            islandContainer.joinPrevIsland(newMotherPosition);
+        }
+        Island nextIsland = islandContainer.nextIsland(newMotherPosition);
+        if(checkJoin(island,nextIsland)) {
+            islandContainer.joinNextIsland(newMotherPosition);
+        }
+
+
         // change state
         game.setGameState(GameState.ACTION_CHOOSE_CLOUD);
 
     }
 
+    private boolean checkJoin(Island island1, Island island2){
+        return island1.getOwner().equals(island2.getOwner());
+    }
     // todo add in Rules
     private Optional<String> computeInfluence(Game game) {
         Map<String, Integer> playerInfluence = new HashMap<>();
         int motherPosition = game.getMotherNature().getPosition();
         Map<Color, String> gameProfessors = game.getProfessors();
-        Island island = game.getIslands().get(motherPosition);
+        Island island = game.getIslandContainer().get(motherPosition);
         for (Map.Entry<Color, Integer> islandStudentInflunce : island.getStudents().entrySet()) {
             Color student = islandStudentInflunce.getKey();
             int influence = islandStudentInflunce.getValue();

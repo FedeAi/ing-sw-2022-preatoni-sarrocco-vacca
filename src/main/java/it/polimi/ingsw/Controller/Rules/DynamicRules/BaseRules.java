@@ -2,7 +2,7 @@ package it.polimi.ingsw.Controller.Rules.DynamicRules;
 
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Island;
+import it.polimi.ingsw.Model.Islands.Island;
 
 import java.util.Map;
 import java.util.Optional;
@@ -18,7 +18,7 @@ public class BaseRules implements DynamicRules{
     public boolean checkProfessorInfluence(Game game, Color color) {
         String playerNickname = game.getRoundOwner().getNickname();
         String ownerNickname = game.getProfessors().get(color);
-        Island motherNatureIsland = game.getIslands().get( game.getMotherNature().getPosition());
+        Island motherNatureIsland = game.getIslandContainer().get( game.getMotherNature().getPosition());
         Map<Color, Integer> studentsOnIsland = motherNatureIsland.getStudents();
 
         if (ownerNickname == null || playerNickname.equals(ownerNickname)) {
