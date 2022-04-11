@@ -11,7 +11,7 @@ import java.util.Map;
 public class SuperIsland implements Island {
     private String owner;
     List<BaseIsland> islands;
-    SuperIsland(List<Island> islands){
+    public SuperIsland(List<Island> islands){
         this.islands = new ArrayList<>();
         for(Island island : islands){
             if(island instanceof SuperIsland){
@@ -19,10 +19,13 @@ public class SuperIsland implements Island {
             }else if (island instanceof BaseIsland){
                 this.islands.add((BaseIsland)island);
             }
+            owner = owner==null ? island.getOwner() : owner;
         }
 
     }
-
+    List<BaseIsland> getBaseIslands(){
+        return islands;
+    }
     @Override
     public Map<Color, Integer> getStudents() {
         Map<Color, Integer> students = new EnumMap<Color, Integer>(Color.class);

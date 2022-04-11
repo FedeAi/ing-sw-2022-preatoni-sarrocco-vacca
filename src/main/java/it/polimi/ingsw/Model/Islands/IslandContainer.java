@@ -40,7 +40,7 @@ public class IslandContainer {
             Island currIsland = islands.get(currIslandIndex);
             Island nextIsland = nextIsland(currIslandIndex);
             Island superIsland = new SuperIsland(List.of(currIsland,nextIsland));
-            islands.add(prevIslandIndex(currIslandIndex), superIsland);
+            islands.add(currIslandIndex, superIsland);
             islands.remove(currIsland);
             islands.remove(nextIsland);
         }

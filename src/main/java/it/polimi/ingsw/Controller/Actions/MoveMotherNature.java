@@ -74,6 +74,7 @@ public class MoveMotherNature implements Performable {
         Island prevIsland = islandContainer.prevIsland(newMotherPosition);
         if(checkJoin(prevIsland,island)) {
             islandContainer.joinPrevIsland(newMotherPosition);
+            game.moveMotherNature(-1);
         }
         Island nextIsland = islandContainer.nextIsland(newMotherPosition);
         if(checkJoin(island,nextIsland)) {
