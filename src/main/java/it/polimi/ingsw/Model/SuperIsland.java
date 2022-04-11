@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 
 import java.util.Map;
 
-public class SuperIsland implements Island{
+public class SuperIsland implements Island {
     @Override
     public Map<Color, Integer> getStudents() {
         return null;

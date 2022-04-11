@@ -16,7 +16,7 @@ public class Player {
     private AssistantCard playedCard; // last played card
     private Magician magician;
 
-    public Player(String nickname){ // FIXME: number numPlayers, higher order data, not relatives to Player
+    public Player(String nickname) { // FIXME: number numPlayers, higher order data, not relatives to Player
         this.nickname = nickname;
         connected = true;
         createHand();
@@ -42,9 +42,10 @@ public class Player {
         return cards;
     }
 
-    public void setMagician(Magician magician){
+    public void setMagician(Magician magician) {
         this.magician = magician;
     }
+
     public Magician getMagician() {
         return magician;
     }

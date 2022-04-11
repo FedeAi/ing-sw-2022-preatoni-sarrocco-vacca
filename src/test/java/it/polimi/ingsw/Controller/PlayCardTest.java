@@ -28,7 +28,7 @@ class PlayCardTest {
         Game gameInstance = gameManager.getGameInstance();
 
         gameInstance.setRoundOwner(p1);
-        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
+        gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
 
 
 
@@ -40,7 +40,7 @@ class PlayCardTest {
         //wrong game phase
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
         assertFalse(playCard.canPerformExt(gameInstance));
-        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
+        gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
 
         // is round owner
         assertTrue(playCard.canPerformExt(gameInstance));

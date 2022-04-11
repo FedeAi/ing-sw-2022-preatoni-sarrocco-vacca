@@ -3,8 +3,6 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.TowerColor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class School {
@@ -15,7 +13,7 @@ public class School {
     private Map<Color, Integer> studentsEntry;
     private final int laneSize = 9;
 
-    public School(int numTowers,TowerColor towerColor , Map<Color, Integer> initialStudentsEntry){
+    public School(int numTowers, TowerColor towerColor, Map<Color, Integer> initialStudentsEntry) {
         this.numTowers = numTowers;
         this.studentsEntry = initialStudentsEntry;
         this.towerColor = towerColor;
@@ -24,12 +22,15 @@ public class School {
     public TowerColor getTowerColor() {
         return towerColor;
     }
-    public void decreseTowers(){
+
+    public void decreaseTowers() {
         this.numTowers--;
     }
-    public void increseTowers(){
+
+    public void increaseTowers() {
         this.numTowers++;
     }
+
     public int getNumTowers() {
         return numTowers;
     }
@@ -50,10 +51,10 @@ public class School {
         studentsHall.put(color, studentsEntry.getOrDefault(color, 0) + 1);
     }
 
-    public void moveStudentFromEntryToHall(Color student){
-        if(studentsEntry.get(student) > 0){
-            studentsEntry.put(student, studentsEntry.get(student)-1);
-            studentsHall.put(student, studentsEntry.getOrDefault(student,0)+1);
+    public void moveStudentFromEntryToHall(Color student) {
+        if (studentsEntry.get(student) > 0) {
+            studentsEntry.put(student, studentsEntry.get(student) - 1);
+            studentsHall.put(student, studentsEntry.getOrDefault(student, 0) + 1);
         }
     }
 
@@ -61,8 +62,8 @@ public class School {
     // TODO TESTING
     public boolean removeStudentFromEntry(Color student) {
         boolean isRemoved = false;
-        Integer numStudents  = studentsEntry.get(student);
-        if(numStudents != null && numStudents > 0) {
+        Integer numStudents = studentsEntry.get(student);
+        if (numStudents != null && numStudents > 0) {
             studentsEntry.put(student, studentsEntry.get(student) - 1);
             isRemoved = true;
         }

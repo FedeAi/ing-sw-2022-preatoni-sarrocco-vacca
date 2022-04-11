@@ -28,7 +28,7 @@ public class Game {
 
     //private Comparator<Integer> influenceComparator = Comparator.comparing((i1,i2)->(i1.intValue()-i2));
 
-    public Game(Bag bag){
+    public Game(Bag bag) {
         this.bag = bag;
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
@@ -40,9 +40,9 @@ public class Game {
         // characterCards = TODO
     }
 
-    public void initProfessors(){
+    public void initProfessors() {
         professors = new EnumMap<Color, String>(Color.class);
-        for(Color c : Color.values()){
+        for (Color c : Color.values()) {
             // set 1 professor per color, initial state
             professors.put(c, null);
         }
@@ -129,7 +129,7 @@ public class Game {
 
     private boolean isNicknameTaken(String name) { //check if the name is available
         for (Player p : players) {
-            if(p.getNickname().equals(name)) {
+            if (p.getNickname().equals(name)) {
                 return true;
             }
         }
@@ -148,7 +148,7 @@ public class Game {
         return bag;
     }
 
-    public int numPlayers(){
+    public int numPlayers() {
         return players.size();
     }
 
@@ -168,7 +168,7 @@ public class Game {
         return islands;
     }
 
-    public void moveMotherNature(int deltaPositions){
+    public void moveMotherNature(int deltaPositions) {
         int newPosition = motherNature.getPosition() + deltaPositions;
         newPosition = newPosition % islands.size();
         motherNature.setIsland(newPosition);

@@ -14,22 +14,29 @@ public class BaseIsland implements Island {
         students = new EnumMap<Color, Integer>(Color.class);
     }
 
-    //TODO override
+    // TODO return a copy of the map, rather than the direct reference
+    @Override
     public Map<Color, Integer> getStudents() {
-        return students;    // TODO return new Object ( immutable class for getters)
+        return students;
     }
 
+    @Override
     public String getOwner() {
         return owner;
     }
 
-    public int getNumTower(){       // superIsland will override this method
-        return owner!=null ? 1 : 0;
+    // superIsland will override this method
+    @Override
+    public int getNumTower() {
+        return owner != null ? 1 : 0;
     }
+
+    @Override
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
+    @Override
     public void addStudent(Color student) {
         students.put(student, students.getOrDefault(student, 0) + 1);
     }
