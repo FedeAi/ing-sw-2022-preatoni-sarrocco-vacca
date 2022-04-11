@@ -8,30 +8,30 @@ import java.util.List;
 import java.util.Map;
 
 public class School {
-    private List<TowerColor> towers;
+    private int numTowers;
+    private final TowerColor towerColor;
+
     private Map<Color, Integer> studentsHall;
     private Map<Color, Integer> studentsEntry;
-    // TODO MOVE PROFESSORS TO GAME CLASS
-    // private ArrayList<> professors;
     private final int laneSize = 9;
 
-    public School(List<TowerColor> towers, Map<Color, Integer> initialStudentsEntry){
-        this.towers = towers;
+    public School(int numTowers,TowerColor towerColor , Map<Color, Integer> initialStudentsEntry){
+        this.numTowers = numTowers;
         this.studentsEntry = initialStudentsEntry;
+        this.towerColor = towerColor;
     }
 
-    // implement 4 player version (?), exceptions
-    public School(int playersSize, int playerNum) {
-        initTowers(playersSize, playerNum);
-        //else
-        //throw new InvalidPlayersException;
+    public TowerColor getTowerColor() {
+        return towerColor;
     }
-
-    public void initEntry(Map<Color, Integer> studentsEntry){
-        this.studentsEntry = studentsEntry;
+    public void decreseTowers(){
+        this.numTowers--;
     }
-    public List<TowerColor> getTowers() {
-        return towers;
+    public void increseTowers(){
+        this.numTowers++;
+    }
+    public int getNumTowers() {
+        return numTowers;
     }
 
     public Map<Color, Integer> getStudentsEntry() {
@@ -56,28 +56,7 @@ public class School {
             studentsHall.put(student, studentsEntry.getOrDefault(student,0)+1);
         }
     }
-    private void initTowers(int playersSize, int playerNum){
-        towers = new ArrayList<TowerColor>();
-        TowerColor color;
 
-        if (playerNum == 0) {
-            color = TowerColor.BLACK;
-        } else if (playerNum == 1) {
-            color = TowerColor.WHITE;
-        } else{ //if (playerNum == 2) {
-            color = TowerColor.GRAY;
-        }
-
-        if (playersSize == 2) {
-            for (int i = 0; i < 8; i++) {
-                towers.add(color);
-            }
-        } else if (playersSize == 3) {
-            for (int i = 0; i < 6; i++) {
-                towers.add(color);
-            }
-        }
-    }
 
     // TODO TESTING
     public boolean removeStudentFromEntry(Color student) {

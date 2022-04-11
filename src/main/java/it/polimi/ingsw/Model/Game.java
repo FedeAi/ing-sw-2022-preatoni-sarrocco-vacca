@@ -5,7 +5,6 @@ import it.polimi.ingsw.Model.Cards.CharacterCard;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Enumerations.Magician;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.DynamicRules;
 
 import java.util.*;
 
@@ -169,6 +168,10 @@ public class Game {
         return islands;
     }
 
-
+    public void moveMotherNature(int deltaPositions){
+        int newPosition = motherNature.getPosition() + deltaPositions;
+        newPosition = newPosition % islands.size();
+        motherNature.setIsland(newPosition);
+    }
 
 }

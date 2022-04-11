@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.Controller.Rules.DynamicRules.DynamicRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Enumerations.Color;
@@ -50,13 +49,13 @@ public class GameManager {
     // TODO this can be moved inside Game?
     private void initSchools() {
         List<Player> players = gameInstance.getPlayers();
-        for (Player p : players) {
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
             // create and fill the school
-            School school = new School(players.indexOf(p), players.size());
             Map<Color, Integer> students = gameInstance.getBag().extract(Rules.getEntrySize(players.size()));
-            school.initEntry(students);
-
-            p.setSchool(school);
+            TowerColor towerColor = TowerColor.values()[i];
+            School school = new School(Rules.getTowersPerPlayer(players.size()),towerColor , students);
+            player.setSchool(school);
         }
     }
 
@@ -67,12 +66,13 @@ public class GameManager {
         MotherNature motherNature;
 
         for (int i = 0; i < Rules.maxIslands; i++) {
-            Island island = new Island();
+            Island island = new BaseIsland();
             if (i != opposite && i != motherNaturePosition) {
                 island.addStudent(gameInstance.getBag().extractOne());
             }
             islands.add(island);
         }
+        gameInstance.initIslands(islands);
     }
 
     private void initMotherNature() {
@@ -86,15 +86,5 @@ public class GameManager {
         gameInstance.getBag().extendBag(Rules.bagSize - Rules.initialBagSize);
     }
 
-    private void initTowers() {
-        List<Player> players = gameInstance.getPlayers();
-        List<TowerColor> towerColors = null; // FIXME Davide
-        for (TowerColor colors : towerColors) { //for each color, based on rules create the right number of towerscolors
-            for (int j = 0; j < Rules.getTowersPerPlayer(players.size()) && colors.ordinal() <= players.size(); j++) { //check the right number and right number of players
-                towerColors.add(colors);
-                // gameInstance.init
-            }
-        }
-    }
 }
 
