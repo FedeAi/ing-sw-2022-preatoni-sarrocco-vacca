@@ -33,7 +33,7 @@ public class ActivateCard implements Performable {
         }
 
         // Simple check to verify that we're in the correct state
-        if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER)||!game.getGameState().equals(GameState.ACTION_MOVE_STUDENTS)) {
+        if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER) && !game.getGameState().equals(GameState.ACTION_MOVE_STUDENTS)) {
             return false;
         }
 

@@ -83,6 +83,11 @@ public class Game {
         return expertMode;
     }
 
+    // This will likely need a MUCH better solution
+    public void setExpertMode(boolean expertMode) {
+        this.expertMode = expertMode;
+    }
+
     public boolean addPlayer(Player player) { //adding the player if the name isn't already taken
         if (!(isNicknameTaken(player.getNickname()))) {
             players.add(player);
