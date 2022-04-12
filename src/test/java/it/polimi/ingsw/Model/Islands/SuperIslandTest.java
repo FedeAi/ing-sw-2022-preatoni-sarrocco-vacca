@@ -57,14 +57,14 @@ class SuperIslandTest {
         SuperIsland s1 = new SuperIsland(List.of(baseIslandA, baseIslandB));
         int totalBluStudents = baseIslandA.getStudents().getOrDefault(Color.BLUE,0) + baseIslandB.getStudents().getOrDefault(Color.BLUE,0);
         int totalYellowStudents = baseIslandA.getStudents().getOrDefault(Color.YELLOW,0) + baseIslandB.getStudents().getOrDefault(Color.YELLOW,0);
-        assertEquals(totalBluStudents, s1.getStudents().get(Color.BLUE));
-        assertEquals(totalYellowStudents, s1.getStudents().get(Color.YELLOW));
+        assertEquals(totalBluStudents, s1.getStudents().getOrDefault(Color.BLUE, 0));
+        assertEquals(totalYellowStudents, s1.getStudents().getOrDefault(Color.YELLOW, 0));
 
         SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC));
         totalBluStudents += baseIslandC.getStudents().getOrDefault(Color.BLUE,0);
         totalYellowStudents += baseIslandC.getStudents().getOrDefault(Color.YELLOW,0);
-        assertEquals(totalBluStudents, s2.getStudents().get(Color.BLUE));
-        assertEquals(totalYellowStudents, s2.getStudents().get(Color.YELLOW));
+        assertEquals(totalBluStudents, s2.getStudents().getOrDefault(Color.BLUE, 0));
+        assertEquals(totalYellowStudents, s2.getStudents().getOrDefault(Color.YELLOW, 0));
 
     }
 

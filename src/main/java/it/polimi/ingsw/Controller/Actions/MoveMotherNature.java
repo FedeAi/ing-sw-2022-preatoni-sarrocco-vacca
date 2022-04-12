@@ -48,6 +48,7 @@ public class MoveMotherNature implements Performable {
     @Override
     public void performMove(Game game, Rules rules) {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
+        // TODO WHY ARE WE CHECKING THE PLAYER, IF WE DO NOT USE IT?
         if (player_opt.isEmpty())    // if there is no Player with that nick
             return;
         Player player = player_opt.get();
@@ -73,12 +74,12 @@ public class MoveMotherNature implements Performable {
         // SuperIsland creation
         IslandContainer islandContainer = game.getIslandContainer();
         Island prevIsland = islandContainer.prevIsland(newMotherPosition);
-        if(checkJoin(prevIsland,island)) {
+        if (checkJoin(prevIsland, island)) {
             islandContainer.joinPrevIsland(newMotherPosition);
             game.moveMotherNature(-1);
         }
         Island nextIsland = islandContainer.nextIsland(newMotherPosition);
-        if(checkJoin(island,nextIsland)) {
+        if (checkJoin(island, nextIsland)) {
             islandContainer.joinNextIsland(newMotherPosition);
         }
 
@@ -88,7 +89,9 @@ public class MoveMotherNature implements Performable {
 
     }
 
-    private boolean checkJoin(Island island1, Island island2){
+    private boolean checkJoin(Island island1, Island island2) {
+        if (island1.getOwner() == null || island2.getOwner() == null)
+            return false;
         return island1.getOwner().equals(island2.getOwner());
     }
 
