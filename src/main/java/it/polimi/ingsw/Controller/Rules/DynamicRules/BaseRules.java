@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Rules.DynamicRules;
 
+import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
@@ -10,8 +11,7 @@ import java.util.Optional;
 
 public class BaseRules implements DynamicRules{
 
-    @Override
-    public boolean influenceComparator(int influence1, int influence2) {
+    protected boolean influenceComparator(int influence1, int influence2) {
         return Integer.compare(influence1, influence2) > 0;
     }
 
@@ -48,6 +48,11 @@ public class BaseRules implements DynamicRules{
     }
 
     @Override
+    public int computeMotherMaxMoves(AssistantCard card) {
+        return card.getMaxMoves();
+    }
+
+    @Override
     public Optional<String> computeIslandInfluence(Game game, int islandIndex) {
         if (game.getIslandContainer().isFeasibleIndex(islandIndex)) { // perform only if the island index is ok
             Map<String, Integer> playerInfluence = new HashMap<>();
@@ -66,7 +71,7 @@ public class BaseRules implements DynamicRules{
             }
             // take in account the + island.getNumTower() given by player towers
             if (island.getNumTower() != 0) {
-                playerInfluence.put(island.getOwner(), playerInfluence.getOrDefault(island.getOwner(), 0) + island.getNumTower());
+                playerInfluence.put(island.getOwner(), playerInfluence.getOrDefault(island.getOwner(), 0) + towerInfluenceModifier(island.getNumTower()));
             }
             // let's find the player who has the bigger influence
             Optional<Map.Entry<String, Integer>> maxPlayer = playerInfluence.entrySet().stream().max((entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue()));
@@ -76,4 +81,7 @@ public class BaseRules implements DynamicRules{
         return Optional.empty();
     }
 
+    protected int towerInfluenceModifier(int value) {
+        return value;
+    }
 }

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Controller.Actions;
 
-import it.polimi.ingsw.Controller.Actions.Performable;
-import it.polimi.ingsw.Controller.Actions.PlayCard;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.GameState;
@@ -36,21 +34,21 @@ class PlayCardTest {
         //!* standard execution
         AssistantCard choice = p1.getCards().get(0);
         Performable playCard = new PlayCard("fede", choice);
-        assertTrue(playCard.canPerformExt(gameInstance));
+        assertTrue(playCard.canPerformExt(gameInstance, ));
 
         //wrong game phase
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        assertFalse(playCard.canPerformExt(gameInstance));
+        assertFalse(playCard.canPerformExt(gameInstance, ));
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
 
         // is round owner
-        assertTrue(playCard.canPerformExt(gameInstance));
+        assertTrue(playCard.canPerformExt(gameInstance, ));
         gameInstance.setRoundOwner(p2);
-        assertFalse(playCard.canPerformExt(gameInstance));
+        assertFalse(playCard.canPerformExt(gameInstance, ));
 
         // wrong choice
         p1.setAndRemovePlayedCard(choice);
-        assertFalse(playCard.canPerformExt(gameInstance));
+        assertFalse(playCard.canPerformExt(gameInstance, ));
 
         // All player's cards are on table -> he can make that choice
         // todo

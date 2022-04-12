@@ -21,7 +21,7 @@ public class RoundManager {
     }
 
     public void performAction(Performable action){
-        if(action.canPerformExt(gameInstance)){
+        if(action.canPerformExt(gameInstance,  gameManager.getRules())){
             action.performMove(gameInstance, gameManager.getRules());
 
             // WinController.check(game)

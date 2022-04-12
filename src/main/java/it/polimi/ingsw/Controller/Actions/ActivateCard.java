@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCard;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -20,7 +19,7 @@ public class ActivateCard implements Performable {
     }
 
     @Override
-    public boolean canPerformExt(Game game) {
+    public boolean canPerformExt(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name
         Optional<Player> player_opt = game.getPlayerByNickname(nickname);
         if (player_opt.isEmpty()) {

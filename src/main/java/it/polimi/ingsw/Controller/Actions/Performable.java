@@ -8,10 +8,12 @@ public interface Performable {
     /**
      * Can perform ext boolean.
      * Check if the player can really make the move.
-     * @param game of type GameExt: the game
+     *
+     * @param game  of type GameExt: the game
+     * @param rules
      * @return the boolean
      */
-    boolean canPerformExt(Game game);
+    boolean canPerformExt(Game game, Rules rules);
 
     /**
      * Perform move method.

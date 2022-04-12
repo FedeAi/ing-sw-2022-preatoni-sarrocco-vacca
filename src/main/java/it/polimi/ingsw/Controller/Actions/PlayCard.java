@@ -21,7 +21,7 @@ public class PlayCard implements Performable {
     }
 
     @Override
-    public boolean canPerformExt(Game game) {
+    public boolean canPerformExt(Game game, Rules rules) {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
 
         if (player_opt.isEmpty())
