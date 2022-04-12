@@ -37,6 +37,7 @@ public class MoveMotherNature implements Performable {
         }
 
         // is action legal check
+
         int playerCardMaxMoves = player.getPlayedCard().getMaxMoves();
         if (movement < 1 || movement > playerCardMaxMoves) {
             return false;

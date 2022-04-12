@@ -10,6 +10,8 @@ import it.polimi.ingsw.Model.Islands.IslandContainer;
 
 import java.util.*;
 
+import static java.util.Optional.empty;
+
 public class Game {
 
     private List<Player> players;
@@ -49,6 +51,12 @@ public class Game {
             professors.put(c, null);
         }
     }
+    public void initClouds(LinkedList<Cloud> clouds){
+        //new object create with the same elements
+        this.clouds.removeAll(clouds);
+        this.clouds.addAll(clouds);
+   }
+
 
     /**
      * @return list of Cards played until round owner
@@ -75,6 +83,26 @@ public class Game {
             orderedPlanningPLayers.add(players.get((playerIndex + i) % players.size()));
         }
         return orderedPlanningPLayers;
+    }
+
+    public  Optional<String> getNextPlayerActionPhase(){
+      List<Player> players = playersActionPhase;
+      int index = players.indexOf(roundOwner) + 1;
+      if(index > players.size()){
+          Optional<String> nothing = Optional.empty();
+          return nothing;
+      }
+      return Optional.ofNullable(players.get(index).getNickname());
+
+    }
+    public  Optional<String> getNextPlayerPlanningPhase(){
+        List<Player> players = getOrderedPlanningPlayers();
+        int index = players.indexOf(roundOwner) + 1;
+        if(index > players.size()){
+            Optional<String> nothing = Optional.empty();
+            return nothing;
+        }
+        return Optional.ofNullable(players.get(index).getNickname());
     }
 
     public List<Magician> getAvailableMagicians() { //choice for available magicians; main character
@@ -174,6 +202,9 @@ public class Game {
         int newPosition = motherNature.getPosition() + deltaPositions;
         newPosition = newPosition % islandContainer.size();
         motherNature.setIsland(newPosition);
+    }
+    public List<Cloud> getClouds(){
+        return clouds;
     }
 
 }
