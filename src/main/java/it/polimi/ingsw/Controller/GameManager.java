@@ -47,6 +47,7 @@ public class GameManager {
         fillBag();
         initSchools();
         initClouds();
+        // TODO initCharacters this can be made in anyway
     }
 
 

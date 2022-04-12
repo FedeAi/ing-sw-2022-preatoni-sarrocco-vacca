@@ -15,7 +15,7 @@ public enum GameState {
     PLANNING_CHOOSE_CARD, //choosing assistant card -->3 consequence
     /* action phase */
     ACTION_MOVE_STUDENTS,
-    ACTION_PLAY_CHARACTER,
+    //ACTION_PLAY_CHARACTER,
     ACTION_MOVE_MOTHER,
     ACTION_CHOOSE_CLOUD,
 

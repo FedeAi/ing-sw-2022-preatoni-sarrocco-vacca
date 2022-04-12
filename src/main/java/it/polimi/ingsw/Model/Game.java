@@ -35,6 +35,7 @@ public class Game {
         islandContainer = new IslandContainer();
         // motherNature = new MotherNature(); TODO
         clouds = new ArrayList<>();
+        characterCards = new ArrayList<>();
         initProfessors();
         // characterCards = TODO
     }
@@ -60,6 +61,8 @@ public class Game {
     public void initIslands(LinkedList<Island> islands) {
         this.islandContainer = new IslandContainer(islands);
     }
+
+    public void initCharacterCards(LinkedList<CharacterCard> cards) { this.characterCards = cards; }
 
     /**
      * check if the name is available
@@ -88,7 +91,7 @@ public class Game {
         }
         return false;
     }
-    
+
     public void moveMotherNature(int deltaPositions) {
         int newPosition = (motherNature.getPosition() + deltaPositions) % islandContainer.size();
         motherNature.setIsland(newPosition);
@@ -195,13 +198,15 @@ public class Game {
         return clouds;
     }
 
-    public Bag getBag() {
-        return bag;
-    }
+    public Bag getBag() { return bag; }
+
+    public List<CharacterCard> getCharacterCards(){ return characterCards; }
 
     public IslandContainer getIslandContainer() {
         return islandContainer;
     }
+
+    public Optional<CharacterCard> getActiveCharacter() { return characterCards.stream().filter(c -> c.isActive()).findFirst();}
 
     public int numPlayers() {
         return players.size();

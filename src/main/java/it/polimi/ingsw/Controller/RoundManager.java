@@ -23,6 +23,10 @@ public class RoundManager {
     public void performAction(Performable action){
         if(action.canPerformExt(gameInstance)){
             action.performMove(gameInstance, gameManager.getRules());
+
+            // deactivate a Character card if there is one active
+            gameInstance.getActiveCharacter().ifPresent(characterCard ->
+                    characterCard.deactivate(gameManager.getRules(),gameInstance ));
             // WinController.check(game)
         }
     }

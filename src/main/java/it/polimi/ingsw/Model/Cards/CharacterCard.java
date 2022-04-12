@@ -8,6 +8,7 @@ public abstract class CharacterCard extends Card {
 
     protected int price;
     protected boolean activated;
+    protected boolean isActive;
     private Character character;
 
     public CharacterCard(String imagePath) {
@@ -15,12 +16,12 @@ public abstract class CharacterCard extends Card {
         activated = false;
     }
 
-    public abstract void activate(Rules rules);
-
     public abstract void activate(Rules rules, Game game);
-    public abstract void deactivate(Rules rules);
+    public abstract void deactivate(Rules rules, Game game);
 
-    public abstract boolean isActive();
+    public boolean isActive() {
+        return isActive;
+    }
 
     public int getPrice() {
         if (activated) {

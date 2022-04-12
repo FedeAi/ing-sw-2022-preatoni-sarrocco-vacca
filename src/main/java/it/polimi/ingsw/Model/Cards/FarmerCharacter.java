@@ -6,29 +6,24 @@ import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Game;
 
 public class FarmerCharacter extends CharacterCard {
-    private boolean isActive;
 
     public FarmerCharacter(String imagePath) {
         super(imagePath);
+        price = 2;
         isActive = false;
     }
 
     @Override
     public void activate(Rules rules, Game game) {
         isActive = true;
-        price = Rules.farmerPrice;
+        activated = true;
         rules.setDynamicRules(new FarmerRules());
     }
 
     @Override
-    public void deactivate(Rules rules) {
+    public void deactivate(Rules rules, Game game) {
         isActive = false;
         rules.setDynamicRules(new BaseRules());
-    }
-
-    @Override
-    public boolean isActive() {
-        return isActive;
     }
 
 }

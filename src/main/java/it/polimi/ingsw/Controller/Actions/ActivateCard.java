@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCard;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -11,9 +12,9 @@ import java.util.Optional;
 public class ActivateCard implements Performable {
 
     private String nickname;
-    private CharacterCard choice;
+    private int choice;
 
-    public ActivateCard(CharacterCard choice, String nickname) {
+    public ActivateCard(String nickname, int choice) {
         this.nickname = nickname;
         this.choice = choice;
     }
@@ -33,7 +34,7 @@ public class ActivateCard implements Performable {
         }
 
         // Simple check to verify that we're in the correct state
-        if (!game.getGameState().equals(GameState.ACTION_PLAY_CHARACTER)) {
+        if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER)||!game.getGameState().equals(GameState.ACTION_MOVE_STUDENTS)) {
             return false;
         }
 
@@ -42,13 +43,18 @@ public class ActivateCard implements Performable {
             return false;
         }
 
+        if(choice < 0 || choice > Rules.numCharacterCards){
+            return false;
+        }
+
+        CharacterCard choiceCard = game.getCharacterCards().get(choice);
         // Verify that the player has enough money
         // TODO PRICE INCREMENT
-        if (player.getBalance() < choice.getPrice()) {
+        if (player.getBalance() < choiceCard.getPrice()) {
             return false;
         }
         // TODO IF THIS NEEDED?
-        if (choice.isActive()) {
+        if (choiceCard.isActive()) {
             return false;
         }
         return true;
@@ -56,7 +62,8 @@ public class ActivateCard implements Performable {
 
     @Override
     public void performMove(Game game, Rules rules) {
-
+        CharacterCard choiceCard = game.getCharacterCards().get(choice);
+        choiceCard.activate(rules, game);
     }
 
     @Override

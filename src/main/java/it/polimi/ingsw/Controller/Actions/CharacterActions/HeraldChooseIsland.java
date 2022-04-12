@@ -77,10 +77,6 @@ public class HeraldChooseIsland implements Performable {
         if(Island.checkJoin(island,nextIsland)) {
             islandContainer.joinNextIsland(islandIndex);
         }
-
-
-        // change state
-        game.setGameState(GameState.ACTION_MOVE_MOTHER);
     }
 
     @Override
