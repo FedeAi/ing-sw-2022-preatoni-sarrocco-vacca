@@ -76,6 +76,10 @@ public class Game {
 
     }
 
+    public boolean isExpertMode() {
+        return expertMode;
+    }
+
     public boolean addPlayer(Player player) { //adding the player if the name isn't already taken
         if (!(isNicknameTaken(player.getNickname()))) {
             players.add(player);

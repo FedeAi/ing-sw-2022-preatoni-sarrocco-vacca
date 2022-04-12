@@ -6,19 +6,25 @@ import it.polimi.ingsw.Controller.Rules.DynamicRules.DynamicRules;
 
 public abstract class CharacterCard extends Card {
 
-    private int price;
+    protected int price;
+    protected boolean activated;
     private Character character;
 
     public CharacterCard(String imagePath) {
         super(imagePath);
+        activated = false;
     }
 
-
     public abstract void activate(Rules rules);
+
     public abstract void deactivate(Rules rules);
+
     public abstract boolean isActive();
 
     public int getPrice() {
+        if (activated) {
+            return price + 1;
+        }
         return price;
     }
 

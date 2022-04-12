@@ -10,6 +10,7 @@ public class Rules {
     public static final int maxIslands = 12;
     public static final int initialBagSize = 2 * Color.values().length;
     public static final int bagSize = 130;
+    public static final int farmerPrice = 2;
 
     private DynamicRules dynamicRules;
 
