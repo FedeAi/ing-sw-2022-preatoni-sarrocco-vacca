@@ -34,7 +34,7 @@ public abstract class MoveStudentFromEntry implements Performable{
         }
 
         // if the player has already moved the Rules.getStudentsPerTurn students
-        if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getStudentsEntry().size() >= Rules.getStudentsPerTurn(game.numPlayers())){
+        if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())){
             return false;
         }
 

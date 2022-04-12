@@ -48,7 +48,6 @@ public class GameManager {
     }
 
 
-    // TODO this can be moved inside Game?
     private void initSchools() {
         List<Player> players = gameInstance.getPlayers();
         for (int i = 0; i < players.size(); i++) {

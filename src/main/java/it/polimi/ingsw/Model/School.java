@@ -42,6 +42,14 @@ public class School {
         return studentsEntry;
     }
 
+    /**
+     * It computes how many students there are in the Entry
+     * @return the number of overall students prensent in the Entry
+     */
+    public int getEntryStudentsNum(){
+        return studentsEntry.values().stream().reduce(0, Integer::sum);
+    }
+
     public void addStudentEntry(Color color) {
         studentsEntry.put(color, studentsEntry.getOrDefault(color, 0) + 1);
     }

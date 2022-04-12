@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Rules;
 
+import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.DynamicRules;
 import it.polimi.ingsw.Model.Enumerations.Color;
 
@@ -12,6 +13,9 @@ public class Rules {
 
     private DynamicRules dynamicRules;
 
+    public Rules(){
+        dynamicRules = new BaseRules();
+    }
     public static int getEntrySize(int numPlayers) {
         return 9;
     }

@@ -27,7 +27,7 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
         if(hasInfluence){
             game.setProfessor(color, player.getNickname());
         }
-        if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getStudentsEntry().size() >= Rules.getStudentsPerTurn(game.numPlayers())){
+        if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())){
             game.setGameState(GameState.ACTION_MOVE_MOTHER);
         }
     }
