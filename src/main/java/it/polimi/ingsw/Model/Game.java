@@ -10,22 +10,17 @@ import it.polimi.ingsw.Model.Islands.IslandContainer;
 
 import java.util.*;
 
-import static java.util.Optional.empty;
-
 public class Game {
 
-    private List<Player> players;
+    private final List<Player> players;
+    private final List<Magician> magicians;
+    private final List<Cloud> clouds;
+    private final Bag bag;
     private List<Player> playersActionPhase; // Ordered list of players for the action phase TODO ADD UML
-
-    private List<Magician> magicians;
     private boolean expertMode;
-
     private IslandContainer islandContainer;
     private MotherNature motherNature;
-    private List<Cloud> clouds;
     private EnumMap<Color, String> professors;
-    private Bag bag;
-
     private List<CharacterCard> characterCards; //array, fixed size = 3
     private GameState gameState;
     private Player roundOwner;
@@ -51,12 +46,57 @@ public class Game {
             professors.put(c, null);
         }
     }
-    public void initClouds(LinkedList<Cloud> clouds){
+
+    public void initClouds(LinkedList<Cloud> clouds) {
         //new object create with the same elements
         this.clouds.removeAll(clouds);
         this.clouds.addAll(clouds);
-   }
+    }
 
+    public void initMotherNature(MotherNature motherNature) {
+        this.motherNature = motherNature;
+    }
+
+    public void initIslands(LinkedList<Island> islands) {
+        this.islandContainer = new IslandContainer(islands);
+    }
+
+    /**
+     * check if the name is available
+     *
+     * @param name
+     * @return
+     */
+    private boolean isNicknameTaken(String name) {
+        return getPlayerByNickname(name).isPresent();
+    }
+
+    public void removeMagician(Magician magician) { //delete the magicians from the possible choice
+        magicians.remove(magician);
+
+    }
+
+    public boolean addPlayer(Player player) { //adding the player if the name isn't already taken
+        if (!(isNicknameTaken(player.getNickname()))) {
+            players.add(player);
+            playersActionPhase = players;   // initialize players for action phase
+            return true;
+        }
+        return false;
+    }
+    
+    public void moveMotherNature(int deltaPositions) {
+        int newPosition = (motherNature.getPosition() + deltaPositions) % islandContainer.size();
+        motherNature.setIsland(newPosition);
+    }
+
+    public void setPlayersActionPhase(List<Player> playersActionPhase) {
+        this.playersActionPhase = playersActionPhase;
+    }
+
+    public void setProfessor(Color professor, String player) {
+        this.professors.put(professor, player);
+    }
 
     /**
      * @return list of Cards played until round owner
@@ -85,22 +125,32 @@ public class Game {
         return orderedPlanningPLayers;
     }
 
-    public  Optional<String> getNextPlayerActionPhase(){
-      List<Player> players = playersActionPhase;
-      int index = players.indexOf(roundOwner) + 1;
-      if(index > players.size()){
-          Optional<String> nothing = Optional.empty();
-          return nothing;
-      }
-      return Optional.ofNullable(players.get(index).getNickname());
-
+    /**
+     * it computes the next player in action phase, if it's end of turn it returns an Empty Optional
+     * Warning this method works only if the game is in action phase
+     *
+     * @return
+     */
+    public Optional<String> getNextPlayerActionPhase() {
+        List<Player> players = playersActionPhase;
+        int index = players.indexOf(roundOwner) + 1;
+        if (index > players.size()) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(players.get(index).getNickname());
     }
-    public  Optional<String> getNextPlayerPlanningPhase(){
+
+    /**
+     * it computes the next player in planning phase, if it's end of turn it returns an Empty Optional
+     * Warning this method works only if the game is in planning phase
+     *
+     * @return
+     */
+    public Optional<String> getNextPlayerPlanningPhase() {
         List<Player> players = getOrderedPlanningPlayers();
         int index = players.indexOf(roundOwner) + 1;
-        if(index > players.size()){
-            Optional<String> nothing = Optional.empty();
-            return nothing;
+        if (index > players.size()) {
+            return Optional.empty();
         }
         return Optional.ofNullable(players.get(index).getNickname());
     }
@@ -109,30 +159,8 @@ public class Game {
         return magicians;
     }
 
-    public void removeMagician(Magician magician) { //delete the magicians from the possible choice
-        magicians.remove(magician);
-
-    }
-
-    public boolean addPlayer(Player player) { //adding the player if the name isn't already taken
-        if (!(isNicknameTaken(player.getNickname()))) {
-            players.add(player);
-            playersActionPhase = players;   // initialize players for action phase
-            return true;
-        }
-        return false;
-    }
-
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public Player getRoundOwner() {
-        return roundOwner;
-    }
-
-    public void setRoundOwner(Player roundOwner) {
-        this.roundOwner = roundOwner;
     }
 
     public GameState getGameState() {
@@ -143,68 +171,48 @@ public class Game {
         this.gameState = gameState;
     }
 
-    public void setPlayersActionPhase(List<Player> playersActionPhase) {
-        this.playersActionPhase = playersActionPhase;
+    public Player getRoundOwner() {
+        return roundOwner;
     }
 
-    public Optional<Player> getPlayerByNickname(String name) { //getting the object player by nickname
-        Player player = null;
-        for (Player p : players) {
-            if (p.getNickname().equals(name)) {
-                player = p;
-            }
-        }
-        return Optional.ofNullable(player);
-    }
-
-    private boolean isNicknameTaken(String name) { //check if the name is available
-        for (Player p : players) {
-            if (p.getNickname().equals(name)) {
-                return true;
-            }
-        }
-        return false;
+    public void setRoundOwner(Player roundOwner) {
+        this.roundOwner = roundOwner;
     }
 
     public EnumMap<Color, String> getProfessors() {
         return professors;
     }
 
-    public void setProfessor(Color professor, String player) {
-        this.professors.put(professor, player);
+    public MotherNature getMotherNature() {
+        return motherNature;
+    }
+
+    public List<Cloud> getClouds() {
+        return clouds;
     }
 
     public Bag getBag() {
         return bag;
     }
 
-    public int numPlayers() {
-        return players.size();
-    }
-
-    public void initIslands(LinkedList<Island> islands) {
-        this.islandContainer = new IslandContainer(islands);
-    }
-
-    public MotherNature getMotherNature() {
-        return motherNature;
-    }
-
-    public void initMotherNature(MotherNature motherNature) {
-        this.motherNature = motherNature;
-    }
-
     public IslandContainer getIslandContainer() {
         return islandContainer;
     }
 
-    public void moveMotherNature(int deltaPositions) {
-        int newPosition = motherNature.getPosition() + deltaPositions;
-        newPosition = newPosition % islandContainer.size();
-        motherNature.setIsland(newPosition);
+    public int numPlayers() {
+        return players.size();
     }
-    public List<Cloud> getClouds(){
-        return clouds;
+
+
+    /**
+     * It return the Player, if there is no player with that nickname the return value is Optional.Empty
+     *
+     * @param name
+     * @return
+     */
+    public Optional<Player> getPlayerByNickname(String name) { //getting the object player by nickname
+        return players.stream().filter(player -> player.getNickname().equals(name)).findFirst();
     }
+
 
 }

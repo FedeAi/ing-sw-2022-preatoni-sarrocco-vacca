@@ -106,8 +106,6 @@ class MoveStudentFromEntryToHallTest {
             }
         }
 
-
-
     }
 
     private Color getStudentFromEntry(Player p){
