@@ -46,6 +46,10 @@ public class IslandContainer {
         }
     }
 
+    public boolean isFeasibleIndex(int index){
+        return index >=0 && index < islands.size();
+    }
+
     public int size(){
         return islands.size();
     }

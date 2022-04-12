@@ -1,12 +1,12 @@
 package it.polimi.ingsw.Model.Cards;
 
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.KnightRules;
+import it.polimi.ingsw.Controller.Rules.DynamicRules.FarmerRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
 
-public class KnightCharacter extends CharacterCard{
+public class FarmerCharacter extends CharacterCard{
     private boolean isActive;
-    public KnightCharacter(String imagePath) {
+    public FarmerCharacter(String imagePath) {
         super(imagePath);
         isActive = false;
     }
@@ -14,7 +14,7 @@ public class KnightCharacter extends CharacterCard{
     @Override
     public void activate(Rules rules) {
         isActive = true;
-        rules.setDynamicRules(new KnightRules());
+        rules.setDynamicRules(new FarmerRules());
     }
 
     @Override

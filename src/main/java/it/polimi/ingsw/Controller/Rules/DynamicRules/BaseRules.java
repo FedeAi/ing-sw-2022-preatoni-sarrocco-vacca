@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,4 +46,34 @@ public class BaseRules implements DynamicRules{
 
         return false;
     }
+
+    @Override
+    public Optional<String> computeIslandInfluence(Game game, int islandIndex) {
+        if (game.getIslandContainer().isFeasibleIndex(islandIndex)) { // perform only if the island index is ok
+            Map<String, Integer> playerInfluence = new HashMap<>();
+            Map<Color, String> professors = game.getProfessors();
+            Island island = game.getIslandContainer().get(islandIndex);
+
+            for (Map.Entry<Color, Integer> islandStudentInflunce : island.getStudents().entrySet()) {
+                Color student = islandStudentInflunce.getKey();
+                int influence = islandStudentInflunce.getValue();
+                // let's find which player has the professor of color student
+                String player = professors.get(student);
+                if (player != null) {
+                    // increment influence of player that has the professor of a specific color (student)
+                    playerInfluence.put(player, playerInfluence.getOrDefault(player, 0) + influence);
+                }
+            }
+            // take in account the + island.getNumTower() given by player towers
+            if (island.getNumTower() != 0) {
+                playerInfluence.put(island.getOwner(), playerInfluence.getOrDefault(island.getOwner(), 0) + island.getNumTower());
+            }
+            // let's find the player who has the bigger influence
+            Optional<Map.Entry<String, Integer>> maxPlayer = playerInfluence.entrySet().stream().max((entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue()));
+            Optional<String> player = Optional.ofNullable(maxPlayer.isPresent() ? maxPlayer.get().getKey() : null);
+            return player;
+        }
+        return Optional.empty();
+    }
+
 }

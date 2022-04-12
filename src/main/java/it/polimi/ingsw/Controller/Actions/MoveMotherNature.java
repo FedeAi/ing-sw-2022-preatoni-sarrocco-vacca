@@ -55,8 +55,8 @@ public class MoveMotherNature implements Performable {
         game.moveMotherNature(movement);
         int newMotherPosition = game.getMotherNature().getPosition();
         Island island = game.getIslandContainer().get(newMotherPosition);
-        // set owner
-        Optional<String> islandNewOwner_opt = computeInfluence(game);
+        // set owner ( put the Tower )
+        Optional<String> islandNewOwner_opt = rules.getDynamicRules().computeIslandInfluence(game, newMotherPosition);
         if (islandNewOwner_opt.isPresent()) {
             String islandPrevOwner = island.getOwner();
             if (!islandNewOwner_opt.get().equals(islandPrevOwner)) {
@@ -90,32 +90,6 @@ public class MoveMotherNature implements Performable {
 
     private boolean checkJoin(Island island1, Island island2){
         return island1.getOwner().equals(island2.getOwner());
-    }
-    // todo add in Rules
-    private Optional<String> computeInfluence(Game game) {
-        Map<String, Integer> playerInfluence = new HashMap<>();
-        int motherPosition = game.getMotherNature().getPosition();
-        Map<Color, String> gameProfessors = game.getProfessors();
-        Island island = game.getIslandContainer().get(motherPosition);
-        for (Map.Entry<Color, Integer> islandStudentInflunce : island.getStudents().entrySet()) {
-            Color student = islandStudentInflunce.getKey();
-            int influence = islandStudentInflunce.getValue();
-            // let's find which player has the professor of color student
-            String player = gameProfessors.get(student);
-            if (player != null) {
-                // increment influence of player that has the professor of a specific color (student)
-                playerInfluence.put(player, playerInfluence.getOrDefault(player, 0) + influence);
-            }
-        }
-        // take in account the + island.getNumTower() given by player towers
-        if (island.getNumTower() != 0) {
-            playerInfluence.put(island.getOwner(), playerInfluence.getOrDefault(island.getOwner(), 0) + island.getNumTower());
-        }
-
-        // let's find the player who has the bigger influence
-        Optional<Map.Entry<String, Integer>> maxPlayer = playerInfluence.entrySet().stream().max((entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue()));
-        Optional<String> player = Optional.ofNullable(maxPlayer.isPresent() ? maxPlayer.get().getKey() : null);
-        return player;
     }
 
     @Override
