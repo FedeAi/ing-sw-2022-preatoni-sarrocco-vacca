@@ -134,7 +134,7 @@ public class Game {
     public Optional<String> getNextPlayerActionPhase() {
         List<Player> players = playersActionPhase;
         int index = players.indexOf(roundOwner) + 1;
-        if (index > players.size()) {
+        if (index >= players.size()) {
             return Optional.empty();
         }
         return Optional.ofNullable(players.get(index).getNickname());

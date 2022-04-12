@@ -8,14 +8,18 @@ import java.util.Map;
 public class Cloud {
     private Map<Color, Integer> students;
 
+    public Cloud() {
+        students = new EnumMap<Color, Integer>(Color.class);
+    }
+
     public Map<Color, Integer> pickStudents() {
         Map<Color, Integer> returnStudents = students;
         students = new EnumMap<Color, Integer>(Color.class);
         return returnStudents;
     }
 
-    public boolean isEmpty(){
-        return students.size()==0;
+    public boolean isEmpty() {
+        return students.size() == 0;
     }
 
     public void addStudent(Color color) {
@@ -23,8 +27,8 @@ public class Cloud {
     }
 
     public void addStudents(Map<Color, Integer> addStudents) {
-        for(Map.Entry<Color,Integer> entry : addStudents.entrySet()){
-            students.put(entry.getKey(), entry.getValue() + students.getOrDefault(entry.getKey(),0));
+        for (Map.Entry<Color, Integer> entry : addStudents.entrySet()) {
+            students.put(entry.getKey(), entry.getValue() + students.getOrDefault(entry.getKey(), 0));
         }
     }
 

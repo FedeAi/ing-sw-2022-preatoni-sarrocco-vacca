@@ -39,7 +39,7 @@ class MoveStudentFromEntryToHallTest {
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
         assertFalse(moveStudentsToHallAction.canPerformExt(gameInstance));
 
-        // wrong player ( no player with thath nick name )
+        // wrong player ( no player with that nickname )
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
         assertFalse(moveStudentsToHallActionWrongPlayer.canPerformExt(gameInstance));
         // wrong player is not your turn

@@ -23,6 +23,7 @@ public class GameManager {
         this.gameInstance = new Game(new Bag(Rules.initialBagSize));
         this.gameInstance.setGameState(GameState.GAME_ROOM);
         rules = new Rules();
+
         //this.roundManager = new RoundManager(this);
     }
 
@@ -45,6 +46,7 @@ public class GameManager {
         initIslands();
         fillBag();
         initSchools();
+        initClouds();
     }
 
 

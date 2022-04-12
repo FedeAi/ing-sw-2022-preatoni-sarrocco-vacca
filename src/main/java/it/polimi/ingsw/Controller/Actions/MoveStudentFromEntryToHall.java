@@ -22,7 +22,7 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
         Player player = player_opt.get();
 
         player.getSchool().moveStudentFromEntryToHall(color);   // model modification
-        // todo check professors
+
         boolean hasInfluence = rules.getDynamicRules().checkProfessorInfluence(game, color);
         if(hasInfluence){
             game.setProfessor(color, player.getNickname());

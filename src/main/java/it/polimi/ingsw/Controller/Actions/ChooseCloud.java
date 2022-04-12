@@ -81,7 +81,7 @@ public class ChooseCloud implements Performable{
     private void refillClouds(Game game){
      int numPlayers = game.numPlayers();
      for(Cloud c : game.getClouds()){
-         assert c.isEmpty();
+         assert !(c.isEmpty());
          c.addStudents(game.getBag().extract(Rules.getStudentsPerTurn(numPlayers)));
      }
     }
