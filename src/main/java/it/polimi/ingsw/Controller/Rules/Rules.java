@@ -17,7 +17,12 @@ public class Rules {
     }
 
     public static int getStudentsPerTurn(int numPlayers) {
-        return 4;
+
+        return switch (numPlayers) {
+            case 2 -> 3;
+            case 3 -> 4;
+            default -> 3;
+        };
     }
 
     public static int getTowersPerPlayer(int numPlayers) {
@@ -28,6 +33,7 @@ public class Rules {
         };
 
     }
+
 
     public DynamicRules getDynamicRules() {
         return dynamicRules;

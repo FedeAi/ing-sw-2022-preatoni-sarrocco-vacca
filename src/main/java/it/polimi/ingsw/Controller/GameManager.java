@@ -88,5 +88,18 @@ public class GameManager {
         gameInstance.getBag().extendBag(Rules.bagSize - Rules.initialBagSize);
     }
 
+    private void initClouds(){
+        int numClouds = gameInstance.getPlayers().size();
+        LinkedList<Cloud> clouds = new LinkedList<>();
+
+        for(int i = 0; i < numClouds; i++){
+            Cloud cloud = new Cloud();
+            cloud.addStudents(gameInstance.getBag().extract(Rules.getStudentsPerTurn(gameInstance.numPlayers()))); //init fill
+            clouds.add(cloud);
+        }
+        gameInstance.initClouds(clouds);
+
+    }
+
 }
 
