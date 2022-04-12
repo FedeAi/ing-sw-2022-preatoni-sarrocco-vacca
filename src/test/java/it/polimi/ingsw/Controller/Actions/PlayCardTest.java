@@ -34,21 +34,21 @@ class PlayCardTest {
         //!* standard execution
         AssistantCard choice = p1.getCards().get(0);
         Performable playCard = new PlayCard("fede", choice);
-        assertTrue(playCard.canPerformExt(gameInstance, ));
+        assertTrue(playCard.canPerformExt(gameInstance, gameManager.getRules()));
 
         //wrong game phase
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        assertFalse(playCard.canPerformExt(gameInstance, ));
+        assertFalse(playCard.canPerformExt(gameInstance, gameManager.getRules()));
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
 
         // is round owner
-        assertTrue(playCard.canPerformExt(gameInstance, ));
+        assertTrue(playCard.canPerformExt(gameInstance, gameManager.getRules()));
         gameInstance.setRoundOwner(p2);
-        assertFalse(playCard.canPerformExt(gameInstance, ));
+        assertFalse(playCard.canPerformExt(gameInstance, gameManager.getRules()));
 
         // wrong choice
         p1.setAndRemovePlayedCard(choice);
-        assertFalse(playCard.canPerformExt(gameInstance, ));
+        assertFalse(playCard.canPerformExt(gameInstance, gameManager.getRules()));
 
         // All player's cards are on table -> he can make that choice
         // todo

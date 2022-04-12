@@ -39,32 +39,32 @@ class ChooseCloudTest {
 
         // base case
         gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-        assertTrue(choiceCloudRIGHT.canPerformExt(gameInstance, ));
+        assertTrue(choiceCloudRIGHT.canPerformExt(gameInstance, gameManager.getRules()));
 
         //wrong game phase
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
-        assertFalse(choiceCloudWRONG.canPerformExt(gameInstance, ));
+        assertFalse(choiceCloudWRONG.canPerformExt(gameInstance, gameManager.getRules()));
 
         // wrong player ( no player with that nickname )
         gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-        assertFalse(choiceCloudWRONG.canPerformExt(gameInstance, ));
+        assertFalse(choiceCloudWRONG.canPerformExt(gameInstance, gameManager.getRules()));
 
         // wrong player is not your turn
         gameInstance.setRoundOwner(p1);
-        assertFalse(choiceCloudRIGHT.canPerformExt(gameInstance, ));
+        assertFalse(choiceCloudRIGHT.canPerformExt(gameInstance, gameManager.getRules()));
         gameInstance.setRoundOwner(p2);
 
 
         // The choice doesn't exist
         Performable action = new ChooseCloud("Kyogre",choice2);
         gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-        assertFalse(action.canPerformExt(gameInstance, ));
+        assertFalse(action.canPerformExt(gameInstance, gameManager.getRules()));
 
         // all Clouds are empty
 
         Performable action2 = new ChooseCloud("Kyogre",choice);
         gameInstance.getClouds().get(choice).pickStudents();
-        assertFalse(action2.canPerformExt(gameInstance, ));
+        assertFalse(action2.canPerformExt(gameInstance, gameManager.getRules()));
 
     }
 
@@ -83,10 +83,12 @@ class ChooseCloudTest {
         gameInstance.setRoundOwner(p2);
 
         Random random = new Random();
-        int choice = random.nextInt(Rules.getStudentsPerTurn(gameInstance.numPlayers())); //random choice between 1 - maxClouds
+        // FIXME why define the cloudIndex as the number of allowed students per turn?
+        // int choice = random.nextInt(Rules.getStudentsPerTurn(gameInstance.numPlayers())); //random choice between 1 - maxClouds
+        int choice = random.nextInt(gameInstance.numPlayers());
 
         Performable ChooseClouds = new ChooseCloud("Kyogre", choice);
-        assertTrue(ChooseClouds.canPerformExt(gameInstance, ));
+        assertTrue(ChooseClouds.canPerformExt(gameInstance, gameManager.getRules()));
 
         // previous state
         int weight = Rules.getStudentsPerTurn(gameInstance.numPlayers());
@@ -98,13 +100,17 @@ class ChooseCloudTest {
         Map<Color, Integer> postEntry = new EnumMap<Color, Integer>(p2.getSchool().getStudentsEntry());
 
         int count = 0;
-        for(Color c: Color.values()){
-            count = count + prevEntry.get(c);
+        for(Color c: Color.values()) {
+            if (prevEntry.get(c) != null) {
+                count = count + prevEntry.get(c);
+            }
         }
 
         int postCounter = 0;
-        for(Color c: Color.values()){
-            postCounter = postCounter + postEntry.get(c);
+        for(Color c: Color.values()) {
+            if (postEntry.get(c) != null) {
+                postCounter = postCounter + postEntry.get(c);
+            }
         }
 
         assertTrue(count + weight == postCounter);
