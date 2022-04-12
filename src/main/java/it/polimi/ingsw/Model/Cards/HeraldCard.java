@@ -1,34 +1,30 @@
 package it.polimi.ingsw.Model.Cards;
 
-import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.FarmerRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
-public class FarmerCharacter extends CharacterCard {
+public class HeraldCard extends CharacterCard{
     private boolean isActive;
 
-    public FarmerCharacter(String imagePath) {
+    public HeraldCard(String imagePath){
         super(imagePath);
         isActive = false;
     }
 
     @Override
     public void activate(Rules rules, Game game) {
+        game.setGameState(GameState.HERALD_ACTIVE);
         isActive = true;
-        price = Rules.farmerPrice;
-        rules.setDynamicRules(new FarmerRules());
     }
 
     @Override
     public void deactivate(Rules rules) {
         isActive = false;
-        rules.setDynamicRules(new BaseRules());
     }
 
     @Override
     public boolean isActive() {
-        return isActive;
+        return false;
     }
-
 }

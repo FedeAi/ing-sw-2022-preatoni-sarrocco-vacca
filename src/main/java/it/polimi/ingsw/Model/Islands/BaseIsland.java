@@ -6,7 +6,7 @@ import it.polimi.ingsw.Model.Islands.Island;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class BaseIsland implements Island {
+public class BaseIsland extends Island {
 
     private Map<Color, Integer> students;
     private String owner;

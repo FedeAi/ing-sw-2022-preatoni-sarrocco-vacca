@@ -4,8 +4,8 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 
 import java.util.Map;
 
-public interface Island {
-    public Map<Color, Integer> getStudents();
+public abstract class Island {
+    public abstract Map<Color, Integer> getStudents();
 
     public abstract String getOwner();
 
@@ -14,4 +14,8 @@ public interface Island {
     public abstract void setOwner(String owner);
 
     public abstract void addStudent(Color student);
+
+    public static boolean checkJoin(Island island1, Island island2){
+        return island1.getOwner().equals(island2.getOwner());
+    }
 }

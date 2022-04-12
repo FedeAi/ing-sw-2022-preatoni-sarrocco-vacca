@@ -8,7 +8,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class SuperIsland implements Island {
+public class SuperIsland extends Island {
     private String owner;
     List<BaseIsland> islands;
     public SuperIsland(List<Island> islands){

@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model.Cards;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Enumerations.Character;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.DynamicRules;
+import it.polimi.ingsw.Model.Game;
 
 public abstract class CharacterCard extends Card {
 
@@ -17,6 +17,7 @@ public abstract class CharacterCard extends Card {
 
     public abstract void activate(Rules rules);
 
+    public abstract void activate(Rules rules, Game game);
     public abstract void deactivate(Rules rules);
 
     public abstract boolean isActive();

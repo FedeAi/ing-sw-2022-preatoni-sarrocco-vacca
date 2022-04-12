@@ -18,4 +18,7 @@ public enum GameState {
     ACTION_PLAY_CHARACTER,
     ACTION_MOVE_MOTHER,
     ACTION_CHOOSE_CLOUD,
+
+    /* CharacterCards */
+    HERALD_ACTIVE,
 }
