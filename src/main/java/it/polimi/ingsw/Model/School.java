@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.TowerColor;
 
+import java.util.EnumMap;
 import java.util.Map;
 
 public class School {
@@ -15,8 +16,9 @@ public class School {
 
     public School(int numTowers, TowerColor towerColor, Map<Color, Integer> initialStudentsEntry) {
         this.numTowers = numTowers;
-        this.studentsEntry = initialStudentsEntry;
         this.towerColor = towerColor;
+        this.studentsEntry = initialStudentsEntry;
+        studentsHall = new EnumMap<Color, Integer>(Color.class);
     }
 
     public TowerColor getTowerColor() {
@@ -48,25 +50,23 @@ public class School {
     }
 
     public void addStudentHall(Color color) {
-        studentsHall.put(color, studentsEntry.getOrDefault(color, 0) + 1);
+        studentsHall.put(color, studentsHall.getOrDefault(color, 0) + 1);
     }
 
     public void moveStudentFromEntryToHall(Color student) {
         if (studentsEntry.get(student) > 0) {
             studentsEntry.put(student, studentsEntry.get(student) - 1);
-            studentsHall.put(student, studentsEntry.getOrDefault(student, 0) + 1);
+            studentsHall.put(student, studentsHall.getOrDefault(student, 0) + 1);
         }
     }
 
-
-    // TODO TESTING
-    public boolean removeStudentFromEntry(Color student) {
-        boolean isRemoved = false;
+    public void removeStudentFromEntry(Color student) {
+        //boolean isRemoved = false;
         Integer numStudents = studentsEntry.get(student);
         if (numStudents != null && numStudents > 0) {
             studentsEntry.put(student, studentsEntry.get(student) - 1);
-            isRemoved = true;
+            //isRemoved = true;
         }
-        return isRemoved;
+        //return isRemoved;
     }
 }
