@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.TowerColor;
+import it.polimi.ingsw.Model.Islands.Island;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class School {
     public School(int numTowers, TowerColor towerColor, Map<Color, Integer> initialStudentsEntry) {
         this.numTowers = numTowers;
         this.towerColor = towerColor;
-        this.studentsEntry = initialStudentsEntry;
+        this.studentsEntry = new EnumMap<Color, Integer>(initialStudentsEntry);
         studentsHall = new EnumMap<Color, Integer>(Color.class);
     }
 
@@ -43,6 +44,11 @@ public class School {
 
     public void addStudentEntry(Color color) {
         studentsEntry.put(color, studentsEntry.getOrDefault(color, 0) + 1);
+    }
+    public void addStudentsEntry(Map<Color, Integer> addStudents) {
+        for(Map.Entry<Color,Integer> entry : addStudents.entrySet()){
+            studentsEntry.put(entry.getKey(), entry.getValue() + studentsEntry.getOrDefault(entry.getKey(),0));
+        }
     }
 
     public Map<Color, Integer> getStudentsHall() {

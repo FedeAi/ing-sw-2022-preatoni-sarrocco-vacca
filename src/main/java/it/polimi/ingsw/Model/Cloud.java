@@ -23,9 +23,8 @@ public class Cloud {
     }
 
     public void addStudents(Map<Color, Integer> addStudents) {
-        if(students.size()>0){
-            students.forEach(
-                    (key, value) -> addStudents.merge(key, value, Integer::sum));
+        for(Map.Entry<Color,Integer> entry : addStudents.entrySet()){
+            students.put(entry.getKey(), entry.getValue() + students.getOrDefault(entry.getKey(),0));
         }
     }
 

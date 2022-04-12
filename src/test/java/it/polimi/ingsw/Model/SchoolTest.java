@@ -41,6 +41,24 @@ class SchoolTest {
     }
 
     @Test
+    void addStudentsEntry() {
+        Bag bag = new Bag(50);
+        Map<Color, Integer> initialStudents = bag.extract(RANDOM.nextInt(5));
+        Map<Color, Integer> addStudents = bag.extract(RANDOM.nextInt(5));
+        School school = new School(8,TowerColor.BLACK , initialStudents);
+        for(Map.Entry<Color, Integer> student : initialStudents.entrySet()){
+            assertEquals(student.getValue(), school.getStudentsEntry().get(student.getKey()));
+        }
+
+        //addStudentsEntry
+        school.addStudentsEntry(addStudents);
+        for(Map.Entry<Color, Integer> student : school.getStudentsEntry().entrySet()){
+            int expected = initialStudents.getOrDefault(student.getKey(),0) + addStudents.getOrDefault(student.getKey(),0);
+            assertEquals(expected, student.getValue());
+        }
+    }
+
+    @Test
     void getStudentsHall() {
         Map<Color, Integer> students = new EnumMap<Color, Integer>(Color.class);
         Color newStudent = Color.randomColor();
@@ -74,6 +92,7 @@ class SchoolTest {
             assertEquals(student.getValue(), school.getStudentsEntry().get(student.getKey()));
         }
     }
+
 
     @Test
     void moveStudentFromEntryToHall() {
@@ -109,4 +128,6 @@ class SchoolTest {
         assertEquals(2, school.getStudentsEntry().get(newStudent));
         assertEquals(2, school.getStudentsHall().get(newStudent));
     }
+
+
 }
