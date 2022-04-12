@@ -70,6 +70,10 @@ public class ChooseCloud implements Performable {
 
         }
 
+        // END OF PLAYER TURN -> deactivate Character effects if there is an active card
+        game.getActiveCharacter().ifPresent(characterCard ->
+                characterCard.deactivate(rules,game));
+
     }
 
     @Override
