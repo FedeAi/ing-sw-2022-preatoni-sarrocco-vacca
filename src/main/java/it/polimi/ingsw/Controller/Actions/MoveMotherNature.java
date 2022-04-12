@@ -1,15 +1,12 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
 import it.polimi.ingsw.Model.Player;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class MoveMotherNature implements Performable {
@@ -22,7 +19,7 @@ public class MoveMotherNature implements Performable {
     }
 
     @Override
-    public boolean canPerformExt(Game game) {
+    public boolean canPerformExt(Game game, Rules rules) {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
         if (player_opt.isEmpty())    // if there is no Player with that nick
             return false;
@@ -38,7 +35,7 @@ public class MoveMotherNature implements Performable {
 
         // is action legal check
 
-        int playerCardMaxMoves = player.getPlayedCard().getMaxMoves();
+        int playerCardMaxMoves = rules.getDynamicRules().computeMotherMaxMoves(player.getPlayedCard());
         if (movement < 1 || movement > playerCardMaxMoves) {
             return false;
         }

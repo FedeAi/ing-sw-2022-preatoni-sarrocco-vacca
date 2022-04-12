@@ -4,9 +4,9 @@ import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
-public class HeraldCard extends CharacterCard{
+public class HeraldCharacter extends CharacterCard{
     private GameState previousState;
-    public HeraldCard(String imagePath){
+    public HeraldCharacter(String imagePath){
         super(imagePath);
         price = 3;
         isActive = false;

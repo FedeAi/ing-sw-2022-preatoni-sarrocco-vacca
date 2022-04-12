@@ -19,7 +19,7 @@ public abstract class MoveStudentFromEntry implements Performable{
     }
 
     @Override
-    public boolean canPerformExt(Game game) {
+    public boolean canPerformExt(Game game, Rules rules) {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
         if(player_opt.isEmpty())    // if there is no Player with that nick
             return false;

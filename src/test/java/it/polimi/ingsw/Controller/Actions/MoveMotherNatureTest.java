@@ -1,15 +1,12 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.SuperIsland;
 import it.polimi.ingsw.Model.Player;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,35 +34,35 @@ class MoveMotherNatureTest {
         // checking if the nickname doesn't belong to the game
         // Nicolò isn't in the game
         moveMotherNature = new MoveMotherNature("Nicolò", movement);
-        assertFalse(moveMotherNature.canPerformExt(gameInstance));
+        assertFalse(moveMotherNature.canPerformExt(gameInstance, ));
 
         // checking if the player argument is the actual round owner
         // p2 is the actual round owner, while I try to pass p1
         moveMotherNature = new MoveMotherNature(p1.getNickname(), movement);
-        assertFalse(moveMotherNature.canPerformExt(gameInstance));
+        assertFalse(moveMotherNature.canPerformExt(gameInstance, ));
 
         // checking if the game is set to the correct game state
         moveMotherNature = new MoveMotherNature(p2.getNickname(), movement);
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        assertFalse(moveMotherNature.canPerformExt(gameInstance));
+        assertFalse(moveMotherNature.canPerformExt(gameInstance, ));
         gameInstance.setGameState(GameState.ACTION_MOVE_MOTHER);
 
         // checking if I have played a card with not enough movement points
         final int cardValue = 1;
         AssistantCard card = p2.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p2.setAndRemovePlayedCard(card);
-        assertFalse(moveMotherNature.canPerformExt(gameInstance));
+        assertFalse(moveMotherNature.canPerformExt(gameInstance, ));
 
         // Normal use case
         final int newCardValue = 5;
         card = p2.getCards().stream().filter(c -> c.getValue() == newCardValue).findFirst().get();
         p2.setAndRemovePlayedCard(card);
-        assertTrue(moveMotherNature.canPerformExt(gameInstance));
+        assertTrue(moveMotherNature.canPerformExt(gameInstance, ));
 
         // checking that I cannot have 0 movements (or negative)
         movement = 0;
         moveMotherNature = new MoveMotherNature(p2.getNickname(), movement);
-        assertFalse(moveMotherNature.canPerformExt(gameInstance));
+        assertFalse(moveMotherNature.canPerformExt(gameInstance, ));
     }
 
     @Test

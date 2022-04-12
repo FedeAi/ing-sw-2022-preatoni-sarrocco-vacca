@@ -34,7 +34,7 @@ class MoveStudentFromEntryToIslandTest {
         Color student = getStudentFromEntry(p1);
         int islandIndex = 2;
         moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), student, islandIndex);
-        assertTrue(moveStudent.canPerformExt(gameInstance));
+        assertTrue(moveStudent.canPerformExt(gameInstance, ));
 
         Map<Color, Integer> prevEntry = new EnumMap<Color, Integer>(p1.getSchool().getStudentsEntry());
         Map<Color, Integer> prevIsland = new EnumMap<Color, Integer>(p1.getSchool().getStudentsEntry());
@@ -86,39 +86,39 @@ class MoveStudentFromEntryToIslandTest {
         // An illegal player tries to play
         String missingPlayer = "Marco";
         moveStudent = new MoveStudentFromEntryToIsland(missingPlayer, student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance));
+        assertFalse(moveStudent.canPerformExt(gameInstance, ));
 
         // It's not the player's turn, roundOwner = p1, we're going to pass p2
         moveStudent = new MoveStudentFromEntryToIsland(p2.getNickname(), student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance));
+        assertFalse(moveStudent.canPerformExt(gameInstance, ));
 
         // We want to see if the action is performable, but we are in the wrong state
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
         moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance));
+        assertFalse(moveStudent.canPerformExt(gameInstance, ));
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
 
         // Simple check for the islandIndex
         islandIndex = -1;
         moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance));
+        assertFalse(moveStudent.canPerformExt(gameInstance, ));
         islandIndex = 40;
         moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance));
+        assertFalse(moveStudent.canPerformExt(gameInstance, ));
         islandIndex = 2;
 
         // Base case
         moveStudent = new MoveStudentFromEntryToHall(p1.getNickname(), student);
-        assertTrue(moveStudent.canPerformExt(gameInstance));
+        assertTrue(moveStudent.canPerformExt(gameInstance, ));
         // We move all the allowed students
         for (int i = 0; i < Rules.getStudentsPerTurn(gameInstance.numPlayers()); i++) {
             Color pickedStudent = getStudentFromEntry(p1);
             moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), pickedStudent, islandIndex);
-            assertTrue(moveStudent.canPerformExt(gameInstance));
+            assertTrue(moveStudent.canPerformExt(gameInstance, ));
 
             p1.getSchool().moveStudentFromEntryToHall(pickedStudent);
         }
-        assertFalse(moveStudent.canPerformExt(gameInstance));
+        assertFalse(moveStudent.canPerformExt(gameInstance, ));
     }
 
     @Test
