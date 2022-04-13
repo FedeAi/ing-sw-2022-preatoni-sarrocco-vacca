@@ -73,6 +73,7 @@ public class BaseRules implements DynamicRules{
             if (island.getNumTower() != 0) {
                 playerInfluence.put(island.getOwner(), playerInfluence.getOrDefault(island.getOwner(), 0) + towerInfluenceModifier(island.getNumTower()));
             }
+            turnOwnerInfluenceModifier(playerInfluence,game.getRoundOwner().getNickname());
             // let's find the player who has the bigger influence
             Optional<Map.Entry<String, Integer>> maxPlayer = playerInfluence.entrySet().stream().max((entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue()));
             Optional<String> player = Optional.ofNullable(maxPlayer.isPresent() ? maxPlayer.get().getKey() : null);
@@ -81,7 +82,20 @@ public class BaseRules implements DynamicRules{
         return Optional.empty();
     }
 
+    /**
+     * This function is used by CentaurEffect
+     * @param value
+     * @return
+     */
     protected int towerInfluenceModifier(int value) {
         return value;
+    }
+
+    /**
+     * This function is used in by knightEffect
+     * @param playerInfluence
+     */
+    protected void turnOwnerInfluenceModifier(Map<String, Integer> playerInfluence, String roundOwner) {
+        return;
     }
 }
