@@ -83,8 +83,7 @@ class ChooseCloudTest {
         gameInstance.setRoundOwner(p2);
 
         Random random = new Random();
-        // FIXME why define the cloudIndex as the number of allowed students per turn?
-        // int choice = random.nextInt(Rules.getStudentsPerTurn(gameInstance.numPlayers())); //random choice between 1 - maxClouds
+        //random choice between 1 - maxClouds
         int choice = random.nextInt(gameInstance.numPlayers());
 
         Performable ChooseClouds = new ChooseCloud("Kyogre", choice);

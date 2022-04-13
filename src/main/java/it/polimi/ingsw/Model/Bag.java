@@ -17,7 +17,6 @@ public class Bag {
         }
     }
 
-    // TODO TESTING
     public void extendBag(int extensionSize) {
         for (int i = 0; i < extensionSize; i++) {
             students.add(Color.values()[i % Color.values().length]);
@@ -40,7 +39,6 @@ public class Bag {
         return out;
     }
 
-    // TODO TESTING
     public Color extractOne() {
         Random rand = new Random();
         int randomIndex = rand.nextInt(students.size());
