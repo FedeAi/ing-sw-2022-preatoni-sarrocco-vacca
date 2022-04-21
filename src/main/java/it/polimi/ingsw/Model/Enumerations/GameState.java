@@ -18,5 +18,9 @@ public enum GameState {
     //ACTION_PLAY_CHARACTER,
     ACTION_MOVE_MOTHER,
     ACTION_CHOOSE_CLOUD,
-    
+
+    /* CharacterCards States     */
+    HERALD_ACTIVE,
+    MUSHROOM_CHOOSE_COLOR,
+
 }

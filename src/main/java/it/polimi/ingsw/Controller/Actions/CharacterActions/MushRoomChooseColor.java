@@ -4,12 +4,9 @@ import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.MushRoomCharacter;
-import it.polimi.ingsw.Model.Enumerations.CharacterCardState;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Islands.Island;
-import it.polimi.ingsw.Model.Islands.IslandContainer;
 import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
@@ -34,7 +31,7 @@ public class MushRoomChooseColor implements Performable {
             return false;
         }
 
-        if (!game.getCharacterCardState().equals(CharacterCardState.MUSHROOM_CHOOSE_COLOR)) {
+        if (!game.getGameState().equals(GameState.MUSHROOM_CHOOSE_COLOR)) {
             return false;
         }
 
