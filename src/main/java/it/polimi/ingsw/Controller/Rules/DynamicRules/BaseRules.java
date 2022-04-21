@@ -61,7 +61,7 @@ public class BaseRules implements DynamicRules{
 
             for (Map.Entry<Color, Integer> islandStudentInflunce : island.getStudents().entrySet()) {
                 Color student = islandStudentInflunce.getKey();
-                int influence = islandStudentInflunce.getValue();
+                int influence = influenceModifier(game, student, islandStudentInflunce.getValue()); // used to modify if character MushRoom is active
                 // let's find which player has the professor of color student
                 String player = professors.get(student);
                 if (player != null) {
@@ -80,6 +80,18 @@ public class BaseRules implements DynamicRules{
             return player;
         }
         return Optional.empty();
+    }
+
+    /**
+     * This function is used by MushRoomEffect
+     *
+     * @param student
+     * @param influence
+     * @param game
+     * @return
+     */
+    protected int influenceModifier(Game game, Color student, int influence) {
+        return influence;
     }
 
     /**
