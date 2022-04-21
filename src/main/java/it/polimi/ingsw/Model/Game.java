@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCard;
+import it.polimi.ingsw.Model.Enumerations.CharacterCardState;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Enumerations.Magician;
@@ -23,6 +24,7 @@ public class Game {
     private EnumMap<Color, String> professors;
     private List<CharacterCard> characterCards; //array, fixed size = 3
     private GameState gameState;
+    private CharacterCardState characterCardState;
     private Player roundOwner;
 
     //private Comparator<Integer> influenceComparator = Comparator.comparing((i1,i2)->(i1.intValue()-i2));
@@ -181,6 +183,14 @@ public class Game {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public CharacterCardState getCharacterCardState() {
+        return characterCardState;
+    }
+
+    public void setCharacterCardState(CharacterCardState characterCardState) {
+        this.characterCardState = characterCardState;
     }
 
     public Player getRoundOwner() {

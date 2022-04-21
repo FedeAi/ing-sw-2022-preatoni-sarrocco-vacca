@@ -2,6 +2,7 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Model.Enumerations.CharacterCardState;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
@@ -30,7 +31,7 @@ public class HeraldChooseIsland implements Performable {
             return false;
         }
 
-        if (!game.getGameState().equals(GameState.HERALD_ACTIVE)) {
+        if (!game.getCharacterCardState().equals(CharacterCardState.HERALD_ACTIVE)) {
             return false;
         }
 
