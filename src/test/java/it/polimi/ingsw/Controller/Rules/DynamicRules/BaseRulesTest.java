@@ -82,6 +82,10 @@ class BaseRulesTest {
         initGame();
 
         Island island = new BaseIsland();
+        Optional<String> player = baseRules.computeIslandInfluence(game, island);
+        assertTrue(player.isEmpty(), "no students on that island -> no owners");
+
+        // Add some students to the island
         island.addStudent(Color.BLUE);
         island.addStudent(Color.BLUE);
         island.addStudent(Color.PINK);
@@ -92,13 +96,18 @@ class BaseRulesTest {
         p2.getSchool().addStudentHall(Color.PINK);
         game.setProfessors(baseRules.getProfessorInfluence(game));
 
-        Optional<String> player = baseRules.computeIslandInfluence(game, island);
+        player = baseRules.computeIslandInfluence(game, island);
         assertTrue(player.isPresent(), "the influence on this island can be computed (there is a winner player)");
-        assertEquals(player.get(), p1.getNickname(),"the winner should be p1 (2 towers)");
+        assertEquals(player.get(), p1.getNickname(),"the winner should be p1 (2 students blue)");
 
         island.addStudent(Color.PINK);
         player = baseRules.computeIslandInfluence(game, island);
-        assertTrue(player.isEmpty(), "Same number of towers on island");
+        assertTrue(player.isEmpty(), "Same number of students on island");
 
+        // add a tower
+        island.setOwner(p1.getNickname());
+        player = baseRules.computeIslandInfluence(game, island);
+        assertTrue(player.isPresent(), "the influence on this island can be computed (there is a winner player)");
+        assertEquals(player.get(), p1.getNickname(),"the winner should be p1 (same students but a tower for p1)");
     }
 }

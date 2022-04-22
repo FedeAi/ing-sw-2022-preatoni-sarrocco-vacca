@@ -22,5 +22,6 @@ public enum GameState {
     /* CharacterCards States     */
     HERALD_ACTIVE,
     MUSHROOM_CHOOSE_COLOR,
+    JOKER_SWAP_STUDENTS,
 
 }
