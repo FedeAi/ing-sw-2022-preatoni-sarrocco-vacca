@@ -67,6 +67,12 @@ public class School {
         studentsHall.put(color, studentsHall.getOrDefault(color, 0) + 1);
     }
 
+    public void addStudentsHall(Map<Color, Integer> addStudents) {
+        for(Map.Entry<Color,Integer> entry : addStudents.entrySet()){
+            studentsHall.put(entry.getKey(), entry.getValue() + studentsHall.getOrDefault(entry.getKey(),0));
+        }
+    }
+
     public void moveStudentFromEntryToHall(Color student) {
         if (studentsEntry.get(student) > 0) {
             studentsEntry.put(student, studentsEntry.get(student) - 1);

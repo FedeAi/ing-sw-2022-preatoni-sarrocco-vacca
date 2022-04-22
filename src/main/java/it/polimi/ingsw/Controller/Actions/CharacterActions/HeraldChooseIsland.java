@@ -52,7 +52,7 @@ public class HeraldChooseIsland implements Performable {
         Island island = game.getIslandContainer().get(islandIndex);
 
         // set owner ( put the Tower )
-        Optional<String> islandNewOwner_opt = rules.getDynamicRules().computeIslandInfluence(game, islandIndex);
+        Optional<String> islandNewOwner_opt = rules.getDynamicRules().computeIslandInfluence(game, island);
         if (islandNewOwner_opt.isPresent()) {
             String islandPrevOwner = island.getOwner();
             if (!islandNewOwner_opt.get().equals(islandPrevOwner)) {

@@ -54,7 +54,7 @@ public class MoveMotherNature implements Performable {
         int newMotherPosition = game.getMotherNature().getPosition();
         Island island = game.getIslandContainer().get(newMotherPosition);
         // set owner ( put the Tower )
-        Optional<String> islandNewOwner_opt = rules.getDynamicRules().computeIslandInfluence(game, newMotherPosition);
+        Optional<String> islandNewOwner_opt = rules.getDynamicRules().computeIslandInfluence(game, island);
         if (islandNewOwner_opt.isPresent()) {
             String islandPrevOwner = island.getOwner();
             if (!islandNewOwner_opt.get().equals(islandPrevOwner)) {

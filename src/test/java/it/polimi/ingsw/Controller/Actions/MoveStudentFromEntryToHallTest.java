@@ -14,18 +14,27 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoveStudentFromEntryToHallTest {
+    private GameManager gameManager;
+    private Player p1;
+    private Player p2;
+    private Game gameInstance;
 
-    @Test
-    void canPerformExt() {
-        GameManager gameManager = new GameManager();
-        Player p1 = new Player("ManovellismoOrdinario");
-        Player p2 = new Player("Biella");
-
+    private void initGame(){
+        gameManager = new GameManager();
+        p1 = new Player("ManovellismoOrdinario");
+        p2 = new Player("Biella");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
+
+        gameInstance = gameManager.getGameInstance();
+        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
         gameInstance.setRoundOwner(p2);
+    }
+
+    @Test
+    void canPerformExt() {
+        initGame();
 
         Color student = getStudentFromEntry(p2); // get a student of the player Entry
         Performable moveStudentsToHallAction = new MoveStudentFromEntryToHall("Biella", student);
@@ -61,21 +70,13 @@ class MoveStudentFromEntryToHallTest {
     }
 
     @Test
-    void performMove() {
-        GameManager gameManager = new GameManager();
-        Player p1 = new Player("ManovellismoOrdinario");
-        Player p2 = new Player("Biella");
-
-        gameManager.addPlayer(p1);
-        gameManager.addPlayer(p2);
-        gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
-        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        gameInstance.setRoundOwner(p2);
+    void performMove_HallEntry() {
+        initGame();
 
         Color student = getStudentFromEntry(p2); // get a student of the player Entry
         Performable moveStudentsToHallAction = new MoveStudentFromEntryToHall("Biella", student);
         assertTrue(moveStudentsToHallAction.canPerformExt(gameInstance, gameManager.getRules()));
+
 
         // previous state
         Map<Color, Integer> prevEntry = new EnumMap<Color, Integer>(p2.getSchool().getStudentsEntry());
@@ -105,11 +106,18 @@ class MoveStudentFromEntryToHallTest {
                 assertEquals(entry.getValue(), students-1, "hall has not been modified except...");
             }
         }
+    }
+    @Test
+    void performMove_professorCheck(){
+        initGame();
+        Color student = getStudentFromEntry(p2); // get a student of the player Entry
+        Performable moveStudentsToHallAction = new MoveStudentFromEntryToHall(p2.getNickname(), student);
+        assertTrue(moveStudentsToHallAction.canPerformExt(gameInstance, gameManager.getRules()));
 
+        moveStudentsToHallAction.performMove(gameInstance, gameManager.getRules());
 
         // check that professor is gained after a move
-        assertEquals(gameInstance.getProfessors().get(student), p2.getNickname());
-
+        assertEquals(gameInstance.getProfessors().get(student), p2.getNickname(), "check that professor is gained after a move");
     }
 
     private Color getStudentFromEntry(Player p){
