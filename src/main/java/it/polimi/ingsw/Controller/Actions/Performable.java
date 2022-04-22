@@ -21,7 +21,7 @@ public abstract class Performable {
      * @param rules
      * @return the boolean
      */
-    protected boolean canPerformExt(Game game, Rules rules){
+    public boolean canPerformExt(Game game, Rules rules){
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
         if (player_opt.isEmpty())    // if there is no Player with that nick
             return false;
@@ -38,7 +38,7 @@ public abstract class Performable {
      *  @param game of type GameExt: the game
      * @param rules
      */
-    protected abstract void performMove(Game game, Rules rules);
+    public abstract void performMove(Game game, Rules rules);
 
     /**
      * Gets NickName player.
