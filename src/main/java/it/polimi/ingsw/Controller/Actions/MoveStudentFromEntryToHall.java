@@ -23,10 +23,9 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
 
         player.getSchool().moveStudentFromEntryToHall(color);   // model modification
 
-        boolean hasInfluence = rules.getDynamicRules().checkProfessorInfluence(game, color);
-        if(hasInfluence){
-            game.setProfessor(color, player.getNickname());
-        }
+        //compute the new professors
+        game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game));
+
         if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())){
             game.setGameState(GameState.ACTION_MOVE_MOTHER);
         }

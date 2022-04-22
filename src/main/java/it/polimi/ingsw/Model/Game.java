@@ -110,6 +110,10 @@ public class Game {
         this.professors.put(professor, player);
     }
 
+    public void setProfessors(EnumMap<Color,String> professors) {
+        this.professors = professors;
+    }
+
     /**
      * @return list of Cards played until round owner
      */

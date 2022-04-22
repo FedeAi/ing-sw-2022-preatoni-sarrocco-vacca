@@ -42,6 +42,7 @@ public class GameManager {
 
     public void initGame() {
         // init Model
+        // TODO canGameBeInitialized() ? ok : throwExce (ad esempio se non ci sono abbastanza giocatori )
         initMotherNature();
         initIslands();
         fillBag();

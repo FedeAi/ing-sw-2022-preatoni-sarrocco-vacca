@@ -4,7 +4,9 @@ import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
+import it.polimi.ingsw.Model.Player;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -16,35 +18,31 @@ public class BaseRules implements DynamicRules{
     }
 
     @Override
-    public boolean checkProfessorInfluence(Game game, Color color) {
-        String playerNickname = game.getRoundOwner().getNickname();
-        String ownerNickname = game.getProfessors().get(color);
+    public EnumMap<Color, String> getProfessorInfluence(Game game) {
+        Player roundOwner = game.getRoundOwner();
+        String roundOwnerNickname = game.getRoundOwner().getNickname();
         Island motherNatureIsland = game.getIslandContainer().get( game.getMotherNature().getPosition());
         Map<Color, Integer> studentsOnIsland = motherNatureIsland.getStudents();
 
-        if (ownerNickname == null || playerNickname.equals(ownerNickname)) {
-            //professors.put(color, playerNickname);
-            return true;
+        EnumMap<Color,String> professorsInfluence = new EnumMap<Color, String>(Color.class);
+
+        for(Color prof : Color.values()){
+            // find who has the most students in the hall of that color
+            Optional<Player> tempOwner = game.getPlayers().stream().max((p1, p2)->Integer.compare(p1.getSchool().getStudentsHall().getOrDefault(prof,0),p2.getSchool().getStudentsHall().getOrDefault(prof,0)));
+            if(tempOwner.isPresent()){
+                //compare against the influence comparator for turn owner
+                if(influenceComparator(roundOwner.getSchool().getStudentsHall().getOrDefault(prof,0), tempOwner.get().getSchool().getStudentsHall().getOrDefault(prof,0))){
+                    professorsInfluence.put(prof,roundOwnerNickname);
+                }else{
+                    professorsInfluence.put(prof,tempOwner.get().getNickname());
+                }
+
+            }
+            else {
+                professorsInfluence.put(prof,null);
+            }
         }
-
-        //get the color of most present students
-        Optional<Map.Entry<Color, Integer>> mostPresentColor_opt = studentsOnIsland.entrySet().stream().max((a, b)->Integer.compare(a.getValue(),b.getValue()));
-
-        if(mostPresentColor_opt.isEmpty())  // the island is empty
-            return true;
-
-        Color mostPresentColor = mostPresentColor_opt.get().getKey();
-        int mostPresentColorQty = mostPresentColor_opt.get().getValue();
-        if(mostPresentColorQty==0)
-            return true;
-
-        // dynamic comparator
-        boolean influence = influenceComparator(studentsOnIsland.getOrDefault(color,0), mostPresentColorQty);
-        if(influence){
-            return true;
-        }
-
-        return false;
+        return professorsInfluence;
     }
 
     @Override

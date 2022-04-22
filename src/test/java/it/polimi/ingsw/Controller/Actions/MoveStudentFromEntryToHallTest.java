@@ -102,9 +102,13 @@ class MoveStudentFromEntryToHallTest {
                 assertEquals(entry.getValue(), students);
             }
             else{
-                assertEquals(entry.getValue(), students-1);
+                assertEquals(entry.getValue(), students-1, "hall has not been modified except...");
             }
         }
+
+
+        // check that professor is gained after a move
+        assertEquals(gameInstance.getProfessors().get(student), p2.getNickname());
 
     }
 

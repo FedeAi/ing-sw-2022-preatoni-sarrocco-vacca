@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
+import it.polimi.ingsw.Controller.Rules.WinController;
 import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Model.Game;
 
@@ -14,17 +15,11 @@ public class RoundManager {
         this.gameInstance = gameManager.getGameInstance();
     }
 
-
-    private Cloud initClouds() {
-        assert false;
-        return null;
-    }
-
     public void performAction(Performable action){
         if(action.canPerformExt(gameInstance,  gameManager.getRules())){
             action.performMove(gameInstance, gameManager.getRules());
 
-            // WinController.check(game)
+            WinController.check(gameInstance);
         }
     }
 
