@@ -1,14 +1,15 @@
-package it.polimi.ingsw.Model.Cards;
+package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.PostmanRules;
+import it.polimi.ingsw.Controller.Rules.DynamicRules.FarmerRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Game;
 
-public class PostmanCharacter extends CharacterCard{
-    public PostmanCharacter(String imagePath){
+public class FarmerCharacter extends CharacterCard {
+
+    public FarmerCharacter(String imagePath) {
         super(imagePath);
-        price = 1;
+        price = 2;
         isActive = false;
     }
 
@@ -16,7 +17,7 @@ public class PostmanCharacter extends CharacterCard{
     public void activate(Rules rules, Game game) {
         isActive = true;
         activated = true;
-        rules.setDynamicRules(new PostmanRules());
+        rules.setDynamicRules(new FarmerRules());
     }
 
     @Override
@@ -24,4 +25,5 @@ public class PostmanCharacter extends CharacterCard{
         isActive = false;
         rules.setDynamicRules(new BaseRules());
     }
+
 }

@@ -10,26 +10,23 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class PlayCard implements Performable {
+public class PlayCard extends Performable {
 
-    private final String myNickName;
     private final AssistantCard choice;
 
     public PlayCard(String myNickName, AssistantCard choice) {
-        this.myNickName = myNickName;
+        super(myNickName);
         this.choice = choice;
     }
 
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-
-        if (player_opt.isEmpty())
+        // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
+        if(!super.canPerformExt(game, rules)){
             return false;
+        }
 
-        Player player = player_opt.get();
-        if (!player.equals(game.getRoundOwner()))
-            return false;
+        Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.PLANNING_CHOOSE_CARD))
             return false;
@@ -68,12 +65,6 @@ public class PlayCard implements Performable {
             game.setRoundOwner(game.getOrderedPlanningPlayers().get(playerIndex + 1));
         }
     }
-
-    @Override
-    public String getNickNamePlayer() {
-        return myNickName;
-    }
-
 
     /**
      * choose Player orders for action phase

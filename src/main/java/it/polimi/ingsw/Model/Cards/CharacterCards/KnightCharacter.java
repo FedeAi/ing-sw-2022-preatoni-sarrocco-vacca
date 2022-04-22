@@ -1,8 +1,7 @@
-package it.polimi.ingsw.Model.Cards;
+package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.KnightRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.PostmanRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Game;
 

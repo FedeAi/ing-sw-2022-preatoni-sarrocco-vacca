@@ -1,37 +1,30 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Model.Cards.CharacterCard;
+import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
-public class ActivateCard implements Performable {
+public class ActivateCard extends Performable {
 
-    private String nickname;
-    private int choice;
+    private final int choice;
 
-    public ActivateCard(String nickname, int choice) {
-        this.nickname = nickname;
+    public ActivateCard(String myNickname, int choice) {
+        super(myNickname);
         this.choice = choice;
     }
 
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
-        // Simple check that verifies that there is a player with the specified name
-        Optional<Player> player_opt = game.getPlayerByNickname(nickname);
-        if (player_opt.isEmpty()) {
-            return false;
-        }
-        Player player = player_opt.get();
-
-        // By design, only the current one player can play at a time, we need to verify this
-        if (!game.getRoundOwner().equals(player)) {
+        // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
+        if(!super.canPerformExt(game, rules)){
             return false;
         }
 
+        Player player = getPlayer(game);
         // Simple check to verify that we're in the correct state
         if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER) && !game.getGameState().equals(GameState.ACTION_MOVE_STUDENTS)) {
             return false;
@@ -65,8 +58,4 @@ public class ActivateCard implements Performable {
         choiceCard.activate(rules, game);
     }
 
-    @Override
-    public String getNickNamePlayer() {
-        return null;
-    }
 }

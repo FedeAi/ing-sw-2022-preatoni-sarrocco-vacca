@@ -1,16 +1,14 @@
-package it.polimi.ingsw.Model.Cards;
+package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.CentaurRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.PostmanRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Game;
 
-public class CentaurCharacter extends CharacterCard{
-
-    public CentaurCharacter(String imagePath){
+public class PostmanCharacter extends CharacterCard{
+    public PostmanCharacter(String imagePath){
         super(imagePath);
-        price = 3;
+        price = 1;
         isActive = false;
     }
 
@@ -18,7 +16,7 @@ public class CentaurCharacter extends CharacterCard{
     public void activate(Rules rules, Game game) {
         isActive = true;
         activated = true;
-        rules.setDynamicRules(new CentaurRules());
+        rules.setDynamicRules(new PostmanRules());
     }
 
     @Override

@@ -53,6 +53,7 @@ public class School {
     public void addStudentEntry(Color color) {
         studentsEntry.put(color, studentsEntry.getOrDefault(color, 0) + 1);
     }
+
     public void addStudentsEntry(Map<Color, Integer> addStudents) {
         for(Map.Entry<Color,Integer> entry : addStudents.entrySet()){
             studentsEntry.put(entry.getKey(), entry.getValue() + studentsEntry.getOrDefault(entry.getKey(),0));

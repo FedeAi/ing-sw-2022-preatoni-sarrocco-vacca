@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Model.Cards.CharacterCard;
+import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Enumerations.Magician;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Controller.Rules.DynamicRules;
 
-import it.polimi.ingsw.Model.Cards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.MushRoomCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
+import it.polimi.ingsw.Model.Cards.CharacterCards.MushRoomCharacter;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Game;
 

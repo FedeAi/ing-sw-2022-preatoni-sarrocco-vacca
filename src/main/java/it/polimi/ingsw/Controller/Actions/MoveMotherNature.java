@@ -9,25 +9,22 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
-public class MoveMotherNature implements Performable {
-    private String myNickName;
-    private int movement;
+public class MoveMotherNature extends Performable {
+    private final int movement;
 
     MoveMotherNature(String player, int movement) {
-        this.myNickName = player;
+        super(player);
         this.movement = movement;
     }
 
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return false;
-        Player player = player_opt.get();
-
-        if (!game.getRoundOwner().equals(player)) {   // if the player is not the round owner
+        // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
+        if(!super.canPerformExt(game, rules)){
             return false;
         }
+
+        Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER)) {
             return false;
@@ -84,12 +81,5 @@ public class MoveMotherNature implements Performable {
         // change state
         game.setGameState(GameState.ACTION_CHOOSE_CLOUD);
 
-    }
-
-
-
-    @Override
-    public String getNickNamePlayer() {
-        return myNickName;
     }
 }

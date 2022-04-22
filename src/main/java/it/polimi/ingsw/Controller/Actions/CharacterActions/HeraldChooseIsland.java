@@ -2,6 +2,9 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
+import it.polimi.ingsw.Model.Cards.CharacterCards.HeraldCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.JockerCharacter;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
@@ -10,31 +13,38 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
-public class HeraldChooseIsland implements Performable {
-    private final String myNickName;
+public class HeraldChooseIsland extends Performable {
     private int islandIndex;
 
     HeraldChooseIsland(String player, int islandIndex) {
-        this.myNickName = player;
+        super(player);
         this.islandIndex = islandIndex;
     }
 
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return false;
-        Player player = player_opt.get();
-
-        if (!game.getRoundOwner().equals(player)) {   // if the player is not the round owner
+        // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
+        if(!super.canPerformExt(game, rules)){
             return false;
         }
+
+        Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.HERALD_ACTIVE)) {
             return false;
         }
 
         // is action legal check
+        // there is no an active card
+        Optional<CharacterCard> card = game.getActiveCharacter();
+        if(card.isEmpty())
+            return false;
+
+        // the active card is not the right one
+        if(!(card.get() instanceof HeraldCharacter)){
+            return false;
+        }
+
         if(!game.getIslandContainer().isFeasibleIndex(islandIndex)){
             return false;
         }
@@ -79,8 +89,4 @@ public class HeraldChooseIsland implements Performable {
         }
     }
 
-    @Override
-    public String getNickNamePlayer() {
-        return myNickName;
-    }
 }

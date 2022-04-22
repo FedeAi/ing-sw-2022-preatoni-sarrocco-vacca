@@ -8,26 +8,23 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
-public abstract class MoveStudentFromEntry implements Performable{
+public abstract class MoveStudentFromEntry extends Performable{
 
-    protected final String myNickName;
     protected final Color color;
 
     MoveStudentFromEntry(String player, Color color){
-        this.myNickName = player;
+        super(player);
         this.color = color;
     }
 
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if(player_opt.isEmpty())    // if there is no Player with that nick
-            return false;
-        Player player = player_opt.get();
-
-        if(!game.getRoundOwner().equals(player)){   // if the player is not the round owner
+        // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
+        if(!super.canPerformExt(game, rules)){
             return false;
         }
+
+        Player player = getPlayer(game);
 
         if(!game.getGameState().equals(GameState.ACTION_MOVE_STUDENTS)){
             return false;
@@ -45,9 +42,5 @@ public abstract class MoveStudentFromEntry implements Performable{
         return true;
     }
 
-    @Override
-    public String getNickNamePlayer() {
-        return myNickName;
-    }
 
 }

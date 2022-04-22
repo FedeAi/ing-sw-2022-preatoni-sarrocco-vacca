@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Model.Cards;
+package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Enumerations.GameState;

@@ -2,8 +2,9 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Model.Cards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.MushRoomCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
+import it.polimi.ingsw.Model.Cards.CharacterCards.JockerCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.MushRoomCharacter;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -11,31 +12,37 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
-public class MushRoomChooseColor implements Performable {
-    private final String myNickName;
+public class MushRoomChooseColor extends Performable {
     private final Color student;
 
     MushRoomChooseColor(String player, Color student) {
-        this.myNickName = player;
+        super(player);
         this.student = student;
     }
 
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return false;
-        Player player = player_opt.get();
-
-        if (!game.getRoundOwner().equals(player)) {   // if the player is not the round owner
+        // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
+        if(!super.canPerformExt(game, rules)){
             return false;
         }
+
+        Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.MUSHROOM_CHOOSE_COLOR)) {
             return false;
         }
 
-        // check the card is one of the extracted once
+        // there is no an active card
+        Optional<CharacterCard> card = game.getActiveCharacter();
+        if(card.isEmpty())
+            return false;
+
+        // the active card is not the right one
+        if(!(card.get() instanceof MushRoomCharacter)){
+            return false;
+        }
+
         if(game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof MushRoomCharacter)){
             return false;
         }
@@ -52,8 +59,4 @@ public class MushRoomChooseColor implements Performable {
         mushRoomCard.ifPresent(characterCard -> ((MushRoomCharacter) characterCard).setStudent(this.student));
     }
 
-    @Override
-    public String getNickNamePlayer() {
-        return myNickName;
-    }
 }
