@@ -20,7 +20,7 @@ public class ChooseCloud extends Performable {
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if(!super.canPerformExt(game, rules)){
+        if (!super.canPerformExt(game, rules)) {
             return false;
         }
 
@@ -68,7 +68,7 @@ public class ChooseCloud extends Performable {
 
         // END OF PLAYER TURN -> deactivate Character effects if there is an active card
         game.getActiveCharacter().ifPresent(characterCard ->
-                characterCard.deactivate(rules,game));
+                characterCard.deactivate(rules, game));
 
     }
 

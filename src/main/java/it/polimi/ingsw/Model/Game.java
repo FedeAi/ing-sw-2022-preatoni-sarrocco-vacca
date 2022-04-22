@@ -62,7 +62,9 @@ public class Game {
         this.islandContainer = new IslandContainer(islands);
     }
 
-    public void initCharacterCards(LinkedList<CharacterCard> cards) { this.characterCards = cards; }
+    public void initCharacterCards(LinkedList<CharacterCard> cards) {
+        this.characterCards = cards;
+    }
 
     /**
      * check if the name is available
@@ -110,7 +112,7 @@ public class Game {
         this.professors.put(professor, player);
     }
 
-    public void setProfessors(EnumMap<Color,String> professors) {
+    public void setProfessors(EnumMap<Color, String> professors) {
         this.professors = professors;
     }
 
@@ -207,15 +209,21 @@ public class Game {
         return clouds;
     }
 
-    public Bag getBag() { return bag; }
+    public Bag getBag() {
+        return bag;
+    }
 
-    public List<CharacterCard> getCharacterCards(){ return characterCards; }
+    public List<CharacterCard> getCharacterCards() {
+        return characterCards;
+    }
 
     public IslandContainer getIslandContainer() {
         return islandContainer;
     }
 
-    public Optional<CharacterCard> getActiveCharacter() { return characterCards.stream().filter(c -> c.isActive()).findFirst();}
+    public Optional<CharacterCard> getActiveCharacter() {
+        return characterCards.stream().filter(c -> c.isActive()).findFirst();
+    }
 
     public int numPlayers() {
         return players.size();

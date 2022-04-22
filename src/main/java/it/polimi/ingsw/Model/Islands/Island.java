@@ -15,7 +15,7 @@ public abstract class Island {
 
     public abstract void addStudent(Color student);
 
-    public static boolean checkJoin(Island island1, Island island2){
+    public static boolean checkJoin(Island island1, Island island2) {
         if (island1.getOwner() == null || island2.getOwner() == null) {
             return false;
         }

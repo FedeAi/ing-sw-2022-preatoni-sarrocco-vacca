@@ -10,14 +10,14 @@ import java.util.Optional;
 
 public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
 
-    MoveStudentFromEntryToHall(String player, Color color){
+    MoveStudentFromEntryToHall(String player, Color color) {
         super(player, color);
     }
 
     @Override
     public void performMove(Game game, Rules rules) {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if(player_opt.isEmpty())    // if there is no Player with that nick
+        if (player_opt.isEmpty())    // if there is no Player with that nick
             return;
         Player player = player_opt.get();
 
@@ -26,7 +26,7 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
         //compute the new professors
         game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game));
 
-        if(Rules.getEntrySize(game.numPlayers()) - player.getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())){
+        if (Rules.getEntrySize(game.numPlayers()) - player.getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())) {
             game.setGameState(GameState.ACTION_MOVE_MOTHER);
         }
     }

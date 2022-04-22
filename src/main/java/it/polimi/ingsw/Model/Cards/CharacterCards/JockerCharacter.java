@@ -5,15 +5,12 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-public class JockerCharacter extends CharacterCard{
-    private Map<Color,Integer> students;
+public class JockerCharacter extends CharacterCard {
+    private Map<Color, Integer> students;
     private GameState previousState;
     private int swappedStudents;
     public static final int maxSwaps = 3;
@@ -21,14 +18,14 @@ public class JockerCharacter extends CharacterCard{
     public JockerCharacter(String imagePath, ArrayList<Color> students) {
         super(imagePath);
         swappedStudents = 0;
-        if(students.size() != 6){
+        if (students.size() != 6) {
             throw new IllegalArgumentException("size of students must me 6");
         }
 
         // fill students map
         this.students = new EnumMap<Color, Integer>(Color.class);
-        for(Color stud : students){
-            this.students.put(stud,this.students.getOrDefault(stud, 0) + 1);
+        for (Color stud : students) {
+            this.students.put(stud, this.students.getOrDefault(stud, 0) + 1);
         }
 
         price = 1;
@@ -53,25 +50,24 @@ public class JockerCharacter extends CharacterCard{
     }
 
     /**
-     *
      * @param studentToPick the student you pick from the island
      * @param studentToPut  the student you put on the island
      */
-    public void swapStudents(Color studentToPick, Color studentToPut) throws IllegalArgumentException{
-        if(students.getOrDefault(studentToPick,0) <= 0){
-            throw  new IllegalArgumentException("the student you choose to pick is not in there");
-        }else{
-            students.put(studentToPut, students.getOrDefault(studentToPut,0)+1);
+    public void swapStudents(Color studentToPick, Color studentToPut) throws IllegalArgumentException {
+        if (students.getOrDefault(studentToPick, 0) <= 0) {
+            throw new IllegalArgumentException("the student you choose to pick is not in there");
+        } else {
+            students.put(studentToPut, students.getOrDefault(studentToPut, 0) + 1);
             students.put(studentToPut, students.get(studentToPick) - 1);
             swappedStudents++;
         }
     }
 
-    public int getSwappedStudents(){
+    public int getSwappedStudents() {
         return swappedStudents;
     }
 
-    public Map<Color, Integer> getStudents(){
+    public Map<Color, Integer> getStudents() {
         return students;
     }
 }

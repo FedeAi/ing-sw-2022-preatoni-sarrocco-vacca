@@ -6,8 +6,6 @@ import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
-import java.util.Optional;
-
 public class ActivateCard extends Performable {
 
     private final int choice;
@@ -20,7 +18,7 @@ public class ActivateCard extends Performable {
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if(!super.canPerformExt(game, rules)){
+        if (!super.canPerformExt(game, rules)) {
             return false;
         }
 
@@ -35,7 +33,7 @@ public class ActivateCard extends Performable {
             return false;
         }
 
-        if(choice < 0 || choice > Rules.numCharacterCards){
+        if (choice < 0 || choice > Rules.numCharacterCards) {
             return false;
         }
 

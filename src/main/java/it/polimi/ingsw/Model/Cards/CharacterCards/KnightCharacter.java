@@ -5,8 +5,8 @@ import it.polimi.ingsw.Controller.Rules.DynamicRules.KnightRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Game;
 
-public class KnightCharacter extends CharacterCard{
-    public KnightCharacter(String imagePath){
+public class KnightCharacter extends CharacterCard {
+    public KnightCharacter(String imagePath) {
         super(imagePath);
         price = 2;
         isActive = false;

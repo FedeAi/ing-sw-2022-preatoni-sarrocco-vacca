@@ -7,7 +7,7 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
-public class MushRoomCharacter extends CharacterCard{
+public class MushRoomCharacter extends CharacterCard {
     Color student;
     private GameState previousState;
 

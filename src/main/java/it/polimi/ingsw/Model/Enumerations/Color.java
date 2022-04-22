@@ -19,7 +19,7 @@ public enum Color {
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
 
-    public static Color randomColor()  {
+    public static Color randomColor() {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

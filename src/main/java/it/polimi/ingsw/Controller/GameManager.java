@@ -8,7 +8,10 @@ import it.polimi.ingsw.Model.Enumerations.TowerColor;
 import it.polimi.ingsw.Model.Islands.BaseIsland;
 import it.polimi.ingsw.Model.Islands.Island;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class GameManager {
 
@@ -32,7 +35,7 @@ public class GameManager {
         return gameInstance;
     }
 
-    public Rules getRules(){
+    public Rules getRules() {
         return rules;
     }
 
@@ -59,7 +62,7 @@ public class GameManager {
             // create and fill the school
             Map<Color, Integer> students = gameInstance.getBag().extract(Rules.getEntrySize(players.size()));
             TowerColor towerColor = TowerColor.values()[i];
-            School school = new School(Rules.getTowersPerPlayer(players.size()),towerColor , students);
+            School school = new School(Rules.getTowersPerPlayer(players.size()), towerColor, students);
             player.setSchool(school);
         }
     }
@@ -91,11 +94,11 @@ public class GameManager {
         gameInstance.getBag().extendBag(Rules.bagSize - Rules.initialBagSize);
     }
 
-    private void initClouds(){
+    private void initClouds() {
         int numClouds = gameInstance.getPlayers().size();
         LinkedList<Cloud> clouds = new LinkedList<>();
 
-        for(int i = 0; i < numClouds; i++){
+        for (int i = 0; i < numClouds; i++) {
             Cloud cloud = new Cloud();
             cloud.addStudents(gameInstance.getBag().extract(Rules.getStudentsPerTurn(gameInstance.numPlayers()))); //init fill
             clouds.add(cloud);

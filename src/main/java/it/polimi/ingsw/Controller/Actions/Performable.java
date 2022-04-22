@@ -9,7 +9,7 @@ import java.util.Optional;
 public abstract class Performable {
     protected String myNickName;
 
-    public Performable(String nickName){
+    public Performable(String nickName) {
         this.myNickName = nickName;
     }
 
@@ -21,7 +21,7 @@ public abstract class Performable {
      * @param rules
      * @return the boolean
      */
-    public boolean canPerformExt(Game game, Rules rules){
+    public boolean canPerformExt(Game game, Rules rules) {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
         if (player_opt.isEmpty())    // if there is no Player with that nick
             return false;
@@ -35,7 +35,8 @@ public abstract class Performable {
 
     /**
      * Perform move method.
-     *  @param game of type GameExt: the game
+     *
+     * @param game  of type GameExt: the game
      * @param rules
      */
     public abstract void performMove(Game game, Rules rules);
@@ -45,7 +46,7 @@ public abstract class Performable {
      *
      * @return of type int: the player's id.
      */
-    String getNickNamePlayer(){
+    String getNickNamePlayer() {
         return myNickName;
     }
 
@@ -55,7 +56,7 @@ public abstract class Performable {
      * @param game
      * @return
      */
-    protected Player getPlayer(Game game){
+    protected Player getPlayer(Game game) {
         Optional<Player> playerByNickname = game.getPlayerByNickname(myNickName);
         return playerByNickname.orElse(null);
     }

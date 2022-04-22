@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model.Islands;
 
 import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Islands.Island;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -11,27 +10,30 @@ import java.util.Map;
 public class SuperIsland extends Island {
     private String owner;
     List<BaseIsland> islands;
-    public SuperIsland(List<Island> islands){
+
+    public SuperIsland(List<Island> islands) {
         this.islands = new ArrayList<>();
-        for(Island island : islands){
-            if(island instanceof SuperIsland){
-                this.islands.addAll(((SuperIsland)island).islands);
-            }else if (island instanceof BaseIsland){
-                this.islands.add((BaseIsland)island);
+        for (Island island : islands) {
+            if (island instanceof SuperIsland) {
+                this.islands.addAll(((SuperIsland) island).islands);
+            } else if (island instanceof BaseIsland) {
+                this.islands.add((BaseIsland) island);
             }
-            owner = owner==null ? island.getOwner() : owner;
+            owner = owner == null ? island.getOwner() : owner;
         }
 
     }
-    List<BaseIsland> getBaseIslands(){
+
+    List<BaseIsland> getBaseIslands() {
         return islands;
     }
+
     @Override
     public Map<Color, Integer> getStudents() {
         Map<Color, Integer> students = new EnumMap<Color, Integer>(Color.class);
-        for(Island i : islands){
-            for(Map.Entry<Color,Integer> entry : i.getStudents().entrySet()){
-                students.put(entry.getKey(), entry.getValue() + students.getOrDefault(entry.getKey(),0));
+        for (Island i : islands) {
+            for (Map.Entry<Color, Integer> entry : i.getStudents().entrySet()) {
+                students.put(entry.getKey(), entry.getValue() + students.getOrDefault(entry.getKey(), 0));
             }
         }
         return students;
@@ -50,7 +52,7 @@ public class SuperIsland extends Island {
     @Override
     public void setOwner(String owner) {
         this.owner = owner;
-        for(Island island : islands){
+        for (Island island : islands) {
             island.setOwner(owner);
         }
     }

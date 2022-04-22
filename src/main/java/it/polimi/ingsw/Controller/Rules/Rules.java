@@ -14,9 +14,10 @@ public class Rules {
 
     private DynamicRules dynamicRules;
 
-    public Rules(){
+    public Rules() {
         dynamicRules = new BaseRules();
     }
+
     public static int getEntrySize(int numPlayers) {
         return 9;
     }

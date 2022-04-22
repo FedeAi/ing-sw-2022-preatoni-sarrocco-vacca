@@ -16,7 +16,9 @@ public interface DynamicRules {
      * @return
      */
     public abstract EnumMap<Color, String> getProfessorInfluence(Game game);
+
     public abstract int computeMotherMaxMoves(AssistantCard card);
+
     /**
      * Computethe player with the maximum influence on that island, or Optional.Empty if no players have influence
      *

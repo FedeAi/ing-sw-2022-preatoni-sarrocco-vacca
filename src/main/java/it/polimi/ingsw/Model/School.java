@@ -2,7 +2,6 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.TowerColor;
-import it.polimi.ingsw.Model.Islands.Island;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -44,9 +43,10 @@ public class School {
 
     /**
      * It computes how many students there are in the Entry
+     *
      * @return the number of overall students prensent in the Entry
      */
-    public int getEntryStudentsNum(){
+    public int getEntryStudentsNum() {
         return studentsEntry.values().stream().reduce(0, Integer::sum);
     }
 
@@ -55,8 +55,8 @@ public class School {
     }
 
     public void addStudentsEntry(Map<Color, Integer> addStudents) {
-        for(Map.Entry<Color,Integer> entry : addStudents.entrySet()){
-            studentsEntry.put(entry.getKey(), entry.getValue() + studentsEntry.getOrDefault(entry.getKey(),0));
+        for (Map.Entry<Color, Integer> entry : addStudents.entrySet()) {
+            studentsEntry.put(entry.getKey(), entry.getValue() + studentsEntry.getOrDefault(entry.getKey(), 0));
         }
     }
 
@@ -69,8 +69,8 @@ public class School {
     }
 
     public void addStudentsHall(Map<Color, Integer> addStudents) {
-        for(Map.Entry<Color,Integer> entry : addStudents.entrySet()){
-            studentsHall.put(entry.getKey(), entry.getValue() + studentsHall.getOrDefault(entry.getKey(),0));
+        for (Map.Entry<Color, Integer> entry : addStudents.entrySet()) {
+            studentsHall.put(entry.getKey(), entry.getValue() + studentsHall.getOrDefault(entry.getKey(), 0));
         }
     }
 

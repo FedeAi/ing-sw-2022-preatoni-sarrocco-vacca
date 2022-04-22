@@ -20,7 +20,7 @@ public class MoveMotherNature extends Performable {
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if(!super.canPerformExt(game, rules)){
+        if (!super.canPerformExt(game, rules)) {
             return false;
         }
 
@@ -68,12 +68,12 @@ public class MoveMotherNature extends Performable {
         // SuperIsland creation
         IslandContainer islandContainer = game.getIslandContainer();
         Island prevIsland = islandContainer.prevIsland(newMotherPosition);
-        if(Island.checkJoin(prevIsland,island)) {
+        if (Island.checkJoin(prevIsland, island)) {
             islandContainer.joinPrevIsland(newMotherPosition);
             game.moveMotherNature(-1);
         }
         Island nextIsland = islandContainer.nextIsland(newMotherPosition);
-        if(Island.checkJoin(island,nextIsland)) {
+        if (Island.checkJoin(island, nextIsland)) {
             islandContainer.joinNextIsland(newMotherPosition);
         }
 

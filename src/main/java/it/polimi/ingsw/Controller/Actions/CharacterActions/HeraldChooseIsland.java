@@ -4,7 +4,6 @@ import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.HeraldCharacter;
-import it.polimi.ingsw.Model.Cards.CharacterCards.JockerCharacter;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
@@ -24,7 +23,7 @@ public class HeraldChooseIsland extends Performable {
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if(!super.canPerformExt(game, rules)){
+        if (!super.canPerformExt(game, rules)) {
             return false;
         }
 
@@ -37,15 +36,15 @@ public class HeraldChooseIsland extends Performable {
         // is action legal check
         // there is no an active card
         Optional<CharacterCard> card = game.getActiveCharacter();
-        if(card.isEmpty())
+        if (card.isEmpty())
             return false;
 
         // the active card is not the right one
-        if(!(card.get() instanceof HeraldCharacter)){
+        if (!(card.get() instanceof HeraldCharacter)) {
             return false;
         }
 
-        if(!game.getIslandContainer().isFeasibleIndex(islandIndex)){
+        if (!game.getIslandContainer().isFeasibleIndex(islandIndex)) {
             return false;
         }
 
@@ -79,12 +78,12 @@ public class HeraldChooseIsland extends Performable {
         // SuperIsland creation
         IslandContainer islandContainer = game.getIslandContainer();
         Island prevIsland = islandContainer.prevIsland(islandIndex);
-        if(Island.checkJoin(prevIsland,island)) {
+        if (Island.checkJoin(prevIsland, island)) {
             islandContainer.joinPrevIsland(islandIndex);
             game.moveMotherNature(-1);
         }
         Island nextIsland = islandContainer.nextIsland(islandIndex);
-        if(Island.checkJoin(island,nextIsland)) {
+        if (Island.checkJoin(island, nextIsland)) {
             islandContainer.joinNextIsland(islandIndex);
         }
     }

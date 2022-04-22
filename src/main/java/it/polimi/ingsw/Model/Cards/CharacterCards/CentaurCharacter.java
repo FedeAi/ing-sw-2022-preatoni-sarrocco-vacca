@@ -5,9 +5,9 @@ import it.polimi.ingsw.Controller.Rules.DynamicRules.CentaurRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Game;
 
-public class CentaurCharacter extends CharacterCard{
+public class CentaurCharacter extends CharacterCard {
 
-    public CentaurCharacter(String imagePath){
+    public CentaurCharacter(String imagePath) {
         super(imagePath);
         price = 3;
         isActive = false;

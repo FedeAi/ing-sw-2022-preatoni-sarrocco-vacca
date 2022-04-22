@@ -18,6 +18,7 @@ public abstract class CharacterCard extends Card {
     }
 
     public abstract void activate(Rules rules, Game game);
+
     public abstract void deactivate(Rules rules, Game game);
 
     public boolean isActive() {

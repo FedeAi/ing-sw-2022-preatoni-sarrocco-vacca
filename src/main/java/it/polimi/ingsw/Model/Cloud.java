@@ -3,7 +3,6 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Model.Enumerations.Color;
 
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 
 public class Cloud {
