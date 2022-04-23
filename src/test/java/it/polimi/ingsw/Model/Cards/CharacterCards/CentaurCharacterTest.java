@@ -1,30 +1,30 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.CentaurRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.PostmanRules;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class PostmanCharacterTest {
-    private PostmanCharacter card;
+class CentaurCharacterTest {
+
+    private CentaurCharacter card;
     private Game game;
     private GameManager gameManager;
-    private Player p1, p2;
+    private Player p1, p2, p3;
 
     private void init() {
-        card = new PostmanCharacter("");
-
+        card = new CentaurCharacter("");
         gameManager = new GameManager();
-        p1 = new Player("DraghettoMagico");
-        p2 = new Player("FatinaBullone");
+        p1 = new Player("Ale");
+        p2 = new Player("Fede");
+        p3 = new Player("Davide");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
+        gameManager.addPlayer(p3);
         gameManager.initGame();
         game = gameManager.getGameInstance();
     }
@@ -33,7 +33,8 @@ class PostmanCharacterTest {
     void activate() {
         init();
         card.activate(gameManager.getRules(), game);
-        assertTrue(gameManager.getRules().getDynamicRules() instanceof PostmanRules, " check rules have been updated");
+        assertTrue(card.isActive(), "Checks if the active flag has been set to true");
+        assertTrue(gameManager.getRules().getDynamicRules() instanceof CentaurRules, "Checks if rules have been updated");
     }
 
     @Test
@@ -41,6 +42,6 @@ class PostmanCharacterTest {
         activate();
         card.deactivate(gameManager.getRules(), game);
         assertFalse(card.isActive(), "Checks if the active flag has been set to false");
-        assertFalse(gameManager.getRules().getDynamicRules() instanceof PostmanRules, "Checks if rules have been set to base");
+        assertFalse(gameManager.getRules().getDynamicRules() instanceof CentaurRules, "Checks if rules have been set to base");
     }
 }
