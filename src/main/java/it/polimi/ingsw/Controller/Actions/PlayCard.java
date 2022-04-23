@@ -70,7 +70,7 @@ public class PlayCard extends Performable {
      * choose Player orders for action phase
      */
     private void setActionOrder(Game game) {
-        // TODO TESTINGGGGG
+        // xTODO TESTINGGGGG
         List<Player> planningPhasePlayers = game.getOrderedPlanningPlayers();
 
         // compare by cards value

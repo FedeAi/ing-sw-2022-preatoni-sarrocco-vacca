@@ -30,6 +30,10 @@ public class MoveMotherNature extends Performable {
             return false;
         }
 
+        if(player == null ){ //getPlayer return null if doesn't exist the player, so check if exist
+            return false;
+        }
+
         // is action legal check
 
         int playerCardMaxMoves = rules.getDynamicRules().computeMotherMaxMoves(player.getPlayedCard());
@@ -41,11 +45,6 @@ public class MoveMotherNature extends Performable {
 
     @Override
     public void performMove(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        // TODO WHY ARE WE CHECKING THE PLAYER, IF WE DO NOT USE IT?
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return;
-        Player player = player_opt.get();
 
         game.moveMotherNature(movement);
         int newMotherPosition = game.getMotherNature().getPosition();
