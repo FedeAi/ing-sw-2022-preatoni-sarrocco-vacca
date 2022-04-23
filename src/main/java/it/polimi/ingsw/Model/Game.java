@@ -63,6 +63,7 @@ public class Game {
     }
 
     public void initCharacterCards(LinkedList<CharacterCard> cards) {
+        // TODO IS THE FUNCTION ARGUMENT CORRECT? LinkedList vs ArrayList or just List
         this.characterCards = cards;
     }
 
