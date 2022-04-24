@@ -30,10 +30,6 @@ public class MoveMotherNature extends Performable {
             return false;
         }
 
-        if(player == null ){ //getPlayer return null if doesn't exist the player, so check if exist
-            return false;
-        }
-
         // is action legal check
 
         int playerCardMaxMoves = rules.getDynamicRules().computeMotherMaxMoves(player.getPlayedCard());

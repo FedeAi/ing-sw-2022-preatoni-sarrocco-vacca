@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class JockerCharacter extends CharacterCard {
+public class JokerCharacter extends CharacterCard {
     private Map<Color, Integer> students;
     private GameState previousState;
     private int swappedStudents;
     public static final int maxSwaps = 3;
 
-    public JockerCharacter(String imagePath, ArrayList<Color> students) {
+    public JokerCharacter(String imagePath, ArrayList<Color> students) {
         super(imagePath);
         swappedStudents = 0;
         if (students.size() != 6) {

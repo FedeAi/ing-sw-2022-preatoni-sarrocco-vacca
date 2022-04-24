@@ -3,7 +3,7 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.JockerCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.JokerCharacter;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -11,10 +11,10 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
-public class JockerSwapStudents extends Performable {
+public class JokerSwapStudents extends Performable {
     private Color studentToPick, studentToPut;
 
-    public JockerSwapStudents(String nickName, Color studentToPick, Color studentToPut) {
+    public JokerSwapStudents(String nickName, Color studentToPick, Color studentToPut) {
         super(nickName);
         this.studentToPick = studentToPick;
         this.studentToPut = studentToPut;
@@ -40,18 +40,18 @@ public class JockerSwapStudents extends Performable {
             return false;
 
         // the active card is not the right one
-        if (!(card.get() instanceof JockerCharacter)) {
+        if (!(card.get() instanceof JokerCharacter)) {
             return false;
         }
-        JockerCharacter jocker = (JockerCharacter) card.get();
+        JokerCharacter joker = (JokerCharacter) card.get();
 
         // already done all possible movements
-        if (jocker.getSwappedStudents() >= JockerCharacter.maxSwaps) {
+        if (joker.getSwappedStudents() >= JokerCharacter.maxSwaps) {
             return false;
         }
 
         // the card does not have that student
-        if (jocker.getStudents().getOrDefault(studentToPick, 0) <= 0) {
+        if (joker.getStudents().getOrDefault(studentToPick, 0) <= 0) {
             return false;
         }
         // the player does not have that student
@@ -70,8 +70,8 @@ public class JockerSwapStudents extends Performable {
 
         // to check instance of and make cast
         if (game.getActiveCharacter().isPresent() && canPerformExt(game, rules)) {
-            JockerCharacter jocker = (JockerCharacter) game.getActiveCharacter().get();
-            jocker.swapStudents(studentToPick, studentToPut);
+            JokerCharacter joker = (JokerCharacter) game.getActiveCharacter().get();
+            joker.swapStudents(studentToPick, studentToPut);
             player.getSchool().addStudentEntry(studentToPick);
             player.getSchool().removeStudentFromEntry(studentToPut);
         }
