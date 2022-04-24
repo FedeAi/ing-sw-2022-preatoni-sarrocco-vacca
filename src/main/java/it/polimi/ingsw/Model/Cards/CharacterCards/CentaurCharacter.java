@@ -14,6 +14,9 @@ public class CentaurCharacter extends CharacterCard {
     }
 
     @Override
+    public void init() {}
+
+    @Override
     public void activate(Rules rules, Game game) {
         isActive = true;
         activated = true;

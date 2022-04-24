@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Model.Bag;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -13,25 +14,33 @@ public class JockerCharacter extends CharacterCard {
     private Map<Color, Integer> students;
     private GameState previousState;
     private int swappedStudents;
+    private Bag bag;
+
     public static final int maxSwaps = 3;
 
-    public JockerCharacter(String imagePath, ArrayList<Color> students) {
+    public JockerCharacter(String imagePath, Bag bag) {
         super(imagePath);
-        swappedStudents = 0;
-        if (students.size() != 6) {
-            throw new IllegalArgumentException("size of students must me 6");
-        }
-
-        // fill students map
-        this.students = new EnumMap<Color, Integer>(Color.class);
-        for (Color stud : students) {
-            this.students.put(stud, this.students.getOrDefault(stud, 0) + 1);
-        }
-
         price = 1;
         isActive = false;
         activated = false;
+
+        swappedStudents = 0;
+        this.bag = bag;
+        // students map
+        this.students = new EnumMap<Color, Integer>(Color.class);
+
+
+
     }
+
+    @Override
+    public void init() {
+        for (int i=0; i<6;i++) {
+            Color student = bag.extractOne();
+            this.students.put(student, this.students.getOrDefault(student, 0) + 1);
+        }
+    }
+
 
     @Override
     public void activate(Rules rules, Game game) {
