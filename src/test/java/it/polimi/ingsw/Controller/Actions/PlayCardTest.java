@@ -94,10 +94,7 @@ class PlayCardTest {
     @Test
     private void setActionOrder() {
 
-      //TODO  NEEDED A GENERAL CHECK
-
-
-
+        //TODO  NEEDED A GENERAL CHECK
 
         GameManager gameM = new GameManager();
 
@@ -112,11 +109,9 @@ class PlayCardTest {
 
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
 
-        //start p1 move
+        //p1 move
         gameInstance.setRoundOwner(p1);
-        Random rand = new Random();
-        int indexCard = rand.nextInt(10);
-        AssistantCard choice = p1.getCards().get(indexCard);
+        AssistantCard choice = p1.getCards().get(0); //value 1
 
         Performable playCard1 = new PlayCard("fede", choice);
         playCard1.performMove(gameInstance,gameM.getRules() );
@@ -124,25 +119,23 @@ class PlayCardTest {
 
         //start p2 move
         gameInstance.setRoundOwner(p2);
-        int indexCard2 = rand.nextInt(10);
-        AssistantCard choice2 = p2.getCards().get(indexCard2);
+        AssistantCard choice2 = p2.getCards().get(1); //value 2
         Performable playCard2 = new PlayCard("gianfranco", choice2);
         playCard1.performMove(gameInstance,gameM.getRules() );
         //end p2 move
+        //and planning phase
 
-       // setActionOrder(gameInstance); error(?)
-        //now we should move the students
+
+        ArrayList<Player> expected = new ArrayList<>(); //list of player
+        expected.add(p1);
+        expected.add(p2);
+
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        //the owner of lower value must move first
 
-        if(choice.getValue() < choice2.getValue()){
-            gameInstance.setRoundOwner(p1);
-            assertFalse(choice.getValue() > choice2.getValue());
-        }
-        else{
-            gameInstance.setRoundOwner(p2);
-            assertFalse(choice.getValue() < choice2.getValue());
-        }
+        assertFalse(!expected.equals(gameInstance.getOrderedPlanningPlayers()));
+
+        //list of expected player should be equals
+
 
     }
 }

@@ -62,7 +62,7 @@ public class Game {
         this.islandContainer = new IslandContainer(islands);
     }
 
-    public void initCharacterCards(LinkedList<CharacterCard> cards) {
+    public void initCharacterCards(List<CharacterCard> cards) {
         // TODO IS THE FUNCTION ARGUMENT CORRECT? LinkedList vs ArrayList or just List
         this.characterCards = cards;
     }

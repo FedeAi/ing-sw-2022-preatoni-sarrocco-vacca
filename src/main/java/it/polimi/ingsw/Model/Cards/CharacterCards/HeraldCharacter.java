@@ -14,6 +14,9 @@ public class HeraldCharacter extends CharacterCard {
     }
 
     @Override
+    public void init() {}
+
+    @Override
     public void activate(Rules rules, Game game) {
         previousState = game.getGameState();
         game.setGameState(GameState.HERALD_ACTIVE);

@@ -12,6 +12,8 @@ public class FarmerCharacter extends CharacterCard {
         price = 2;
         isActive = false;
     }
+    @Override
+    public void init() {}
 
     @Override
     public void activate(Rules rules, Game game) {

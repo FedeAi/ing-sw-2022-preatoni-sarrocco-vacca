@@ -2,16 +2,14 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Cards.CharacterCards.*;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Enumerations.TowerColor;
 import it.polimi.ingsw.Model.Islands.BaseIsland;
 import it.polimi.ingsw.Model.Islands.Island;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class GameManager {
 
@@ -20,6 +18,7 @@ public class GameManager {
     private final Game gameInstance;
     private final Rules rules;
     //private RoundManager roundManager;
+    private boolean isHard_temp = true;
 
     public GameManager() {
 
@@ -51,7 +50,26 @@ public class GameManager {
         fillBag();
         initSchools();
         initClouds();
-        // TODO initCharacters this can be made in anyway
+        if(isHard_temp){
+            initCharacters();
+        }
+    }
+
+    private void initCharacters() {
+        List<CharacterCard> characters = new ArrayList<>();
+        characters.add(new CentaurCharacter(""));
+        characters.add(new FarmerCharacter(""));
+        characters.add(new HeraldCharacter(""));
+        characters.add(new JockerCharacter("", gameInstance.getBag()));
+        characters.add(new KnightCharacter(""));
+        characters.add(new MushRoomCharacter(""));
+        characters.add(new PostmanCharacter(""));
+
+        Collections.shuffle(characters);
+        List<CharacterCard> extractedCharacters = characters.subList(0, 3);
+        extractedCharacters.forEach(CharacterCard::init);
+        gameInstance.initCharacterCards(characters.subList(0,3));
+
     }
 
 
