@@ -60,7 +60,7 @@ public class GameManager {
         characters.add(new CentaurCharacter(""));
         characters.add(new FarmerCharacter(""));
         characters.add(new HeraldCharacter(""));
-        characters.add(new JockerCharacter("", gameInstance.getBag()));
+        characters.add(new JokerCharacter("", gameInstance.getBag()));
         characters.add(new KnightCharacter(""));
         characters.add(new MushRoomCharacter(""));
         characters.add(new PostmanCharacter(""));

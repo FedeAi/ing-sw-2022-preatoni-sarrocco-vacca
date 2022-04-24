@@ -6,11 +6,10 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class JockerCharacter extends CharacterCard {
+public class JokerCharacter extends CharacterCard {
     private Map<Color, Integer> students;
     private GameState previousState;
     private int swappedStudents;
@@ -18,7 +17,7 @@ public class JockerCharacter extends CharacterCard {
 
     public static final int maxSwaps = 3;
 
-    public JockerCharacter(String imagePath, Bag bag) {
+    public JokerCharacter(String imagePath, Bag bag) {
         super(imagePath);
         price = 1;
         isActive = false;

@@ -51,6 +51,8 @@ public class ChooseCloud extends Performable {
         List<Cloud> clouds = game.getClouds();
         player.getSchool().addStudentsEntry(clouds.get(choice).pickStudents());
 
+
+        // TODO MOVE THIS TO ROUNDMANAGER (JAVA:LISTENER)
         Optional<String> nextPlayer = game.getNextPlayerActionPhase();
 
         if (nextPlayer.isEmpty()) { //if end Turn
