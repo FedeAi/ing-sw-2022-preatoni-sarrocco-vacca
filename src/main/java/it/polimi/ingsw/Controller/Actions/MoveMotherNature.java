@@ -45,33 +45,35 @@ public class MoveMotherNature extends Performable {
         game.moveMotherNature(movement);
         int newMotherPosition = game.getMotherNature().getPosition();
         Island island = game.getIslandContainer().get(newMotherPosition);
-        // set owner ( put the Tower )
-        Optional<String> islandNewOwner_opt = rules.getDynamicRules().computeIslandInfluence(game, island);
-        if (islandNewOwner_opt.isPresent()) {
-            String islandPrevOwner = island.getOwner();
-            if (!islandNewOwner_opt.get().equals(islandPrevOwner)) {
-                island.setOwner(islandNewOwner_opt.get());
-                // remove tower to the player
-                Optional<Player> islandOwnerPlayer_opt = game.getPlayerByNickname(islandNewOwner_opt.get());
-                islandOwnerPlayer_opt.ifPresent(owner -> owner.getSchool().decreaseTowers());
-                // give back the tower to the previous owner
-                Optional<Player> islandPrevPlayer_opt = game.getPlayerByNickname(islandPrevOwner);
-                islandPrevPlayer_opt.ifPresent(owner -> owner.getSchool().increaseTowers());
+        // TODO Needs a code review and proper testing
+        if (!island.isBlocked()) {
+            // set owner ( put the Tower )
+            Optional<String> islandNewOwner_opt = rules.getDynamicRules().computeIslandInfluence(game, island);
+            if (islandNewOwner_opt.isPresent()) {
+                String islandPrevOwner = island.getOwner();
+                if (!islandNewOwner_opt.get().equals(islandPrevOwner)) {
+                    island.setOwner(islandNewOwner_opt.get());
+                    // remove tower to the player
+                    Optional<Player> islandOwnerPlayer_opt = game.getPlayerByNickname(islandNewOwner_opt.get());
+                    islandOwnerPlayer_opt.ifPresent(owner -> owner.getSchool().decreaseTowers());
+                    // give back the tower to the previous owner
+                    Optional<Player> islandPrevPlayer_opt = game.getPlayerByNickname(islandPrevOwner);
+                    islandPrevPlayer_opt.ifPresent(owner -> owner.getSchool().increaseTowers());
+                }
+            }
+
+            // SuperIsland creation
+            IslandContainer islandContainer = game.getIslandContainer();
+            Island prevIsland = islandContainer.prevIsland(newMotherPosition);
+            if (Island.checkJoin(prevIsland, island)) {
+                islandContainer.joinPrevIsland(newMotherPosition);
+                game.moveMotherNature(-1);
+            }
+            Island nextIsland = islandContainer.nextIsland(newMotherPosition);
+            if (Island.checkJoin(island, nextIsland)) {
+                islandContainer.joinNextIsland(newMotherPosition);
             }
         }
-
-        // SuperIsland creation
-        IslandContainer islandContainer = game.getIslandContainer();
-        Island prevIsland = islandContainer.prevIsland(newMotherPosition);
-        if (Island.checkJoin(prevIsland, island)) {
-            islandContainer.joinPrevIsland(newMotherPosition);
-            game.moveMotherNature(-1);
-        }
-        Island nextIsland = islandContainer.nextIsland(newMotherPosition);
-        if (Island.checkJoin(island, nextIsland)) {
-            islandContainer.joinNextIsland(newMotherPosition);
-        }
-
 
         // change state
         game.setGameState(GameState.ACTION_CHOOSE_CLOUD);
