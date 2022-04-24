@@ -1,27 +1,34 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.MushRoomRules;
+import it.polimi.ingsw.Controller.Rules.DynamicRules.PostmanRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Model.Bag;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
-import java.util.ArrayList;
+import java.util.Map;
 
-public class MushRoomCharacter extends CharacterCard {
-    Color student;
+public class PrincessCharacter extends CharacterCard {
+
+    private Map<Color, Integer> students;
     private GameState previousState;
+    private Bag bag;
 
-    public MushRoomCharacter(String imagePath) {
+
+    public PrincessCharacter(String imagePath) {
         super(imagePath);
-        price = 3;
+        price = 2;
         isActive = false;
     }
-
     @Override
     public void init() {
-        ArrayList <Color> students = new ArrayList<>();
+
+        for (int i=0; i<4;i++) {
+            Color student = bag.extractOne();
+            this.students.put(student, this.students.getOrDefault(student, 0) + 1);
+        }
     }
 
     @Override
@@ -29,24 +36,19 @@ public class MushRoomCharacter extends CharacterCard {
         isActive = true;
         activated = true;
         previousState = game.getGameState();
-        game.setGameState(GameState.MUSHROOM_CHOOSE_COLOR);
-        rules.setDynamicRules(new MushRoomRules());
+        game.setGameState(GameState.PRINCESS_MOVE_STUDENT);
+
     }
 
     @Override
     public void deactivate(Rules rules, Game game) {
         isActive = false;
-        rules.setDynamicRules(new BaseRules());
         game.setGameState(previousState);
-        setStudent(null);
     }
 
-    public Color getStudent() {
-        return student;
-    }
-
-    public void setStudent(Color student) {
-        this.student = student;
+    public void moveStudent(Color Student) {
+        students.remove(Student,1);
+        students.put(bag.extractOne(),1);
     }
 
 }

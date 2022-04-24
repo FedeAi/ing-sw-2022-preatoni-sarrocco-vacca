@@ -92,9 +92,8 @@ class PlayCardTest {
         assertTrue(gameInstance.getPlayedCards().contains(choice));
     }
     @Test
-    private void setActionOrder() {
+    public void setActionOrder() {
 
-        //TODO  NEEDED A GENERAL CHECK
 
         GameManager gameM = new GameManager();
 
@@ -121,7 +120,7 @@ class PlayCardTest {
         gameInstance.setRoundOwner(p2);
         AssistantCard choice2 = p2.getCards().get(1); //value 2
         Performable playCard2 = new PlayCard("gianfranco", choice2);
-        playCard1.performMove(gameInstance,gameM.getRules() );
+        playCard2.performMove(gameInstance,gameM.getRules() );
         //end p2 move
         //and planning phase
 
