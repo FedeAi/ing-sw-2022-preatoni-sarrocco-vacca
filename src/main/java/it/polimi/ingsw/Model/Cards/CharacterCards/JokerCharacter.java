@@ -10,6 +10,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class JokerCharacter extends CharacterCard {
+
     private Map<Color, Integer> students;
     private GameState previousState;
     private int swappedStudents;
