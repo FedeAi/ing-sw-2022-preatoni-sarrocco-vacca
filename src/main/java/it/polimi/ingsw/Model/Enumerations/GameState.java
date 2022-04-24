@@ -15,7 +15,6 @@ public enum GameState {
     PLANNING_CHOOSE_CARD, //choosing assistant card -->3 consequence
     /* action phase */
     ACTION_MOVE_STUDENTS,
-    //ACTION_PLAY_CHARACTER,
     ACTION_MOVE_MOTHER,
     ACTION_CHOOSE_CLOUD,
 
@@ -24,5 +23,6 @@ public enum GameState {
     MUSHROOM_CHOOSE_COLOR,
     JOKER_SWAP_STUDENTS,
     PRINCESS_MOVE_STUDENT,
+    MONK_MOVE_STUDENT, GRANDMA_BLOCK_ISLAND,
 
 }

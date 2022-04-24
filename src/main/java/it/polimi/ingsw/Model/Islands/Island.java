@@ -5,6 +5,13 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 import java.util.Map;
 
 public abstract class Island {
+    /*
+        TODO I HAVEN'T SORTED THE SUPERISLAND BLOCKED CASE YET
+        If we join an island with an adjacent one which is blocked,
+        is the SuperIsland blocked or not?
+    */
+    protected boolean isBlocked;
+
     public abstract Map<Color, Integer> getStudents();
 
     public abstract String getOwner();
@@ -20,5 +27,13 @@ public abstract class Island {
             return false;
         }
         return island1.getOwner().equals(island2.getOwner());
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 }

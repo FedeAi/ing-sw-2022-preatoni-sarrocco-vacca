@@ -65,7 +65,7 @@ public class PrincessMoveToEntry extends Performable {
         if (game.getActiveCharacter().isPresent() && canPerformExt(game, rules)) {
             PrincessCharacter princessCharacter = (PrincessCharacter) game.getActiveCharacter().get();
             princessCharacter.moveStudent(student);
-            player.getSchool().addStudentEntry(student);
+            player.getSchool().addStudentHall(student);
         }
 
 

@@ -2,9 +2,7 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Model.Bag;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.HeraldCharacter;
 import it.polimi.ingsw.Model.Cards.CharacterCards.JokerCharacter;
 import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
 import it.polimi.ingsw.Model.Enumerations.Color;
@@ -13,7 +11,6 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;

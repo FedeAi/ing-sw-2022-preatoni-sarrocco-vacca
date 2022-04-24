@@ -12,6 +12,7 @@ public class BaseIsland extends Island {
 
     public BaseIsland() {
         students = new EnumMap<Color, Integer>(Color.class);
+        isBlocked = false;
     }
 
     // TODO return a copy of the map, rather than the direct reference
