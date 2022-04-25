@@ -44,6 +44,12 @@ public class GrandmaCharacter extends CharacterCard {
         }
     }
 
+    public void addBlockingCard() {
+        if (blockingCards <= 4) {
+            blockingCards++;
+        }
+    }
+
     public int getBlockingCards() {
         return blockingCards;
     }

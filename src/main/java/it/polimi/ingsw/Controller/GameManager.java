@@ -50,6 +50,7 @@ public class GameManager {
         initSchools();
         initClouds();
         if(isHard_temp){
+            gameInstance.setExpertMode(true);
             initCharacters();
         }
     }

@@ -76,8 +76,7 @@ public class MonkMoveToIsland extends Performable {
             MonkCharacter monk = (MonkCharacter) game.getActiveCharacter().get();
             monk.moveStudent(student);
             // Now we add the student to the specified island
-            Map<Color, Integer> students = game.getIslandContainer().get(islandIndex).getStudents();
-            students.put(student, students.getOrDefault(student, 0) + 1);
+            game.getIslandContainer().get(islandIndex).addStudent(student);
             monk.deactivate(rules, game);
         }
     }

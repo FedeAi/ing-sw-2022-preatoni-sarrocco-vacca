@@ -7,7 +7,6 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
-import java.util.ArrayList;
 
 public class MushRoomCharacter extends CharacterCard {
     Color student;
@@ -20,9 +19,7 @@ public class MushRoomCharacter extends CharacterCard {
     }
 
     @Override
-    public void init() {
-        ArrayList <Color> students = new ArrayList<>();
-    }
+    public void init() {}
 
     @Override
     public void activate(Rules rules, Game game) {

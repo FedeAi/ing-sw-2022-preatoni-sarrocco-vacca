@@ -37,6 +37,7 @@ public class Game {
         clouds = new ArrayList<>();
         characterCards = new ArrayList<>();
         initProfessors();
+        expertMode = false;
         // characterCards = TODO
     }
 
