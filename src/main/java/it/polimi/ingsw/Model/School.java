@@ -96,9 +96,14 @@ public class School {
         }
         //return isRemoved;
     }
-    public void swapStudents(Color studentToPick, Color studentToPut) {
-       moveStudentFromEntryToHall(studentToPick);
-       moveStudentFromHalltoEntry(studentToPut);
+    /**
+        SWAPPING STUDENTS FROM HALL TO ENTRY (FOR MINSTREL)
+     */
+    public void swapStudents(Color studentFromEntry, Color studentToHall){
+
+       moveStudentFromEntryToHall(studentFromEntry);
+       moveStudentFromHalltoEntry(studentToHall);
+
     }
 
 }

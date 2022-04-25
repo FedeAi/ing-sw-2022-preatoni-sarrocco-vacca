@@ -66,6 +66,7 @@ public class PrincessMoveToEntry extends Performable {
             PrincessCharacter princessCharacter = (PrincessCharacter) game.getActiveCharacter().get();
             princessCharacter.moveStudent(student);
             player.getSchool().addStudentHall(student);
+            game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors
         }
 
     }

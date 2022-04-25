@@ -77,6 +77,7 @@ public class MinstrelSwapStudents extends Performable {
         if (game.getActiveCharacter().isPresent() && canPerformExt(game, rules)) {
             MinstrelCharacter minstrelCharacter = (MinstrelCharacter) game.getActiveCharacter().get();
             player.getSchool().swapStudents(studentToPick,studentToPut);
+            game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors
         }
     }
 }
