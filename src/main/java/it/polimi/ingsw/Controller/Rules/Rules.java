@@ -7,7 +7,8 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 
 public class Rules {
 
-    public static final int maxPlayers = 4;
+    private static final int MIN_PLAYERS = 2;
+    private static final int MAX_PLAYERS = 3;
     public static final int maxIslands = 12;
     public static final int initialBagSize = 2 * Color.values().length;
     public static final int bagSize = 130;

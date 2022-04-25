@@ -80,6 +80,12 @@ public class School {
             studentsHall.put(student, studentsHall.getOrDefault(student, 0) + 1);
         }
     }
+    public void moveStudentFromHalltoEntry(Color student){
+        if(studentsHall.get(student)>0){
+            studentsHall.put(student, studentsHall.get(student) - 1);
+            studentsEntry.put(student, studentsEntry.getOrDefault(student, 0) + 1);
+        }
+    }
 
     public void removeStudentFromEntry(Color student) {
         //boolean isRemoved = false;
@@ -90,4 +96,9 @@ public class School {
         }
         //return isRemoved;
     }
+    public void swapStudents(Color studentToPick, Color studentToPut) {
+       moveStudentFromEntryToHall(studentToPick);
+       moveStudentFromHalltoEntry(studentToPut);
+    }
+
 }

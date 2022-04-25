@@ -24,7 +24,6 @@ public class PrincessCharacter extends CharacterCard {
     }
     @Override
     public void init() {
-
         for (int i=0; i<4;i++) {
             Color student = bag.extractOne();
             this.students.put(student, this.students.getOrDefault(student, 0) + 1);
@@ -46,9 +45,14 @@ public class PrincessCharacter extends CharacterCard {
         game.setGameState(previousState);
     }
 
-    public void moveStudent(Color Student) {
-        students.remove(Student,1);
-        students.put(bag.extractOne(),1);
+    public void moveStudent(Color student) {
+
+        if(students.get(student)!=null) {
+            students.put(student, students.get(student) - 1);
+            Color refill = bag.extractOne();
+            students.put(refill, this.students.getOrDefault(student, 0) + 1);
+        }
     }
+
 
 }

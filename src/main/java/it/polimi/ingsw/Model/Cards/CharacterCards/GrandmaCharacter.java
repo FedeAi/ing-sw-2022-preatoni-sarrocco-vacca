@@ -12,6 +12,7 @@ public class GrandmaCharacter extends CharacterCard {
     public GrandmaCharacter(String imagePath) {
         super(imagePath);
         isActive = false;
+        price = 2;
         // Maybe this goes in the init() method?
         blockingCards = 4;
     }

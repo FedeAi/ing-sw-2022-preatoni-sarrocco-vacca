@@ -14,8 +14,7 @@ import java.util.*;
 
 public class GameManager {
 
-    private static final int MIN_PLAYERS = 2;
-    private static final int MAX_PLAYERS = 3;
+
     private final Game gameInstance;
     private final Rules rules;
     //private RoundManager roundManager;

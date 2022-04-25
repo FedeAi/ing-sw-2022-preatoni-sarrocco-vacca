@@ -59,8 +59,8 @@ public class JokerCharacter extends CharacterCard {
     }
 
     /**
-     * @param studentToPick the student you pick from the island
-     * @param studentToPut  the student you put on the island
+     * @param studentToPick the student you pick from the card
+     * @param studentToPut  the student you put on the card
      */
     public void swapStudents(Color studentToPick, Color studentToPut) throws IllegalArgumentException {
         if (students.getOrDefault(studentToPick, 0) <= 0) {

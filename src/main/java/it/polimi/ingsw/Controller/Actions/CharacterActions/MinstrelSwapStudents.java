@@ -4,8 +4,7 @@ import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.JokerCharacter;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MushRoomCharacter;
-import it.polimi.ingsw.Model.Cards.CharacterCards.PrincessCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.MinstrelCharacter;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -13,18 +12,18 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
-public class PrincessMoveToEntry extends Performable {
+public class MinstrelSwapStudents extends Performable {
 
-    private final Color student;
+    private Color studentToPick, studentToPut;
 
-    public PrincessMoveToEntry(String nickName, Color student) {
+    public MinstrelSwapStudents(String nickName, Color studentToPick, Color studentToPut) {
         super(nickName);
-        this.student = student;
+        this.studentToPick = studentToPick;
+        this.studentToPut = studentToPut;
     }
 
     @Override
     public boolean canPerformExt(Game game, Rules rules) {
-
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
         if (!super.canPerformExt(game, rules)) {
             return false;
@@ -32,27 +31,39 @@ public class PrincessMoveToEntry extends Performable {
 
         Player player = getPlayer(game);
 
-        if (!game.getGameState().equals(GameState.PRINCESS_MOVE_STUDENT)) {
+        if (!game.getGameState().equals(GameState.MINISTREL_SWAP_STUDENTS)) {
             return false;
         }
 
+        // is action legal check
         // there is no an active card
+
         Optional<CharacterCard> card = game.getActiveCharacter();
         if (card.isEmpty())
             return false;
 
         // the active card is not the right one
-        if (!(card.get() instanceof PrincessCharacter)) {
+        if (!(card.get() instanceof MinstrelCharacter)) {
             return false;
         }
 
-        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof PrincessCharacter)) {
+        MinstrelCharacter minstrel = (MinstrelCharacter) card.get();
+
+        // already done all possible movements
+        if (minstrel.getSwappedStudents() >= minstrel.maxSwaps) {
+            return false;
+        }
+        //the entry doesn't have enough students
+
+        if (player.getSchool().getStudentsEntry().getOrDefault(studentToPick, 0) <= 0) {
+            return false;
+        }
+        if(player.getSchool().getStudentsHall().getOrDefault(studentToPut,0)<=0){
             return false;
         }
 
         return true;
     }
-
 
     @Override
     public void performMove(Game game, Rules rules) {
@@ -61,14 +72,11 @@ public class PrincessMoveToEntry extends Performable {
         if (player_opt.isEmpty())    // if there is no Player with that nick
             return;
         Player player = player_opt.get();
+
         // to check instance of and make cast
         if (game.getActiveCharacter().isPresent() && canPerformExt(game, rules)) {
-            PrincessCharacter princessCharacter = (PrincessCharacter) game.getActiveCharacter().get();
-            princessCharacter.moveStudent(student);
-            player.getSchool().addStudentHall(student);
+            MinstrelCharacter minstrelCharacter = (MinstrelCharacter) game.getActiveCharacter().get();
+            player.getSchool().swapStudents(studentToPick,studentToPut);
         }
-
     }
-
 }
-
