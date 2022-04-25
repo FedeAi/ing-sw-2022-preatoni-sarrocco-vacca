@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
+import it.polimi.ingsw.Model.Cards.CharacterCards.GrandmaCharacter;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
@@ -73,8 +75,15 @@ public class MoveMotherNature extends Performable {
             if (Island.checkJoin(island, nextIsland)) {
                 islandContainer.joinNextIsland(newMotherPosition);
             }
+        } else {
+            island.setBlocked(false);
+            Optional<CharacterCard> card = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof GrandmaCharacter).findFirst();
+            if (card.isEmpty()) {
+                return;
+            }
+            GrandmaCharacter grandma = (GrandmaCharacter) card.get();
+            grandma.addBlockingCard();
         }
-
         // change state
         game.setGameState(GameState.ACTION_CHOOSE_CLOUD);
 
