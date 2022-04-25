@@ -17,7 +17,6 @@ public class PrincessCharacterTest {
     private Player p1, p2, p3;
 
     private void init() {
-        card = new PrincessCharacter("", game.getBag());
         gameManager = new GameManager();
         p1 = new Player("Ale");
         p2 = new Player("Fede");
@@ -27,6 +26,7 @@ public class PrincessCharacterTest {
         gameManager.addPlayer(p3);
         gameManager.initGame();
         game = gameManager.getGameInstance();
+        card = new PrincessCharacter("", game.getBag());
     }
 
     @Test

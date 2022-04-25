@@ -89,6 +89,7 @@ class MonkMoveToIslandTest {
         // FIXME IF I HAVE MORE THAN 1 CARD ACTIVE, THE CANPERFORM() FAILS
         // THE FIRST CARD IS ACTIVE BUT ISN'T OF THE MONK TYPE
         // assertTrue(action.canPerformExt(game, gameManager.getRules()));
+
         // Now we remove the other card
         cardList.remove(0);
         assertTrue(action.canPerformExt(game, gameManager.getRules()));
@@ -106,5 +107,6 @@ class MonkMoveToIslandTest {
         int initialIslandValue = island.getStudents().getOrDefault(selectionColor, 0);
         action.performMove(game, gameManager.getRules());
         assertEquals(initialIslandValue + 1, island.getStudents().get(selectionColor));
+        assertFalse(card.isActive());
     }
 }

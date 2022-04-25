@@ -162,6 +162,7 @@ class MoveMotherNatureTest {
         gameInstance.getIslandContainer().get(next).setOwner(p3.getNickname());
         moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
         moveMotherNature.performMove(gameInstance, gameManager.getRules());
+        // FIXME MOTHERNATURE_POSITION = -1 AFTER A JOIN? THIS WILL CAUSE THE FOLLOWING ASSERT() TO FAIL
         assertTrue(gameInstance.getIslandContainer().get(gameInstance.getMotherNature().getPosition()) instanceof SuperIsland);
         assertEquals(gameInstance.getIslandContainer().size(), oldIslands - 1);
     }

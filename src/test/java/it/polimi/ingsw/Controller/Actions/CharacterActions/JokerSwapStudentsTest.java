@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +53,7 @@ class JokerSwapStudentsTest {
         }
         studentToPut = Color.BLUE;
         for (Color c : Color.values()) {
-            selectionValue = card.getStudents().getOrDefault(c, 0);
+            selectionValue = p1.getSchool().getStudentsEntry().getOrDefault(c, 0);
             if (selectionValue > 0) {
                 studentToPut = c;
                 break;
@@ -64,9 +65,8 @@ class JokerSwapStudentsTest {
     @Test
     void canPerformExt() {
         init();
-
+        // First we try to call the underlying Performable abstract
         String wrongNickname = "Suino";
-
         action = new JokerSwapStudents(wrongNickname, studentToPick, studentToPut);
         assertFalse(action.canPerformExt(game, gameManager.getRules()));
         // Now we try to perform the action with the wrong gameState set (set before)
@@ -97,14 +97,18 @@ class JokerSwapStudentsTest {
     @Test
     void performMove() {
         init();
-        studentToPick = Color.BLUE;
-        studentToPut = Color.BLUE;
         card.activate(gameManager.getRules(), game);
         cardList.add(card);
+        game.initCharacterCards(cardList);
         action = new JokerSwapStudents(p1.getNickname(), studentToPick, studentToPut);
-        int playerBlues = game.getRoundOwner().getSchool().getStudentsEntry().get(studentToPut);
+        Map<Color, Integer> entry = p1.getSchool().getStudentsEntry();
+        int initialStudents = entry.getOrDefault(studentToPick, 0);
         action.performMove(game, gameManager.getRules());
-        int finalPlayerBlues = game.getRoundOwner().getSchool().getStudentsEntry().get(studentToPick);
-        assertEquals(playerBlues, finalPlayerBlues);
+        int finalStudents = entry.get(studentToPick);
+        if (studentToPick.equals(studentToPut)) {
+            assertEquals(initialStudents, finalStudents);
+        } else {
+            assertEquals(initialStudents + 1, finalStudents);
+        }
     }
 }
