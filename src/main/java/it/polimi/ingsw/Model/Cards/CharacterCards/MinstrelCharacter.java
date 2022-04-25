@@ -16,7 +16,6 @@ public class MinstrelCharacter extends  CharacterCard{
     public MinstrelCharacter(String imagePath) {
         super(imagePath);
         price = 1;
-        isActive = false;
     }
 
     @Override

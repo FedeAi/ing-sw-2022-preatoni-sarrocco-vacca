@@ -6,6 +6,7 @@ import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
+import java.util.EnumMap;
 import java.util.Map;
 
 public class PrincessCharacter extends CharacterCard {
@@ -15,9 +16,11 @@ public class PrincessCharacter extends CharacterCard {
     private Bag bag;
 
 
-    public PrincessCharacter(String imagePath) {
+    public PrincessCharacter(String imagePath, Bag bag) {
         super(imagePath);
         price = 2;
+        this.bag = bag;
+        students = new EnumMap<Color, Integer>(Color.class);
     }
 
     @Override
@@ -48,6 +51,10 @@ public class PrincessCharacter extends CharacterCard {
             Color refill = bag.extractOne();
             students.put(refill, this.students.getOrDefault(refill, 0) + 1);
         }
+    }
+
+    public Map<Color, Integer> getStudents() {
+        return students;
     }
 
 
