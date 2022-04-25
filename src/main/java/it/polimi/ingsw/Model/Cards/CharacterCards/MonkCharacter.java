@@ -47,10 +47,12 @@ public class MonkCharacter extends CharacterCard {
     }
 
     public void moveStudent(Color student) {
-        students.put(student, students.get(student) - 1);
-        // Refill the card after the use
-        Color refill = bag.extractOne();
-        students.put(refill, this.students.getOrDefault(student, 0) + 1);
+        if(students.get(student)!=null) {
+            students.put(student, students.get(student) - 1);
+            // Refill the card after the use
+            Color refill = bag.extractOne();
+            students.put(refill, this.students.getOrDefault(student, 0) + 1);
+        }
     }
 
     public Map<Color, Integer> getStudents() {
