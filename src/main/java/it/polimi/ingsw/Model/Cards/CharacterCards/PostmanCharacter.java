@@ -9,22 +9,17 @@ public class PostmanCharacter extends CharacterCard {
     public PostmanCharacter(String imagePath) {
         super(imagePath);
         price = 1;
-        isActive = false;
     }
 
     @Override
-    public void init() {}
-
-    @Override
     public void activate(Rules rules, Game game) {
-        isActive = true;
-        activated = true;
+        super.activate(rules, game);
         rules.setDynamicRules(new PostmanRules());
     }
 
     @Override
     public void deactivate(Rules rules, Game game) {
-        isActive = false;
+        super.deactivate(rules, game);
         rules.setDynamicRules(new BaseRules());
     }
 }

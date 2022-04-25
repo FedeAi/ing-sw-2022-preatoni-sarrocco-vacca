@@ -21,16 +21,11 @@ public class JokerCharacter extends CharacterCard {
     public JokerCharacter(String imagePath, Bag bag) {
         super(imagePath);
         price = 1;
-        isActive = false;
-        activated = false;
 
         swappedStudents = 0;
         this.bag = bag;
         // students map
         this.students = new EnumMap<Color, Integer>(Color.class);
-
-
-
     }
 
     @Override
@@ -44,8 +39,7 @@ public class JokerCharacter extends CharacterCard {
 
     @Override
     public void activate(Rules rules, Game game) {
-        isActive = true;
-        activated = true;
+        super.activate(rules, game);
         previousState = game.getGameState();
         game.setGameState(GameState.JOKER_SWAP_STUDENTS);
         swappedStudents = 0;
@@ -54,7 +48,7 @@ public class JokerCharacter extends CharacterCard {
 
     @Override
     public void deactivate(Rules rules, Game game) {
-        isActive = false;
+        super.deactivate(rules, game);
         game.setGameState(previousState);
     }
 

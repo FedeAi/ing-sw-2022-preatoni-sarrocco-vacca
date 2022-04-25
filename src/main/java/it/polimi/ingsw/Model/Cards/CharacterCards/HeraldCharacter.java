@@ -10,23 +10,18 @@ public class HeraldCharacter extends CharacterCard {
     public HeraldCharacter(String imagePath) {
         super(imagePath);
         price = 3;
-        isActive = false;
     }
 
     @Override
-    public void init() {}
-
-    @Override
     public void activate(Rules rules, Game game) {
+        super.activate(rules, game);
         previousState = game.getGameState();
         game.setGameState(GameState.HERALD_ACTIVE);
-        isActive = true;
-
     }
 
     @Override
     public void deactivate(Rules rules, Game game) {
-        isActive = false;
+        super.deactivate(rules, game);
         game.setGameState(previousState);
     }
 

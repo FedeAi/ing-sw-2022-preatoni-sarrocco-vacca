@@ -2,11 +2,8 @@ package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Bag;
-import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
-
-import java.util.Map;
 
 public class MinstrelCharacter extends  CharacterCard{
 
@@ -23,20 +20,14 @@ public class MinstrelCharacter extends  CharacterCard{
     }
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
     public void activate(Rules rules, Game game) {
-        isActive = true;
-        activated = true;
-        game.setGameState(GameState.PRINCESS_MOVE_STUDENT);
+        super.activate(rules, game);
+        game.setGameState(GameState.MINISTREL_SWAP_STUDENTS);
     }
 
     @Override
     public void deactivate(Rules rules, Game game) {
-        isActive = false;
+        super.deactivate(rules, game);
         game.setGameState(previousState);
     }
     public int getSwappedStudents() {

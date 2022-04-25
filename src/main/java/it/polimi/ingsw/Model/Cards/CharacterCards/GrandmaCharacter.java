@@ -11,28 +11,20 @@ public class GrandmaCharacter extends CharacterCard {
 
     public GrandmaCharacter(String imagePath) {
         super(imagePath);
-        isActive = false;
         price = 2;
-        // Maybe this goes in the init() method?
         blockingCards = 4;
     }
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
     public void activate(Rules rules, Game game) {
-        activated = true;
-        isActive = true;
+        super.activate(rules, game);
         previousState = game.getGameState();
         game.setGameState(GameState.GRANDMA_BLOCK_ISLAND);
     }
 
     @Override
     public void deactivate(Rules rules, Game game) {
-        isActive = false;
+        super.deactivate(rules, game);
         game.setGameState(previousState);
     }
 

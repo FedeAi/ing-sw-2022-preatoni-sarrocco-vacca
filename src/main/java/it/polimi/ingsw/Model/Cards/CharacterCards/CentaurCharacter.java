@@ -10,22 +10,17 @@ public class CentaurCharacter extends CharacterCard {
     public CentaurCharacter(String imagePath) {
         super(imagePath);
         price = 3;
-        isActive = false;
     }
 
     @Override
-    public void init() {}
-
-    @Override
     public void activate(Rules rules, Game game) {
-        isActive = true;
-        activated = true;
+        super.activate(rules, game);
         rules.setDynamicRules(new CentaurRules());
     }
 
     @Override
     public void deactivate(Rules rules, Game game) {
-        isActive = false;
+        super.deactivate(rules, game);
         rules.setDynamicRules(new BaseRules());
     }
 }

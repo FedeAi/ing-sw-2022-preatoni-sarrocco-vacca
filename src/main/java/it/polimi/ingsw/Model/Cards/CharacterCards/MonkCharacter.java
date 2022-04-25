@@ -18,7 +18,6 @@ public class MonkCharacter extends CharacterCard {
     public MonkCharacter(String imagePath, Bag bag) {
         super(imagePath);
         price = 1;
-        isActive = false;
         this.bag = bag;
         students = new EnumMap<Color, Integer>(Color.class);
     }
@@ -33,15 +32,14 @@ public class MonkCharacter extends CharacterCard {
 
     @Override
     public void activate(Rules rules, Game game) {
-        activated = true;
-        isActive = true;
+        super.activate(rules, game);
         previousState = game.getGameState();
         game.setGameState(GameState.MONK_MOVE_STUDENT);
     }
 
     @Override
     public void deactivate(Rules rules, Game game) {
-        isActive = false;
+        super.deactivate(rules, game);
         game.setGameState(previousState);
     }
 

@@ -15,16 +15,11 @@ public class MushRoomCharacter extends CharacterCard {
     public MushRoomCharacter(String imagePath) {
         super(imagePath);
         price = 3;
-        isActive = false;
     }
 
     @Override
-    public void init() {}
-
-    @Override
     public void activate(Rules rules, Game game) {
-        isActive = true;
-        activated = true;
+        super.activate(rules, game);
         previousState = game.getGameState();
         game.setGameState(GameState.MUSHROOM_CHOOSE_COLOR);
         rules.setDynamicRules(new MushRoomRules());
@@ -32,7 +27,7 @@ public class MushRoomCharacter extends CharacterCard {
 
     @Override
     public void deactivate(Rules rules, Game game) {
-        isActive = false;
+        super.deactivate(rules, game);
         rules.setDynamicRules(new BaseRules());
         game.setGameState(previousState);
         setStudent(null);

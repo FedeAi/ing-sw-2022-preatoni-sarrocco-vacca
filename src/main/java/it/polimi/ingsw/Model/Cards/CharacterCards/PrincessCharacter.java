@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
-import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.PostmanRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Bag;
 import it.polimi.ingsw.Model.Enumerations.Color;
@@ -20,7 +18,6 @@ public class PrincessCharacter extends CharacterCard {
     public PrincessCharacter(String imagePath) {
         super(imagePath);
         price = 2;
-        isActive = false;
     }
 
     @Override
@@ -33,8 +30,7 @@ public class PrincessCharacter extends CharacterCard {
 
     @Override
     public void activate(Rules rules, Game game) {
-        isActive = true;
-        activated = true;
+        super.activate(rules, game);
         previousState = game.getGameState();
         game.setGameState(GameState.PRINCESS_MOVE_STUDENT);
 
@@ -42,7 +38,7 @@ public class PrincessCharacter extends CharacterCard {
 
     @Override
     public void deactivate(Rules rules, Game game) {
-        isActive = false;
+        super.deactivate(rules, game);
         game.setGameState(previousState);
     }
 
