@@ -44,7 +44,7 @@ public class MonkCharacter extends CharacterCard {
     }
 
     public void moveStudent(Color student) {
-        if(students.get(student)!=null) {
+        if (students.get(student) != null) {
             students.put(student, students.get(student) - 1);
             // Refill the card after the use
             Color refill = bag.extractOne();
