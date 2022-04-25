@@ -22,6 +22,7 @@ public class PrincessCharacter extends CharacterCard {
         price = 2;
         isActive = false;
     }
+
     @Override
     public void init() {
         for (int i=0; i<4;i++) {
@@ -46,11 +47,10 @@ public class PrincessCharacter extends CharacterCard {
     }
 
     public void moveStudent(Color student) {
-
         if(students.get(student)!=null) {
             students.put(student, students.get(student) - 1);
             Color refill = bag.extractOne();
-            students.put(refill, this.students.getOrDefault(student, 0) + 1);
+            students.put(refill, this.students.getOrDefault(refill, 0) + 1);
         }
     }
 
