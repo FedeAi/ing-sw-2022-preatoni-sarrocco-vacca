@@ -18,7 +18,6 @@ public class MonkCharacter extends CharacterCard {
     public MonkCharacter(String imagePath, Bag bag) {
         super(imagePath);
         price = 1;
-        /* TODO Why don't we move isActive to the constructor? */
         isActive = false;
         this.bag = bag;
         students = new EnumMap<Color, Integer>(Color.class);
