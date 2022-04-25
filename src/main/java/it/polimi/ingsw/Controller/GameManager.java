@@ -2,6 +2,7 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.*;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
@@ -28,7 +29,6 @@ public class GameManager {
 
         //this.roundManager = new RoundManager(this);
     }
-
 
     public Game getGameInstance() {
         return gameInstance;

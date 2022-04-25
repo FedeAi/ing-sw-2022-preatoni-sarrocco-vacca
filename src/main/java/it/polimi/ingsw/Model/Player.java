@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.Magician;
 
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 public class Player {
 
+    public  static final Rules rules = new Rules();
     private String nickname;
     private boolean connected;
     private School school;
@@ -69,7 +71,7 @@ public class Player {
     // empty string in AC constructor, this needs to be sorted
     private void createHand() {
         cards = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= rules.getNumAssistantCards(); i++) {
             cards.add(new AssistantCard("", i));
         }
     }
