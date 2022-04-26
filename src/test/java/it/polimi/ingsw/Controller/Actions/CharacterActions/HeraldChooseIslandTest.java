@@ -82,6 +82,7 @@ class HeraldChooseIslandTest {
     @Test
     void performMove() {
         init();
+        islandIndex = 0;
         action = new HeraldChooseIsland(p1.getNickname(), islandIndex);
         Color profColor = Color.BLUE;
         game.setProfessor(profColor, game.getRoundOwner().getNickname());

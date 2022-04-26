@@ -130,7 +130,7 @@ public class Game {
     }
 
     public void moveMotherNature(int deltaPositions) {
-        int newPosition = (motherNature.getPosition() + deltaPositions) % islandContainer.size();
+        int newPosition = (motherNature.getPosition() + deltaPositions + islandContainer.size()) % islandContainer.size();
         motherNature.setIsland(newPosition);
     }
 
