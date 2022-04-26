@@ -24,8 +24,8 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
         player.getSchool().moveStudentFromEntryToHall(color);   // model modification
 
         // coin
-        int hallPosition = player.getSchool().getStudentsHall().getOrDefault(color,0);
-        if(Rules.checkCoin(hallPosition)){
+        int hallPosition = player.getSchool().getStudentsHall().getOrDefault(color, 0);
+        if (Rules.checkCoin(hallPosition)) {
             game.incrementPlayerBalance(player.getNickname());
         }
         //compute the new professors

@@ -56,13 +56,13 @@ class ChooseCloudTest {
 
 
         // The choice doesn't exist
-        Performable action = new ChooseCloud("Kyogre",choice2);
+        Performable action = new ChooseCloud("Kyogre", choice2);
         gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
         assertFalse(action.canPerformExt(gameInstance, gameManager.getRules()));
 
         // all Clouds are empty
 
-        Performable action2 = new ChooseCloud("Kyogre",choice);
+        Performable action2 = new ChooseCloud("Kyogre", choice);
         gameInstance.getClouds().get(choice).pickStudents();
         assertFalse(action2.canPerformExt(gameInstance, gameManager.getRules()));
 
@@ -93,20 +93,20 @@ class ChooseCloudTest {
         int weight = Rules.getStudentsPerTurn(gameInstance.numPlayers());
         Map<Color, Integer> prevEntry = new EnumMap<Color, Integer>(p2.getSchool().getStudentsEntry()); //empty?
         //perform move
-        
+
         ChooseClouds.performMove(gameInstance, gameManager.getRules());
 
         Map<Color, Integer> postEntry = new EnumMap<Color, Integer>(p2.getSchool().getStudentsEntry());
 
         int count = 0;
-        for(Color c: Color.values()) {
+        for (Color c : Color.values()) {
             if (prevEntry.get(c) != null) {
                 count = count + prevEntry.get(c);
             }
         }
 
         int postCounter = 0;
-        for(Color c: Color.values()) {
+        for (Color c : Color.values()) {
             if (postEntry.get(c) != null) {
                 postCounter = postCounter + postEntry.get(c);
             }

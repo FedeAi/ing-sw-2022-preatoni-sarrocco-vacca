@@ -57,7 +57,7 @@ public class MinstrelSwapStudents extends Performable {
         if (player.getSchool().getStudentsEntry().getOrDefault(studentFromEntry, 0) <= 0) {
             return false;
         }
-        if(player.getSchool().getStudentsHall().getOrDefault(studentFromHall,0)<=0){
+        if (player.getSchool().getStudentsHall().getOrDefault(studentFromHall, 0) <= 0) {
             return false;
         }
 
@@ -78,8 +78,8 @@ public class MinstrelSwapStudents extends Performable {
             game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors
 
             // coin
-            int hallPosition = player.getSchool().getStudentsHall().getOrDefault(studentFromEntry,0);
-            if(Rules.checkCoin(hallPosition)){
+            int hallPosition = player.getSchool().getStudentsHall().getOrDefault(studentFromEntry, 0);
+            if (Rules.checkCoin(hallPosition)) {
                 game.incrementPlayerBalance(player.getNickname());
             }
 

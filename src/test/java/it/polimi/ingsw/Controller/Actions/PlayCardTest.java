@@ -7,6 +7,7 @@ import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
+
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayCardTest {
 
     @Test
-    void canPerformExt() throws Exception{
+    void canPerformExt() throws Exception {
 
         GameManager gameManager = new GameManager();
         Player p1 = new Player("fede");
@@ -30,7 +31,6 @@ class PlayCardTest {
 
         gameInstance.setRoundOwner(p1);
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
-
 
 
         //!* standard execution
@@ -57,7 +57,7 @@ class PlayCardTest {
     }
 
     @Test
-    void performMove() throws Exception{
+    void performMove() throws Exception {
         GameManager gameManager = new GameManager();
         Player p1 = new Player("fede");
         Player p2 = new Player("gianfranco");
@@ -77,20 +77,21 @@ class PlayCardTest {
         List<AssistantCard> prev_cards = new ArrayList<>(p1.getCards());
 
         //!* PERFORM MOVE
-        playCard.performMove(gameInstance,gameManager.getRules() );
+        playCard.performMove(gameInstance, gameManager.getRules());
 
         assertFalse(p1.hasCard(choice));
         assertEquals(p1.getPlayedCard(), choice);
         assertFalse(p1.getCards().contains(choice));
         assertEquals(gameInstance.getRoundOwner(), p2);
 
-        assertEquals(prev_cards.size(), p1.getCards().size()+1);
+        assertEquals(prev_cards.size(), p1.getCards().size() + 1);
         prev_cards.remove(choice);
         assertTrue(p1.getCards().containsAll(prev_cards));
 
         assertEquals(1, gameInstance.getPlayedCards().size());
         assertTrue(gameInstance.getPlayedCards().contains(choice));
     }
+
     @Test
     public void setActionOrder() {
 
@@ -113,14 +114,14 @@ class PlayCardTest {
         AssistantCard choice = p1.getCards().get(0); //value 1
 
         Performable playCard1 = new PlayCard("fede", choice);
-        playCard1.performMove(gameInstance,gameM.getRules() );
+        playCard1.performMove(gameInstance, gameM.getRules());
         //end p1
 
         //start p2 move
         gameInstance.setRoundOwner(p2);
         AssistantCard choice2 = p2.getCards().get(1); //value 2
         Performable playCard2 = new PlayCard("gianfranco", choice2);
-        playCard2.performMove(gameInstance,gameM.getRules() );
+        playCard2.performMove(gameInstance, gameM.getRules());
         //end p2 move
         //and planning phase
 

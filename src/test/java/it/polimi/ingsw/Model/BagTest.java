@@ -46,6 +46,7 @@ public class BagTest {
         assertEquals("control bag dim ", myBag.getStudents().size(), initialSize - 1);
 
     }
+
     @Test
     public void extendBag() {
 
@@ -55,7 +56,7 @@ public class BagTest {
         Bag myBag2 = new Bag(numStudents);
         myBag2.extendBag(extensionSize);
 
-        assertEquals("the diff of the bags should be the extensionSize ", myBag.getStudents().size()+extensionSize, myBag2.getStudents().size());
+        assertEquals("the diff of the bags should be the extensionSize ", myBag.getStudents().size() + extensionSize, myBag2.getStudents().size());
 
 
     }

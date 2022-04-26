@@ -19,7 +19,7 @@ class MoveStudentFromEntryToHallTest {
     private Player p2;
     private Game gameInstance;
 
-    private void initGame(){
+    private void initGame() {
         gameManager = new GameManager();
         p1 = new Player("ManovellismoOrdinario");
         p2 = new Player("Biella");
@@ -59,7 +59,7 @@ class MoveStudentFromEntryToHallTest {
 
         // The player has already moved all possible students
         Performable action = new MoveStudentFromEntryToHall("Biella", student);
-        for(int i =0; i< Rules.getStudentsPerTurn(gameInstance.numPlayers()); i++){
+        for (int i = 0; i < Rules.getStudentsPerTurn(gameInstance.numPlayers()); i++) {
             Color pickedStudent = getStudentFromEntry(p2);
             action = new MoveStudentFromEntryToHall("Biella", pickedStudent);
             assertTrue(action.canPerformExt(gameInstance, gameManager.getRules()));
@@ -87,28 +87,27 @@ class MoveStudentFromEntryToHallTest {
         // checks
         // entry has not been modified except...
         Player p = gameInstance.getPlayerByNickname("Biella").get();
-        for(Map.Entry<Color,Integer> entry : prevEntry.entrySet()){
+        for (Map.Entry<Color, Integer> entry : prevEntry.entrySet()) {
             int students = p.getSchool().getStudentsEntry().get(entry.getKey());
-            if(entry.getKey() != student){
+            if (entry.getKey() != student) {
                 assertEquals(entry.getValue(), students);
-            }
-            else{
-                assertEquals(entry.getValue(), students+1);
+            } else {
+                assertEquals(entry.getValue(), students + 1);
             }
         }
         // hall has not been modified except...
-        for(Map.Entry<Color,Integer> entry : prevHall.entrySet()){
+        for (Map.Entry<Color, Integer> entry : prevHall.entrySet()) {
             int students = p.getSchool().getStudentsHall().get(entry.getKey());
-            if(entry.getKey() != student){
+            if (entry.getKey() != student) {
                 assertEquals(entry.getValue(), students);
-            }
-            else{
-                assertEquals(entry.getValue(), students-1, "hall has not been modified except...");
+            } else {
+                assertEquals(entry.getValue(), students - 1, "hall has not been modified except...");
             }
         }
     }
+
     @Test
-    void performMove_professorCheck(){
+    void performMove_professorCheck() {
         initGame();
         Color student = getStudentFromEntry(p2); // get a student of the player Entry
         Performable moveStudentsToHallAction = new MoveStudentFromEntryToHall(p2.getNickname(), student);
@@ -120,7 +119,7 @@ class MoveStudentFromEntryToHallTest {
         assertEquals(gameInstance.getProfessors().get(student), p2.getNickname(), "check that professor is gained after a move");
     }
 
-    private Color getStudentFromEntry(Player p){
-        return p.getSchool().getStudentsEntry().entrySet().stream().filter((s)->s.getValue()>0).findFirst().get().getKey();
+    private Color getStudentFromEntry(Player p) {
+        return p.getSchool().getStudentsEntry().entrySet().stream().filter((s) -> s.getValue() > 0).findFirst().get().getKey();
     }
 }

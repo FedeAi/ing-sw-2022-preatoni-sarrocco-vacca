@@ -68,31 +68,33 @@ public class Game {
         this.characterCards = cards;
     }
 
-    public void initBalance(int balance){
+    public void initBalance(int balance) {
         this.balance = balance;
     }
 
     /**
      * increment player balance and decrease game balance
+     *
      * @param nickname
      */
-    public void incrementPlayerBalance(String nickname){
+    public void incrementPlayerBalance(String nickname) {
         getPlayerByNickname(nickname).ifPresent(player -> {
-            if(balance>0){
+            if (balance > 0) {
                 player.addCoin();
                 balance--;
             }
         });
     }
-    public void decrementBalance(){
+
+    public void decrementBalance() {
         balance--;
     }
 
-    public void incrementBalance(int value){
-        balance+= value;
+    public void incrementBalance(int value) {
+        balance += value;
     }
 
-    public int getBalance(){
+    public int getBalance() {
         return balance;
     }
 

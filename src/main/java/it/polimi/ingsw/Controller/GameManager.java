@@ -49,7 +49,7 @@ public class GameManager {
         fillBag();
         initSchools();
         initClouds();
-        if(isHard_temp){
+        if (isHard_temp) {
             gameInstance.setExpertMode(true);
             initCharacters();
 
@@ -76,7 +76,7 @@ public class GameManager {
         Collections.shuffle(characters);
         List<CharacterCard> extractedCharacters = characters.subList(0, 3);
         extractedCharacters.forEach(CharacterCard::init);
-        gameInstance.initCharacterCards(characters.subList(0,3));
+        gameInstance.initCharacterCards(characters.subList(0, 3));
 
     }
 
@@ -116,8 +116,8 @@ public class GameManager {
         gameInstance.initMotherNature(motherNature);
     }
 
-    private void initPlayersBalance(){
-        for(Player p : gameInstance.getPlayers()){
+    private void initPlayersBalance() {
+        for (Player p : gameInstance.getPlayers()) {
             gameInstance.incrementPlayerBalance(p.getNickname());
         }
     }

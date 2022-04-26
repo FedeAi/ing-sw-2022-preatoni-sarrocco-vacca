@@ -77,7 +77,7 @@ public class JokerSwapStudents extends Performable {
             player.getSchool().removeStudentFromEntry(studentToPut);
 
             // card deactivate
-            if(joker.getSwappedStudents() >= JokerCharacter.maxSwaps){
+            if (joker.getSwappedStudents() >= JokerCharacter.maxSwaps) {
                 joker.deactivate(rules, game);
             }
         }

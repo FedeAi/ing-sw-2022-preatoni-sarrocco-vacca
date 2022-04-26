@@ -80,8 +80,9 @@ public class School {
             studentsHall.put(student, studentsHall.getOrDefault(student, 0) + 1);
         }
     }
-    public void moveStudentFromHalltoEntry(Color student){
-        if(studentsHall.get(student)>0){
+
+    public void moveStudentFromHalltoEntry(Color student) {
+        if (studentsHall.get(student) > 0) {
             studentsHall.put(student, studentsHall.get(student) - 1);
             studentsEntry.put(student, studentsEntry.getOrDefault(student, 0) + 1);
         }
@@ -96,13 +97,14 @@ public class School {
         }
         //return isRemoved;
     }
-    /**
-        SWAPPING STUDENTS FROM HALL TO ENTRY (FOR MINSTREL)
-     */
-    public void swapStudents(Color studentFromEntry, Color studentFromHall){
 
-       moveStudentFromEntryToHall(studentFromEntry);
-       moveStudentFromHalltoEntry(studentFromHall);
+    /**
+     * SWAPPING STUDENTS FROM HALL TO ENTRY (FOR MINSTREL)
+     */
+    public void swapStudents(Color studentFromEntry, Color studentFromHall) {
+        Color temp = studentFromEntry;
+        moveStudentFromEntryToHall(studentFromEntry);
+        moveStudentFromHalltoEntry(studentFromHall);
 
     }
 

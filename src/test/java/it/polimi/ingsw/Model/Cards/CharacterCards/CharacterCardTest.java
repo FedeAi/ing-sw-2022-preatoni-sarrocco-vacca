@@ -11,8 +11,9 @@ class CharacterCardTest {
     private PostmanCharacter card;
     private Game game;
     private GameManager gameManager;
-    private Player p1,p2;
-    private void init(){
+    private Player p1, p2;
+
+    private void init() {
         card = new PostmanCharacter("");
 
         gameManager = new GameManager();
@@ -42,10 +43,10 @@ class CharacterCardTest {
         assertTrue(card.getPrice() > 0, "check CardPrice");
         int initialPrice = card.getPrice();
         card.activate(gameManager.getRules(), game);
-        assertEquals(card.getPrice(),initialPrice+1, "check price increment");
+        assertEquals(card.getPrice(), initialPrice + 1, "check price increment");
         card.deactivate(gameManager.getRules(), game);
-        assertEquals(card.getPrice(),initialPrice+1, "check price increment is kept");
+        assertEquals(card.getPrice(), initialPrice + 1, "check price increment is kept");
         card.activate(gameManager.getRules(), game);
-        assertEquals(card.getPrice(),initialPrice+1, "check price increment is not done the second time");
+        assertEquals(card.getPrice(), initialPrice + 1, "check price increment is not done the second time");
     }
 }

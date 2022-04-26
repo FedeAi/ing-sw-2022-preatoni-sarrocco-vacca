@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ActivateCardTest {
     GameManager gameManager;
-    Player p1,p2,p3;
+    Player p1, p2, p3;
     Game gameInstance;
 
-    private void initTest(){
+    private void initTest() {
         gameManager = new GameManager();
         p1 = new Player("Ale");
         p2 = new Player("Davide");
@@ -98,18 +98,18 @@ class ActivateCardTest {
         int cardIndex = 0;
         CharacterCard card = gameInstance.getCharacterCards().get(cardIndex);
         // give money to p3
-        for(int i = 0; i < card.getPrice()+1; i++){
+        for (int i = 0; i < card.getPrice() + 1; i++) {
             gameInstance.incrementPlayerBalance(p3.getNickname());
         }
-        Performable action = new ActivateCard(p3.getNickname(),cardIndex);
+        Performable action = new ActivateCard(p3.getNickname(), cardIndex);
 
         int previousPlayerBalance = p3.getBalance();
         int previousGameBalance = gameInstance.getBalance();
         int previousCardPrice = card.getPrice();
 
-        action.performMove(gameInstance,gameManager.getRules());
+        action.performMove(gameInstance, gameManager.getRules());
 
-        assertEquals(previousPlayerBalance-previousCardPrice, p3.getBalance(), "money are removed correctly");
+        assertEquals(previousPlayerBalance - previousCardPrice, p3.getBalance(), "money are removed correctly");
         assertEquals(previousGameBalance + previousCardPrice - 1, gameInstance.getBalance(), "first activation of the card, game get back price - 1");
         assertEquals(previousCardPrice + 1, card.getPrice(), "cost increment on card is right");
 
@@ -117,7 +117,7 @@ class ActivateCardTest {
         card.deactivate(gameManager.getRules(), gameInstance);
 
         // give money to p3
-        for(int i = 0; i < card.getPrice()+1; i++){
+        for (int i = 0; i < card.getPrice() + 1; i++) {
             gameInstance.incrementPlayerBalance(p3.getNickname());
         }
 
@@ -125,11 +125,11 @@ class ActivateCardTest {
         previousGameBalance = gameInstance.getBalance();
         previousCardPrice = card.getPrice();
 
-        action.performMove(gameInstance,gameManager.getRules());
+        action.performMove(gameInstance, gameManager.getRules());
 
-        assertEquals(previousPlayerBalance-previousCardPrice, p3.getBalance(), "money are removed correctly");
+        assertEquals(previousPlayerBalance - previousCardPrice, p3.getBalance(), "money are removed correctly");
         assertEquals(previousGameBalance + previousCardPrice, gameInstance.getBalance(), "second activation of the card, game get back full price");
-        assertEquals(previousCardPrice , card.getPrice(), "no cost increment on card is right");
+        assertEquals(previousCardPrice, card.getPrice(), "no cost increment on card is right");
 
     }
 

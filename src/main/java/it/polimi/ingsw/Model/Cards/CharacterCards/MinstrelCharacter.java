@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.Bag;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
-public class MinstrelCharacter extends  CharacterCard{
+public class MinstrelCharacter extends CharacterCard {
 
 
     private GameState previousState;
@@ -29,6 +29,7 @@ public class MinstrelCharacter extends  CharacterCard{
         super.deactivate(rules, game);
         game.setGameState(previousState);
     }
+
     public int getSwappedStudents() {
         return swappedStudents;
     }

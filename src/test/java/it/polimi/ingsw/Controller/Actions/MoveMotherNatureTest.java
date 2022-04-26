@@ -69,6 +69,7 @@ class MoveMotherNatureTest {
         moveMotherNature = new MoveMotherNature(p1.getNickname(), movement);
         assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
     }
+
     @Test
     @DisplayName("Wrong state set test")
     void wrongStateTest() {
@@ -76,6 +77,7 @@ class MoveMotherNatureTest {
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
     }
+
     @Test
     @DisplayName("playedCard doesn't have enough movement")
     void notEnoughMovementTest() {
@@ -85,6 +87,7 @@ class MoveMotherNatureTest {
         p3.setAndRemovePlayedCard(card);
         assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
     }
+
     @Test
     @DisplayName("Movement not zero")
     void movementNotZeroTest() {
@@ -96,6 +99,7 @@ class MoveMotherNatureTest {
         moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
         assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
     }
+
     @Test
     @DisplayName("Basic canPerform test")
     void canPerformExt() {

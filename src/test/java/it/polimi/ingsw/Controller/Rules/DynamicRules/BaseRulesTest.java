@@ -17,12 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class BaseRulesTest {
-    private Player p1,p2;
+    private Player p1, p2;
     private Game game;
     private GameManager gameManager;
     private BaseRules baseRules;
 
-    private void initGame(){
+    private void initGame() {
         gameManager = new GameManager();
         p1 = new Player("player1");
         p2 = new Player("player2");
@@ -40,11 +40,11 @@ class BaseRulesTest {
     void getProfessorInfluenceBaseCase() {
         initGame();
         // FIXME this test should be made in game
-        for(String owner : game.getProfessors().values()){
+        for (String owner : game.getProfessors().values()) {
             assertNull(owner, "init of professors, all profs must not have an owner");
         }
 
-        for(String owner : baseRules.getProfessorInfluence(game).values()){
+        for (String owner : baseRules.getProfessorInfluence(game).values()) {
             assertNull(owner, "any player has a student in the all -> all professors must not have an owner");
         }
 
@@ -52,21 +52,21 @@ class BaseRulesTest {
     }
 
     @Test
-    void getProfessorInfluenceNormalUsage(){
+    void getProfessorInfluenceNormalUsage() {
         initGame();
 
         // add students to players
-        p1.getSchool().addStudentsHall(Map.of(Color.BLUE,4, Color.YELLOW,2));
-        p2.getSchool().addStudentsHall(Map.of(Color.BLUE,3,Color.YELLOW,1));
+        p1.getSchool().addStudentsHall(Map.of(Color.BLUE, 4, Color.YELLOW, 2));
+        p2.getSchool().addStudentsHall(Map.of(Color.BLUE, 3, Color.YELLOW, 1));
 
         EnumMap<Color, String> professorInfluence = baseRules.getProfessorInfluence(game);
 
         assertNull(professorInfluence.get(Color.GREEN), "no players have students with that color in the hall");
-        assertNull(professorInfluence.get(Color.RED),"no players have students with that color in the hall");
-        assertNull(professorInfluence.get(Color.PINK),"no players have students with that color in the hall");
+        assertNull(professorInfluence.get(Color.RED), "no players have students with that color in the hall");
+        assertNull(professorInfluence.get(Color.PINK), "no players have students with that color in the hall");
 
         assertEquals(professorInfluence.get(Color.BLUE), p1.getNickname(), "p1 has more prof of that color in hall");
-        assertEquals(professorInfluence.get(Color.YELLOW), p1.getNickname(),"p1 has more prof of that color in hall");
+        assertEquals(professorInfluence.get(Color.YELLOW), p1.getNickname(), "p1 has more prof of that color in hall");
     }
 
     @Test
@@ -98,7 +98,7 @@ class BaseRulesTest {
 
         player = baseRules.computeIslandInfluence(game, island);
         assertTrue(player.isPresent(), "the influence on this island can be computed (there is a winner player)");
-        assertEquals(player.get(), p1.getNickname(),"the winner should be p1 (2 students blue)");
+        assertEquals(player.get(), p1.getNickname(), "the winner should be p1 (2 students blue)");
 
         island.addStudent(Color.PINK);
         player = baseRules.computeIslandInfluence(game, island);
@@ -108,6 +108,6 @@ class BaseRulesTest {
         island.setOwner(p1.getNickname());
         player = baseRules.computeIslandInfluence(game, island);
         assertTrue(player.isPresent(), "the influence on this island can be computed (there is a winner player)");
-        assertEquals(player.get(), p1.getNickname(),"the winner should be p1 (same students but a tower for p1)");
+        assertEquals(player.get(), p1.getNickname(), "the winner should be p1 (same students but a tower for p1)");
     }
 }

@@ -24,7 +24,7 @@ public class Player {
         createHand();
     }
 
-    public void initBalance(int balance){
+    public void initBalance(int balance) {
         this.balance = balance;
     }
 
@@ -61,7 +61,7 @@ public class Player {
     }
 
     public void spendCoins(int amount) {
-        balance -=amount;
+        balance -= amount;
         balance = Math.max(balance, 0);
     }
 

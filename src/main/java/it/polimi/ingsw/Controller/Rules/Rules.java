@@ -48,17 +48,18 @@ public class Rules {
 
     /**
      * This method returns true if the position on the school hall has a coin
+     *
      * @param position hall's index
      * @return returns true if the position on the school hall has a coin, otherwise false
      */
     public static boolean checkCoin(int position) {
         return switch (position) {
-            case 2,5,8 -> true;
+            case 2, 5, 8 -> true;
             default -> false;
         };
     }
 
-    public int getNumAssistantCards(){
+    public int getNumAssistantCards() {
         return numAssistantCards;
     }
 

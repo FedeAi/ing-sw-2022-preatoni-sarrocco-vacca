@@ -24,6 +24,7 @@ class HeraldChooseIslandTest {
     private int islandIndex;
     private CharacterCard card;
     private LinkedList<CharacterCard> cardList;
+
     private void init() {
         gameManager = new GameManager();
         p1 = new Player("Ale");

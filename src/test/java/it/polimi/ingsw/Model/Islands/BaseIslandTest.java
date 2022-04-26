@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BaseIslandTest {
 
-//    private GameManager initGameManager(){
+    //    private GameManager initGameManager(){
 //        GameManager gameManager = new GameManager();
 //        Player p1 = new Player("Marula");
 //        Player p2 = new Player("Albano");
@@ -34,13 +34,13 @@ class BaseIslandTest {
         students.add(Color.YELLOW);
 
         BaseIsland baseIsland = new BaseIsland();
-        for(Color student : students){
+        for (Color student : students) {
             baseIsland.addStudent(student);
         }
         assertEquals(3, baseIsland.getStudents().get(Color.BLUE));
         assertEquals(2, baseIsland.getStudents().get(Color.YELLOW));
-        assertEquals(0, baseIsland.getStudents().getOrDefault(Color.GREEN,0));
-        assertEquals(0, baseIsland.getStudents().getOrDefault(Color.PINK,0));
+        assertEquals(0, baseIsland.getStudents().getOrDefault(Color.GREEN, 0));
+        assertEquals(0, baseIsland.getStudents().getOrDefault(Color.PINK, 0));
 
     }
 
@@ -70,25 +70,25 @@ class BaseIslandTest {
     void addStudent() {
         List<Color> blueStudents = new ArrayList<>();
         List<Color> yellowStudents = new ArrayList<>();
-        for(int i = 0; i<10; i++){
+        for (int i = 0; i < 10; i++) {
             blueStudents.add(Color.BLUE);
         }
-        for(int i = 0; i<5; i++){
+        for (int i = 0; i < 5; i++) {
             yellowStudents.add(Color.YELLOW);
         }
 
         BaseIsland baseIsland = new BaseIsland();
-        for(int i=0; i< blueStudents.size(); i++){
+        for (int i = 0; i < blueStudents.size(); i++) {
             Color student = blueStudents.get(i);
             baseIsland.addStudent(student);
-            assertEquals(i+1 ,baseIsland.getStudents().get(Color.BLUE));
-            assertEquals(0 ,baseIsland.getStudents().getOrDefault(Color.YELLOW,0));
+            assertEquals(i + 1, baseIsland.getStudents().get(Color.BLUE));
+            assertEquals(0, baseIsland.getStudents().getOrDefault(Color.YELLOW, 0));
         }
-        for(int i=0; i< yellowStudents.size(); i++){
+        for (int i = 0; i < yellowStudents.size(); i++) {
             Color student = yellowStudents.get(i);
             baseIsland.addStudent(student);
-            assertEquals(10 ,baseIsland.getStudents().get(Color.BLUE));
-            assertEquals(i+1 ,baseIsland.getStudents().get(Color.YELLOW));
+            assertEquals(10, baseIsland.getStudents().get(Color.BLUE));
+            assertEquals(i + 1, baseIsland.getStudents().get(Color.YELLOW));
         }
     }
 }

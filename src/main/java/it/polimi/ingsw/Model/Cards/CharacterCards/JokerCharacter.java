@@ -30,7 +30,7 @@ public class JokerCharacter extends CharacterCard {
 
     @Override
     public void init() {
-        for (int i=0; i<6;i++) {
+        for (int i = 0; i < 6; i++) {
             Color student = bag.extractOne();
             this.students.put(student, this.students.getOrDefault(student, 0) + 1);
         }

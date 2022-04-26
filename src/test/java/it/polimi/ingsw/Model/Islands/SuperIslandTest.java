@@ -12,24 +12,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class SuperIslandTest {
     private static final Random RANDOM = new Random();
 
-    private BaseIsland randomInitBaseIsland(){
+    private BaseIsland randomInitBaseIsland() {
         BaseIsland baseIsland = new BaseIsland();
-        for(int i = 0; i< RANDOM.nextInt(100); i++){
+        for (int i = 0; i < RANDOM.nextInt(100); i++) {
             baseIsland.addStudent(Color.values()[RANDOM.nextInt(Color.values().length)]);
         }
         return baseIsland;
     }
 
-    private SuperIsland randomInitSuperIsland(){
+    private SuperIsland randomInitSuperIsland() {
         List<Island> islandList = new ArrayList<>();
-        for(int i = 0; i< RANDOM.nextInt(5); i++){
+        for (int i = 0; i < RANDOM.nextInt(5); i++) {
             islandList.add(randomInitBaseIsland());
         }
         return new SuperIsland(islandList);
     }
 
     @Test
-    void constructor(){
+    void constructor() {
         // Testing the different possibility to build a super island
         BaseIsland baseIslandA = randomInitBaseIsland();
         BaseIsland baseIslandB = randomInitBaseIsland();
@@ -55,14 +55,14 @@ class SuperIslandTest {
         BaseIsland baseIslandC = randomInitBaseIsland();
 
         SuperIsland s1 = new SuperIsland(List.of(baseIslandA, baseIslandB));
-        int totalBluStudents = baseIslandA.getStudents().getOrDefault(Color.BLUE,0) + baseIslandB.getStudents().getOrDefault(Color.BLUE,0);
-        int totalYellowStudents = baseIslandA.getStudents().getOrDefault(Color.YELLOW,0) + baseIslandB.getStudents().getOrDefault(Color.YELLOW,0);
+        int totalBluStudents = baseIslandA.getStudents().getOrDefault(Color.BLUE, 0) + baseIslandB.getStudents().getOrDefault(Color.BLUE, 0);
+        int totalYellowStudents = baseIslandA.getStudents().getOrDefault(Color.YELLOW, 0) + baseIslandB.getStudents().getOrDefault(Color.YELLOW, 0);
         assertEquals(totalBluStudents, s1.getStudents().getOrDefault(Color.BLUE, 0));
         assertEquals(totalYellowStudents, s1.getStudents().getOrDefault(Color.YELLOW, 0));
 
         SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC));
-        totalBluStudents += baseIslandC.getStudents().getOrDefault(Color.BLUE,0);
-        totalYellowStudents += baseIslandC.getStudents().getOrDefault(Color.YELLOW,0);
+        totalBluStudents += baseIslandC.getStudents().getOrDefault(Color.BLUE, 0);
+        totalYellowStudents += baseIslandC.getStudents().getOrDefault(Color.YELLOW, 0);
         assertEquals(totalBluStudents, s2.getStudents().getOrDefault(Color.BLUE, 0));
         assertEquals(totalYellowStudents, s2.getStudents().getOrDefault(Color.YELLOW, 0));
 
@@ -85,7 +85,7 @@ class SuperIslandTest {
         BaseIsland baseIslandC = randomInitBaseIsland();
         BaseIsland baseIslandD = randomInitBaseIsland();
         SuperIsland s1 = new SuperIsland(List.of(baseIslandA, baseIslandB));
-        SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC,baseIslandD));
+        SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC, baseIslandD));
 
         assertEquals(0, s1.getNumTower());
         assertEquals(0, s2.getNumTower());
@@ -104,7 +104,7 @@ class SuperIslandTest {
         BaseIsland baseIslandC = randomInitBaseIsland();
         BaseIsland baseIslandD = randomInitBaseIsland();
         SuperIsland s1 = new SuperIsland(List.of(baseIslandA, baseIslandB));
-        SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC,baseIslandD));
+        SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC, baseIslandD));
 
         s2.setOwner("Giampiero");
         assertEquals("Giampiero", s2.getOwner());
@@ -118,10 +118,10 @@ class SuperIslandTest {
         BaseIsland baseIslandC = randomInitBaseIsland();
         BaseIsland baseIslandD = randomInitBaseIsland();
         SuperIsland s1 = new SuperIsland(List.of(baseIslandA, baseIslandB));
-        SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC,baseIslandD));
+        SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC, baseIslandD));
         Color student = Color.YELLOW;
-        int numYellowStudents = s2.getStudents().getOrDefault(student,0);
+        int numYellowStudents = s2.getStudents().getOrDefault(student, 0);
         s2.addStudent(student);
-        assertEquals(numYellowStudents+1, s2.getStudents().getOrDefault(student,0));
+        assertEquals(numYellowStudents + 1, s2.getStudents().getOrDefault(student, 0));
     }
 }

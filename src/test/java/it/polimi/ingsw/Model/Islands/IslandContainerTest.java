@@ -13,7 +13,7 @@ class IslandContainerTest {
         Island i1 = new BaseIsland();
         Island i2 = new BaseIsland();
         Island i3 = new BaseIsland();
-        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i1,i2,i3)));
+        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i1, i2, i3)));
 
         assertEquals(2, islandContainer.prevIslandIndex(0));
         assertEquals(1, islandContainer.prevIslandIndex(2));
@@ -25,7 +25,7 @@ class IslandContainerTest {
         Island i1 = new BaseIsland();
         Island i2 = new BaseIsland();
         Island i3 = new BaseIsland();
-        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i1,i2,i3)));
+        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i1, i2, i3)));
 
         assertEquals(1, islandContainer.nextIslandIndex(0));
         assertEquals(0, islandContainer.nextIslandIndex(2));
@@ -37,7 +37,7 @@ class IslandContainerTest {
         Island i1 = new BaseIsland();
         Island i2 = new BaseIsland();
         Island i3 = new BaseIsland();
-        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i1,i2,i3)));
+        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i1, i2, i3)));
 
         assertEquals(i3, islandContainer.prevIsland(0));
         assertEquals(i2, islandContainer.prevIsland(2));
@@ -49,7 +49,7 @@ class IslandContainerTest {
         Island i1 = new BaseIsland();
         Island i2 = new BaseIsland();
         Island i3 = new BaseIsland();
-        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i1,i2,i3)));
+        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i1, i2, i3)));
 
         assertEquals(i2, islandContainer.nextIsland(0));
         assertEquals(i1, islandContainer.nextIsland(2));
@@ -63,7 +63,7 @@ class IslandContainerTest {
         BaseIsland i2 = new BaseIsland();
         Island i3 = new BaseIsland();
         Island i4 = new BaseIsland();
-        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i0, i1,i2,i3,i4)));
+        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i0, i1, i2, i3, i4)));
         islandContainer.joinPrevIsland(2);
 
         assertEquals(4, islandContainer.size());
@@ -83,7 +83,7 @@ class IslandContainerTest {
         BaseIsland i2 = new BaseIsland();
         BaseIsland i3 = new BaseIsland();
         Island i4 = new BaseIsland();
-        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i0, i1,i2,i3,i4)));
+        IslandContainer islandContainer = new IslandContainer(new LinkedList<>(List.of(i0, i1, i2, i3, i4)));
         islandContainer.joinNextIsland(2);
 
         assertEquals(4, islandContainer.size());

@@ -21,6 +21,7 @@ class DeactivateCardTest {
     private Player p1, p2, p3;
     DeactivateCard action;
     LinkedList<CharacterCard> characterList;
+
     private void init() {
         card = new KnightCharacter("");
         gameManager = new GameManager();
