@@ -14,6 +14,8 @@ public class Rules {
     public static final int bagSize = 130;
     public static final int numCharacterCards = 3;
     public static final int numAssistantCards = 10;
+    public static final int numCoins = 20;
+    public static final int initialPlayerBalance = 1;
 
 
     private DynamicRules dynamicRules;
@@ -43,6 +45,19 @@ public class Rules {
         };
 
     }
+
+    /**
+     * This method returns true if the position on the school hall has a coin
+     * @param position hall's index
+     * @return returns true if the position on the school hall has a coin, otherwise false
+     */
+    public static boolean checkCoin(int position) {
+        return switch (position) {
+            case 2,5,8 -> true;
+            default -> false;
+        };
+    }
+
     public int getNumAssistantCards(){
         return numAssistantCards;
     }

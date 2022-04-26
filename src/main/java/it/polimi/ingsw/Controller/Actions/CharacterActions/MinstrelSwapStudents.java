@@ -3,7 +3,6 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.JokerCharacter;
 import it.polimi.ingsw.Model.Cards.CharacterCards.MinstrelCharacter;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
@@ -14,12 +13,12 @@ import java.util.Optional;
 
 public class MinstrelSwapStudents extends Performable {
 
-    private Color studentToPick, studentToPut;
+    private Color studentFromEntry, studentFromHall;
 
     public MinstrelSwapStudents(String nickName, Color studentToPick, Color studentToPut) {
         super(nickName);
-        this.studentToPick = studentToPick;
-        this.studentToPut = studentToPut;
+        this.studentFromEntry = studentToPick;
+        this.studentFromHall = studentToPut;
     }
 
     @Override
@@ -50,15 +49,15 @@ public class MinstrelSwapStudents extends Performable {
         MinstrelCharacter minstrel = (MinstrelCharacter) card.get();
 
         // already done all possible movements
-        if (minstrel.getSwappedStudents() >= minstrel.maxSwaps) {
+        if (minstrel.getSwappedStudents() >= MinstrelCharacter.maxSwaps) {
             return false;
         }
         //the entry doesn't have enough students
 
-        if (player.getSchool().getStudentsEntry().getOrDefault(studentToPick, 0) <= 0) {
+        if (player.getSchool().getStudentsEntry().getOrDefault(studentFromEntry, 0) <= 0) {
             return false;
         }
-        if(player.getSchool().getStudentsHall().getOrDefault(studentToPut,0)<=0){
+        if(player.getSchool().getStudentsHall().getOrDefault(studentFromHall,0)<=0){
             return false;
         }
 
@@ -74,10 +73,16 @@ public class MinstrelSwapStudents extends Performable {
         Player player = player_opt.get();
 
         // to check instance of and make cast
-        if (game.getActiveCharacter().isPresent() && canPerformExt(game, rules)) {
-            MinstrelCharacter minstrelCharacter = (MinstrelCharacter) game.getActiveCharacter().get();
-            player.getSchool().swapStudents(studentToPick,studentToPut);
+        if (canPerformExt(game, rules)) {
+            player.getSchool().swapStudents(studentFromEntry, studentFromHall);
             game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors
+
+            // coin
+            int hallPosition = player.getSchool().getStudentsHall().getOrDefault(studentFromEntry,0);
+            if(Rules.checkCoin(hallPosition)){
+                game.incrementPlayerBalance(player.getNickname());
+            }
+
         }
     }
 }

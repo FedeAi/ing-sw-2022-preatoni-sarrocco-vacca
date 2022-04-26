@@ -52,6 +52,9 @@ public class GameManager {
         if(isHard_temp){
             gameInstance.setExpertMode(true);
             initCharacters();
+
+            gameInstance.initBalance(Rules.numCoins);
+            initPlayersBalance();
         }
     }
 
@@ -64,6 +67,11 @@ public class GameManager {
         characters.add(new KnightCharacter(""));
         characters.add(new MushRoomCharacter(""));
         characters.add(new PostmanCharacter(""));
+        characters.add(new ThiefCharacter(""));
+        characters.add(new PrincessCharacter("", gameInstance.getBag()));
+        characters.add(new MinstrelCharacter(""));
+        characters.add(new MonkCharacter("", gameInstance.getBag()));
+        characters.add(new GrandmaCharacter(""));
 
         Collections.shuffle(characters);
         List<CharacterCard> extractedCharacters = characters.subList(0, 3);
@@ -106,6 +114,12 @@ public class GameManager {
         int motherNaturePosition = rand.nextInt(1, Rules.maxIslands);
         MotherNature motherNature = new MotherNature(motherNaturePosition);
         gameInstance.initMotherNature(motherNature);
+    }
+
+    private void initPlayersBalance(){
+        for(Player p : gameInstance.getPlayers()){
+            gameInstance.incrementPlayerBalance(p.getNickname());
+        }
     }
 
     private void fillBag() {

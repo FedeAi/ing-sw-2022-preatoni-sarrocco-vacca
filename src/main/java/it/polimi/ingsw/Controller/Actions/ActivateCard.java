@@ -6,6 +6,8 @@ import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
+import java.util.Optional;
+
 public class ActivateCard extends Performable {
 
     private final int choice;
@@ -39,11 +41,9 @@ public class ActivateCard extends Performable {
 
         CharacterCard choiceCard = game.getCharacterCards().get(choice);
         // Verify that the player has enough money
-        // TODO PRICE INCREMENT
         if (player.getBalance() < choiceCard.getPrice()) {
             return false;
         }
-        // TODO IF THIS NEEDED?
         if (choiceCard.isActive()) {
             return false;
         }
@@ -52,8 +52,17 @@ public class ActivateCard extends Performable {
 
     @Override
     public void performMove(Game game, Rules rules) {
+        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
+        if (player_opt.isEmpty())    // if there is no Player with that nick
+            return;
+        Player player = player_opt.get();
+
         CharacterCard choiceCard = game.getCharacterCards().get(choice);
         choiceCard.activate(rules, game);
+
+        game.incrementBalance(choiceCard.getPrice());
+        player.spendCoins(choiceCard.getPrice());
+
     }
 
 }

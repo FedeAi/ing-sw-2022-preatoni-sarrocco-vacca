@@ -16,13 +16,16 @@ public class Player {
     private List<AssistantCard> cards;
     private AssistantCard playedCard; // last played card
     private Magician magician;
-    private List<Object> balance;
+    private int balance;
 
     public Player(String nickname) { // FIXME: number numPlayers, higher order data, not relatives to Player
         this.nickname = nickname;
         connected = true;
         createHand();
-        balance = new ArrayList<>();
+    }
+
+    public void initBalance(int balance){
+        this.balance = balance;
     }
 
     public void setSchool(School school) {
@@ -53,18 +56,17 @@ public class Player {
         return magician;
     }
 
-    public void addCoin(Object coin) {
-        balance.add(coin);
+    public void addCoin() {
+        balance++;
     }
 
     public void spendCoins(int amount) {
-        for (int i = 0; i < amount; i++) {
-            balance.remove(i);
-        }
+        balance -=amount;
+        balance = Math.max(balance, 0);
     }
 
     public int getBalance() {
-        return balance.size();
+        return balance;
     }
 
     // empty string in AC constructor, this needs to be sorted

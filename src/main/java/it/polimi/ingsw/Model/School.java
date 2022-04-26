@@ -99,10 +99,10 @@ public class School {
     /**
         SWAPPING STUDENTS FROM HALL TO ENTRY (FOR MINSTREL)
      */
-    public void swapStudents(Color studentFromEntry, Color studentToHall){
+    public void swapStudents(Color studentFromEntry, Color studentFromHall){
 
        moveStudentFromEntryToHall(studentFromEntry);
-       moveStudentFromHalltoEntry(studentToHall);
+       moveStudentFromHalltoEntry(studentFromHall);
 
     }
 

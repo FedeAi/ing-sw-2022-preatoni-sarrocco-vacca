@@ -16,6 +16,7 @@ public class Game {
     private final List<Magician> magicians;
     private final List<Cloud> clouds;
     private final Bag bag;
+    private int balance;
     private List<Player> playersActionPhase; // Ordered list of players for the action phase TODO ADD UML
     private boolean expertMode;
     private IslandContainer islandContainer;
@@ -64,8 +65,27 @@ public class Game {
     }
 
     public void initCharacterCards(List<CharacterCard> cards) {
-        // TODO IS THE FUNCTION ARGUMENT CORRECT? LinkedList vs ArrayList or just List
         this.characterCards = cards;
+    }
+
+    public void initBalance(int balance){
+        this.balance = balance;
+    }
+
+    public void incrementPlayerBalance(String nickname){
+        getPlayerByNickname(nickname).ifPresent(player -> {
+            if(balance>0){
+                player.addCoin();
+                balance--;
+            }
+        });
+    }
+    public void decrementBalance(){
+        balance--;
+    }
+
+    public void incrementBalance(int value){
+        balance+= value;
     }
 
     /**
