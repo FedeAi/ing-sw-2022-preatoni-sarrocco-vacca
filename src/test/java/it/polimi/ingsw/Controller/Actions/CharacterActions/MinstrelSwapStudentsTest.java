@@ -11,8 +11,8 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 
+import java.util.EnumMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +22,7 @@ class MinstrelSwapStudentsTest {
     private Game game;
     private GameManager gameManager;
     private Player p1, p2, p3;
-    Color studentToPick, studentToPut;
+    Color studentFromEntry, studentFromHall;
     private MinstrelCharacter card;
     private LinkedList<CharacterCard> cardList;
 
@@ -42,27 +42,20 @@ class MinstrelSwapStudentsTest {
         card.init();
         cardList = new LinkedList<>();
 
-        studentToPick = Color.BLUE;
+        studentFromEntry = Color.BLUE;
 
         for (Color c : Color.values()) {
             int selectionValue = p1.getSchool().getStudentsEntry().getOrDefault(c, 0);
             if (selectionValue > 0) {
-                studentToPick = c;
+                studentFromEntry = c;
                 break;
             }
         }
 
-        studentToPut = Color.BLUE;
-        for (Color c : Color.values()) {
-            int selectionValue = p1.getSchool().getStudentsHall().getOrDefault(c, 0);
-            if (selectionValue > 0) {
-                studentToPick = c;
-                break;
-            }
-        }
-        // add students to players
+        studentFromHall = Color.BLUE;
 
-        p1.getSchool().getStudentsHall().put(studentToPut, 1);
+        // add students to player hall
+        p1.getSchool().getStudentsHall().put(studentFromHall, 1);
 
 
     }
@@ -72,12 +65,12 @@ class MinstrelSwapStudentsTest {
         init();
         // First we try to call the underlying Performable abstract
         String wrongNickname = "Scrofa";
-        action = new MinstrelSwapStudents(wrongNickname, studentToPick, studentToPut);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        action = new MinstrelSwapStudents(wrongNickname, studentFromEntry, studentFromHall);
+        assertFalse(action.canPerformExt(game, gameManager.getRules()), "wrongNickname");
 
         // Now we try to perform the action with the wrong gameState set (set before)
-        action = new MinstrelSwapStudents(p1.getNickname(), studentToPick, studentToPut);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        action = new MinstrelSwapStudents(p1.getNickname(), studentFromEntry, studentFromHall);
+        assertFalse(action.canPerformExt(game, gameManager.getRules()), " wrong gameState");
 
         // No cards present check
         card.activate(gameManager.getRules(), game);
@@ -98,12 +91,20 @@ class MinstrelSwapStudentsTest {
 
         cardList.add(card);
         card.activate(gameManager.getRules(), game);
-        action = new MinstrelSwapStudents(p1.getNickname(), studentToPick, studentToPut);
+        action = new MinstrelSwapStudents(p1.getNickname(), studentFromEntry, studentFromHall);
 
         assertTrue(action.canPerformExt(game, gameManager.getRules()));
 
-        action.performMove(game, gameManager.getRules());
-        action.performMove(game, gameManager.getRules());
+        // player has not enough students in the hall
+        p1.getSchool().getStudentsHall().put(studentFromHall, 0);
+        assertFalse(action.canPerformExt(game, gameManager.getRules()), "not enough students in the hall");
+
+        p1.getSchool().getStudentsHall().put(studentFromHall, 1);
+        p1.getSchool().getStudentsEntry().put(studentFromEntry, 0);
+        assertFalse(action.canPerformExt(game, gameManager.getRules()), "not enough students in the entry");
+
+        //action.performMove(game, gameManager.getRules());
+        //action.performMove(game, gameManager.getRules());
         /*
          *   FIXME the assert sometimes fails, I think it's caused by a failed performMove
          *    I.E. if I have only one student from either hall or entry (in this case the random one is entry),
@@ -120,9 +121,9 @@ class MinstrelSwapStudentsTest {
         card.activate(gameManager.getRules(), game);
         cardList.add(card);
         //1st check the number of entry
-        action = new MinstrelSwapStudents(p1.getNickname(), studentToPick, studentToPut);
+        action = new MinstrelSwapStudents(p1.getNickname(), studentFromEntry, studentFromHall);
         int prevEntry = game.getRoundOwner().getSchool().getStudentsEntry().size();
-        action.performMove(game, gameManager.getRules());
+        action.performMove(game, gameManager.getRules());   // Guarda che fallisce la can perform
         int postEntry = game.getRoundOwner().getSchool().getStudentsEntry().size();
         assertEquals(prevEntry, postEntry);
         //2nd check the number of hall
@@ -131,20 +132,20 @@ class MinstrelSwapStudentsTest {
         int postHall = game.getRoundOwner().getSchool().getStudentsHall().size();
         assertEquals(prevHall, postHall);
         //check the color
-        if (studentToPick.equals(studentToPut)) { //if the colors are equals then swap doesn't change
-            int prevColor = game.getRoundOwner().getSchool().getStudentsEntry().get(studentToPick);
+        if (studentFromEntry.equals(studentFromHall)) { //if the colors are equals then swap doesn't change
+            int prevColor = game.getRoundOwner().getSchool().getStudentsEntry().get(studentFromEntry);
             action.performMove(game, gameManager.getRules());
-            int postColor = game.getRoundOwner().getSchool().getStudentsEntry().get(studentToPut);
+            int postColor = game.getRoundOwner().getSchool().getStudentsEntry().get(studentFromHall);
             assertEquals(prevColor, postColor);
         } else {
             // if the colors are different each other, then the prevColor of entry prevColor = postColor -1
             //                                         then the preColor od Hall prevColor = postColor +1;
             //1st checking the colors of entry
-            int prevColor1 = game.getRoundOwner().getSchool().getStudentsEntry().get(studentToPick);
-            int prevColor2 = game.getRoundOwner().getSchool().getStudentsEntry().get(studentToPut);
+            int prevColor1 = game.getRoundOwner().getSchool().getStudentsEntry().get(studentFromEntry);
+            int prevColor2 = game.getRoundOwner().getSchool().getStudentsEntry().get(studentFromHall);
             action.performMove(game, gameManager.getRules());
-            int postColor1 = game.getRoundOwner().getSchool().getStudentsEntry().getOrDefault(studentToPick, 0);
-            int postColor2 = game.getRoundOwner().getSchool().getStudentsEntry().getOrDefault(studentToPut, 0);
+            int postColor1 = game.getRoundOwner().getSchool().getStudentsEntry().getOrDefault(studentFromEntry, 0);
+            int postColor2 = game.getRoundOwner().getSchool().getStudentsEntry().getOrDefault(studentFromHall, 0);
             // TODO
             /**
              something doesn't work, pls don't touch i want to fix it
@@ -162,6 +163,37 @@ class MinstrelSwapStudentsTest {
             */
 
         }
-
     }
+
+    @Test
+    void performMoveProposta() {
+        init();
+        card.activate(gameManager.getRules(), game);
+        cardList.add(card);
+        game.initCharacterCards(cardList);
+        action = new MinstrelSwapStudents(p1.getNickname(), studentFromEntry, studentFromHall);
+        assertTrue(action.canPerformExt(game, gameManager.getRules()));
+
+        EnumMap<Color, Integer> prevEntry = new EnumMap<Color, Integer>(p1.getSchool().getStudentsEntry());
+        EnumMap<Color, Integer> prevHall = new EnumMap<Color, Integer>(p1.getSchool().getStudentsHall());
+        action.performMove(game, gameManager.getRules());
+        EnumMap<Color, Integer> actualEntry = new EnumMap<Color, Integer>(p1.getSchool().getStudentsEntry());
+        EnumMap<Color, Integer> actualHall = new EnumMap<Color, Integer>(p1.getSchool().getStudentsHall());
+
+        int nextEntry = prevEntry.getOrDefault(studentFromHall, 0) + 1;
+        int nextHall = prevHall.getOrDefault(studentFromEntry, 0) + 1;
+
+        if (studentFromHall == studentFromEntry) {
+            nextEntry = prevEntry.getOrDefault(studentFromHall, 0);
+            nextHall = prevHall.getOrDefault(studentFromEntry, 0);
+        }
+
+
+        assertEquals(nextEntry, actualEntry.get(studentFromHall), "correctness of swap");
+        assertEquals(nextHall, actualHall.get(studentFromEntry), "correctness of swap");
+
+        assertEquals(prevEntry.size(), actualEntry.size(), "entry size not changed");
+        assertEquals(prevHall.size(), actualHall.size(), "hall size not changed");
+    }
+
 }

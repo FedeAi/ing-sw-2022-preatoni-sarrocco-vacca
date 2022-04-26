@@ -2,6 +2,7 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -15,50 +16,52 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ChooseCloudTest {
 
-    @Test
-    void canPerformExt() {
+    GameManager gameManager;
+    Player p1, p2;
+    Game gameInstance;
 
-        GameManager gameManager = new GameManager();
-        Player p1 = new Player("Palkia");
-        Player p2 = new Player("Kyogre");
+    private void initTest(){
+        gameManager = new GameManager();
+        p1 = new Player("Palkia");
+        p2 = new Player("Kyogre");
 
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
+        gameInstance = gameManager.getGameInstance();
         gameInstance.setRoundOwner(p2);
+        gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
 
+    }
+    @Test
+    void canPerformExt() {
+        initTest();
+        int choice = 1;
 
-        int choice = 1; // get right choice
-        int choice2 = 6;
-
-
-        Performable choiceCloudRIGHT = new ChooseCloud("Kyogre", choice);
-        Performable choiceCloudWRONG = new ChooseCloud("Scaccia", choice);
-
+        Performable chooseCloud= new ChooseCloud(p2.getNickname(), choice);
 
         // base case
-        gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-        assertTrue(choiceCloudRIGHT.canPerformExt(gameInstance, gameManager.getRules()));
+        assertTrue(chooseCloud.canPerformExt(gameInstance, gameManager.getRules()), "base case");
 
         //wrong game phase
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
-        assertFalse(choiceCloudWRONG.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(chooseCloud.canPerformExt(gameInstance, gameManager.getRules()),"wrong game phase");
 
         // wrong player ( no player with that nickname )
+        Performable chooseCloudWrongNick = new ChooseCloud("Scaccia", choice);
         gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-        assertFalse(choiceCloudWRONG.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(chooseCloudWrongNick.canPerformExt(gameInstance, gameManager.getRules()), "wrong player");
 
         // wrong player is not your turn
         gameInstance.setRoundOwner(p1);
-        assertFalse(choiceCloudRIGHT.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(chooseCloud.canPerformExt(gameInstance, gameManager.getRules()), "not round-owner");
         gameInstance.setRoundOwner(p2);
 
 
         // The choice doesn't exist
-        Performable action = new ChooseCloud("Kyogre", choice2);
+        Performable wrongChoiceAction = new ChooseCloud("Kyogre", 6);
         gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-        assertFalse(action.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(wrongChoiceAction.canPerformExt(gameInstance, gameManager.getRules()));
 
         // all Clouds are empty
 
@@ -71,48 +74,31 @@ class ChooseCloudTest {
     @Test
     void performMove() {
 
-        GameManager gameManager = new GameManager();
-        Player p1 = new Player("Palkia");
-        Player p2 = new Player("Kyogre");
-
-        gameManager.addPlayer(p1);
-        gameManager.addPlayer(p2);
-        gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
-        gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-        gameInstance.setRoundOwner(p2);
+        initTest();
 
         Random random = new Random();
         //random choice between 1 - maxClouds
         int choice = random.nextInt(gameInstance.numPlayers());
 
-        Performable ChooseClouds = new ChooseCloud("Kyogre", choice);
-        assertTrue(ChooseClouds.canPerformExt(gameInstance, gameManager.getRules()));
+        Performable chooseCloud = new ChooseCloud(p2.getNickname(), choice);
+        assertTrue(chooseCloud.canPerformExt(gameInstance, gameManager.getRules()));
 
         // previous state
-        int weight = Rules.getStudentsPerTurn(gameInstance.numPlayers());
-        Map<Color, Integer> prevEntry = new EnumMap<Color, Integer>(p2.getSchool().getStudentsEntry()); //empty?
-        //perform move
+        int studentsPerTurn = Rules.getStudentsPerTurn(gameInstance.numPlayers());
+        Map<Color, Integer> prevEntry = new EnumMap<Color, Integer>(p2.getSchool().getStudentsEntry());
+        Cloud selectedCloud = gameInstance.getClouds().get(choice);
 
-        ChooseClouds.performMove(gameInstance, gameManager.getRules());
+        //perform move
+        chooseCloud.performMove(gameInstance, gameManager.getRules());
 
         Map<Color, Integer> postEntry = new EnumMap<Color, Integer>(p2.getSchool().getStudentsEntry());
 
-        int count = 0;
-        for (Color c : Color.values()) {
-            if (prevEntry.get(c) != null) {
-                count = count + prevEntry.get(c);
-            }
-        }
 
-        int postCounter = 0;
-        for (Color c : Color.values()) {
-            if (postEntry.get(c) != null) {
-                postCounter = postCounter + postEntry.get(c);
-            }
-        }
+        int previousPlayerStudents = prevEntry.values().stream().reduce(0,Integer::sum);
+        int postPlayerStudents = postEntry.values().stream().reduce(0,Integer::sum);
 
-        assertTrue(count + weight == postCounter);
+        assertEquals(previousPlayerStudents + studentsPerTurn, postPlayerStudents, "the right number of student has been added");
+        //assertTrue(selectedCloud.isEmpty(), "after having picked students the cloud must be empty"); // Not true if the current player is the last one ( refill )
 
     }
 

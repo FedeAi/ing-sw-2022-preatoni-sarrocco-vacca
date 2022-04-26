@@ -78,7 +78,7 @@ public class PrincessMoveToEntryTest {
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerformExt(game, gameManager.getRules()), "there is no princessCharacter in Game");
         /**
          like Monk, to fix when getActiveCharacter will return not just 1 elem
          */
@@ -95,8 +95,8 @@ public class PrincessMoveToEntryTest {
         cardList.add(card);
         game.initCharacterCards(cardList);
         action = new PrincessMoveToEntry(p1.getNickname(), selectionColor);
-        int prevHall = p1.getSchool().getStudentsHall().getOrDefault(selectionColor, 0).intValue();
+        int prevHall = p1.getSchool().getStudentsHall().getOrDefault(selectionColor, 0);
         action.performMove(game, gameManager.getRules());
-        assertEquals(prevHall + 1, p1.getSchool().getStudentsHall().getOrDefault(selectionColor, 0).intValue());
+        assertEquals(prevHall + 1, p1.getSchool().getStudentsHall().getOrDefault(selectionColor, 0));
     }
 }
