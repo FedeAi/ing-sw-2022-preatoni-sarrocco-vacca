@@ -58,10 +58,16 @@ public class ActivateCard extends Performable {
         Player player = player_opt.get();
 
         CharacterCard choiceCard = game.getCharacterCards().get(choice);
-        choiceCard.activate(rules, game);
 
-        game.incrementBalance(choiceCard.getPrice());
+        if(choiceCard.alreadyActivatedOnce()){
+            game.incrementBalance(choiceCard.getPrice());
+        }else{
+            game.incrementBalance(choiceCard.getPrice()-1);
+        }
+
         player.spendCoins(choiceCard.getPrice());
+
+        choiceCard.activate(rules, game);
 
     }
 

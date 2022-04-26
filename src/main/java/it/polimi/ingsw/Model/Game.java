@@ -72,6 +72,10 @@ public class Game {
         this.balance = balance;
     }
 
+    /**
+     * increment player balance and decrease game balance
+     * @param nickname
+     */
     public void incrementPlayerBalance(String nickname){
         getPlayerByNickname(nickname).ifPresent(player -> {
             if(balance>0){
@@ -86,6 +90,10 @@ public class Game {
 
     public void incrementBalance(int value){
         balance+= value;
+    }
+
+    public int getBalance(){
+        return balance;
     }
 
     /**

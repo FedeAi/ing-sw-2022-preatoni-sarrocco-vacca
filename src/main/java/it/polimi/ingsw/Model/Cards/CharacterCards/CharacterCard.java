@@ -37,7 +37,9 @@ public abstract class CharacterCard extends Card {
     public boolean isActive() {
         return isActive;
     }
-
+    public boolean alreadyActivatedOnce(){
+        return activated;
+    }
     public int getPrice() {
         if (activated) {
             return price + 1;
