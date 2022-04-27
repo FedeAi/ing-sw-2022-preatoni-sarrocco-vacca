@@ -36,5 +36,8 @@ public class MinstrelCharacter extends CharacterCard {
         return swappedStudents;
     }
 
+    public void incrementSwapped(){
+        swappedStudents++;
+    }
 
 }

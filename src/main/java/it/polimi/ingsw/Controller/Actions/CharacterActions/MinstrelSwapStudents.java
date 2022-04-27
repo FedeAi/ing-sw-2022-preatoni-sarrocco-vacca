@@ -34,6 +34,7 @@ public class MinstrelSwapStudents extends Performable {
             return false;
         }
 
+
         // is action legal check
         // there is no an active card
 
@@ -67,20 +68,25 @@ public class MinstrelSwapStudents extends Performable {
     @Override
     public void performMove(Game game, Rules rules) {
 
+        Optional<CharacterCard> card = game.getActiveCharacter();
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
+        MinstrelCharacter minstrel = (MinstrelCharacter) card.get();
+
         if (player_opt.isEmpty())    // if there is no Player with that nick
             return;
         Player player = player_opt.get();
 
         // to check instance of and make cast
         if (canPerformExt(game, rules)) {
+
             player.getSchool().swapStudents(studentFromEntry, studentFromHall);
             game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors
-
+            minstrel.incrementSwapped();
             // coin
             int hallPosition = player.getSchool().getStudentsHall().getOrDefault(studentFromEntry, 0);
             if (Rules.checkCoin(hallPosition)) {
                 game.incrementPlayerBalance(player.getNickname());
+
             }
 
         }

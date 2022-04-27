@@ -77,11 +77,12 @@ public class School {
     public void moveStudentFromEntryToHall(Color student) {
         if (studentsEntry.get(student) > 0) {
             studentsEntry.put(student, studentsEntry.get(student) - 1);
+            studentsEntry.get(student);
             studentsHall.put(student, studentsHall.getOrDefault(student, 0) + 1);
         }
     }
 
-    public void moveStudentFromHalltoEntry(Color student) {
+    public void moveStudentFromHallToEntry(Color student) {
         if (studentsHall.get(student) > 0) {
             studentsHall.put(student, studentsHall.get(student) - 1);
             studentsEntry.put(student, studentsEntry.getOrDefault(student, 0) + 1);
@@ -93,18 +94,17 @@ public class School {
         Integer numStudents = studentsEntry.get(student);
         if (numStudents != null && numStudents > 0) {
             studentsEntry.put(student, studentsEntry.get(student) - 1);
-            //isRemoved = true;
+
         }
-        //return isRemoved;
+
     }
 
     /**
      * SWAPPING STUDENTS FROM HALL TO ENTRY (FOR MINSTREL)
      */
     public void swapStudents(Color studentFromEntry, Color studentFromHall) {
-        Color temp = studentFromEntry;
         moveStudentFromEntryToHall(studentFromEntry);
-        moveStudentFromHalltoEntry(studentFromHall);
+        moveStudentFromHallToEntry(studentFromHall);
 
     }
 
