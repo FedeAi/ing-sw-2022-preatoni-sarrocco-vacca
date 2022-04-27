@@ -14,7 +14,8 @@ import java.util.Optional;
 public class MoveMotherNature extends Performable {
     private final int movement;
 
-    MoveMotherNature(String player, int movement) {
+    // is public correct?
+    public MoveMotherNature(String player, int movement) {
         super(player);
         this.movement = movement;
     }
@@ -43,11 +44,9 @@ public class MoveMotherNature extends Performable {
 
     @Override
     public void performMove(Game game, Rules rules) {
-
         game.moveMotherNature(movement);
         int newMotherPosition = game.getMotherNature().getPosition();
         Island island = game.getIslandContainer().get(newMotherPosition);
-        // TODO Needs a code review and proper testing
         if (!island.isBlocked()) {
             // set owner ( put the Tower )
             Optional<String> islandNewOwner_opt = rules.getDynamicRules().computeIslandInfluence(game, island);
@@ -63,7 +62,6 @@ public class MoveMotherNature extends Performable {
                     islandPrevPlayer_opt.ifPresent(owner -> owner.getSchool().increaseTowers());
                 }
             }
-
             // SuperIsland creation
             IslandContainer islandContainer = game.getIslandContainer();
             Island prevIsland = islandContainer.prevIsland(newMotherPosition);
@@ -86,6 +84,5 @@ public class MoveMotherNature extends Performable {
         }
         // change state
         game.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-
     }
 }

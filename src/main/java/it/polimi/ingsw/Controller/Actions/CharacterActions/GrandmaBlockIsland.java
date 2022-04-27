@@ -76,7 +76,6 @@ public class GrandmaBlockIsland extends Performable {
         if (game.getActiveCharacter().isPresent() && canPerformExt(game, rules)) {
             GrandmaCharacter grandma = (GrandmaCharacter) game.getActiveCharacter().get();
             grandma.moveBlockingCard();
-            // TODO TESTING
             game.getIslandContainer().get(islandIndex).setBlocked(true);
             grandma.deactivate(rules, game);
         }
