@@ -21,7 +21,9 @@ public class MinstrelCharacter extends CharacterCard {
     @Override
     public void activate(Rules rules, Game game) {
         super.activate(rules, game);
+        previousState = game.getGameState();
         game.setGameState(GameState.MINISTREL_SWAP_STUDENTS);
+        swappedStudents = 0;
     }
 
     @Override
