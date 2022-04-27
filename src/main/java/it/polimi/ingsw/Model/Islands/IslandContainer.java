@@ -35,7 +35,7 @@ public class IslandContainer {
     }
 
     public void joinPrevIsland(int currIslandIndex) {
-        if (currIslandIndex > 0 && currIslandIndex < islands.size()) {
+        if (currIslandIndex >= 0 && currIslandIndex < islands.size()) {
             Island currIsland = islands.get(currIslandIndex);
             Island prevIsland = prevIsland(currIslandIndex);
             Island superIsland = new SuperIsland(List.of(prevIsland, currIsland));
@@ -46,7 +46,7 @@ public class IslandContainer {
     }
 
     public void joinNextIsland(int currIslandIndex) {
-        if (currIslandIndex > 0 && currIslandIndex < islands.size()) {
+        if (currIslandIndex >= 0 && currIslandIndex < islands.size()) {
             Island currIsland = islands.get(currIslandIndex);
             Island nextIsland = nextIsland(currIslandIndex);
             Island superIsland = new SuperIsland(List.of(currIsland, nextIsland));

@@ -159,12 +159,11 @@ class MoveMotherNatureTest {
         for (int i = 0; i < 5; i++) {
             game.getIslandContainer().get(nextPosition).addStudent(profColor);
         }
-
         // Then, we play a valid card: 3 movement, we need to play a 5+ value card
         final int cardValue = 5;
         AssistantCard card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-
+        // Now we move MN
         moveMotherNature = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
         moveMotherNature.performMove(game, gameManager.getRules());
         // Checking if motherNature has in fact moved
@@ -209,12 +208,11 @@ class MoveMotherNatureTest {
         for (int i = 0; i < 5; i++) {
             game.getIslandContainer().get(nextPosition).addStudent(profColor);
         }
-
         // Then, we play a valid card: 3 movement, we need to play a 5+ value card
         final int cardValue = 5;
         AssistantCard card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-
+        // Now we move MN
         moveMotherNature = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
         moveMotherNature.performMove(game, gameManager.getRules());
         // Checking if motherNature has in fact moved
@@ -233,8 +231,6 @@ class MoveMotherNatureTest {
             game.getIslandContainer().get(nextPosition).addStudent(profColor);
         }
         int oldIslands = game.getIslandContainer().size();
-        int next = game.getIslandContainer().correctIndex(2, game.getMotherNature().getPosition());
-        game.getIslandContainer().get(next).setOwner(p3.getNickname());
         moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
         moveMotherNature.performMove(game, gameManager.getRules());
         assertTrue(game.getIslandContainer().get(game.getMotherNature().getPosition()) instanceof SuperIsland);
