@@ -3,7 +3,7 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MushRoomCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.MushroomCharacter;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -11,10 +11,10 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
-public class MushRoomChooseColor extends Performable {
+public class MushroomChooseColor extends Performable {
     private final Color student;
 
-    MushRoomChooseColor(String player, Color student) {
+    public MushroomChooseColor(String player, Color student) {
         super(player);
         this.student = student;
     }
@@ -38,11 +38,11 @@ public class MushRoomChooseColor extends Performable {
             return false;
 
         // the active card is not the right one
-        if (!(card.get() instanceof MushRoomCharacter)) {
+        if (!(card.get() instanceof MushroomCharacter)) {
             return false;
         }
 
-        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof MushRoomCharacter)) {
+        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof MushroomCharacter)) {
             return false;
         }
 
@@ -54,8 +54,8 @@ public class MushRoomChooseColor extends Performable {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
         if (player_opt.isEmpty())    // if there is no Player with that nick
             return;
-        Optional<CharacterCard> mushRoomCard = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof MushRoomCharacter).findFirst();
-        mushRoomCard.ifPresent(characterCard -> ((MushRoomCharacter) characterCard).setStudent(this.student));
+        Optional<CharacterCard> mushRoomCard = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof MushroomCharacter).findFirst();
+        mushRoomCard.ifPresent(characterCard -> ((MushroomCharacter) characterCard).setStudent(this.student));
     }
 
 }

@@ -8,11 +8,11 @@ import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 
 
-public class MushRoomCharacter extends CharacterCard {
+public class MushroomCharacter extends CharacterCard {
     Color student;
     private GameState previousState;
 
-    public MushRoomCharacter(String imagePath) {
+    public MushroomCharacter(String imagePath) {
         super(imagePath);
         price = 3;
     }

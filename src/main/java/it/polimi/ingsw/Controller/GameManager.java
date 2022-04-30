@@ -2,7 +2,6 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.*;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
@@ -65,7 +64,7 @@ public class GameManager {
         characters.add(new HeraldCharacter(""));
         characters.add(new JokerCharacter("", gameInstance.getBag()));
         characters.add(new KnightCharacter(""));
-        characters.add(new MushRoomCharacter(""));
+        characters.add(new MushroomCharacter(""));
         characters.add(new PostmanCharacter(""));
         characters.add(new ThiefCharacter(""));
         characters.add(new PrincessCharacter("", gameInstance.getBag()));
