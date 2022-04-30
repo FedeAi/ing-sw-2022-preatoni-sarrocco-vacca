@@ -1,8 +1,6 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.CentaurRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.PostmanRules;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
@@ -20,13 +18,13 @@ class PostmanCharacterTest {
     private void init() {
         card = new PostmanCharacter("");
 
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("DraghettoMagico");
         p2 = new Player("FatinaBullone");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
     }
 
     @Test

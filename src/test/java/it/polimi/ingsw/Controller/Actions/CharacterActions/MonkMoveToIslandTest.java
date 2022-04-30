@@ -30,7 +30,7 @@ class MonkMoveToIslandTest {
     private int selectionValue;
 
     private void init() {
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("Ale");
         p2 = new Player("Fede");
         p3 = new Player("Davide");
@@ -38,7 +38,7 @@ class MonkMoveToIslandTest {
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         card = new MonkCharacter("", game.getBag());

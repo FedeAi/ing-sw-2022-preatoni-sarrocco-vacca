@@ -36,7 +36,7 @@ class MoveMotherNatureTest {
      */
     @BeforeEach
     void init() {
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("Ale");
         p2 = new Player("Davide");
         p3 = new Player("Fede");
@@ -44,7 +44,7 @@ class MoveMotherNatureTest {
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
         game.setGameState(GameState.ACTION_MOVE_MOTHER);
         movement = 3;
         game.setRoundOwner(p3);

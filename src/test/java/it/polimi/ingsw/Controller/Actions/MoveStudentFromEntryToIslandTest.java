@@ -17,7 +17,7 @@ class MoveStudentFromEntryToIslandTest {
 
     @Test
     void performMove() {
-        GameManager gameManager = new GameManager();
+        GameManager gameManager = new GameManager(new Game());
         Player p1 = new Player("Ale");
         Player p2 = new Player("Davide");
         Player p3 = new Player("Fede");
@@ -26,7 +26,7 @@ class MoveStudentFromEntryToIslandTest {
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
+        Game gameInstance = gameManager.getGame();
         gameInstance.setRoundOwner(p1);
         Performable moveStudent;
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
@@ -65,7 +65,7 @@ class MoveStudentFromEntryToIslandTest {
 
     @Test
     void canPerformExt() {
-        GameManager gameManager = new GameManager();
+        GameManager gameManager = new GameManager(new Game());
         Player p1 = new Player("Ale");
         Player p2 = new Player("Davide");
         Player p3 = new Player("Fede");
@@ -74,7 +74,7 @@ class MoveStudentFromEntryToIslandTest {
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
+        Game gameInstance = gameManager.getGame();
         gameInstance.setRoundOwner(p1);
         Performable moveStudent;
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
@@ -123,7 +123,7 @@ class MoveStudentFromEntryToIslandTest {
 
     @Test
     public void getNickNamePlayerTest() {
-        GameManager gameManager = new GameManager();
+        GameManager gameManager = new GameManager(new Game());
         Player p1 = new Player("Ale");
         Player p2 = new Player("Fede");
         gameManager.addPlayer(p1);

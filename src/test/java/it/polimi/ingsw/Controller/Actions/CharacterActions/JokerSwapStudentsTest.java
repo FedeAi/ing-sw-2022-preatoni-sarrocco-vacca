@@ -11,7 +11,6 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 
-import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ class JokerSwapStudentsTest {
     private LinkedList<CharacterCard> cardList;
 
     private void init() {
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("Ale");
         p2 = new Player("Fede");
         p3 = new Player("Davide");
@@ -37,7 +36,7 @@ class JokerSwapStudentsTest {
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         card = new JokerCharacter("", game.getBag());

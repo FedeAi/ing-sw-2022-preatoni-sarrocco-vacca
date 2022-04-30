@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BaseIslandTest {
 
-    //    private GameManager initGameManager(){
-//        GameManager gameManager = new GameManager();
+    //    private GameManager initGameManager(new Game()){
+//        GameManager gameManager = new GameManager(new Game());
 //        Player p1 = new Player("Marula");
 //        Player p2 = new Player("Albano");
 //        gameManager.addPlayer(p1);

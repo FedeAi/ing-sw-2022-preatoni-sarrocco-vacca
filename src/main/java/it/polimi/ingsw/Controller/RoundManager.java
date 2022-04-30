@@ -4,14 +4,17 @@ import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.WinController;
 import it.polimi.ingsw.Model.Game;
 
-public class RoundManager {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public class RoundManager implements PropertyChangeListener {
 
     private GameManager gameManager;
     private Game gameInstance;
 
     public RoundManager(GameManager gameManager) {
         this.gameManager = gameManager;
-        this.gameInstance = gameManager.getGameInstance();
+        this.gameInstance = gameManager.getGame();
     }
 
     public void performAction(Performable action) {
@@ -23,4 +26,8 @@ public class RoundManager {
     }
 
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
 }

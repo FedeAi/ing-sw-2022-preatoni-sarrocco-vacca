@@ -20,14 +20,14 @@ class MoveStudentFromEntryToHallTest {
     private Game gameInstance;
 
     private void initGame() {
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("ManovellismoOrdinario");
         p2 = new Player("Biella");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
 
-        gameInstance = gameManager.getGameInstance();
+        gameInstance = gameManager.getGame();
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
         gameInstance.setRoundOwner(p2);
     }

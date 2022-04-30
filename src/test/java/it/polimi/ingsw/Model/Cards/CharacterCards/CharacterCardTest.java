@@ -16,13 +16,13 @@ class CharacterCardTest {
     private void init() {
         card = new PostmanCharacter("");
 
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("DraghettoMagico");
         p2 = new Player("FatinaBullone");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
     }
 
 

@@ -18,7 +18,7 @@ public class BaseIsland extends Island {
     // TODO return a copy of the map, rather than the direct reference
     @Override
     public Map<Color, Integer> getStudents() {
-        return students;
+        return new EnumMap<Color, Integer>(students);
     }
 
     @Override

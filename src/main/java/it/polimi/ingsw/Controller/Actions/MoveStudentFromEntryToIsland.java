@@ -25,7 +25,7 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
         Player player = player_opt.get();
 
         player.getSchool().removeStudentFromEntry(color);
-        game.getIslandContainer().get(islandIndex).addStudent(color);
+        game.getIslandContainer().addIslandStudent(islandIndex, color);
 
         if (Rules.getEntrySize(game.numPlayers()) - player.getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())) {
             game.setGameState(GameState.ACTION_MOVE_MOTHER);

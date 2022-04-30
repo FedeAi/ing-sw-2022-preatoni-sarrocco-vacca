@@ -24,7 +24,7 @@ class DeactivateCardTest {
 
     private void init() {
         card = new KnightCharacter("");
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("Ale");
         p2 = new Player("Fede");
         p3 = new Player("Davide");
@@ -32,7 +32,7 @@ class DeactivateCardTest {
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         game.setRoundOwner(p1);
     }

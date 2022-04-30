@@ -1,11 +1,12 @@
 package it.polimi.ingsw.Model.Islands;
 
+import it.polimi.ingsw.Model.Enumerations.Color;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class IslandContainer {
     private LinkedList<Island> islands;
-
     public IslandContainer(LinkedList<Island> islands) {
         this.islands = islands;
     }
@@ -24,6 +25,10 @@ public class IslandContainer {
 
     public int correctIndex(int delta, int currentPosition) {
         return (currentPosition + islands.size() + delta) % islands.size();
+    }
+
+    public void addIslandStudent(int islandIndex, Color student){
+        islands.get(islandIndex).addStudent(student);
     }
 
     public Island prevIsland(int currIslandIndex) {

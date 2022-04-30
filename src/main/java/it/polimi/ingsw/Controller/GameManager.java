@@ -9,27 +9,32 @@ import it.polimi.ingsw.Model.Enumerations.TowerColor;
 import it.polimi.ingsw.Model.Islands.BaseIsland;
 import it.polimi.ingsw.Model.Islands.Island;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
-public class GameManager {
+public class GameManager implements PropertyChangeListener {
 
-
-    private final Game gameInstance;
+    public static final String ROUND_CONTROLLER = "roundController";
+    private final Game game;
     private final Rules rules;
-    //private RoundManager roundManager;
+    private RoundManager roundManager;
     private boolean isHard_temp = true;
+    private final PropertyChangeSupport controllerListeners = new PropertyChangeSupport(this);
 
-    public GameManager() {
+    public GameManager(Game game) {
 
-        this.gameInstance = new Game(new Bag(Rules.initialBagSize));
-        this.gameInstance.setGameState(GameState.GAME_ROOM);
+        this.game = game;   //new Game(new Bag(Rules.initialBagSize))
+        this.game.setGameState(GameState.GAME_ROOM);
         rules = new Rules();
+        this.roundManager = new RoundManager(this);
 
-        //this.roundManager = new RoundManager(this);
+        controllerListeners.addPropertyChangeListener(roundManager);
     }
 
-    public Game getGameInstance() {
-        return gameInstance;
+    public Game getGame() {
+        return game;
     }
 
     public Rules getRules() {
@@ -37,7 +42,7 @@ public class GameManager {
     }
 
     public void addPlayer(Player player) {
-        this.gameInstance.addPlayer(player);
+        this.game.addPlayer(player);
     }
 
     public void initGame() {
@@ -49,10 +54,10 @@ public class GameManager {
         initSchools();
         initClouds();
         if (isHard_temp) {
-            gameInstance.setExpertMode(true);
+            game.setExpertMode(true);
             initCharacters();
 
-            gameInstance.initBalance(Rules.numCoins);
+            game.initBalance(Rules.numCoins);
             initPlayersBalance();
         }
     }
@@ -62,30 +67,30 @@ public class GameManager {
         characters.add(new CentaurCharacter(""));
         characters.add(new FarmerCharacter(""));
         characters.add(new HeraldCharacter(""));
-        characters.add(new JokerCharacter("", gameInstance.getBag()));
+        characters.add(new JokerCharacter("", game.getBag()));
         characters.add(new KnightCharacter(""));
         characters.add(new MushroomCharacter(""));
         characters.add(new PostmanCharacter(""));
         characters.add(new ThiefCharacter(""));
-        characters.add(new PrincessCharacter("", gameInstance.getBag()));
+        characters.add(new PrincessCharacter("", game.getBag()));
         characters.add(new MinstrelCharacter(""));
-        characters.add(new MonkCharacter("", gameInstance.getBag()));
+        characters.add(new MonkCharacter("", game.getBag()));
         characters.add(new GrandmaCharacter(""));
 
         Collections.shuffle(characters);
         List<CharacterCard> extractedCharacters = characters.subList(0, 3);
         extractedCharacters.forEach(CharacterCard::init);
-        gameInstance.initCharacterCards(characters.subList(0, 3));
+        game.initCharacterCards(characters.subList(0, 3));
 
     }
 
 
     private void initSchools() {
-        List<Player> players = gameInstance.getPlayers();
+        List<Player> players = game.getPlayers();
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
             // create and fill the school
-            Map<Color, Integer> students = gameInstance.getBag().extract(Rules.getEntrySize(players.size()));
+            Map<Color, Integer> students = game.getBag().extract(Rules.getEntrySize(players.size()));
             TowerColor towerColor = TowerColor.values()[i];
             School school = new School(Rules.getTowersPerPlayer(players.size()), towerColor, students);
             player.setSchool(school);
@@ -93,7 +98,7 @@ public class GameManager {
     }
 
     private void initIslands() {
-        int motherNaturePosition = gameInstance.getMotherNature().getPosition();
+        int motherNaturePosition = game.getMotherNature().getPosition();
         int opposite = (motherNaturePosition + 6) % 12;
         LinkedList<Island> islands = new LinkedList<>();
         MotherNature motherNature;
@@ -101,42 +106,46 @@ public class GameManager {
         for (int i = 0; i < Rules.maxIslands; i++) {
             Island island = new BaseIsland();
             if (i != opposite && i != motherNaturePosition) {
-                island.addStudent(gameInstance.getBag().extractOne());
+                island.addStudent(game.getBag().extractOne());
             }
             islands.add(island);
         }
-        gameInstance.initIslands(islands);
+        game.initIslands(islands);
     }
 
     private void initMotherNature() {
         Random rand = new Random();
         int motherNaturePosition = rand.nextInt(1, Rules.maxIslands);
         MotherNature motherNature = new MotherNature(motherNaturePosition);
-        gameInstance.initMotherNature(motherNature);
+        game.initMotherNature(motherNature);
     }
 
     private void initPlayersBalance() {
-        for (Player p : gameInstance.getPlayers()) {
-            gameInstance.incrementPlayerBalance(p.getNickname());
+        for (Player p : game.getPlayers()) {
+            game.incrementPlayerBalance(p.getNickname());
         }
     }
 
     private void fillBag() {
-        gameInstance.getBag().extendBag(Rules.bagSize - Rules.initialBagSize);
+        game.getBag().extendBag(Rules.bagSize - Rules.initialBagSize);
     }
 
     private void initClouds() {
-        int numClouds = gameInstance.getPlayers().size();
+        int numClouds = game.getPlayers().size();
         LinkedList<Cloud> clouds = new LinkedList<>();
 
         for (int i = 0; i < numClouds; i++) {
             Cloud cloud = new Cloud();
-            cloud.addStudents(gameInstance.getBag().extract(Rules.getStudentsPerTurn(gameInstance.numPlayers()))); //init fill
+            cloud.addStudents(game.getBag().extract(Rules.getStudentsPerTurn(game.numPlayers()))); //init fill
             clouds.add(cloud);
         }
-        gameInstance.initClouds(clouds);
+        game.initClouds(clouds);
 
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
 }
 

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.KnightRules;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ public class MinstrelCharacterTest {
 
     private void init() {
         card = new MinstrelCharacter("");
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("Ale");
         p2 = new Player("Fede");
         p3 = new Player("Davide");
@@ -26,7 +25,7 @@ public class MinstrelCharacterTest {
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
     }
 
     @Test

@@ -23,13 +23,13 @@ class BaseRulesTest {
     private BaseRules baseRules;
 
     private void initGame() {
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("player1");
         p2 = new Player("player2");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
 
         game.setRoundOwner(p1);
 

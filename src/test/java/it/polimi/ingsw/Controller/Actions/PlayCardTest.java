@@ -1,16 +1,13 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,14 +17,14 @@ class PlayCardTest {
     @Test
     void canPerformExt() throws Exception {
 
-        GameManager gameManager = new GameManager();
+        GameManager gameManager = new GameManager(new Game());
         Player p1 = new Player("fede");
         Player p2 = new Player("gianfranco");
 
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
+        Game gameInstance = gameManager.getGame();
 
         gameInstance.setRoundOwner(p1);
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
@@ -58,14 +55,14 @@ class PlayCardTest {
 
     @Test
     void performMove() throws Exception {
-        GameManager gameManager = new GameManager();
+        GameManager gameManager = new GameManager(new Game());
         Player p1 = new Player("fede");
         Player p2 = new Player("gianfranco");
 
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
+        Game gameInstance = gameManager.getGame();
 
         gameInstance.setRoundOwner(p1);
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
@@ -96,7 +93,7 @@ class PlayCardTest {
     public void setActionOrder() {
 
 
-        GameManager gameM = new GameManager();
+        GameManager gameM = new GameManager(new Game());
 
         Player p1 = new Player("fede");
         Player p2 = new Player("gianfranco");
@@ -105,7 +102,7 @@ class PlayCardTest {
         gameM.addPlayer(p2);
         gameM.initGame();
 
-        Game gameInstance = gameM.getGameInstance();
+        Game gameInstance = gameM.getGame();
 
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
 

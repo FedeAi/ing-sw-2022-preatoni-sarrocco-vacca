@@ -2,17 +2,13 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MonkCharacter;
 import it.polimi.ingsw.Model.Cards.CharacterCards.PrincessCharacter;
 import it.polimi.ingsw.Model.Enumerations.Color;
 import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Model.School;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -33,7 +29,7 @@ public class PrincessMoveToEntryTest {
 
     private void init() {
 
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("Ale");
         p2 = new Player("Fede");
         p3 = new Player("Davide");
@@ -41,7 +37,7 @@ public class PrincessMoveToEntryTest {
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         card = new PrincessCharacter("", game.getBag());

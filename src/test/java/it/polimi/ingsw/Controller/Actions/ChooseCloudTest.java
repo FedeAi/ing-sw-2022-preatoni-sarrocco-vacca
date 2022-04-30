@@ -21,14 +21,14 @@ class ChooseCloudTest {
     Game gameInstance;
 
     private void initTest(){
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("Palkia");
         p2 = new Player("Kyogre");
 
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        gameInstance = gameManager.getGameInstance();
+        gameInstance = gameManager.getGame();
         gameInstance.setRoundOwner(p2);
         gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
 

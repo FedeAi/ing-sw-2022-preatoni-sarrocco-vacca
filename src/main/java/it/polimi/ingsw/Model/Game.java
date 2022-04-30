@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Enumerations.Color;
@@ -7,10 +8,17 @@ import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Enumerations.Magician;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
+import it.polimi.ingsw.Server.Answer.IslandsMessage;
+import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.listeners.IslandsListener;
+import it.polimi.ingsw.listeners.MoveMotherListener;
 
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 public class Game {
+    public static final String MOVE_MOTHER_LISTENER = "moveMotherListener";
+    public static final String ISLANDS_LISTENER = "islandsListener";
 
     private final List<Player> players;
     private final List<Magician> magicians;
@@ -26,20 +34,20 @@ public class Game {
     private GameState gameState;
     private Player roundOwner;
 
+    protected final PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+
     //private Comparator<Integer> influenceComparator = Comparator.comparing((i1,i2)->(i1.intValue()-i2));
 
-    public Game(Bag bag) {
-        this.bag = bag;
+    public Game() {
+        this.bag = new Bag(Rules.initialBagSize);
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
         magicians = new ArrayList<>();
         islandContainer = new IslandContainer();
-        // motherNature = new MotherNature(); TODO
         clouds = new ArrayList<>();
         characterCards = new ArrayList<>();
         initProfessors();
         expertMode = false;
-        // characterCards = TODO
     }
 
     public void initProfessors() {
@@ -58,10 +66,12 @@ public class Game {
 
     public void initMotherNature(MotherNature motherNature) {
         this.motherNature = motherNature;
+        listeners.firePropertyChange(MOVE_MOTHER_LISTENER, null, motherNature.getPosition());
     }
 
     public void initIslands(LinkedList<Island> islands) {
         this.islandContainer = new IslandContainer(islands);
+        listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
     }
 
     public void initCharacterCards(List<CharacterCard> cards) {
@@ -71,6 +81,16 @@ public class Game {
     public void initBalance(int balance) {
         this.balance = balance;
     }
+
+    /**
+     * Method createListeners creates the Map of listeners.
+     * @param client virtualClient - the VirtualClient on the server.
+     */
+    public void createListeners(VirtualView client){
+        listeners.addPropertyChangeListener(MOVE_MOTHER_LISTENER, new MoveMotherListener(client));
+        listeners.addPropertyChangeListener(ISLANDS_LISTENER, new IslandsListener(client));
+    }
+
 
     /**
      * increment player balance and decrease game balance
@@ -132,8 +152,10 @@ public class Game {
     }
 
     public void moveMotherNature(int deltaPositions) {
-        int newPosition = (motherNature.getPosition() + deltaPositions + islandContainer.size()) % islandContainer.size();
+        int oldPosition = motherNature.getPosition();;
+        int newPosition = (oldPosition + deltaPositions + islandContainer.size()) % islandContainer.size();
         motherNature.setIsland(newPosition);
+        listeners.firePropertyChange(MOVE_MOTHER_LISTENER, oldPosition, newPosition);
     }
 
     public void setPlayersActionPhase(List<Player> playersActionPhase) {
@@ -254,13 +276,17 @@ public class Game {
     }
 
     public Optional<CharacterCard> getActiveCharacter() {
-        return characterCards.stream().filter(c -> c.isActive()).findFirst();
+        return characterCards.stream().filter(CharacterCard::isActive).findFirst();
     }
 
     public int numPlayers() {
         return players.size();
     }
 
+    public void addIslandStudent(int islandIndex, Color student){
+        islandContainer.addIslandStudent(islandIndex, student);
+        listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);  // TODO old value?
+    }
 
     /**
      * It return the Player, if there is no player with that nickname the return value is Optional.Empty
@@ -271,6 +297,8 @@ public class Game {
     public Optional<Player> getPlayerByNickname(String name) { //getting the object player by nickname
         return players.stream().filter(player -> player.getNickname().equals(name)).findFirst();
     }
+
+
 
 
 }

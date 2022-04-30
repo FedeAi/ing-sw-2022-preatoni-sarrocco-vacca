@@ -15,7 +15,7 @@ class ActivateCardTest {
     Game gameInstance;
 
     private void initTest() {
-        gameManager = new GameManager();
+        gameManager = new GameManager(new Game());
         p1 = new Player("Ale");
         p2 = new Player("Davide");
         p3 = new Player("Fede");
@@ -24,7 +24,7 @@ class ActivateCardTest {
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        gameInstance = gameManager.getGameInstance();
+        gameInstance = gameManager.getGame();
         gameInstance.setRoundOwner(p3);
     }
 
