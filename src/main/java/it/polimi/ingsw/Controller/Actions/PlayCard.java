@@ -52,9 +52,8 @@ public class PlayCard extends Performable {
             return;
         Player player = player_opt.get();
 
-        player.setAndRemovePlayedCard(choice);
-
-        // set new round owner or change game phase
+        game.playCard(player, choice);
+        // TODO MOVE THIS TO ROUNDMANAGER (?) set new round owner or change game phase
         int playerIndex = game.getOrderedPlanningPlayers().indexOf(player);
         if (playerIndex == game.getPlayers().size() - 1) {
 

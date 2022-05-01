@@ -1,6 +1,9 @@
 package it.polimi.ingsw.listeners;
 
+import it.polimi.ingsw.Constants.Pair;
+import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.MoveMotherMessage;
+import it.polimi.ingsw.Server.Answer.SchoolMessage;
 import it.polimi.ingsw.Server.VirtualView;
 
 import java.beans.PropertyChangeEvent;
@@ -8,19 +11,19 @@ import java.beans.PropertyChangeEvent;
 /**
  * MoveMotherListener class is a WorkerListener used for notifying the client after a move action.
  *
- * @author Alice Piemonti
- * @see WorkerListener
+ * @author Federico Sarrocco, Alessandro Vacca
+ * @see AbsListener
  */
 
 
-public class AssistantCardListener extends AbsListener {
+public class SchoolListener extends AbsListener {
 
     /**
      * Constructor MoveMotherListener creates a new MoveListener instance.
      *
-     * @param client of type VirtualClient - the virtual client on Server.
+     * @param client of type VirtualClient - the virtual client on the Server.
      */
-    public AssistantCardListener(VirtualView client) {
+    public SchoolListener(VirtualView client) {
         super(client);
     }
 
@@ -32,7 +35,7 @@ public class AssistantCardListener extends AbsListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        MoveMotherMessage message = new MoveMotherMessage((int) evt.getNewValue());
+        SchoolMessage message = new SchoolMessage((Pair<String,School>) evt.getNewValue());
         virtualView.sendAll(message);
     }
 }

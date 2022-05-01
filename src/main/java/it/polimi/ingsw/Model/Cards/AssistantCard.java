@@ -2,9 +2,10 @@ package it.polimi.ingsw.Model.Cards;
 
 import it.polimi.ingsw.Model.Enumerations.Animals;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class AssistantCard extends Card {
+public class AssistantCard extends Card implements Serializable {
 
     private int maxMoves;
     private int value;

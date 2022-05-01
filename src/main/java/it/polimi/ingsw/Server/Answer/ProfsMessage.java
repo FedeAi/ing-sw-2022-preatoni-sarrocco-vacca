@@ -1,21 +1,25 @@
 package it.polimi.ingsw.Server.Answer;
 
+import it.polimi.ingsw.Model.Enumerations.Color;
+
+import java.util.EnumMap;
+
 /**
  * MoveMessage class is an Answer used for sending infos about a move action to the client.
  *
- * @author GC30
+ * @author Alessandro Vacca
  * @see Answer
  */
-public class MoveMotherMessage implements Answer {
-  private final int island;
+public class ProfsMessage implements Answer {
+  private final EnumMap<Color, String> message;
 
   /**
    * Constructor MoveMessage creates a new MoveMessage instance.
    *
-   * @param island .................
+   * @param profs .................
    */
-  public MoveMotherMessage(int island) {
-    this.island = island;
+  public ProfsMessage(EnumMap<Color, String> profs) {
+    this.message = profs;
   }
 
   /**
@@ -25,7 +29,7 @@ public class MoveMotherMessage implements Answer {
    * @see Answer#getMessage()
    */
   @Override
-  public Integer getMessage() {
-    return island;
+  public EnumMap<Color, String> getMessage() {
+    return message;
   }
 }

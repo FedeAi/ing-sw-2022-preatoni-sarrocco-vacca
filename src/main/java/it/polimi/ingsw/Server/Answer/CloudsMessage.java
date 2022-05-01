@@ -1,21 +1,25 @@
 package it.polimi.ingsw.Server.Answer;
 
+import it.polimi.ingsw.Model.Cloud;
+
+import java.util.List;
+
 /**
  * MoveMessage class is an Answer used for sending infos about a move action to the client.
  *
- * @author GC30
+ * @author Alessandro Vacca
  * @see Answer
  */
-public class MoveMotherMessage implements Answer {
-  private final int island;
+public class CloudsMessage implements Answer {
+  private final List<Cloud> message;
 
   /**
    * Constructor MoveMessage creates a new MoveMessage instance.
    *
-   * @param island .................
+   * @param clouds .................
    */
-  public MoveMotherMessage(int island) {
-    this.island = island;
+  public CloudsMessage(List<Cloud> clouds) {
+    this.message = clouds;
   }
 
   /**
@@ -25,7 +29,7 @@ public class MoveMotherMessage implements Answer {
    * @see Answer#getMessage()
    */
   @Override
-  public Integer getMessage() {
-    return island;
+  public List<Cloud> getMessage() {
+    return message;
   }
 }

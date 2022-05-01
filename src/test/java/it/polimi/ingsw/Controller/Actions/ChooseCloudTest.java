@@ -66,7 +66,7 @@ class ChooseCloudTest {
         // all Clouds are empty
 
         Performable action2 = new ChooseCloud("Kyogre", choice);
-        gameInstance.getClouds().get(choice).pickStudents();
+        gameInstance.pickCloud(choice);
         assertFalse(action2.canPerformExt(gameInstance, gameManager.getRules()));
 
     }

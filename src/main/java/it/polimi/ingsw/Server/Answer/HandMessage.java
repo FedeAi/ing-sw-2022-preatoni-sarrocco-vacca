@@ -5,20 +5,20 @@ import it.polimi.ingsw.Model.Cards.AssistantCard;
 import java.util.List;
 
 /**
- * MoveMessage class is an Answer used for sending infos about a move action to the client.
+ * HandMessage class is an Answer used for sending infos about the new client's hand.
  *
- * @author GC30
+ * @author Federico Sarrocco, Alessandro Vacca
  * @see Answer
  */
-public class AssistantCardMessage implements Answer {
+public class HandMessage implements Answer {
   private final List<AssistantCard> message;
 
   /**
-   * Constructor MoveMessage creates a new MoveMessage instance.
+   * Constructor HandMessage creates a new HandMessage instance.
    *
-   * @param island .................
+   * @param assistantCards .................
    */
-  public AssistantCardMessage(List<AssistantCard> assistantCards) {
+  public HandMessage(List<AssistantCard> assistantCards) {
     this.message = assistantCards;
   }
 

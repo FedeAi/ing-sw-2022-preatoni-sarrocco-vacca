@@ -49,7 +49,7 @@ public class ChooseCloud extends Performable {
         Player player = player_opt.get();
 
         List<Cloud> clouds = game.getClouds();
-        player.getSchool().addStudentsEntry(clouds.get(choice).pickStudents());
+        player.getSchool().addStudentsEntry(game.pickCloud(choice));
 
 
         // TODO MOVE THIS TO ROUNDMANAGER (JAVA:LISTENER)
@@ -58,7 +58,7 @@ public class ChooseCloud extends Performable {
         if (nextPlayer.isEmpty()) { //if end Turn
             game.setRoundOwner(game.getOrderedPlanningPlayers().get(0)); //the next player is the first of the next turn
             game.setGameState(GameState.PLANNING_CHOOSE_CARD);
-            refillClouds(game); //refill of clouds
+            game.refillClouds(); //refill of clouds
         } else {
             Optional<Player> nextPlayerAction = game.getPlayerByNickname(nextPlayer.get()); //the next player of action phase
             if (nextPlayerAction.isPresent()) {
@@ -79,13 +79,5 @@ public class ChooseCloud extends Performable {
         return myNickName;
     }
 
-    private void refillClouds(Game game) {
-
-        int numPlayers = game.numPlayers();
-        for (Cloud c : game.getClouds()) {
-            c.pickStudents(); //sure of to empty the cloud
-            c.addStudents(game.getBag().extract(Rules.getStudentsPerTurn(numPlayers))); //refill the same cloud
-        }
-    }
 
 }

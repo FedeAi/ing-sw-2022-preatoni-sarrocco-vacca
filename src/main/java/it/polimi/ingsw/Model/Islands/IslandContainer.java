@@ -2,10 +2,11 @@ package it.polimi.ingsw.Model.Islands;
 
 import it.polimi.ingsw.Model.Enumerations.Color;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class IslandContainer {
+public class IslandContainer implements Serializable {
     private LinkedList<Island> islands;
     public IslandContainer(LinkedList<Island> islands) {
         this.islands = islands;

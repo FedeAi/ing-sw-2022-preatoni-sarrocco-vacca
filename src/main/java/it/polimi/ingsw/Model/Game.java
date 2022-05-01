@@ -8,10 +8,8 @@ import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Enumerations.Magician;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
-import it.polimi.ingsw.Server.Answer.IslandsMessage;
 import it.polimi.ingsw.Server.VirtualView;
-import it.polimi.ingsw.listeners.IslandsListener;
-import it.polimi.ingsw.listeners.MoveMotherListener;
+import it.polimi.ingsw.listeners.*;
 
 import java.beans.PropertyChangeSupport;
 import java.util.*;
@@ -19,6 +17,10 @@ import java.util.*;
 public class Game {
     public static final String MOVE_MOTHER_LISTENER = "moveMotherListener";
     public static final String ISLANDS_LISTENER = "islandsListener";
+    public static final String PLAYED_CARD_LISTENER = "playedCardListener";
+    public static final String SCHOOL_LISTENER = "schoolListener";
+    public static final String CLOUDS_LISTENER = "cloudsListener";
+    public static final String PROFS_LISTENER = "profsListener";
 
     private final List<Player> players;
     private final List<Magician> magicians;
@@ -49,6 +51,20 @@ public class Game {
         initProfessors();
         expertMode = false;
     }
+
+    /**
+     * Method createListeners creates the Map of listeners.
+     * @param client virtualClient - the VirtualClient on the server.
+     */
+    public void createListeners(VirtualView client){
+        listeners.addPropertyChangeListener(MOVE_MOTHER_LISTENER, new MoveMotherListener(client));
+        listeners.addPropertyChangeListener(ISLANDS_LISTENER, new IslandsListener(client));
+        listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
+        listeners.addPropertyChangeListener(SCHOOL_LISTENER, new SchoolListener(client));
+        listeners.addPropertyChangeListener(CLOUDS_LISTENER, new CloudsListener(client));
+        listeners.addPropertyChangeListener(PROFS_LISTENER, new CloudsListener(client));
+    }
+
 
     public void initProfessors() {
         professors = new EnumMap<Color, String>(Color.class);
@@ -81,16 +97,6 @@ public class Game {
     public void initBalance(int balance) {
         this.balance = balance;
     }
-
-    /**
-     * Method createListeners creates the Map of listeners.
-     * @param client virtualClient - the VirtualClient on the server.
-     */
-    public void createListeners(VirtualView client){
-        listeners.addPropertyChangeListener(MOVE_MOTHER_LISTENER, new MoveMotherListener(client));
-        listeners.addPropertyChangeListener(ISLANDS_LISTENER, new IslandsListener(client));
-    }
-
 
     /**
      * increment player balance and decrease game balance
@@ -162,12 +168,17 @@ public class Game {
         this.playersActionPhase = playersActionPhase;
     }
 
+    /**
+     * @deprecated
+     */
     public void setProfessor(Color professor, String player) {
         this.professors.put(professor, player);
     }
 
     public void setProfessors(EnumMap<Color, String> professors) {
+        EnumMap<Color, String> oldProfs = new EnumMap<>(professors);
         this.professors = professors;
+        listeners.firePropertyChange(PROFS_LISTENER, oldProfs, professors);
     }
 
     /**
@@ -283,13 +294,33 @@ public class Game {
         return players.size();
     }
 
+    public void refillClouds() {
+        for (Cloud c : clouds) {
+            c.pickStudents(); //sure of to empty the cloud
+            c.addStudents(bag.extract(Rules.getStudentsPerTurn(numPlayers()))); //refill the same cloud
+        }
+        listeners.firePropertyChange(CLOUDS_LISTENER, null, clouds);
+    }
+
+    public Map<Color, Integer> pickCloud(int cloudIndex) throws IndexOutOfBoundsException{
+        Cloud cloud = clouds.get(cloudIndex);
+        Map<Color, Integer> students = cloud.pickStudents();
+        listeners.firePropertyChange(CLOUDS_LISTENER, null, clouds);
+        return students;
+    }
+
     public void addIslandStudent(int islandIndex, Color student){
         islandContainer.addIslandStudent(islandIndex, student);
         listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);  // TODO old value?
     }
 
+    public void playCard(Player player, AssistantCard playedCard) {
+        player.setAndRemovePlayedCard(playedCard);
+        listeners.firePropertyChange(PLAYED_CARD_LISTENER, null, playedCard);
+    }
+
     /**
-     * It return the Player, if there is no player with that nickname the return value is Optional.Empty
+     * It returns the Player, if there is no player with that nickname the return value is Optional.Empty
      *
      * @param name
      * @return
@@ -297,8 +328,4 @@ public class Game {
     public Optional<Player> getPlayerByNickname(String name) { //getting the object player by nickname
         return players.stream().filter(player -> player.getNickname().equals(name)).findFirst();
     }
-
-
-
-
 }

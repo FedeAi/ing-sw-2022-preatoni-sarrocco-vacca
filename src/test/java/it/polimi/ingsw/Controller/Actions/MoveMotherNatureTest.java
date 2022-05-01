@@ -11,6 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -118,7 +121,9 @@ class MoveMotherNatureTest {
     @DisplayName("Single island conquer")
     void singleIslandConquer() {
         // Simple action test
-        game.setProfessor(profColor, game.getRoundOwner().getNickname());
+        EnumMap<Color, String> profs = new EnumMap<Color, String>(Color.class);
+        profs.put(profColor,game.getRoundOwner().getNickname());
+        game.setProfessors(profs);
         // Now Fede controls the BLUE professor
         // Next we will be adding some students to the island we're going to go to
         int nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());

@@ -1,21 +1,24 @@
 package it.polimi.ingsw.Server.Answer;
 
+import it.polimi.ingsw.Constants.Pair;
+import it.polimi.ingsw.Model.School;
+
 /**
  * MoveMessage class is an Answer used for sending infos about a move action to the client.
  *
- * @author GC30
+ * @author Alessandro Vacca
  * @see Answer
  */
-public class MoveMotherMessage implements Answer {
-  private final int island;
+public class SchoolMessage implements Answer {
+  private final Pair<String, School> message;
 
   /**
    * Constructor MoveMessage creates a new MoveMessage instance.
    *
-   * @param island .................
+   * @param newSchool .................
    */
-  public MoveMotherMessage(int island) {
-    this.island = island;
+  public SchoolMessage(Pair<String, School> newSchool) {
+    this.message = newSchool;
   }
 
   /**
@@ -25,7 +28,7 @@ public class MoveMotherMessage implements Answer {
    * @see Answer#getMessage()
    */
   @Override
-  public Integer getMessage() {
-    return island;
+  public Pair<String, School> getMessage() {
+    return message;
   }
 }
