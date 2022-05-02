@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Pair;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
@@ -84,6 +85,9 @@ public class Player implements PropertyChangeListener {
     public boolean isConnected() {
         return connected;
     }
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
 
     public School getSchool() {
         return school;
@@ -121,7 +125,7 @@ public class Player implements PropertyChangeListener {
     // empty string in AC constructor, this needs to be sorted
     private void createHand() {
         cards = new ArrayList<>();
-        for (int i = 1; i <= Rules.numAssistantCards; i++) {
+        for (int i = 1; i <= Constants.NUM_ASSISTANT_CARDS; i++) {
             cards.add(new AssistantCard("", i));
         }
         listeners.firePropertyChange(HAND_LISTENER, null, cards);

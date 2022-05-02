@@ -1,7 +1,7 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Constants.Magician;
-import it.polimi.ingsw.Server.Answer.game.MagiciansMessage;
+import it.polimi.ingsw.Server.Answer.game.MagiciansMessageDeprecated;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
@@ -34,7 +34,7 @@ public class MagiciansListener extends AbsListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        MagiciansMessage message = new MagiciansMessage((List<Magician>) evt.getNewValue());
+        MagiciansMessageDeprecated message = new MagiciansMessageDeprecated((List<Magician>) evt.getNewValue());
         virtualClient.sendAll(message);
     }
 }

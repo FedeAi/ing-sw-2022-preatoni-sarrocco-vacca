@@ -2,6 +2,7 @@ package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.ErrorType;
+import it.polimi.ingsw.Constants.Exceptions.OutOfBoundException;
 import it.polimi.ingsw.Server.Answer.ConnectionMessage;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
@@ -76,7 +77,8 @@ public class Server {
      * between VirtualClient, nicknames and client ids. It also creates a new game session.
      */
     public Server() {
-        socketServer = new SocketServer(Constants.getPort(), this);
+        //socketServer = new SocketServer(Constants.getPort(), this);
+        socketServer = new SocketServer(8080, this);
         idMapClient = new HashMap<>();
         nameMapId = new HashMap<>();
         clientToConnection = new HashMap<>();
@@ -112,7 +114,7 @@ public class Server {
      *
      * @param totalPlayers of type int - the number of players provided by the first user connected.
      * @throws OutOfBoundException when the input is not in the correct player range.
-     * @see it.polimi.ingsw.constants.Constants for the max/min player parameters.
+     * @see it.polimi.ingsw.Constants.Constants for the max/min player parameters.
      */
     protected void setTotalPlayers(int totalPlayers) throws OutOfBoundException {
         if (totalPlayers < Constants.MIN_PLAYERS || totalPlayers > Constants.MAX_PLAYERS) {
@@ -308,7 +310,7 @@ public class Server {
             System.err.println("Error: ports accepted started from 1024! Please insert a new value.");
             main(null);
         }
-        Constants.setPort(port);
+//        Constants.setPort(port);
         System.err.println(Constants.getInfo() + "Starting Socket Server");
         Server server = new Server();
         ExecutorService executor = Executors.newCachedThreadPool();

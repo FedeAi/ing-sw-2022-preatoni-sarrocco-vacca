@@ -1,23 +1,12 @@
 package it.polimi.ingsw.Controller.Rules;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.DynamicRules;
 import it.polimi.ingsw.Constants.Color;
 
 
 public class Rules {
-
-    private static final int MIN_PLAYERS = 2;
-    private static final int MAX_PLAYERS = 3;
-    public static final int maxIslands = 12;
-    public static final int initialBagSize = 2 * Color.values().length;
-    public static final int bagSize = 130;
-    public static final int numCharacterCards = 3;
-    public static final int numAssistantCards = 10;
-    public static final int numCoins = 20;
-    public static final int initialPlayerBalance = 1;
-
-
     private DynamicRules dynamicRules;
 
     public Rules() {
@@ -60,7 +49,7 @@ public class Rules {
     }
 
     public int getNumAssistantCards() {
-        return numAssistantCards;
+        return Constants.NUM_ASSISTANT_CARDS;
     }
 
     public DynamicRules getDynamicRules() {

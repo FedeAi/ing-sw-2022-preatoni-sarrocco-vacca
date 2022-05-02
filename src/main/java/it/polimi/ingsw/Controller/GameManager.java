@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.*;
@@ -25,7 +26,7 @@ public class GameManager implements PropertyChangeListener {
 
     public GameManager(Game game) {
 
-        this.game = game;   //new Game(new Bag(Rules.initialBagSize))
+        this.game = game;   //new Game(new Bag(Constants.INITIAL_BAG_SIZE))
         this.game.setGameState(GameState.GAME_ROOM);
         rules = new Rules();
         this.roundManager = new RoundManager(this);
@@ -57,7 +58,7 @@ public class GameManager implements PropertyChangeListener {
             game.setExpertMode(true);
             initCharacters();
 
-            game.initBalance(Rules.numCoins);
+            game.initBalance(Constants.NUM_COINS);
             initPlayersBalance();
         }
     }
@@ -103,7 +104,7 @@ public class GameManager implements PropertyChangeListener {
         LinkedList<Island> islands = new LinkedList<>();
         MotherNature motherNature;
 
-        for (int i = 0; i < Rules.maxIslands; i++) {
+        for (int i = 0; i < Constants.MAX_ISLANDS; i++) {
             Island island = new BaseIsland();
             if (i != opposite && i != motherNaturePosition) {
                 island.addStudent(game.getBag().extractOne());
@@ -115,7 +116,7 @@ public class GameManager implements PropertyChangeListener {
 
     private void initMotherNature() {
         Random rand = new Random();
-        int motherNaturePosition = rand.nextInt(1, Rules.maxIslands);
+        int motherNaturePosition = rand.nextInt(1, Constants.MAX_ISLANDS);
         MotherNature motherNature = new MotherNature(motherNaturePosition);
         game.initMotherNature(motherNature);
     }
@@ -127,7 +128,7 @@ public class GameManager implements PropertyChangeListener {
     }
 
     private void fillBag() {
-        game.getBag().extendBag(Rules.bagSize - Rules.initialBagSize);
+        game.getBag().extendBag(Constants.BAG_SIZE - Constants.INITIAL_BAG_SIZE);
     }
 
     private void initClouds() {

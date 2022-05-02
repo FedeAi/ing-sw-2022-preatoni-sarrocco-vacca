@@ -86,4 +86,8 @@ public class VirtualClient implements PropertyChangeListener {
     public boolean isConnected(){
         return socketClientConnection != null;      // TODO check the correctness
     }
+
+    public GameHandler getGameHandler() {
+        return gameHandler;
+    }
 }

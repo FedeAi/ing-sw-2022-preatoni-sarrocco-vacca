@@ -5,6 +5,9 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Server.Answer.Answer;
 import it.polimi.ingsw.Server.Answer.ConnectionMessage;
+import it.polimi.ingsw.Server.Answer.CustomMessage;
+import it.polimi.ingsw.Server.Answer.MagiciansMessage;
+import it.polimi.ingsw.Server.Answer.game.MagiciansMessageDeprecated;
 
 import java.beans.PropertyChangeSupport;
 import java.util.Random;
@@ -50,6 +53,14 @@ public class GameHandler {
         }
     }
 
+    public void sendAllExcept(Answer message, int excludedID) {
+        for(Player p:game.getActivePlayers()) {
+            if(server.getIDByNickname(p.getNickname())!=excludedID) {
+                server.getClientByID(p.getID()).send(message);
+            }
+        }
+    }
+
     public void setPlayersNumber(int number){
         playersNumber = number;
     }
@@ -71,8 +82,20 @@ public class GameHandler {
         }
     }
 
-    public void setup(){
+    public void unregisterPlayer(int id) {
+        game.getPlayerByID(id).setConnected(false);
+    }
 
+    public void setup(){
+        if(started==0) started=1;
+        String nickname = game.getActivePlayers().get(playersNumber - game.getAvailableMagicians().size()).
+                getNickname();
+        MagiciansMessage req = new MagiciansMessage("Please choose your magician");
+        req.addRemaingMagicians(game.getAvailableMagicians());
+
+        server.getClientByID(server.getIDByNickname(nickname)).send(req);
+        sendAllExcept(new CustomMessage("User " + nickname + " is choosing his color!"),
+                server.getIDByNickname(nickname));
     }
 
 }

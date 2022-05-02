@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
@@ -43,7 +44,7 @@ public class Game {
     //private Comparator<Integer> influenceComparator = Comparator.comparing((i1,i2)->(i1.intValue()-i2));
 
     public Game() {
-        this.bag = new Bag(Rules.initialBagSize);
+        this.bag = new Bag(Constants.INITIAL_BAG_SIZE);
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
         magicians = new ArrayList<>();
@@ -353,5 +354,15 @@ public class Game {
      */
     public Optional<Player> getPlayerByNickname(String name) { //getting the object player by nickname
         return players.stream().filter(player -> player.getNickname().equals(name)).findFirst();
+    }
+
+    // TODO make it like getPlayerByNickname
+    public Player getPlayerByID(int id) {
+        for (Player player : players) {
+            if (player.getID() == id) {
+                return player;
+            }
+        }
+        return null;
     }
 }

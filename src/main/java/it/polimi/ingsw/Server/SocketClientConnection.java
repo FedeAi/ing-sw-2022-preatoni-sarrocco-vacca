@@ -144,10 +144,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
     public void actionHandler(Action action) {
         
     }
-
-    public void setNumPlayer(int numPlayers){
-        this.numPlayers = numPlayers;
-    }
+    
     /**
      * Method setupConnection checks the validity of the connection message received from the client.
      *

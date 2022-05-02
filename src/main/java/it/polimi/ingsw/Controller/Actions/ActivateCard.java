@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Constants.GameState;
@@ -35,7 +36,7 @@ public class ActivateCard extends Performable {
             return false;
         }
 
-        if (choice < 0 || choice > Rules.numCharacterCards) {
+        if (choice < 0 || choice > Constants.NUM_CHARACTER_CARDS) {
             return false;
         }
 

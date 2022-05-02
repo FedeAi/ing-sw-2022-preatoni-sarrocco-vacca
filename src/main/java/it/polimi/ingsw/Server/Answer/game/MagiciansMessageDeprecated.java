@@ -11,7 +11,7 @@ import java.util.List;
  * @author Alessandro Vacca
  * @see Answer
  */
-public class MagiciansMessage implements Answer {
+public class MagiciansMessageDeprecated implements Answer {
   private final List<Magician> message;
 
   /**
@@ -19,7 +19,7 @@ public class MagiciansMessage implements Answer {
    *
    * @param magicians .................
    */
-  public MagiciansMessage(List<Magician> magicians) {
+  public MagiciansMessageDeprecated(List<Magician> magicians) {
     this.message = magicians;
   }
 
