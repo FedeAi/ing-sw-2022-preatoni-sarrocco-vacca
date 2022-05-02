@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Constants.Color;
 
 import java.io.Serializable;
 import java.util.EnumMap;

@@ -3,9 +3,9 @@ package it.polimi.ingsw.Controller;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.*;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
-import it.polimi.ingsw.Model.Enumerations.TowerColor;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Constants.TowerColor;
 import it.polimi.ingsw.Model.Islands.BaseIsland;
 import it.polimi.ingsw.Model.Islands.Island;
 

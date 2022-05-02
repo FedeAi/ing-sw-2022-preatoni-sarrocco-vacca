@@ -2,7 +2,7 @@ package it.polimi.ingsw.Controller.Rules.DynamicRules;
 
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.MushroomCharacter;
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Model.Game;
 
 import java.util.Optional;

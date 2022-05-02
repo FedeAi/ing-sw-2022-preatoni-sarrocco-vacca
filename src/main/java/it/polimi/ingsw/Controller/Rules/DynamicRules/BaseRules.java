@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Controller.Rules.DynamicRules;
 
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Player;

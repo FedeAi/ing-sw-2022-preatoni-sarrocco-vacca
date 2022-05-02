@@ -3,16 +3,17 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
-import it.polimi.ingsw.Model.Enumerations.Magician;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Server.VirtualClient;
 import it.polimi.ingsw.listeners.*;
 
 import java.beans.PropertyChangeSupport;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game {
     public static final String MOVE_MOTHER_LISTENER = "moveMotherListener";
@@ -21,6 +22,7 @@ public class Game {
     public static final String SCHOOL_LISTENER = "schoolListener";
     public static final String CLOUDS_LISTENER = "cloudsListener";
     public static final String PROFS_LISTENER = "profsListener";
+    public static final String MAGICIAN_LISTENER = "magicianListener";
 
     private final List<Player> players;
     private final List<Magician> magicians;
@@ -56,15 +58,15 @@ public class Game {
      * Method createListeners creates the Map of listeners.
      * @param client virtualClient - the VirtualClient on the server.
      */
-    public void createListeners(VirtualView client){
+    public void createListeners(VirtualClient client){
         listeners.addPropertyChangeListener(MOVE_MOTHER_LISTENER, new MoveMotherListener(client));
         listeners.addPropertyChangeListener(ISLANDS_LISTENER, new IslandsListener(client));
         listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
         listeners.addPropertyChangeListener(SCHOOL_LISTENER, new SchoolListener(client));
         listeners.addPropertyChangeListener(CLOUDS_LISTENER, new CloudsListener(client));
-        listeners.addPropertyChangeListener(PROFS_LISTENER, new CloudsListener(client));
+        listeners.addPropertyChangeListener(PROFS_LISTENER, new ProfsListener(client));
+        listeners.addPropertyChangeListener(MAGICIAN_LISTENER, new MagiciansListener(client));
     }
-
 
     public void initProfessors() {
         professors = new EnumMap<Color, String>(Color.class);
@@ -134,9 +136,25 @@ public class Game {
         return getPlayerByNickname(name).isPresent();
     }
 
-    public void removeMagician(Magician magician) { //delete the magicians from the possible choice
-        magicians.remove(magician);
 
+    // FIXME GIGANTESCO
+    public void createPlayer(int playerID, String nickname) {
+        Player p = new Player(playerID, nickname);
+        players.add(p);
+    }
+
+    /**
+     * Method chooseMagician() allows players to select an available magician to play with.
+     *
+     * @param p - the player
+     * @param magician - the chosen magician
+     */
+    public void chooseMagician(Player p, Magician magician) {
+        p.setMagician(magician);
+        List<Magician> oldMagicians = new ArrayList<>(magicians);
+        magicians.remove(magician);
+        playersActionPhase = players;
+        listeners.firePropertyChange(MAGICIAN_LISTENER, oldMagicians, magicians);
     }
 
     public boolean isExpertMode() {
@@ -148,6 +166,11 @@ public class Game {
         this.expertMode = expertMode;
     }
 
+    /**
+     * @deprecated
+     * @param player
+     * @return
+     */
     public boolean addPlayer(Player player) { //adding the player if the name isn't already taken
         if (!(isNicknameTaken(player.getNickname()))) {
             players.add(player);
@@ -244,6 +267,9 @@ public class Game {
 
     public List<Player> getPlayers() {
         return players;
+    }
+    public List<Player> getActivePlayers() {
+        return players.stream().filter(Player::isConnected).collect(Collectors.toList());
     }
 
     public GameState getGameState() {

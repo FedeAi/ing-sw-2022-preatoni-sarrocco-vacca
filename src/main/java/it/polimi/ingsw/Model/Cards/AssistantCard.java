@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.Cards;
 
-import it.polimi.ingsw.Model.Enumerations.Animals;
+import it.polimi.ingsw.Constants.Animals;
 
 import java.io.Serializable;
 import java.util.Objects;

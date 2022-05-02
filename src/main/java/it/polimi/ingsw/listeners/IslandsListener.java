@@ -1,9 +1,8 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Model.Islands.IslandContainer;
-import it.polimi.ingsw.Server.Answer.IslandsMessage;
-import it.polimi.ingsw.Server.Answer.MoveMotherMessage;
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Server.Answer.game.IslandsMessage;
+import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 
@@ -22,7 +21,7 @@ public class IslandsListener extends AbsListener {
      *
      * @param client of type VirtualClient - the virtual client on Server.
      */
-    public IslandsListener(VirtualView client) {
+    public IslandsListener(VirtualClient client) {
         super(client);
     }
 
@@ -35,6 +34,6 @@ public class IslandsListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         IslandsMessage message = new IslandsMessage((IslandContainer) evt.getNewValue());
-        virtualView.sendAll(message);
+        virtualClient.sendAll(message);
     }
 }

@@ -1,10 +1,8 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cloud;
-import it.polimi.ingsw.Server.Answer.CloudsMessage;
-import it.polimi.ingsw.Server.Answer.HandMessage;
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Server.Answer.game.CloudsMessage;
+import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
@@ -24,7 +22,7 @@ public class CloudsListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public CloudsListener(VirtualView client) {
+    public CloudsListener(VirtualClient client) {
         super(client);
     }
 
@@ -37,6 +35,6 @@ public class CloudsListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         CloudsMessage message = new CloudsMessage((List<Cloud>) evt.getNewValue());
-        virtualView.sendAll(message);
+        virtualClient.sendAll(message);
     }
 }

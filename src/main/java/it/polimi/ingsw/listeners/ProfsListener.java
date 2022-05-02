@@ -1,9 +1,8 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Server.Answer.BalanceMessage;
-import it.polimi.ingsw.Server.Answer.ProfsMessage;
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Server.Answer.game.ProfsMessage;
+import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.EnumMap;
@@ -23,7 +22,7 @@ public class ProfsListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public ProfsListener(VirtualView client) {
+    public ProfsListener(VirtualClient client) {
         super(client);
     }
 
@@ -36,6 +35,6 @@ public class ProfsListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ProfsMessage message = new ProfsMessage((EnumMap<Color, String>) evt.getNewValue());
-        virtualView.send(message);
+        virtualClient.send(message);
     }
 }

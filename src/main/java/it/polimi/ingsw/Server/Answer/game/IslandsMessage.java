@@ -1,7 +1,8 @@
-package it.polimi.ingsw.Server.Answer;
+package it.polimi.ingsw.Server.Answer.game;
 
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
+import it.polimi.ingsw.Server.Answer.Answer;
 
 /**
  * IslandMessage class is an Answer used for ........

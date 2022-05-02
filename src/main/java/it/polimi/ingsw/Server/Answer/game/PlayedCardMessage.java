@@ -1,7 +1,8 @@
-package it.polimi.ingsw.Server.Answer;
+package it.polimi.ingsw.Server.Answer.game;
 
 import it.polimi.ingsw.Constants.Pair;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
+import it.polimi.ingsw.Server.Answer.Answer;
 
 import java.util.AbstractMap;
 import java.util.HashMap;

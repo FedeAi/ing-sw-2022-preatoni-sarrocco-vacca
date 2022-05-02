@@ -1,6 +1,6 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Server.VirtualClient;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -11,14 +11,14 @@ import java.beans.PropertyChangeListener;
  */
 public abstract class AbsListener implements PropertyChangeListener {
 
-  final VirtualView virtualView;
+  final VirtualClient virtualClient;
 
   /**
    * Constructor WorkerListener creates a new WorkerListener instance.
    *
    * @param client of type VirtualClient - the virtual client on Server.
    */
-  public AbsListener(VirtualView client) {
-    virtualView = client;
+  public AbsListener(VirtualClient client) {
+    virtualClient = client;
   }
 }

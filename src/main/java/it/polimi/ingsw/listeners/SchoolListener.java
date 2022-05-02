@@ -2,9 +2,8 @@ package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Constants.Pair;
 import it.polimi.ingsw.Model.School;
-import it.polimi.ingsw.Server.Answer.MoveMotherMessage;
-import it.polimi.ingsw.Server.Answer.SchoolMessage;
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Server.Answer.game.SchoolMessage;
+import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 
@@ -23,7 +22,7 @@ public class SchoolListener extends AbsListener {
      *
      * @param client of type VirtualClient - the virtual client on the Server.
      */
-    public SchoolListener(VirtualView client) {
+    public SchoolListener(VirtualClient client) {
         super(client);
     }
 
@@ -36,6 +35,6 @@ public class SchoolListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SchoolMessage message = new SchoolMessage((Pair<String,School>) evt.getNewValue());
-        virtualView.sendAll(message);
+        virtualClient.sendAll(message);
     }
 }

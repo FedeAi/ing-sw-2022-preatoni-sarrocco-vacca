@@ -3,10 +3,9 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Constants.Pair;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Model.Enumerations.Magician;
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Constants.Magician;
+import it.polimi.ingsw.Server.VirtualClient;
 import it.polimi.ingsw.listeners.BalanceListener;
-import it.polimi.ingsw.listeners.IslandsListener;
 import it.polimi.ingsw.listeners.MoveMotherListener;
 import it.polimi.ingsw.listeners.SchoolListener;
 
@@ -23,6 +22,7 @@ public class Player implements PropertyChangeListener {
     public static final String SCHOOL_LISTENER = "schoolListener";
     public static final String BALANCE_LISTENER = "balanceListener";
 
+    private final int playerID;
     private String nickname;
     private boolean connected;
     private School school;
@@ -33,7 +33,21 @@ public class Player implements PropertyChangeListener {
 
     protected final PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 
-    public Player(String nickname) { // FIXME: number numPlayers, higher order data, not relatives to Player
+    // FIXME
+
+    /**
+     * @deprecated
+     * @param nickname
+     */
+    public Player(String nickname) {
+        this.nickname = nickname;
+        connected = true;
+        createHand();
+        playerID = 0;
+    }
+
+    public Player(int playerID, String nickname) {
+        this.playerID = playerID;
         this.nickname = nickname;
         connected = true;
         createHand();
@@ -43,7 +57,7 @@ public class Player implements PropertyChangeListener {
      * Method createListeners creates the Map of listeners.
      * @param client virtualClient - the VirtualClient on the server.
      */
-    public void createListeners(VirtualView client){
+    public void createListeners(VirtualClient client){
         listeners.addPropertyChangeListener(HAND_LISTENER, new MoveMotherListener(client));
         listeners.addPropertyChangeListener(SCHOOL_LISTENER, new SchoolListener(client));   // TODO ricordarsi di fare sendall
         listeners.addPropertyChangeListener(BALANCE_LISTENER, new BalanceListener(client));
@@ -63,6 +77,10 @@ public class Player implements PropertyChangeListener {
         return nickname;
     }
 
+    public int getID(){
+        return playerID;
+    }
+
     public boolean isConnected() {
         return connected;
     }
@@ -75,12 +93,12 @@ public class Player implements PropertyChangeListener {
         return cards;
     }
 
-    public void setMagician(Magician magician) {
-        this.magician = magician;
-    }
-
     public Magician getMagician() {
         return magician;
+    }
+
+    public void setMagician(Magician magician) {
+        this.magician = magician;
     }
 
     public void addCoin() {

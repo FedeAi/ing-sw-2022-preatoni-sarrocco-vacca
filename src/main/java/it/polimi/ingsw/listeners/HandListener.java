@@ -1,8 +1,8 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Server.Answer.HandMessage;
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Server.Answer.game.HandMessage;
+import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
@@ -22,7 +22,7 @@ public class HandListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public HandListener(VirtualView client) {
+    public HandListener(VirtualClient client) {
         super(client);
     }
 
@@ -35,6 +35,6 @@ public class HandListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         HandMessage message = new HandMessage((List<AssistantCard>) evt.getNewValue());
-        virtualView.sendAll(message);
+        virtualClient.sendAll(message);
     }
 }

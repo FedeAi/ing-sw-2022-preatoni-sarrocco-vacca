@@ -2,8 +2,8 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.SuperIsland;
 import it.polimi.ingsw.Model.Player;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 

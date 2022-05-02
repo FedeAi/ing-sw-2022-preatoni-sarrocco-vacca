@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.Islands;
 
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Constants.Color;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

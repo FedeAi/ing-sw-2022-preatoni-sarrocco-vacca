@@ -2,8 +2,8 @@ package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Constants.Pair;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Server.Answer.PlayedCardMessage;
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Server.Answer.game.PlayedCardMessage;
+import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 
@@ -14,7 +14,7 @@ public class PlayedCardListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on the Server.
      */
-    public PlayedCardListener(VirtualView client) {
+    public PlayedCardListener(VirtualClient client) {
         super(client);
     }
 
@@ -27,6 +27,6 @@ public class PlayedCardListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         PlayedCardMessage message = new PlayedCardMessage((Pair<String, AssistantCard>) evt.getNewValue());
-        virtualView.sendAll(message);
+        virtualClient.sendAll(message);
     }
 }

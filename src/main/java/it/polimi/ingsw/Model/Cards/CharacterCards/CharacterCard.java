@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.Card;
-import it.polimi.ingsw.Model.Enumerations.Character;
+import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Model.Game;
 
 public abstract class CharacterCard extends Card {

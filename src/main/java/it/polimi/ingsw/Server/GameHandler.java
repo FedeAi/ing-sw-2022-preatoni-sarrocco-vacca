@@ -2,6 +2,9 @@ package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.Answer.Answer;
+import it.polimi.ingsw.Server.Answer.ConnectionMessage;
 
 import java.beans.PropertyChangeSupport;
 import java.util.Random;
@@ -10,7 +13,7 @@ import java.util.logging.Logger;
 /**
  * GameHandler class handles a single match, instantiating a game mode (Game class) and a main controller (Controller
  * class). It also manages the startup phase, like the marker's color selection.
- * @author GC30
+ * @author Federico Sarrocco Alessandro Vacca
 
  */
 public class GameHandler {
@@ -35,6 +38,41 @@ public class GameHandler {
         game = new Game();
         controller = new GameManager(game);   // new GameManager(game, this);
         controllerListener.addPropertyChangeListener(controller);
+    }
+
+    public void createPlayer(String nickName, int player_id){
+        game.createPlayer(player_id, nickName);
+    }
+
+    public void sendAll(Answer message){
+        for(Player p : game.getPlayers()){
+            server.getClientByID(p.getID()).send(message);
+        }
+    }
+
+    public void setPlayersNumber(int number){
+        playersNumber = number;
+    }
+
+    public boolean isStarted(){
+        return started > 0;
+    }
+
+    public void endGame() {
+        while(!game.getActivePlayers().isEmpty()) {
+            server.getClientByID(game.getActivePlayers().get(0).getID()).getConnection().close();
+        }
+    }
+    public void endGame(String leftNickname) {
+        sendAll(new ConnectionMessage(PLAYER + " " + leftNickname + " left the game, the match will now end." +
+                "\nThanks for playing!", false));
+        while(!game.getActivePlayers().isEmpty()) {
+            server.getClientByID(game.getActivePlayers().get(0).getID()).getConnection().close();
+        }
+    }
+
+    public void setup(){
+
     }
 
 }

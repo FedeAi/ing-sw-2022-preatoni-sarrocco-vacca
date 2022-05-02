@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.TowerColor;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.TowerColor;
 
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;

@@ -1,10 +1,6 @@
 package it.polimi.ingsw.Model.Islands;
 
-import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Model.Bag;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Constants.Color;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

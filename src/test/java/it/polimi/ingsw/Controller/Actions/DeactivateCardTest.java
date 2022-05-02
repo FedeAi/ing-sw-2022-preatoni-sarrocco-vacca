@@ -3,7 +3,7 @@ package it.polimi.ingsw.Controller.Actions;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;

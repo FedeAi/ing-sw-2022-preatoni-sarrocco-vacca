@@ -1,10 +1,9 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Constants.Color;
 import org.junit.Test;
 
 import java.util.Map;
-import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 

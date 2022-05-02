@@ -1,12 +1,9 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Model.Cloud;
-import it.polimi.ingsw.Server.Answer.BalanceMessage;
-import it.polimi.ingsw.Server.Answer.CloudsMessage;
-import it.polimi.ingsw.Server.VirtualView;
+import it.polimi.ingsw.Server.Answer.game.BalanceMessage;
+import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
-import java.util.List;
 
 /**
  * MoveMotherListener class is a WorkerListener used for notifying the client after a move action.
@@ -23,7 +20,7 @@ public class BalanceListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public BalanceListener(VirtualView client) {
+    public BalanceListener(VirtualClient client) {
         super(client);
     }
 
@@ -36,6 +33,6 @@ public class BalanceListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         BalanceMessage message = new BalanceMessage((int) evt.getNewValue());
-        virtualView.send(message);
+        virtualClient.send(message);
     }
 }

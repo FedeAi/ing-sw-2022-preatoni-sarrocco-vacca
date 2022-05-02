@@ -11,14 +11,14 @@ import java.beans.PropertyChangeListener;
  * is connected through server socket. It's used for preparing an answer for sending and for general
  * operations on the client too.
  *
- * @author GC30
+ * @author Federico Sarrocco, Alessandro Vacca
  * @see PropertyChangeListener
  */
 
-public class VirtualView implements PropertyChangeListener {
+public class VirtualClient implements PropertyChangeListener {
     private int clientID;
     private String nickname;
-    //private SocketClientConnection socketClientConnection;
+    private SocketClientConnection socketClientConnection;
     private GameHandler gameHandler;
 
     /**
@@ -30,7 +30,7 @@ public class VirtualView implements PropertyChangeListener {
      *     server via socket.
      * @param gameHandler of type GameHandler - GameHandler reference.
      */
-    public VirtualView(
+    public VirtualClient(
             int clientID,
             String nickname,
             SocketClientConnection socketClientConnection,
@@ -46,7 +46,7 @@ public class VirtualView implements PropertyChangeListener {
      * package, called SerializedMessage, then sends the packaged answer to the transmission protocol,
      * located in the socket-client handler.
      *
-     * @see it.polimi.ingsw.server.SocketClientConnection for more details.
+     * @see it.polimi.ingsw.Server.SocketClientConnection for more details.
      * @param serverAnswer of type Answer - the answer to be sent to the user.
      */
     public void send(Answer serverAnswer) {
@@ -69,5 +69,21 @@ public class VirtualView implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+
+    public SocketClientConnection getConnection() {
+        return socketClientConnection;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public int getClientID() {
+        return clientID;
+    }
+
+    public boolean isConnected(){
+        return socketClientConnection != null;      // TODO check the correctness
     }
 }

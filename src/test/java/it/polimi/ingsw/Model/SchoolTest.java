@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.TowerColor;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.TowerColor;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;

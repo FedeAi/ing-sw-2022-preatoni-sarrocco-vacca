@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Model.Enumerations;
+package it.polimi.ingsw.Constants;
 
 public enum GameState {
     GAME_ROOM,

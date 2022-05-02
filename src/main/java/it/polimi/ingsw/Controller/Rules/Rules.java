@@ -2,7 +2,7 @@ package it.polimi.ingsw.Controller.Rules;
 
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.DynamicRules;
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Constants.Color;
 
 
 public class Rules {
