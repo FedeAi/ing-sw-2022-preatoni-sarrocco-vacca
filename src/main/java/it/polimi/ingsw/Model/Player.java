@@ -167,6 +167,6 @@ public class Player implements PropertyChangeListener {
     // TODO FIXME THIS IS NOT bello, il propertyChange è triggerato dalla scuola
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        listeners.firePropertyChange(SCHOOL_LISTENER, null, new Pair<String,School>(this.nickname, this.school));
+        listeners.firePropertyChange(SCHOOL_LISTENER, null, school);
     }
 }

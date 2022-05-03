@@ -13,7 +13,6 @@ import java.util.logging.Logger;
  * SocketServer class creates a socket that accepts connections from clients, and creates a thread
  * containing them.
  *
- * @author Luca Pirovano
  * @see Runnable
  */
 public class SocketServer implements Runnable {

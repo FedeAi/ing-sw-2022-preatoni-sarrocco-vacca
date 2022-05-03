@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * Server class is the main one of the server side, it allows clients to connect, play together and
  * also starts the match.
  *
- * @author Luca Pirovano
+ * @author Davide Preatoni, Federico Sarrocco, Alessandro Vacca
  */
 public class Server {
     private final SocketServer socketServer;
@@ -310,7 +310,7 @@ public class Server {
             System.err.println("Error: ports accepted started from 1024! Please insert a new value.");
             main(null);
         }
-//        Constants.setPort(port);
+        Constants.setPort(port);
         System.err.println(Constants.getInfo() + "Starting Socket Server");
         Server server = new Server();
         ExecutorService executor = Executors.newCachedThreadPool();

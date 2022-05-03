@@ -6,7 +6,7 @@ import it.polimi.ingsw.Server.VirtualClient;
 import java.beans.PropertyChangeEvent;
 
 /**
- * MoveMotherListener class is a WorkerListener used for notifying the client after a move action.
+ * MoveMotherListener class is a AbsListener used for notifying the client after a move action.
  *
  * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener

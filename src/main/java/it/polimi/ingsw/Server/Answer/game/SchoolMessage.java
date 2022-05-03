@@ -11,25 +11,28 @@ import it.polimi.ingsw.Server.Answer.Answer;
  * @see Answer
  */
 public class SchoolMessage implements Answer {
-  private final Pair<String, School> message;
-
+  private final School message;
+  private final String player;
   /**
    * Constructor MoveMessage creates a new MoveMessage instance.
    *
    * @param newSchool .................
    */
-  public SchoolMessage(Pair<String, School> newSchool) {
+  public SchoolMessage(String player, School newSchool) {
     this.message = newSchool;
+    this.player = player;
   }
 
   /**
-   * Method getMessage returns the message of this WorkerPlacement object.
+   * Method getMessage returns the message of this Answer object.
    *
-   * @return the message (type Object) of this WorkerPlacement object.
+   * @return the message (type Object) of this Answer object.
    * @see Answer#getMessage()
    */
   @Override
-  public Pair<String, School> getMessage() {
+  public School getMessage() {
     return message;
   }
+
+  public String getPlayer(){return  player;}
 }

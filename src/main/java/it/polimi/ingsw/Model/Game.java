@@ -22,7 +22,6 @@ public class Game {
     public static final String PLAYED_CARD_LISTENER = "playedCardListener";
     public static final String CLOUDS_LISTENER = "cloudsListener";
     public static final String PROFS_LISTENER = "profsListener";
-    public static final String MAGICIAN_LISTENER = "magicianListener";
 
     private final List<Player> players;
     private final List<Magician> magicians;
@@ -64,7 +63,6 @@ public class Game {
         listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
         listeners.addPropertyChangeListener(CLOUDS_LISTENER, new CloudsListener(client));
         listeners.addPropertyChangeListener(PROFS_LISTENER, new ProfsListener(client));
-        listeners.addPropertyChangeListener(MAGICIAN_LISTENER, new MagiciansListener(client));
     }
 
     public void initProfessors() {
@@ -153,7 +151,6 @@ public class Game {
         List<Magician> oldMagicians = new ArrayList<>(magicians);
         magicians.remove(magician);
         playersActionPhase = players;
-        listeners.firePropertyChange(MAGICIAN_LISTENER, oldMagicians, magicians);
     }
 
     public boolean isExpertMode() {

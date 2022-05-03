@@ -15,7 +15,8 @@ import java.util.Map;
  * @see Answer
  */
 public class PlayedCardMessage implements Answer {
-    private final Pair<String, AssistantCard> message;
+    private final AssistantCard message;
+    private final String player;
 
     /**
      * Constructor MoveMessage creates a new MoveMessage instance.
@@ -23,18 +24,23 @@ public class PlayedCardMessage implements Answer {
      * @param playedCard .................
      */
 
-    public PlayedCardMessage(Pair<String, AssistantCard> message) {
+    public PlayedCardMessage(String player, AssistantCard message) {
+        this.player = player;
         this.message = message;
     }
 
     /**
-     * Method getMessage returns the message of this WorkerPlacement object.
+     * Method getMessage returns the message of this Answer object.
      *
-     * @return the message (type Object) of this WorkerPlacement object.
+     * @return the message (type Object) of this Answer object.
      * @see Answer#getMessage()
      */
     @Override
-    public Pair<String, AssistantCard> getMessage() {
+    public AssistantCard getMessage() {
         return message;
+    }
+
+    public String getPlayer() {
+        return player;
     }
 }

@@ -7,12 +7,10 @@ public class GameError implements Answer {
     private final ErrorType error;
     private final String message;
 
-
     public GameError(ErrorType error) {
         this.error = error;
         this.message = null;
     }
-
 
     public GameError(ErrorType error, String message) {
         this.error = error;

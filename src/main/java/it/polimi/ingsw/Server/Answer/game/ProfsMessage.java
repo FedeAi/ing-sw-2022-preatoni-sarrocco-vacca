@@ -24,9 +24,9 @@ public class ProfsMessage implements Answer {
   }
 
   /**
-   * Method getMessage returns the message of this WorkerPlacement object.
+   * Method getMessage returns the message of this Answer object.
    *
-   * @return the message (type Object) of this WorkerPlacement object.
+   * @return the message (type Object) of this Answer object.
    * @see Answer#getMessage()
    */
   @Override

@@ -9,14 +9,11 @@ import java.util.List;
  */
 public class MagiciansMessage implements Answer{
     private final String message;
-    private List<Magician> remainingMagicians;
+    private final List<Magician> remainingMagicians;
 
-    public MagiciansMessage(String message){
+    public MagiciansMessage(String message, List<Magician> remainingMagicians){
         this.message = message;
-    }
-
-    public void addRemainingMagicians(List<Magician> magicians){
-        remainingMagicians = magicians;
+        this.remainingMagicians = remainingMagicians;
     }
 
     public List<Magician> getRemainingMagicians() {

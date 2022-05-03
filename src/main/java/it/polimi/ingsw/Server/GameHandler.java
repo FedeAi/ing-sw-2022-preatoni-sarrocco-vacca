@@ -90,8 +90,7 @@ public class GameHandler {
         if (started == 0) started = 1;
         String nickname = game.getActivePlayers().get(playersNumber - game.getAvailableMagicians().size()).
                 getNickname();
-        MagiciansMessage req = new MagiciansMessage("Please choose your magician");
-        req.addRemainingMagicians(game.getAvailableMagicians());
+        MagiciansMessage req = new MagiciansMessage("Please choose your magician", game.getAvailableMagicians());
 
         server.getClientByID(server.getIDByNickname(nickname)).send(req);
         sendAllExcept(new CustomMessage("User " + nickname + " is choosing his magician!"),
