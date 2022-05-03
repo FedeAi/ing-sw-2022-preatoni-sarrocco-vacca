@@ -35,6 +35,6 @@ public class HandListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         HandMessage message = new HandMessage((List<AssistantCard>) evt.getNewValue());
-        virtualClient.sendAll(message);
+        virtualClient.send(message);    
     }
 }

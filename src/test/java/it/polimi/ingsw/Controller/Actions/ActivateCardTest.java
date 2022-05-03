@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +15,8 @@ class ActivateCardTest {
     Player p1, p2, p3;
     Game gameInstance;
 
+    /** Method init: initializes values. */
+    @BeforeEach
     private void initTest() {
         gameManager = new GameManager(new Game());
         p1 = new Player("Ale");
@@ -30,7 +33,6 @@ class ActivateCardTest {
 
     @Test
     void canPerformExt() {
-        initTest();
 
         Performable activateCard;
         gameInstance.setGameState(GameState.ACTION_MOVE_MOTHER);
@@ -94,7 +96,7 @@ class ActivateCardTest {
 
     @Test
     void performMove() {
-        initTest();
+
         int cardIndex = 0;
         CharacterCard card = gameInstance.getCharacterCards().get(cardIndex);
         // give money to p3

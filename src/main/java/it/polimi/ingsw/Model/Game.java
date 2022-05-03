@@ -20,7 +20,6 @@ public class Game {
     public static final String MOVE_MOTHER_LISTENER = "moveMotherListener";
     public static final String ISLANDS_LISTENER = "islandsListener";
     public static final String PLAYED_CARD_LISTENER = "playedCardListener";
-    public static final String SCHOOL_LISTENER = "schoolListener";
     public static final String CLOUDS_LISTENER = "cloudsListener";
     public static final String PROFS_LISTENER = "profsListener";
     public static final String MAGICIAN_LISTENER = "magicianListener";
@@ -63,7 +62,6 @@ public class Game {
         listeners.addPropertyChangeListener(MOVE_MOTHER_LISTENER, new MoveMotherListener(client));
         listeners.addPropertyChangeListener(ISLANDS_LISTENER, new IslandsListener(client));
         listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
-        listeners.addPropertyChangeListener(SCHOOL_LISTENER, new SchoolListener(client));
         listeners.addPropertyChangeListener(CLOUDS_LISTENER, new CloudsListener(client));
         listeners.addPropertyChangeListener(PROFS_LISTENER, new ProfsListener(client));
         listeners.addPropertyChangeListener(MAGICIAN_LISTENER, new MagiciansListener(client));
