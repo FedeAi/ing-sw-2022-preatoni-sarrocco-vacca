@@ -15,7 +15,7 @@ public class MagiciansMessage implements Answer{
         this.message = message;
     }
 
-    public void addRemaingMagicians(List<Magician> magicians){
+    public void addRemainingMagicians(List<Magician> magicians){
         remainingMagicians = magicians;
     }
 

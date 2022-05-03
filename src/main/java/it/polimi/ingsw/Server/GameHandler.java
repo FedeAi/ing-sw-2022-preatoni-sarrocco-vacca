@@ -7,7 +7,6 @@ import it.polimi.ingsw.Server.Answer.Answer;
 import it.polimi.ingsw.Server.Answer.ConnectionMessage;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import it.polimi.ingsw.Server.Answer.MagiciansMessage;
-import it.polimi.ingsw.Server.Answer.game.MagiciansMessageDeprecated;
 
 import java.beans.PropertyChangeSupport;
 import java.util.Random;
@@ -16,8 +15,8 @@ import java.util.logging.Logger;
 /**
  * GameHandler class handles a single match, instantiating a game mode (Game class) and a main controller (Controller
  * class). It also manages the startup phase, like the marker's color selection.
- * @author Federico Sarrocco Alessandro Vacca
-
+ *
+ * @author Federico Sarrocco, Alessandro Vacca
  */
 public class GameHandler {
     private static final String PLAYER = "Player";
@@ -43,41 +42,42 @@ public class GameHandler {
         controllerListener.addPropertyChangeListener(controller);
     }
 
-    public void createPlayer(String nickName, int player_id){
+    public void createPlayer(String nickName, int player_id) {
         game.createPlayer(player_id, nickName);
     }
 
-    public void sendAll(Answer message){
-        for(Player p : game.getPlayers()){
+    public void sendAll(Answer message) {
+        for (Player p : game.getPlayers()) {
             server.getClientByID(p.getID()).send(message);
         }
     }
 
     public void sendAllExcept(Answer message, int excludedID) {
-        for(Player p:game.getActivePlayers()) {
-            if(server.getIDByNickname(p.getNickname())!=excludedID) {
+        for (Player p : game.getActivePlayers()) {
+            if (server.getIDByNickname(p.getNickname()) != excludedID) {
                 server.getClientByID(p.getID()).send(message);
             }
         }
     }
 
-    public void setPlayersNumber(int number){
+    public void setPlayersNumber(int number) {
         playersNumber = number;
     }
 
-    public boolean isStarted(){
+    public boolean isStarted() {
         return started > 0;
     }
 
     public void endGame() {
-        while(!game.getActivePlayers().isEmpty()) {
+        while (!game.getActivePlayers().isEmpty()) {
             server.getClientByID(game.getActivePlayers().get(0).getID()).getConnection().close();
         }
     }
+
     public void endGame(String leftNickname) {
         sendAll(new ConnectionMessage(PLAYER + " " + leftNickname + " left the game, the match will now end." +
                 "\nThanks for playing!", false));
-        while(!game.getActivePlayers().isEmpty()) {
+        while (!game.getActivePlayers().isEmpty()) {
             server.getClientByID(game.getActivePlayers().get(0).getID()).getConnection().close();
         }
     }
@@ -86,15 +86,15 @@ public class GameHandler {
         game.getPlayerByID(id).setConnected(false);
     }
 
-    public void setup(){
-        if(started==0) started=1;
+    public void setup() {
+        if (started == 0) started = 1;
         String nickname = game.getActivePlayers().get(playersNumber - game.getAvailableMagicians().size()).
                 getNickname();
         MagiciansMessage req = new MagiciansMessage("Please choose your magician");
-        req.addRemaingMagicians(game.getAvailableMagicians());
+        req.addRemainingMagicians(game.getAvailableMagicians());
 
         server.getClientByID(server.getIDByNickname(nickname)).send(req);
-        sendAllExcept(new CustomMessage("User " + nickname + " is choosing his color!"),
+        sendAllExcept(new CustomMessage("User " + nickname + " is choosing his magician!"),
                 server.getIDByNickname(nickname));
     }
 

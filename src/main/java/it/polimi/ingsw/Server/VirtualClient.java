@@ -8,7 +8,7 @@ import java.beans.PropertyChangeListener;
 
 /**
  * Virtual client interface; this is a representation of the virtual instance of the client, which
- * is connected through server socket. It's used for preparing an answer for sending and for general
+ * is connected through server socket. It's used for preparing the answer to be sent and for general
  * operations on the client too.
  *
  * @author Federico Sarrocco, Alessandro Vacca

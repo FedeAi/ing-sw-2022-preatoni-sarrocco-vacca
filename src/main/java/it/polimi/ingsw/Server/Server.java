@@ -244,7 +244,7 @@ public class Server {
             VirtualClient client =
                     new VirtualClient(clientID, nickname, socketClientHandler, currentGame);
             if (totalPlayers != -1 && waiting.size() >= totalPlayers) {
-                //client.send(new GameError(ErrosType.FULLSERVER));
+                //client.send(new GameError(ErrorType.FULLSERVER));
                 return null;
             }
             idMapClient.put(clientID, client);
