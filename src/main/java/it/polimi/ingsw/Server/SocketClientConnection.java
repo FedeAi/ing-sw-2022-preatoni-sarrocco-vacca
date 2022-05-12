@@ -136,13 +136,17 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      *     in order to perform an action.
      */
     public void actionHandler(Message command) {
+        System.out.println("Debug: MESSAGE RECEIVED: " + command.getClass().getName());
         if (command instanceof LoginMessage) {
             setupConnection((LoginMessage) command);
         }
     }
 
     public void actionHandler(Action action) {
-        
+        System.out.println("Debug: ACTION RECEIVED: " + action.action.name());
+        /*if (command instanceof LoginMessage) {
+            setupConnection((LoginMessage) command);
+        }*/
     }
     
     /**

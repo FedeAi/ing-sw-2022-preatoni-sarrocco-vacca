@@ -45,4 +45,5 @@ public class Action implements Serializable {
         this.color0 = color0;
         color1 = null;
     }
+
 }

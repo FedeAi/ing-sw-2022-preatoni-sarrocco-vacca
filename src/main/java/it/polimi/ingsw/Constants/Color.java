@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Constants;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public enum Color {
     YELLOW,
@@ -13,6 +10,7 @@ public enum Color {
     GREEN;
 
 
+    public static Color parseColor(String color){ return Enum.valueOf(Color.class, color.toUpperCase());}
     // pick random color method
     private static final List<Color> VALUES =
             Collections.unmodifiableList(Arrays.asList(values()));

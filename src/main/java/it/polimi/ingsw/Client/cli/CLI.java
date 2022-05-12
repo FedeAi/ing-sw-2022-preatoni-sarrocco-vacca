@@ -1,14 +1,12 @@
 package it.polimi.ingsw.Client.cli;
 
-import it.polimi.ingsw.Client.ServerMessageHandler;
-import it.polimi.ingsw.Client.ConnectionSocket;
-import it.polimi.ingsw.Client.ModelView;
-import it.polimi.ingsw.Client.UI;
+import it.polimi.ingsw.Client.*;
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -16,6 +14,7 @@ import java.util.logging.Logger;
 public class CLI implements UI {
 
     private static final Logger logger = Logger.getLogger(CLI.class.getName());
+    private final PropertyChangeSupport listeners = new PropertyChangeSupport(this);
     private final PrintStream output;
     private final Scanner input;
     private final ModelView modelView;
@@ -30,7 +29,6 @@ public class CLI implements UI {
         modelView = new ModelView(this);
         serverMessageHandler = new ServerMessageHandler(this, modelView);
         activeGame = true;
-
 
     }
 
@@ -55,9 +53,11 @@ public class CLI implements UI {
 
     public void run() {
         setup();
-//        while (isActiveGame()) {
-//            loop();
-//        }
+        while (isActiveGame()) {
+            input.reset();
+            String cmd = input.nextLine();
+            listeners.firePropertyChange("action", null, cmd);
+        }
         input.close();
         output.close();
     }
@@ -95,7 +95,7 @@ public class CLI implements UI {
         } catch (DuplicateNicknameException | InvalidNicknameException e) {
             setup();
         }
-        //listeners.addPropertyChangeListener("action", new ActionParser(connectionSocket, modelView));
+        listeners.addPropertyChangeListener("action", new InputToMessage(modelView, connectionSocket));
     }
 
     @Override

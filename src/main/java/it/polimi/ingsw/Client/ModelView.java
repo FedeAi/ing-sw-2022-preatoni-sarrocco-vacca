@@ -34,6 +34,8 @@ public class ModelView {
     private List<CharacterCard> characterCards;
     private Map<String, AssistantCard> playedCards;
 
+    private boolean isInputActive = true; // TODO FIXME this must be set not true forever
+
     /**
      * Constructor ModelView creates a new ModelView instance.
      *
@@ -157,10 +159,22 @@ public class ModelView {
         this.playedCards.put(player, playedCard);
     }
 
+    public boolean isInputActive() {
+        return isInputActive;
+    }
+    public void activateInput() {
+        isInputActive = true;
+    }
+    public void deactivateInput() {
+        isInputActive = false;
+    }
+
     public CLI getCli(){
         return cli;
     }
     public GUI getGui( ) {
         return gui;
     }
+
+
 }
