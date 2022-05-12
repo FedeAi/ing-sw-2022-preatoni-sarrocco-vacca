@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.cli;
 
-import it.polimi.ingsw.Client.ActionHandler;
+import it.polimi.ingsw.Client.ServerMessageHandler;
 import it.polimi.ingsw.Client.ConnectionSocket;
 import it.polimi.ingsw.Client.ModelView;
 import it.polimi.ingsw.Client.UI;
@@ -19,7 +19,7 @@ public class CLI implements UI {
     private final PrintStream output;
     private final Scanner input;
     private final ModelView modelView;
-    private final ActionHandler actionHandler;
+    private final ServerMessageHandler serverMessageHandler;
     private boolean activeGame;
 
     private ConnectionSocket connectionSocket;
@@ -28,7 +28,7 @@ public class CLI implements UI {
         input = new Scanner(System.in);
         output = new PrintStream(System.out);
         modelView = new ModelView(this);
-        actionHandler = new ActionHandler(this, modelView);
+        serverMessageHandler = new ServerMessageHandler(this, modelView);
         activeGame = true;
 
 
@@ -86,7 +86,7 @@ public class CLI implements UI {
         connectionSocket = new ConnectionSocket();
         modelView.setPlayerName(nickname);
         try {
-            if (!connectionSocket.setup(nickname, modelView, actionHandler)) {
+            if (!connectionSocket.setup(nickname, modelView, serverMessageHandler)) {
                 System.err.println("The entered IP/port doesn't match any active server or the server is not " +
                         "running. Please try again!");
                 CLI.main(null);

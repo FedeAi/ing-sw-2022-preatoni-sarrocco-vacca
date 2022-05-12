@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * @author Federico Sarrocco
  */
-public class MagiciansMessage implements Answer{
+public class ReqMagicianMessage implements Answer{
     private final String message;
     private final List<Magician> remainingMagicians;
 
-    public MagiciansMessage(String message, List<Magician> remainingMagicians){
+    public ReqMagicianMessage(String message, List<Magician> remainingMagicians){
         this.message = message;
         this.remainingMagicians = remainingMagicians;
     }

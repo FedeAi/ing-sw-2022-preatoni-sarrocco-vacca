@@ -6,7 +6,7 @@ import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Server.Answer.Answer;
 import it.polimi.ingsw.Server.Answer.ConnectionMessage;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
-import it.polimi.ingsw.Server.Answer.MagiciansMessage;
+import it.polimi.ingsw.Server.Answer.ReqMagicianMessage;
 
 import java.beans.PropertyChangeSupport;
 import java.util.Random;
@@ -90,7 +90,7 @@ public class GameHandler {
         if (started == 0) started = 1;
         String nickname = game.getActivePlayers().get(playersNumber - game.getAvailableMagicians().size()).
                 getNickname();
-        MagiciansMessage req = new MagiciansMessage("Please choose your magician", game.getAvailableMagicians());
+        ReqMagicianMessage req = new ReqMagicianMessage("Please choose your magician", game.getAvailableMagicians());
 
         server.getClientByID(server.getIDByNickname(nickname)).send(req);
         sendAllExcept(new CustomMessage("User " + nickname + " is choosing his magician!"),

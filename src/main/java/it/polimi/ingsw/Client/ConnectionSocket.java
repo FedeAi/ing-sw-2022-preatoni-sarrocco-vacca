@@ -43,12 +43,12 @@ public class ConnectionSocket {
      * @param nickname of type String - the username chosen by the user.
      * @param modelView of type ModelView - the structure, stored into the client, containing simple
      *     logic of the model.
-     * @param actionHandler of type ActionHandler - the class handling the answers.
+     * @param serverMessageHandler of type ServerMessageHandler - the class handling the answers.
      * @return boolean true if connection is successful, false otherwise.
      * @throws DuplicateNicknameException when the nickname is already in use.
      * @throws InvalidNicknameException when the nickname contains illegal characters (like "-").
      */
-    public boolean setup(String nickname, ModelView modelView, ActionHandler actionHandler)
+    public boolean setup(String nickname, ModelView modelView, ServerMessageHandler serverMessageHandler)
             throws DuplicateNicknameException, InvalidNicknameException {
         try {
             System.out.println(
@@ -72,7 +72,7 @@ public class ConnectionSocket {
                     break;
                 }
             }
-            listener = new SocketListener(socket, modelView, input, actionHandler);
+            listener = new SocketListener(socket, modelView, input, serverMessageHandler);
             Thread thread = new Thread(listener);
             thread.start();
             return true;

@@ -19,7 +19,7 @@ public class SocketListener implements Runnable {
 
   private final Socket socket;
   private final ModelView modelView;
-  private final ActionHandler actionHandler;
+  private final ServerMessageHandler serverMessageHandler;
   private final Logger logger = Logger.getLogger(getClass().getName());
   private final ObjectInputStream inputStream;
 
@@ -29,17 +29,17 @@ public class SocketListener implements Runnable {
    * @param socket of type Socket - socket reference.
    * @param modelView of type ModelView - modelView reference.
    * @param inputStream of type ObjectInputStream - the inputStream.
-   * @param actionHandler of type ActionHandler - ActionHandler reference.
+   * @param serverMessageHandler of type ServerMessageHandler - ServerMessageHandler reference.
    */
   public SocketListener(
       Socket socket,
       ModelView modelView,
       ObjectInputStream inputStream,
-      ActionHandler actionHandler) {
+      ServerMessageHandler serverMessageHandler) {
     this.modelView = modelView;
     this.socket = socket;
     this.inputStream = inputStream;
-    this.actionHandler = actionHandler;
+    this.serverMessageHandler = serverMessageHandler;
   }
 
   /**
@@ -50,7 +50,7 @@ public class SocketListener implements Runnable {
    */
   public void process(SerializedAnswer serverMessage) {
     modelView.setServerAnswer(serverMessage.getServerAnswer());
-    actionHandler.answerHandler();
+    serverMessageHandler.answerHandler();
   }
 
   /** Method run loops and sends messages. */
