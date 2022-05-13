@@ -1,16 +1,14 @@
 package it.polimi.ingsw.Exceptions;
 
-import it.polimi.ingsw.Constants.GameState;
 
 public class WrongStateException extends GameException {
-    private GameState state;
 
-    public WrongStateException(GameState currentState) {
-        this.state = currentState;
+    public WrongStateException(String state) {
+        super(state);
     }
 
     @Override
     public String getMessage() {
-        return "This action is reserved for the " + state.toString();
+        return "This action is reserved for the " + errorMessage;
     }
 }

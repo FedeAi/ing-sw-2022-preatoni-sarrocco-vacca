@@ -131,8 +131,8 @@ public class Player implements PropertyChangeListener {
         listeners.firePropertyChange(HAND_LISTENER, null, cards);
     }
 
-    public boolean hasCard(AssistantCard card) {
-        return cards.contains(card);
+    public boolean hasCard(int card) {
+        return cards.stream().anyMatch(c -> c.getValue() == card);
     }
 
     public AssistantCard getPlayedCard() {

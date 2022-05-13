@@ -2,6 +2,10 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
+import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -19,57 +23,60 @@ public class ActivateCard extends Performable {
     }
 
     @Override
-    protected void canPerform(Game game, Rules rules) {
+    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if (!super.canPerform(game, rules)) {
-            return false;
-        }
+        super.canPerform(game, rules);
 
         Player player = getPlayer(game);
         // Simple check to verify that we're in the correct state
         if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER) && !game.getGameState().equals(GameState.ACTION_MOVE_STUDENTS)) {
-            return false;
+            throw new WrongStateException("action phase!");
         }
 
         // Verify that we are under expert rules
         if (!game.isExpertMode()) {
-            return false;
+            throw new GameException("This feature is available only in expert mode!");
         }
 
-        if (choice < 0 || choice > Constants.NUM_CHARACTER_CARDS) {
-            return false;
+        if (choice < 0 || choice >= Constants.NUM_CHARACTER_CARDS) {
+            throw new GameException("The selected character card is invalid (index from 0 to 2)");
         }
 
-        CharacterCard choiceCard = game.getCharacterCards().get(choice);
+        CharacterCard chosenCard = game.getCharacterCards().get(choice);
         // Verify that the player has enough money
-        if (player.getBalance() < choiceCard.getPrice()) {
-            return false;
+        if (player.getBalance() < chosenCard.getPrice()) {
+            throw new GameException("You don't have enough money! The selected card costs " + chosenCard.getPrice());
         }
-        if (choiceCard.isActive()) {
-            return false;
+        if (chosenCard.isActive()) {
+            throw new GameException("The selected card is already active");
         }
-        return true;
     }
 
     @Override
     public void performMove(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return;
-        Player player = player_opt.get();
+        performMove(game, rules);
+        Player player = getPlayer(game);
 
-        CharacterCard choiceCard = game.getCharacterCards().get(choice);
+        CharacterCard chosenCard = game.getCharacterCards().get(choice);
 
-        if (choiceCard.alreadyActivatedOnce()) {
-            game.incrementBalance(choiceCard.getPrice());
+        if (chosenCard.alreadyActivatedOnce()) {
+            game.incrementBalance(chosenCard.getPrice());
         } else {
-            game.incrementBalance(choiceCard.getPrice() - 1);
+            game.incrementBalance(chosenCard.getPrice() - 1);
         }
 
-        player.spendCoins(choiceCard.getPrice());
+        player.spendCoins(chosenCard.getPrice());
 
-        choiceCard.activate(rules, game);
-
+        chosenCard.activate(rules, game);
     }
 
+    @Override
+    public GameState nextState(Game game, Rules rules){
+        return game.getGameState();
+    }
+
+    @Override
+    public Player nextPlayer(Game game, Rules rules){
+        return game.getRoundOwner();
+    }
 }

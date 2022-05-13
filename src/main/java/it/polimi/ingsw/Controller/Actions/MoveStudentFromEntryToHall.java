@@ -27,11 +27,7 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
         if (Rules.checkCoin(hallPosition)) {
             game.incrementPlayerBalance(player.getNickname());
         }
-        //compute the new professors
+        // Updates the professors to the new owners (if any)
         game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game));
-
-        if (Rules.getEntrySize(game.numPlayers()) - player.getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())) {
-            game.setGameState(GameState.ACTION_MOVE_MOTHER);
-        }
     }
 }

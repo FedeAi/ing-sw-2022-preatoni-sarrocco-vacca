@@ -27,7 +27,7 @@ public abstract class MoveStudentFromEntry extends Performable {
         Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.ACTION_MOVE_STUDENTS)) {
-            throw new WrongStateException(GameState.ACTION_MOVE_STUDENTS);
+            throw new WrongStateException("action phase, when you move students");
         }
 
         // Checks if the player has already moved the maximum allowed students
@@ -39,5 +39,21 @@ public abstract class MoveStudentFromEntry extends Performable {
         if (player.getSchool().getStudentsEntry().get(color) == 0) {
             throw new GameException("You don't have any students of the selected color");
         }
+    }
+
+    @Override
+    public GameState nextState(Game game, Rules rules){
+
+        // if all students are moved from entry
+        if (Rules.getEntrySize(game.numPlayers()) - getPlayer(game).getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())) {
+            return GameState.ACTION_MOVE_MOTHER;
+        }else {
+            return game.getGameState();
+        }
+    }
+
+    @Override
+    public Player nextPlayer(Game game, Rules rules){
+        return game.getRoundOwner();
     }
 }

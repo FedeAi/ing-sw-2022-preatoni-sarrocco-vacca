@@ -3,6 +3,9 @@ package it.polimi.ingsw.Controller.Actions;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
@@ -18,28 +21,20 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return;
-        Player player = player_opt.get();
-
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
+        Player player = getPlayer(game);
+        // Method that removes the specified student from the player's entry
         player.getSchool().removeStudentFromEntry(color);
+        // Method that adds the specified student to the player's selected island
         game.addIslandStudent(islandIndex, color);
-
-        if (Rules.getEntrySize(game.numPlayers()) - player.getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())) {
-            game.setGameState(GameState.ACTION_MOVE_MOTHER);
-        }
     }
 
     @Override
-    protected void canPerform(Game game, Rules rules) {
-        if (!super.canPerform(game, rules)) {
-            return false;
-        }
+    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        super.canPerform(game, rules);
         if (islandIndex < 0 || islandIndex >= game.getIslandContainer().size()) {
-            return false;
+            throw new GameException("Invalid island index! You can only select islands from 0 to " + game.getIslandContainer().size());
         }
-        return true;
     }
 }

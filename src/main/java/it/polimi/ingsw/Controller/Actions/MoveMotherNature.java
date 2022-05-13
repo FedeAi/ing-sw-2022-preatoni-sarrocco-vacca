@@ -31,7 +31,7 @@ public class MoveMotherNature extends Performable {
         Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER)) {
-            throw new WrongStateException(GameState.ACTION_MOVE_MOTHER);
+            throw new WrongStateException("action phase, when you move mother nature");
         }
 
         // is action legal check
@@ -82,7 +82,15 @@ public class MoveMotherNature extends Performable {
             GrandmaCharacter grandma = (GrandmaCharacter) card.get();
             grandma.addBlockingCard();
         }
-        // change state
-        game.setGameState(GameState.ACTION_CHOOSE_CLOUD);
+    }
+
+    @Override
+    public GameState nextState(Game game, Rules rules){
+        return GameState.ACTION_CHOOSE_CLOUD;
+    }
+
+    @Override
+    public Player nextPlayer(Game game, Rules rules){
+        return game.getRoundOwner();
     }
 }

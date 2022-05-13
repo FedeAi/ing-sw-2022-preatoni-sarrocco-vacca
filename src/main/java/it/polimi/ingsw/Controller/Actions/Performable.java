@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.InvalidPlayerException;
@@ -45,6 +46,9 @@ public abstract class Performable {
      * @param rules
      */
     public abstract void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException;
+
+    public abstract GameState nextState(Game game, Rules rules);
+    public abstract Player nextPlayer(Game game, Rules rules);
 
     /**
      * Gets NickName player.
