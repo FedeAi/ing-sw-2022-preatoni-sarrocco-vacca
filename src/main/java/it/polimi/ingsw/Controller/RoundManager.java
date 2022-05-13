@@ -9,34 +9,46 @@ import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.listeners.RoundOwnerListener;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Comparator;
 import java.util.List;
 
-public class RoundManager implements PropertyChangeListener {
+public class RoundManager {
+
+    public static final String ROUND_OWNER_LISTENER = "roundOwnerListener";
+
 
     private GameManager gameManager;
     private Game gameInstance;
+    private final PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 
     public RoundManager(GameManager gameManager) {
         this.gameManager = gameManager;
         this.gameInstance = gameManager.getGame();
+        //listeners.addPropertyChangeListener(RoundOwnerListener());
     }
 
+    public void addListener(PropertyChangeListener listener){
+        listeners.addPropertyChangeListener(listener);
+    }
     
     public void performAction(Performable action) throws InvalidPlayerException, RoundOwnerException, GameException {
         action.performMove(gameInstance, gameManager.getRules());
         /* this line is reached only if the action is performable  */
 
-        handleTurnChange(action);
+        handleStateChange(action);
+        handleNextPlayer(action);
+
         WinController.check(gameInstance);
 
     }
 
 
-    public void handleTurnChange(Performable action){
+    public void handleStateChange(Performable action){
         GameState nextState = action.nextState(gameInstance, gameManager.getRules());
         gameInstance.setGameState(nextState);
 
@@ -44,7 +56,6 @@ public class RoundManager implements PropertyChangeListener {
         if(action instanceof PlayCard &&  nextState == GameState.ACTION_MOVE_STUDENTS){
             setActionOrder(gameInstance);
         }
-
     }
 
     public void handleNextPlayer(Performable action){
@@ -63,11 +74,6 @@ public class RoundManager implements PropertyChangeListener {
         planningPhasePlayers.sort(compareByCardValue);
         game.setPlayersActionPhase(planningPhasePlayers);
         game.setRoundOwner(planningPhasePlayers.get(0));
-
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-
-    }
 }

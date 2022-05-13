@@ -13,6 +13,9 @@ import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Constants.TowerColor;
 import it.polimi.ingsw.Model.Islands.BaseIsland;
 import it.polimi.ingsw.Model.Islands.Island;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.VirtualClient;
+import it.polimi.ingsw.listeners.NextRoundListener;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -28,14 +31,18 @@ public class GameManager implements PropertyChangeListener {
     private boolean isHard_temp = true;
     private final PropertyChangeSupport controllerListeners = new PropertyChangeSupport(this);
 
+
     public GameManager(Game game) {
 
         this.game = game;   //new Game(new Bag(Constants.INITIAL_BAG_SIZE))
         this.game.setGameState(GameState.GAME_ROOM);
         rules = new Rules();
         this.roundManager = new RoundManager(this);
+        this.roundManager.addListener(this);
+    }
 
-        controllerListeners.addPropertyChangeListener(roundManager);
+    public void createListener(VirtualClient client){
+        controllerListeners.addPropertyChangeListener(new NextRoundListener(client));
     }
 
     public Game getGame() {
@@ -153,7 +160,7 @@ public class GameManager implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        controllerListeners.firePropertyChange(evt);
     }
 }
 
