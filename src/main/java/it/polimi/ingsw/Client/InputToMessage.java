@@ -55,23 +55,25 @@ public class InputToMessage implements PropertyChangeListener {
 
         try {
             switch (command.toUpperCase()) {
+                case "LIST" -> {
 
+                }
                 case "PLAYCARD" -> actionToSend = messageBuilder.playCard(in);
-                case "CHOOSECLOUD" -> actionToSend = messageBuilder.chooseCloud(in);
+                case "CLOUD" -> actionToSend = messageBuilder.chooseCloud(in);
                 case "MOVEMOTHER" -> actionToSend = messageBuilder.moveMother(in);
-                case "MOVESTUDENTISLAND" -> actionToSend = messageBuilder.moveStudentIsland(in);
-                case "MOVESTUDENTHAL"-> actionToSend = messageBuilder.moveStudentHall(in);
-                case "ACTIVATECARD"-> actionToSend = messageBuilder.activateCard(in);
-                case "DEACTIVATECARD"-> actionToSend = messageBuilder.deactivateCard(in);
+                case "STUDENTSISLAND" -> actionToSend = messageBuilder.moveStudentIsland(in);
+                case "STUDENTSHALL"-> actionToSend = messageBuilder.moveStudentHall(in);
+                case "ACTIVATE"-> actionToSend = messageBuilder.activateCard(in);
+                case "DEACTIVATE"-> actionToSend = messageBuilder.deactivateCard(in);
                 case "SETUP" -> messageToSend = messageBuilder.setupMessage(in);
-//                case "" -> sendMessage = inputChecker.desc(in);
-//                case "" -> sendMessage = inputChecker.addGod(in);
-//                case "" -> sendMessage = checkSelectWorker(inx
-//                case "" -> sendMessage = checkMove(in, modelView.getTurnPhase());
-//                case "" -> sendMessage = checkBuild(in, modelView.getTurnPhase());
-//                case "" -> sendMessage = checkPlaceDome(in, modelView.getTurnPhase());
-//                case "" -> sendMessage = checkForceWorker(in, modelView.getTurnPhase());
-//                case "" -> sendMessage = checkRemoveLevel(in, modelView.getTurnPhase());
+                case "GRANDMA" -> actionToSend = messageBuilder.grandmaBlock(in);
+                case "HERALD" -> actionToSend = messageBuilder.heraldChoose(in);
+                case "JOKER" -> actionToSend = messageBuilder.jokerSwap(in);
+                case "MINSTREL" -> actionToSend = messageBuilder.minstrelSwap(in);
+                case "MONK" -> actionToSend = messageBuilder.monkMove(in);
+                case "MUSHROOM" -> actionToSend = messageBuilder.mushroomChoose(in);
+                case "PRINCESS" -> actionToSend = messageBuilder.princessMove(in);
+                case "THIEF" -> actionToSend = messageBuilder.thiefChoose(in);
                 case "END" -> messageToSend = new EndTurnMessage();
                 case "QUIT" -> {
                     connectionSocket.send(messageBuilder.quit());
