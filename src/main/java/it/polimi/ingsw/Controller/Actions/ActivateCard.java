@@ -67,13 +67,4 @@ public class ActivateCard extends Performable {
         chosenCard.activate(rules, game);
     }
 
-    @Override
-    public GameState nextState(Game game, Rules rules){
-        return game.getGameState();
-    }
-
-    @Override
-    public Player nextPlayer(Game game, Rules rules){
-        return game.getRoundOwner();
-    }
 }

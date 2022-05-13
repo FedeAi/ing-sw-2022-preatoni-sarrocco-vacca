@@ -76,4 +76,5 @@ public class GrandmaBlockIsland extends Performable {
             grandma.deactivate(rules, game);
         }
     }
+
 }

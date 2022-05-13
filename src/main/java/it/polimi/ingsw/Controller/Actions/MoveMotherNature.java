@@ -69,6 +69,9 @@ public class MoveMotherNature extends Performable {
             Island nextIsland = islandContainer.nextIsland(newMotherPosition);
             if (Island.checkJoin(island, nextIsland)) {
                 islandContainer.joinNextIsland(newMotherPosition);
+                if(newMotherPosition == islandContainer.size()){
+                    game.moveMotherNature(0);
+                }
             }
         } else {
             island.setBlocked(false);
@@ -86,8 +89,4 @@ public class MoveMotherNature extends Performable {
         return GameState.ACTION_CHOOSE_CLOUD;
     }
 
-    @Override
-    public Player nextPlayer(Game game, Rules rules){
-        return game.getRoundOwner();
-    }
 }

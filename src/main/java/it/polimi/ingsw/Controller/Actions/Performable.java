@@ -47,8 +47,13 @@ public abstract class Performable {
      */
     public abstract void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException;
 
-    public abstract GameState nextState(Game game, Rules rules);
-    public abstract Player nextPlayer(Game game, Rules rules);
+    public GameState nextState(Game game, Rules rules){
+        return game.getGameState();
+    }
+
+    public Player nextPlayer(Game game, Rules rules){
+        return game.getRoundOwner();
+    }
 
     /**
      * Gets NickName player.

@@ -22,7 +22,6 @@ public class ChooseCloud extends Performable {
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
         super.canPerform(game, rules);
-
         if (!game.getGameState().equals(GameState.ACTION_CHOOSE_CLOUD)) {
             throw new WrongStateException("final step of the action phase.");
         }

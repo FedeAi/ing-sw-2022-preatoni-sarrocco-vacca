@@ -52,8 +52,4 @@ public abstract class MoveStudentFromEntry extends Performable {
         }
     }
 
-    @Override
-    public Player nextPlayer(Game game, Rules rules){
-        return game.getRoundOwner();
-    }
 }

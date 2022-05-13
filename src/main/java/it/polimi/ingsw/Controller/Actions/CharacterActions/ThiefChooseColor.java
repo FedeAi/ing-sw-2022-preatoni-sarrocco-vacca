@@ -59,7 +59,7 @@ public class ThiefChooseColor extends Performable {
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         // TODO TESTING
         // Redundant card presence check and general canPerform() check, then we execute the action

@@ -22,6 +22,7 @@ public class Game {
     public static final String PLAYED_CARD_LISTENER = "playedCardListener";
     public static final String CLOUDS_LISTENER = "cloudsListener";
     public static final String PROFS_LISTENER = "profsListener";
+    public static final String ROUND_OWNER_LISTENER = "roundOwnerListener";
 
     private final List<Player> players;
     private final List<Magician> magicians;
@@ -63,6 +64,7 @@ public class Game {
         listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
         listeners.addPropertyChangeListener(CLOUDS_LISTENER, new CloudsListener(client));
         listeners.addPropertyChangeListener(PROFS_LISTENER, new ProfsListener(client));
+        listeners.addPropertyChangeListener(ROUND_OWNER_LISTENER, new RoundOwnerListener(client));
     }
 
     public void initProfessors() {
@@ -177,7 +179,7 @@ public class Game {
     }
 
     public void moveMotherNature(int deltaPositions) {
-        int oldPosition = motherNature.getPosition();;
+        int oldPosition = motherNature.getPosition();
         int newPosition = (oldPosition + deltaPositions + islandContainer.size()) % islandContainer.size();
         motherNature.setIsland(newPosition);
         listeners.firePropertyChange(MOVE_MOTHER_LISTENER, oldPosition, newPosition);
@@ -202,6 +204,7 @@ public class Game {
 
     /**
      * @return list of Cards played until round owner
+     * TODO maybe is broken test FIXME
      */
     public List<AssistantCard> getPlayedCards() {
         ArrayList<AssistantCard> playedCards = new ArrayList<AssistantCard>();
@@ -281,7 +284,12 @@ public class Game {
     }
 
     public void setRoundOwner(Player roundOwner) {
-        this.roundOwner = roundOwner;
+        if(this.roundOwner != roundOwner){
+            listeners.firePropertyChange(ROUND_OWNER_LISTENER, this.roundOwner, roundOwner);
+            this.roundOwner = roundOwner;
+
+        }
+
     }
 
     public EnumMap<Color, String> getProfessors() {
