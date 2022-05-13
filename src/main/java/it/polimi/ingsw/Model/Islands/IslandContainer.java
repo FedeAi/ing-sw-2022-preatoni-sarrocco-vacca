@@ -8,6 +8,7 @@ import java.util.List;
 
 public class IslandContainer implements Serializable {
     private LinkedList<Island> islands;
+
     public IslandContainer(LinkedList<Island> islands) {
         this.islands = islands;
     }
@@ -28,7 +29,7 @@ public class IslandContainer implements Serializable {
         return (currentPosition + islands.size() + delta) % islands.size();
     }
 
-    public void addIslandStudent(int islandIndex, Color student){
+    public void addIslandStudent(int islandIndex, Color student) {
         islands.get(islandIndex).addStudent(student);
     }
 
@@ -52,11 +53,18 @@ public class IslandContainer implements Serializable {
     }
 
     public void joinNextIsland(int currIslandIndex) {
-        if (currIslandIndex >= 0 && currIslandIndex < islands.size()) {
+        if (currIslandIndex >= 0 && currIslandIndex < islands.size() - 1) {
             Island currIsland = islands.get(currIslandIndex);
             Island nextIsland = nextIsland(currIslandIndex);
             Island superIsland = new SuperIsland(List.of(currIsland, nextIsland));
             islands.add(currIslandIndex, superIsland);
+            islands.remove(currIsland);
+            islands.remove(nextIsland);
+        } else if (currIslandIndex == islands.size() - 1) {
+            Island currIsland = islands.get(currIslandIndex);
+            Island nextIsland = nextIsland(currIslandIndex);
+            Island superIsland = new SuperIsland(List.of(currIsland, nextIsland));
+            islands.add(0, superIsland);
             islands.remove(currIsland);
             islands.remove(nextIsland);
         }
