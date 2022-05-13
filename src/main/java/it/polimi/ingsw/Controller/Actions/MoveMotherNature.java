@@ -24,7 +24,7 @@ public class MoveMotherNature extends Performable {
     }
 
     @Override
-    public void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
         super.canPerform(game, rules);
 
@@ -42,7 +42,8 @@ public class MoveMotherNature extends Performable {
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
         game.moveMotherNature(movement);
         int newMotherPosition = game.getMotherNature().getPosition();
         Island island = game.getIslandContainer().get(newMotherPosition);

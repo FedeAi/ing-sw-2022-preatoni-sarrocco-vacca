@@ -33,7 +33,7 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
     }
 
     @Override
-    public void canPerform(Game game, Rules rules) {
+    protected void canPerform(Game game, Rules rules) {
         if (!super.canPerform(game, rules)) {
             return false;
         }

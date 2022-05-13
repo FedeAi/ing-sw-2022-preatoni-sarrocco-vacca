@@ -4,7 +4,6 @@ import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
-import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
@@ -25,7 +24,7 @@ public abstract class Performable {
      * @throws InvalidPlayerException
      * @throws RoundOwnerException
      */
-    public void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
         // Checks if there is a player with the specified nickname in the game
         if (player_opt.isEmpty()) {
@@ -45,7 +44,7 @@ public abstract class Performable {
      * @param game  of type GameExt: the game
      * @param rules
      */
-    public abstract void performMove(Game game, Rules rules);
+    public abstract void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException;
 
     /**
      * Gets NickName player.

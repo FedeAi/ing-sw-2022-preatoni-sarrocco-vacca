@@ -3,10 +3,11 @@ package it.polimi.ingsw.Controller.Actions;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
-
-import java.util.Optional;
 
 public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
 
@@ -15,11 +16,9 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return;
-        Player player = player_opt.get();
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
+        Player player = getPlayer(game);
 
         player.getSchool().moveStudentFromEntryToHall(color);   // model modification
 

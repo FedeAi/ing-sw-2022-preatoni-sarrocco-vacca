@@ -20,7 +20,7 @@ public class PlayCard extends Performable {
     }
 
     @Override
-    public void canPerform(Game game, Rules rules) {
+    protected void canPerform(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
         if (!super.canPerform(game, rules)) {
             return false;
