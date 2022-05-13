@@ -47,7 +47,10 @@ public class RoundManager implements PropertyChangeListener {
 
     }
 
-    public void handleNextPlayer()
+    public void handleNextPlayer(Performable action){
+        Player nextPlayer = action.nextPlayer(gameInstance, gameManager.getRules());
+        gameInstance.setRoundOwner(nextPlayer);
+    }
 
     /**
      * choose Player orders for action phase
