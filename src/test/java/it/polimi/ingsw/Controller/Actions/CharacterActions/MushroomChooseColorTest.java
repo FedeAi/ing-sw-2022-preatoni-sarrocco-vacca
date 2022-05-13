@@ -15,8 +15,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Class MushroomChooseColorTest tests the MushroomChooseColor action.
  *
@@ -58,7 +56,7 @@ class MushroomChooseColorTest {
     void superTest() {
         String wrongNickname = "Kraken";
         action = new MushroomChooseColor(wrongNickname, studentColor);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -67,7 +65,7 @@ class MushroomChooseColorTest {
         // We aren't set to the correct state
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         action = new MushroomChooseColor(p1.getNickname(), studentColor);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -75,7 +73,7 @@ class MushroomChooseColorTest {
     void zeroActives() {
         game.setGameState(GameState.MUSHROOM_CHOOSE_COLOR);
         action = new MushroomChooseColor(p1.getNickname(), studentColor);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     // TODO FINISH THIS

@@ -18,7 +18,7 @@ public class RoundManager implements PropertyChangeListener {
     }
 
     public void performAction(Performable action) {
-        if (action.canPerformExt(gameInstance, gameManager.getRules())) {
+        if (action.canPerform(gameInstance, gameManager.getRules())) {
             action.performMove(gameInstance, gameManager.getRules());
 
             WinController.check(gameInstance);

@@ -61,27 +61,27 @@ public class PrincessMoveToEntryTest {
         // First we try to call the underlying Performable abstract
         String wrongNickname = "Marule";
         action = new PrincessMoveToEntry(wrongNickname, selectionColor);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Right name, wrong state
         action = new PrincessMoveToEntry(p1.getNickname(), selectionColor);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
 
         // Now we try to have no active card in the list while having a correct islandIndex
         action = new PrincessMoveToEntry(p1.getNickname(), selectionColor);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Now we're going to have some cards on the list, but not of the Princess type
         KnightCharacter tempCard = new KnightCharacter("");
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()), "there is no princessCharacter in Game");
+        assertFalse(action.canPerform(game, gameManager.getRules()), "there is no princessCharacter in Game");
         /**
          like Monk, to fix when getActiveCharacter will return not just 1 elem
          */
         cardList.remove(0);
         cardList.add(card);
         card.activate(gameManager.getRules(), game);
-        assertTrue(action.canPerformExt(game, gameManager.getRules()));
+        assertTrue(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test

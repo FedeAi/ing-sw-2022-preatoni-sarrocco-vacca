@@ -44,16 +44,16 @@ class DeactivateCardTest {
         // First we check the underlying Performable call
         String wrongNickname = "Franco";
         action = new DeactivateCard(wrongNickname);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Then we try to perform the action with no characterCards present
         action = new DeactivateCard(p1.getNickname());
         characterList = new LinkedList<>();
         game.initCharacterCards(characterList);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Now we retry but with actual cards present
         card.activate(gameManager.getRules(), game);
         characterList.add(card);
-        assertTrue(action.canPerformExt(game, gameManager.getRules()));
+        assertTrue(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test

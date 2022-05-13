@@ -45,15 +45,15 @@ class HeraldChooseIslandTest {
         // First we try to call the underlying Performable abstract
         String wrongNickname = "Achille";
         action = new HeraldChooseIsland(wrongNickname, islandIndex);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Now we try to perform the action with the wrong gameState set
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         action = new HeraldChooseIsland(p1.getNickname(), islandIndex);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // We activate the card, without adding it to the active cards
         card = new HeraldCharacter("");
         card.activate(gameManager.getRules(), game);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Then we try to reach the semi-impossible case of being in HERALD_ACTIVE state with the wrong card
         // after we remove the wrong card, we then add the right one
         card = new CentaurCharacter("");
@@ -61,7 +61,7 @@ class HeraldChooseIslandTest {
         cardList = new LinkedList<>();
         cardList.add(card);
         game.initCharacterCards(cardList);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         cardList.remove(0);
         card.deactivate(gameManager.getRules(), game);
         card = new HeraldCharacter("");
@@ -70,14 +70,14 @@ class HeraldChooseIslandTest {
         // We then try to check if the action can be performed with a wrong island index;
         islandIndex = 13;
         action = new HeraldChooseIsland(p1.getNickname(), islandIndex);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         islandIndex = -1;
         action = new HeraldChooseIsland(p1.getNickname(), islandIndex);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // After all of this, we now set everything to their correct values
         islandIndex = 1;
         action = new HeraldChooseIsland(p1.getNickname(), islandIndex);
-        assertTrue(action.canPerformExt(game, gameManager.getRules()));
+        assertTrue(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test

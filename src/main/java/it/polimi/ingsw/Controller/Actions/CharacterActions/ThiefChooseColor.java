@@ -23,9 +23,9 @@ public class ThiefChooseColor extends Performable {
     }
 
     @Override
-    public boolean canPerformExt(Game game, Rules rules) {
+    public void canPerform(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name, and that he is the roundOwner
-        if (!super.canPerformExt(game, rules)) {
+        if (!super.canPerform(game, rules)) {
             return false;
         }
 
@@ -63,7 +63,7 @@ public class ThiefChooseColor extends Performable {
     public void performMove(Game game, Rules rules) {
         // TODO TESTING
         // Redundant card presence check and general canPerform() check, then we execute the action
-        if (game.getActiveCharacter().isPresent() && canPerformExt(game, rules)) {
+        if (game.getActiveCharacter().isPresent() && canPerform(game, rules)) {
             List<Player> players = game.getPlayers();
             for (Player p : players) {
                 Map<Color, Integer> studentsHall = p.getSchool().getStudentsHall();

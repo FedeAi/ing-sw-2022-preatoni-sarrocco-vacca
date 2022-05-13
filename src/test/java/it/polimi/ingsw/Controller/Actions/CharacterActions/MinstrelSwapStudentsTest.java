@@ -66,15 +66,15 @@ class MinstrelSwapStudentsTest {
         // First we try to call the underlying Performable abstract
         String wrongNickname = "Scrofa";
         action = new MinstrelSwapStudents(wrongNickname, studentFromEntry, studentFromHall);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()), "wrongNickname");
+        assertFalse(action.canPerform(game, gameManager.getRules()), "wrongNickname");
 
         // Now we try to perform the action with the wrong gameState set (set before)
         action = new MinstrelSwapStudents(p1.getNickname(), studentFromEntry, studentFromHall);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()), " wrong gameState");
+        assertFalse(action.canPerform(game, gameManager.getRules()), " wrong gameState");
 
         // No cards present check
         card.activate(gameManager.getRules(), game);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
 
         // We now have a card present, but not the JOKER
         // It's important also to not have a card that changes the game state
@@ -82,7 +82,7 @@ class MinstrelSwapStudentsTest {
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         tempCard.deactivate(gameManager.getRules(), game);
         // Now we correctly pass the MINSTREL
         for (int i = 0; i < cardList.size(); i++) {
@@ -93,16 +93,16 @@ class MinstrelSwapStudentsTest {
         card.activate(gameManager.getRules(), game);
         action = new MinstrelSwapStudents(p1.getNickname(), studentFromEntry, studentFromHall);
 
-        assertTrue(action.canPerformExt(game, gameManager.getRules()));
+        assertTrue(action.canPerform(game, gameManager.getRules()));
 
         // player has not enough students in the hall
         p1.getSchool().getStudentsHall().put(studentFromHall, 0);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()), "not enough students in the hall");
+        assertFalse(action.canPerform(game, gameManager.getRules()), "not enough students in the hall");
 
         p1.getSchool().getStudentsHall().put(studentFromHall, 1);
         p1.getSchool().getStudentsEntry().put(studentFromEntry, 0);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()), "not enough students in the entry");
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()), "not enough students in the entry");
+        assertFalse(action.canPerform(game, gameManager.getRules()));
 
 
     }
@@ -117,7 +117,7 @@ class MinstrelSwapStudentsTest {
         cardList.add(card);
         game.initCharacterCards(cardList);
         action = new MinstrelSwapStudents(p1.getNickname(), studentFromEntry, studentFromHall);
-        assertTrue(action.canPerformExt(game, gameManager.getRules()));
+        assertTrue(action.canPerform(game, gameManager.getRules()));
 
 
         for (Color c : Color.values()) {

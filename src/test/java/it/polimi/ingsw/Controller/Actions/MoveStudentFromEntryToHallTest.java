@@ -42,18 +42,18 @@ class MoveStudentFromEntryToHallTest {
 
         // base case
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        assertTrue(moveStudentsToHallAction.canPerformExt(gameInstance, gameManager.getRules()));
+        assertTrue(moveStudentsToHallAction.canPerform(gameInstance, gameManager.getRules()));
 
         //wrong game phase
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
-        assertFalse(moveStudentsToHallAction.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(moveStudentsToHallAction.canPerform(gameInstance, gameManager.getRules()));
 
         // wrong player ( no player with that nickname )
         gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        assertFalse(moveStudentsToHallActionWrongPlayer.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(moveStudentsToHallActionWrongPlayer.canPerform(gameInstance, gameManager.getRules()));
         // wrong player is not your turn
         gameInstance.setRoundOwner(p1);
-        assertFalse(moveStudentsToHallAction.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(moveStudentsToHallAction.canPerform(gameInstance, gameManager.getRules()));
         gameInstance.setRoundOwner(p2);
 
 
@@ -62,11 +62,11 @@ class MoveStudentFromEntryToHallTest {
         for (int i = 0; i < Rules.getStudentsPerTurn(gameInstance.numPlayers()); i++) {
             Color pickedStudent = getStudentFromEntry(p2);
             action = new MoveStudentFromEntryToHall("Biella", pickedStudent);
-            assertTrue(action.canPerformExt(gameInstance, gameManager.getRules()));
+            assertTrue(action.canPerform(gameInstance, gameManager.getRules()));
 
             p2.getSchool().moveStudentFromEntryToHall(pickedStudent);
         }
-        assertFalse(action.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(action.canPerform(gameInstance, gameManager.getRules()));
     }
 
     @Test
@@ -75,7 +75,7 @@ class MoveStudentFromEntryToHallTest {
 
         Color student = getStudentFromEntry(p2); // get a student of the player Entry
         Performable moveStudentsToHallAction = new MoveStudentFromEntryToHall("Biella", student);
-        assertTrue(moveStudentsToHallAction.canPerformExt(gameInstance, gameManager.getRules()));
+        assertTrue(moveStudentsToHallAction.canPerform(gameInstance, gameManager.getRules()));
 
 
         // previous state
@@ -111,7 +111,7 @@ class MoveStudentFromEntryToHallTest {
         initGame();
         Color student = getStudentFromEntry(p2); // get a student of the player Entry
         Performable moveStudentsToHallAction = new MoveStudentFromEntryToHall(p2.getNickname(), student);
-        assertTrue(moveStudentsToHallAction.canPerformExt(gameInstance, gameManager.getRules()));
+        assertTrue(moveStudentsToHallAction.canPerform(gameInstance, gameManager.getRules()));
 
         moveStudentsToHallAction.performMove(gameInstance, gameManager.getRules());
 

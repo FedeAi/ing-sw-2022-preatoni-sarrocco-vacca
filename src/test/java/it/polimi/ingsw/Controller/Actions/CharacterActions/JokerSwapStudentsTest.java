@@ -67,29 +67,29 @@ class JokerSwapStudentsTest {
         // First we try to call the underlying Performable abstract
         String wrongNickname = "Suino";
         action = new JokerSwapStudents(wrongNickname, studentToPick, studentToPut);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Now we try to perform the action with the wrong gameState set (set before)
         action = new JokerSwapStudents(p1.getNickname(), studentToPick, studentToPut);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // No cards present check
         card.activate(gameManager.getRules(), game);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // We now have a card present, but not the JOKER
         // It's important also to not have a card that changes the game state
         CharacterCard tempCard = new KnightCharacter("");
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         tempCard.deactivate(gameManager.getRules(), game);
         // Now we correctly pass the JOKER
         card.activate(gameManager.getRules(), game);
         cardList.add(card);
-        assertTrue(action.canPerformExt(game, gameManager.getRules()));
+        assertTrue(action.canPerform(game, gameManager.getRules()));
         action.performMove(game, gameManager.getRules());
         action.performMove(game, gameManager.getRules());
         action.performMove(game, gameManager.getRules());
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Many branches in the underlying action are quite difficult to take
     }
 

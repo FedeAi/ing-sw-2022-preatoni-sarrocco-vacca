@@ -41,33 +41,33 @@ class ChooseCloudTest {
         Performable chooseCloud= new ChooseCloud(p2.getNickname(), choice);
 
         // base case
-        assertTrue(chooseCloud.canPerformExt(gameInstance, gameManager.getRules()), "base case");
+        assertTrue(chooseCloud.canPerform(gameInstance, gameManager.getRules()), "base case");
 
         //wrong game phase
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
-        assertFalse(chooseCloud.canPerformExt(gameInstance, gameManager.getRules()),"wrong game phase");
+        assertFalse(chooseCloud.canPerform(gameInstance, gameManager.getRules()),"wrong game phase");
 
         // wrong player ( no player with that nickname )
         Performable chooseCloudWrongNick = new ChooseCloud("Scaccia", choice);
         gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-        assertFalse(chooseCloudWrongNick.canPerformExt(gameInstance, gameManager.getRules()), "wrong player");
+        assertFalse(chooseCloudWrongNick.canPerform(gameInstance, gameManager.getRules()), "wrong player");
 
         // wrong player is not your turn
         gameInstance.setRoundOwner(p1);
-        assertFalse(chooseCloud.canPerformExt(gameInstance, gameManager.getRules()), "not round-owner");
+        assertFalse(chooseCloud.canPerform(gameInstance, gameManager.getRules()), "not round-owner");
         gameInstance.setRoundOwner(p2);
 
 
         // The choice doesn't exist
         Performable wrongChoiceAction = new ChooseCloud("Kyogre", 6);
         gameInstance.setGameState(GameState.ACTION_CHOOSE_CLOUD);
-        assertFalse(wrongChoiceAction.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(wrongChoiceAction.canPerform(gameInstance, gameManager.getRules()));
 
         // all Clouds are empty
 
         Performable action2 = new ChooseCloud("Kyogre", choice);
         gameInstance.pickCloud(choice);
-        assertFalse(action2.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(action2.canPerform(gameInstance, gameManager.getRules()));
 
     }
 
@@ -81,7 +81,7 @@ class ChooseCloudTest {
         int choice = random.nextInt(gameInstance.numPlayers());
 
         Performable chooseCloud = new ChooseCloud(p2.getNickname(), choice);
-        assertTrue(chooseCloud.canPerformExt(gameInstance, gameManager.getRules()));
+        assertTrue(chooseCloud.canPerform(gameInstance, gameManager.getRules()));
 
         // previous state
         int studentsPerTurn = Rules.getStudentsPerTurn(gameInstance.numPlayers());

@@ -33,8 +33,8 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
     }
 
     @Override
-    public boolean canPerformExt(Game game, Rules rules) {
-        if (!super.canPerformExt(game, rules)) {
+    public void canPerform(Game game, Rules rules) {
+        if (!super.canPerform(game, rules)) {
             return false;
         }
         if (islandIndex < 0 || islandIndex >= game.getIslandContainer().size()) {

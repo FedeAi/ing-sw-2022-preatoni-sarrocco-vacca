@@ -19,9 +19,9 @@ public class ActivateCard extends Performable {
     }
 
     @Override
-    public boolean canPerformExt(Game game, Rules rules) {
+    public void canPerform(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if (!super.canPerformExt(game, rules)) {
+        if (!super.canPerform(game, rules)) {
             return false;
         }
 

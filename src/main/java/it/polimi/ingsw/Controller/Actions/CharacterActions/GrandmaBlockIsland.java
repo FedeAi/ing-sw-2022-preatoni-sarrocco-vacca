@@ -20,9 +20,9 @@ public class GrandmaBlockIsland extends Performable {
     }
 
     @Override
-    public boolean canPerformExt(Game game, Rules rules) {
+    public void canPerform(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name, and that he is the roundOwner
-        if (!super.canPerformExt(game, rules)) {
+        if (!super.canPerform(game, rules)) {
             return false;
         }
 
@@ -73,7 +73,7 @@ public class GrandmaBlockIsland extends Performable {
     @Override
     public void performMove(Game game, Rules rules) {
         // Redundant card presence check and general canPerform() check, then we execute the action
-        if (game.getActiveCharacter().isPresent() && canPerformExt(game, rules)) {
+        if (game.getActiveCharacter().isPresent() && canPerform(game, rules)) {
             GrandmaCharacter grandma = (GrandmaCharacter) game.getActiveCharacter().get();
             grandma.moveBlockingCard();
             game.getIslandContainer().get(islandIndex).setBlocked(true);

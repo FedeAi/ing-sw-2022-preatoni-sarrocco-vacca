@@ -1,6 +1,10 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
+import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.GrandmaCharacter;
 import it.polimi.ingsw.Constants.GameState;
@@ -14,32 +18,27 @@ import java.util.Optional;
 public class MoveMotherNature extends Performable {
     private final int movement;
 
-    // is public correct?
     public MoveMotherNature(String player, int movement) {
         super(player);
         this.movement = movement;
     }
 
     @Override
-    public boolean canPerformExt(Game game, Rules rules) {
+    public void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if (!super.canPerformExt(game, rules)) {
-            return false;
-        }
+        super.canPerform(game, rules);
 
         Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER)) {
-            return false;
+            throw new WrongStateException(GameState.ACTION_MOVE_MOTHER);
         }
 
         // is action legal check
-
         int playerCardMaxMoves = rules.getDynamicRules().computeMotherMaxMoves(player.getPlayedCard());
         if (movement < 1 || movement > playerCardMaxMoves) {
-            return false;
+            throw new GameException("You can move mother nature from 1 to " + playerCardMaxMoves);
         }
-        return true;
     }
 
     @Override

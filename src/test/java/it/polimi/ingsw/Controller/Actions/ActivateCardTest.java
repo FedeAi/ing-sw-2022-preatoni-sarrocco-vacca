@@ -43,17 +43,17 @@ class ActivateCardTest {
         // First, we try to pass a wrong nickname
         String wrongNickname = "NomeSbagliato";
         activateCard = new ActivateCard(wrongNickname, choice);
-        assertFalse(activateCard.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(activateCard.canPerform(gameInstance, gameManager.getRules()));
 
         // checking if the player argument is the actual round owner
         // p3 is the actual round owner, while I try to pass p1
         activateCard = new ActivateCard(p1.getNickname(), choice);
-        assertFalse(activateCard.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(activateCard.canPerform(gameInstance, gameManager.getRules()));
 
         // checking if the game is set to the correct game state
         gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
         activateCard = new ActivateCard(p3.getNickname(), choice);
-        assertFalse(activateCard.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(activateCard.canPerform(gameInstance, gameManager.getRules()));
         gameInstance.setGameState(GameState.ACTION_MOVE_MOTHER);
 
         /*
@@ -65,17 +65,17 @@ class ActivateCardTest {
         // Simple test to check for the expert game mode
         gameInstance.setExpertMode(false);
         activateCard = new ActivateCard(p3.getNickname(), choice);
-        assertFalse(activateCard.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(activateCard.canPerform(gameInstance, gameManager.getRules()));
         gameInstance.setExpertMode(true);
 
         // Then, we see if we have a correct "choice" value
         choice = -1;
         activateCard = new ActivateCard(p3.getNickname(), choice);
-        assertFalse(activateCard.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(activateCard.canPerform(gameInstance, gameManager.getRules()));
 
         choice = 10;
         activateCard = new ActivateCard(p3.getNickname(), choice);
-        assertFalse(activateCard.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(activateCard.canPerform(gameInstance, gameManager.getRules()));
 
         // Check if the player is poor (no money left), then restore the balance
         // This is commented out because initCharacters() is needed.
@@ -83,7 +83,7 @@ class ActivateCardTest {
         choice = 1;
         p3.spendCoins(p3.getBalance());
         activateCard = new ActivateCard(p3.getNickname(), choice);
-        assertFalse(activateCard.canPerformExt(gameInstance, gameManager.getRules()));
+        assertFalse(activateCard.canPerform(gameInstance, gameManager.getRules()));
         p3.addCoin();
         p3.addCoin();
         p3.addCoin();
@@ -91,7 +91,7 @@ class ActivateCardTest {
         // Base case, initCharacters() needs to be implemented first
         choice = 1;
         activateCard = new ActivateCard(p3.getNickname(), choice);
-        assertTrue(activateCard.canPerformExt(gameInstance, gameManager.getRules()));
+        assertTrue(activateCard.canPerform(gameInstance, gameManager.getRules()));
     }
 
     @Test

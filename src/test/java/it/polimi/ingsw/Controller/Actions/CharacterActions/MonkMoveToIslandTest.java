@@ -62,28 +62,28 @@ class MonkMoveToIslandTest {
         // First we try to call the underlying Performable abstract
         String wrongNickname = "Suino";
         action = new MonkMoveToIsland(wrongNickname, selectionColor, islandIndex);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Right name, wrong state
         action = new MonkMoveToIsland(p1.getNickname(), selectionColor, islandIndex);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Right state, wrong islandIndex
         islandIndex = -1;
         card.activate(gameManager.getRules(), game);
         action = new MonkMoveToIsland(p1.getNickname(), selectionColor, islandIndex);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         islandIndex = 13;
         action = new MonkMoveToIsland(p1.getNickname(), selectionColor, islandIndex);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Now we try to have no active card in the list while having a correct islandIndex
         islandIndex = 1;
         action = new MonkMoveToIsland(p1.getNickname(), selectionColor, islandIndex);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // Now we're going to have some cards on the list, but not of the MONK type
         KnightCharacter tempCard = new KnightCharacter("");
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // We're now correctly adding an activated monk
         cardList.add(card);
         // FIXME IF I HAVE MORE THAN 1 CARD ACTIVE, THE CANPERFORM() FAILS
@@ -92,7 +92,7 @@ class MonkMoveToIslandTest {
 
         // Now we remove the other card
         cardList.remove(0);
-        assertTrue(action.canPerformExt(game, gameManager.getRules()));
+        assertTrue(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test

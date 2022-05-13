@@ -1,7 +1,6 @@
-package it.polimi.ingsw.Server;
+package it.polimi.ingsw.Server.Answer;
 
 import it.polimi.ingsw.Constants.ErrorType;
-import it.polimi.ingsw.Server.Answer.Answer;
 
 public class GameError implements Answer {
     private final ErrorType error;

@@ -60,7 +60,7 @@ class MoveMotherNatureTest {
         // checking if the nickname doesn't belong to the game
         // Nicolò isn't in the game
         moveMotherNature = new MoveMotherNature("Nicolò", movement);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -69,7 +69,7 @@ class MoveMotherNatureTest {
         // checking if the player argument is the actual round owner
         // p2 is the actual round owner, while I try to pass p1
         moveMotherNature = new MoveMotherNature(p1.getNickname(), movement);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -77,7 +77,7 @@ class MoveMotherNatureTest {
     void wrongStateTest() {
         // checks if the game is set to the correct game state
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -87,7 +87,7 @@ class MoveMotherNatureTest {
         final int cardValue = 1;
         card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -99,7 +99,7 @@ class MoveMotherNatureTest {
         card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
         moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -109,7 +109,7 @@ class MoveMotherNatureTest {
         final int newCardValue = 5;
         card = p3.getCards().stream().filter(c -> c.getValue() == newCardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-        assertTrue(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        assertTrue(moveMotherNature.canPerform(game, gameManager.getRules()));
     }
 
     /**

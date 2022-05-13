@@ -68,7 +68,7 @@ class GrandmaBlockIslandTest {
     void superTest() {
         String wrongNickname = "Beppe";
         action = new GrandmaBlockIsland(wrongNickname, selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -77,7 +77,7 @@ class GrandmaBlockIslandTest {
         // We aren't set to the correct state
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -87,11 +87,11 @@ class GrandmaBlockIslandTest {
         grandma.activate(gameManager.getRules(), game);
         selectedIsland = -1;
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
         // selectedIsland > islands.size() test
         selectedIsland = 12;
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -101,7 +101,7 @@ class GrandmaBlockIslandTest {
         grandma.activate(gameManager.getRules(), game);
         game.getIslandContainer().get(selectedIsland).setBlocked(true);
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -109,7 +109,7 @@ class GrandmaBlockIslandTest {
     void zeroActives() {
         game.setGameState(GameState.GRANDMA_BLOCK_ISLAND);
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -124,7 +124,7 @@ class GrandmaBlockIslandTest {
         game.initCharacterCards(cardList);
         game.setGameState(GameState.GRANDMA_BLOCK_ISLAND);
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -138,7 +138,7 @@ class GrandmaBlockIslandTest {
         game.initCharacterCards(cardList);
         game.setGameState(GameState.GRANDMA_BLOCK_ISLAND);
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -150,7 +150,7 @@ class GrandmaBlockIslandTest {
             grandma.moveBlockingCard();
         }
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertFalse(action.canPerform(game, gameManager.getRules()));
     }
 
     @Test
@@ -158,7 +158,7 @@ class GrandmaBlockIslandTest {
     void grandmaSelection() {
         grandma.activate(gameManager.getRules(), game);
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertTrue(action.canPerformExt(game, gameManager.getRules()));
+        assertTrue(action.canPerform(game, gameManager.getRules()));
         action.performMove(game, gameManager.getRules());
         assertTrue(game.getIslandContainer().get(selectedIsland).isBlocked());
     }

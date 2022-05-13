@@ -22,9 +22,9 @@ public class MinstrelSwapStudents extends Performable {
     }
 
     @Override
-    public boolean canPerformExt(Game game, Rules rules) {
+    public void canPerform(Game game, Rules rules) {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if (!super.canPerformExt(game, rules)) {
+        if (!super.canPerform(game, rules)) {
             return false;
         }
 
@@ -77,7 +77,7 @@ public class MinstrelSwapStudents extends Performable {
         Player player = player_opt.get();
 
         // to check instance of and make cast
-        if (canPerformExt(game, rules)) {
+        if (canPerform(game, rules)) {
 
             player.getSchool().swapStudents(studentFromEntry, studentFromHall);
             game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors

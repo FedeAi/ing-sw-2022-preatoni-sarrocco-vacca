@@ -1,6 +1,10 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
+import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
@@ -14,23 +18,25 @@ public abstract class Performable {
     }
 
     /**
-     * Can perform ext boolean.
-     * Check if the player can really make the move.
+     * CanPerform method checks if a player can perform a move.
      *
-     * @param game  of type GameExt: the game
-     * @param rules
-     * @return the boolean
+     * @param game - represents the game Model.
+     * @param rules - represents the current game rules.
+     * @throws InvalidPlayerException
+     * @throws RoundOwnerException
      */
-    public boolean canPerformExt(Game game, Rules rules) {
+    public void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return false;
+        // Checks if there is a player with the specified nickname in the game
+        if (player_opt.isEmpty()) {
+            throw new InvalidPlayerException();
+        }
         Player player = player_opt.get();
 
-        if (!game.getRoundOwner().equals(player)) {   // if the player is not the round owner
-            return false;
+        // Checks if the player is the round owner
+        if (!game.getRoundOwner().equals(player)) {
+            throw new RoundOwnerException(game.getRoundOwner().getNickname());
         }
-        return true;
     }
 
     /**
