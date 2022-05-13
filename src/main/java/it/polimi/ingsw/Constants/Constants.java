@@ -15,7 +15,7 @@ public class Constants {
     public static final int NUM_COINS = 20;
     public static final int INITIAL_PLAYER_BALANCE = 1;
 
-    public static int port;
+    public static int port = 8080;
     public static String address;
 
     public static final String ANSI_UNDERLINE = "\033[4m";
@@ -76,7 +76,7 @@ public class Constants {
         Constants.port = port;
     }
 
-    public int getPort() {
+    public static int getPort() {
         return port;
     }
 

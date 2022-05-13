@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Server.Answer;
 
-import it.polimi.ingsw.Constants.ErrorType;
-
 public class GameError implements Answer {
     private final ErrorType error;
     private final String message;

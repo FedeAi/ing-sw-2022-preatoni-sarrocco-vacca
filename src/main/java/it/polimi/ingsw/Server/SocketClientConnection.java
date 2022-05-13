@@ -9,13 +9,12 @@ import java.util.logging.Logger;
 
 import it.polimi.ingsw.Client.messages.*;
 import it.polimi.ingsw.Constants.Constants;
-import it.polimi.ingsw.Constants.ErrorType;
+import it.polimi.ingsw.Server.Answer.ErrorType;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Controller.Actions.CharacterActions.*;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
-import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import it.polimi.ingsw.Server.Answer.GameError;
 import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
@@ -229,21 +228,12 @@ public class SocketClientConnection implements ClientConnection, Runnable {
                         boolean expertMode = (((SetupMessage) command).expertMode);
                         server.setTotalPlayers(playerNumber);
                         server.getGameByID(clientID).setPlayersNumber(playerNumber);
-                        server
-                                .getClientByID(this.clientID)
-                                .send(
-                                        new CustomMessage("Success: player number " + "set to " + playerNumber));
+                        server.getClientByID(this.clientID).send(new CustomMessage("Success: player number " + "set to " + playerNumber));
                         break;
-                        // FIXME custom exception
+                    // FIXME custom exception
                     } catch (Exception e) {
-                        server
-                                .getClientByID(this.clientID)
-                                .send(
-                                        new CustomMessage(
-                                                "Error: not a valid " + "input! Please provide a value of 2 or 3."));
-                        server
-                                .getClientByID(this.clientID)
-                                .send(new ReqPlayersMessage("Choose the number" + " of players! [2/3]"));
+                        server.getClientByID(this.clientID).send(new CustomMessage("Error: not a valid " + "input! Please provide a value of 2 or 3."));
+                        server.getClientByID(this.clientID).send(new ReqPlayersMessage("Choose the number" + " of players! [2/3]"));
                     }
                 }
             } catch (ClassNotFoundException | IOException e) {

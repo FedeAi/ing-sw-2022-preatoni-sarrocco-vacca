@@ -52,6 +52,7 @@ public class Game {
         characterCards = new ArrayList<>();
         initProfessors();
         expertMode = false;
+
     }
 
     /**

@@ -7,6 +7,10 @@ import it.polimi.ingsw.Client.messages.SerializedMessage;
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
+import it.polimi.ingsw.Server.Answer.ConnectionMessage;
+import it.polimi.ingsw.Server.Answer.ErrorType;
+import it.polimi.ingsw.Server.Answer.GameError;
+import it.polimi.ingsw.Server.Answer.SerializedAnswer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,7 +24,7 @@ import java.util.logging.Logger;
 /**
  * ConnectionSocket class handles the connection between the client and the server.
  *
- * @author Federico Sarrocco
+ * @author Federico Sarrocco, Davide Preatoni
  */
 public class ConnectionSocket {
     private final Logger logger = Logger.getLogger(getClass().getName());
@@ -32,7 +36,7 @@ public class ConnectionSocket {
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
     public ConnectionSocket() {
         this.serverAddress = "localhost";//Constants.getAddress();
-        this.serverPort =   8080;//Constants.getPort();
+        this.serverPort = Constants.getPort();
     }
 
     /**
@@ -48,8 +52,7 @@ public class ConnectionSocket {
      * @throws DuplicateNicknameException when the nickname is already in use.
      * @throws InvalidNicknameException when the nickname contains illegal characters (like "-").
      */
-    public boolean setup(String nickname, ModelView modelView, ServerMessageHandler serverMessageHandler)
-            throws DuplicateNicknameException, InvalidNicknameException {
+    public boolean setup(String nickname, ModelView modelView, ServerMessageHandler serverMessageHandler) throws DuplicateNicknameException, InvalidNicknameException {
         try {
             System.out.println(
                     Constants.ANSI_YELLOW + "Configuring socket connection..." + Constants.ANSI_RESET);
@@ -68,7 +71,7 @@ public class ConnectionSocket {
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
             while (true) {
-                if (readInput(nickname, input)) {
+                if (readSetupInput(nickname, input)) {
                     break;
                 }
             }
@@ -93,18 +96,18 @@ public class ConnectionSocket {
      * @throws DuplicateNicknameException when the nickname has already been chosen.
      * @throws InvalidNicknameException when the nickname contains illegal characters (like "-").
      */
-    private boolean readInput(String nickname, ObjectInputStream input)
+    private boolean readSetupInput(String nickname, ObjectInputStream input)
             throws DuplicateNicknameException, InvalidNicknameException {
-        //try {
+        try {
             send(new LoginMessage(nickname));
-            //if (nicknameChecker(input.readObject())) {
+            if (nicknameChecker(input.readObject())) {
                 return true;
-            //}
-//        } catch (IOException | ClassNotFoundException e) {
-//            System.err.println(e.getMessage());
-//            return false;
-//        }
-//        return true;
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            return false;
+       }
+        return true;
     }
 
     /**
@@ -141,6 +144,34 @@ public class ConnectionSocket {
             System.err.println("Error during send process.");
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
+    }
+    /**
+     * Method send sends a new action to the server, encapsulating the object in a SerializedMessage
+     * type unpacked and read later by the server.
+     *
+     *
+     */
+
+    public boolean nicknameChecker(Object input) throws DuplicateNicknameException, InvalidNicknameException {
+
+        SerializedAnswer answer = (SerializedAnswer) input;
+        if (answer.getServerAnswer() instanceof ConnectionMessage && ((ConnectionMessage) answer.getServerAnswer()).isValid()) {
+            return true;
+        } else if (answer.getServerAnswer() instanceof GameError) {
+            if (((GameError) answer.getServerAnswer()).getError().equals(ErrorType.DUPLICATE_NICKNAME)) {
+                System.err.println("This nickname is already in use! Please choose one other.");
+                throw new DuplicateNicknameException();
+            }
+            if (((GameError) answer.getServerAnswer()).getError().equals(ErrorType.INVALID_NICKNAME)) {
+                System.err.println("Nickname can't contain - character");
+                throw new InvalidNicknameException();
+            } else if (((GameError) answer.getServerAnswer()).getError().equals(ErrorType.FULL_LOBBY)) {
+                System.err.println(
+                        "This match is already full, please try again later!\nApplication will now close...");
+                System.exit(0);
+            }
+        }
+        return false;
     }
 
 }

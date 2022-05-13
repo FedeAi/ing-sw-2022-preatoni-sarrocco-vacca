@@ -3,10 +3,7 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.cli.CLI;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Client.messages.turn.GameStartedMessage;
-import it.polimi.ingsw.Server.Answer.Answer;
-import it.polimi.ingsw.Server.Answer.ConnectionMessage;
-import it.polimi.ingsw.Server.Answer.ReqMagicianMessage;
-import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
+import it.polimi.ingsw.Server.Answer.*;
 import it.polimi.ingsw.Server.Answer.modelUpdate.*;
 
 import java.beans.PropertyChangeSupport;
@@ -20,6 +17,8 @@ import java.beans.PropertyChangeSupport;
 public class ServerMessageHandler {
 
   public static final String GAME_SETUP_LISTENER = "gameSetup";
+  public static final String GAME_ERROR_LISTER = "gameError";
+  public static final String CUSTOM_MESSAGE_LISTER = "customMessage";
 
   private final ModelView modelView;
   private final PropertyChangeSupport view = new PropertyChangeSupport(this);
@@ -65,6 +64,12 @@ public class ServerMessageHandler {
     else if(answer instanceof ModelMessage){
       handleGameMessage((ModelMessage) answer);
     }
+    else if(answer instanceof GameError){
+      view.firePropertyChange(GAME_ERROR_LISTER,null, answer);
+    }
+    else if(answer instanceof CustomMessage){
+      view.firePropertyChange(CUSTOM_MESSAGE_LISTER,null, answer);
+    }
 
   }
 
@@ -92,6 +97,9 @@ public class ServerMessageHandler {
     }
     else if(answer instanceof SchoolMessage message){
       modelView.setPlayerSchool(message.getPlayer(), message.getMessage());
+    }
+    else if(answer instanceof RoundOwnerMessage message){
+      modelView.setRoundOwner(message.getMessage());
     }
   }
 

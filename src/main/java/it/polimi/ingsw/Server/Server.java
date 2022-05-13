@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Constants.Constants;
-import it.polimi.ingsw.Constants.ErrorType;
+import it.polimi.ingsw.Server.Answer.ErrorType;
 import it.polimi.ingsw.Constants.Exceptions.OutOfBoundException;
 import it.polimi.ingsw.Server.Answer.*;
 
@@ -74,8 +74,8 @@ public class Server {
      * between VirtualClient, nicknames and client ids. It also creates a new game session.
      */
     public Server() {
-        //socketServer = new SocketServer(Constants.getPort(), this);
-        socketServer = new SocketServer(8080, this);
+
+        socketServer = new SocketServer(Constants.getPort(), this);
         idMapClient = new HashMap<>();
         nameMapId = new HashMap<>();
         clientToConnection = new HashMap<>();
@@ -180,6 +180,7 @@ public class Server {
             }
             currentGame.sendAll(new CustomMessage("The match has started!"));
             waiting.clear();
+            //FIXME why setup isn't called by client
             currentGame.setup();
         } else {
             currentGame.sendAll(
@@ -217,7 +218,7 @@ public class Server {
      * @return Integer - the client ID if everything goes fine, null otherwise.
      */
     public synchronized Integer registerConnection(
-            String nickname, SocketClientConnection socketClientHandler) {
+        String nickname, SocketClientConnection socketClientHandler) {
         Integer clientID = nameMapId.get(nickname);
 
         if (clientID == null) { // Player has never connected to the server before.

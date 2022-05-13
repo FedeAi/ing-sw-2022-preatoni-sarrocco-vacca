@@ -65,6 +65,7 @@ public class GameManager implements PropertyChangeListener {
         fillBag();
         initSchools();
         initClouds();
+        initRoundManager();
         if (isHard_temp) {
             game.setExpertMode(true);
             initCharacters();
@@ -72,6 +73,7 @@ public class GameManager implements PropertyChangeListener {
             game.initBalance(Constants.NUM_COINS);
             initPlayersBalance();
         }
+
     }
 
     private void initCharacters() {
@@ -106,6 +108,9 @@ public class GameManager implements PropertyChangeListener {
             School school = new School(Rules.getTowersPerPlayer(players.size()), towerColor, students);
             player.setSchool(school);
         }
+    }
+    private void initRoundManager(){
+        game.setPlayersActionPhase(game.getPlayers());
     }
 
     private void initIslands() {

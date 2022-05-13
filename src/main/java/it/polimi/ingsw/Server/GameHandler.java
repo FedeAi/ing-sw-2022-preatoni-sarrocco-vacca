@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
-import it.polimi.ingsw.Controller.GameManager;
+import it.polimi.ingsw.Controller.*;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  * @author Federico Sarrocco, Alessandro Vacca
  */
 public class GameHandler {
+
     private static final String PLAYER = "Player";
     private final Server server;
     private final GameManager controller;
@@ -91,15 +92,16 @@ public class GameHandler {
     }
 
     public void setup() {
-        if (started == 0) started = 1;
-        String nickname = game.getActivePlayers().get(playersNumber - game.getAvailableMagicians().size()).
-                getNickname();
+        if (started == 0){
+            started = 1;
+        }
+        String nickname = game.getActivePlayers().get(playersNumber - game.getAvailableMagicians().size()).getNickname();
         ReqMagicianMessage req = new ReqMagicianMessage("Please choose your magician", game.getAvailableMagicians());
 
         server.getClientByID(server.getIDByNickname(nickname)).send(req);
-        sendAllExcept(new CustomMessage("User " + nickname + " is choosing his magician!"),
-                server.getIDByNickname(nickname));
+        sendAllExcept(new CustomMessage("User " + nickname + " is choosing his magician!"), server.getIDByNickname(nickname));
     }
+
     public void performAction(Performable action) throws InvalidPlayerException, RoundOwnerException, GameException {
         controller.performAction(action);
     }

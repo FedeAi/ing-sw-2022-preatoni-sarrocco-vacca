@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  * @see Runnable
  */
 public class SocketServer implements Runnable {
+
     private final int port;
     private final ExecutorService executorService;
     private final Server server;
