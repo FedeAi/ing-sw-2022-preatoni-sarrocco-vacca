@@ -1,7 +1,11 @@
 package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Constants.Constants;
+import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.*;
 import it.polimi.ingsw.Constants.Color;
@@ -82,7 +86,6 @@ public class GameManager implements PropertyChangeListener {
         List<CharacterCard> extractedCharacters = characters.subList(0, 3);
         extractedCharacters.forEach(CharacterCard::init);
         game.initCharacterCards(characters.subList(0, 3));
-
     }
 
 
@@ -142,6 +145,10 @@ public class GameManager implements PropertyChangeListener {
         }
         game.initClouds(clouds);
 
+    }
+
+    public void performAction(Performable action) throws InvalidPlayerException, RoundOwnerException, GameException {
+        roundManager.performAction(action);
     }
 
     @Override

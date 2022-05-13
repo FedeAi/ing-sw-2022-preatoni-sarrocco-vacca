@@ -12,7 +12,6 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 public class PlayCard extends Performable {
 
@@ -30,7 +29,7 @@ public class PlayCard extends Performable {
         Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.PLANNING_CHOOSE_CARD)) {
-            throw new WrongStateException("planning phase");
+            throw new WrongStateException("planning phase.");
         }
         if (!player.hasCard(choice)) {
             throw new GameException("You must select a valid index. The specified index " + choice + " is not valid.");
@@ -39,7 +38,7 @@ public class PlayCard extends Performable {
         if (!game.getPlayedCards().stream().anyMatch(c -> c.getValue() == choice) || game.getPlayedCards().containsAll(player.getCards())) {
             return;
         } else {
-            throw new GameException("You cannot play a card that has already been played by an other player");
+            throw new GameException("You cannot play a card that has already been played by an other player.");
         }
     }
 

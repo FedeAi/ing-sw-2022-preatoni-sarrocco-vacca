@@ -2,14 +2,13 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Constants.Color;
-import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidIndexException;
 import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
-import java.util.Optional;
 
 public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
 
@@ -34,7 +33,7 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         super.canPerform(game, rules);
         if (islandIndex < 0 || islandIndex >= game.getIslandContainer().size()) {
-            throw new GameException("Invalid island index! You can only select islands from 0 to " + game.getIslandContainer().size());
+            throw new InvalidIndexException("island", 0, game.getIslandContainer().size() - 1, islandIndex);
         }
     }
 }

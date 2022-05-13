@@ -2,7 +2,6 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Constants.Color;
-import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
@@ -11,7 +10,7 @@ import it.polimi.ingsw.Model.Player;
 
 public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
 
-    MoveStudentFromEntryToHall(String player, Color color) {
+    public MoveStudentFromEntryToHall(String player, Color color) {
         super(player, color);
     }
 

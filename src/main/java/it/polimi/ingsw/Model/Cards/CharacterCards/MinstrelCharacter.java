@@ -22,7 +22,7 @@ public class MinstrelCharacter extends CharacterCard {
     public void activate(Rules rules, Game game) {
         super.activate(rules, game);
         previousState = game.getGameState();
-        game.setGameState(GameState.MINISTREL_SWAP_STUDENTS);
+        game.setGameState(GameState.MINSTREL_SWAP_STUDENTS);
         swappedStudents = 0;
     }
 

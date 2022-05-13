@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Exceptions.GameException;
-import it.polimi.ingsw.Exceptions.InvalidPlayerException;
-import it.polimi.ingsw.Exceptions.RoundOwnerException;
-import it.polimi.ingsw.Exceptions.WrongStateException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.GrandmaCharacter;
 import it.polimi.ingsw.Constants.GameState;
@@ -31,13 +28,13 @@ public class MoveMotherNature extends Performable {
         Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER)) {
-            throw new WrongStateException("action phase, when you move mother nature");
+            throw new WrongStateException("action phase, when you move mother nature.");
         }
 
         // is action legal check
         int playerCardMaxMoves = rules.getDynamicRules().computeMotherMaxMoves(player.getPlayedCard());
         if (movement < 1 || movement > playerCardMaxMoves) {
-            throw new GameException("You can move mother nature from 1 to " + playerCardMaxMoves);
+            throw new InvalidIndexException("mother nature movement", 1, playerCardMaxMoves, movement);
         }
     }
 

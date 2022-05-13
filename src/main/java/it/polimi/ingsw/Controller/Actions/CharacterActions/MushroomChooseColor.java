@@ -2,6 +2,10 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
+import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.MushroomCharacter;
 import it.polimi.ingsw.Constants.Color;
@@ -20,40 +24,33 @@ public class MushroomChooseColor extends Performable {
     }
 
     @Override
-    protected void canPerform(Game game, Rules rules) {
+    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if (!super.canPerform(game, rules)) {
-            return false;
-        }
-
-        Player player = getPlayer(game);
+        super.canPerform(game, rules);
 
         if (!game.getGameState().equals(GameState.MUSHROOM_CHOOSE_COLOR)) {
-            return false;
+            throw new WrongStateException("state you access by activating the mushroom card.");
         }
 
         // there is no an active card
         Optional<CharacterCard> card = game.getActiveCharacter();
-        if (card.isEmpty())
-            return false;
+        if (card.isEmpty()) {
+            throw new GameException("There isn't any active card present.");
+        }
 
         // the active card is not the right one
         if (!(card.get() instanceof MushroomCharacter)) {
-            return false;
+            throw new GameException("The card that has been activated in this turn is not of the mushroom type.");
         }
 
         if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof MushroomCharacter)) {
-            return false;
+            throw new GameException("There isn't any character card of the type mushroom on the table.");
         }
-
-        return true;
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return;
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
         Optional<CharacterCard> mushRoomCard = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof MushroomCharacter).findFirst();
         mushRoomCard.ifPresent(characterCard -> ((MushroomCharacter) characterCard).setStudent(this.student));
     }

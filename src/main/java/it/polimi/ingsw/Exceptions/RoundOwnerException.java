@@ -9,6 +9,6 @@ public class RoundOwnerException extends Exception {
 
     @Override
     public String getMessage() {
-        return "It's not your turn! The current player is " + currentOwner;
+        return "It's not your turn! The current player is " + currentOwner + ".";
     }
 }

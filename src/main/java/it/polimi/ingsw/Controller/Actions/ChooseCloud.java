@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Exceptions.GameException;
-import it.polimi.ingsw.Exceptions.InvalidPlayerException;
-import it.polimi.ingsw.Exceptions.RoundOwnerException;
-import it.polimi.ingsw.Exceptions.WrongStateException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -16,7 +13,7 @@ import java.util.Optional;
 public class ChooseCloud extends Performable {
     private final int choice;
 
-    ChooseCloud(String player, int choice) {
+    public ChooseCloud(String player, int choice) {
         super(player);
         this.choice = choice;
     }
@@ -27,14 +24,14 @@ public class ChooseCloud extends Performable {
         super.canPerform(game, rules);
 
         if (!game.getGameState().equals(GameState.ACTION_CHOOSE_CLOUD)) {
-            throw new WrongStateException("final step of the action phase");
+            throw new WrongStateException("final step of the action phase.");
         }
         // A cloud for every player
         int numCloud = game.numPlayers();
         List<Cloud> clouds = game.getClouds();
 
-        if (choice >= numCloud || choice < 0 || clouds.get(choice).isEmpty()) { //right choice
-            throw new GameException("Invalid cloud index selected: you can only select indexes from 0 to " + (numCloud - 1));
+        if (choice >= numCloud || choice < 0 || clouds.get(choice).isEmpty()) {
+            throw new InvalidIndexException("cloud", 0, numCloud - 1, choice);
         }
     }
 
@@ -62,7 +59,7 @@ public class ChooseCloud extends Performable {
     }
 
     @Override
-    public GameState nextState(Game game, Rules rules){
+    public GameState nextState(Game game, Rules rules) {
         Optional<String> nextActionPlayer = game.getNextPlayerActionPhase();
         if (nextActionPlayer.isEmpty()) { //if end Turn
             return GameState.PLANNING_CHOOSE_CARD;
@@ -72,7 +69,7 @@ public class ChooseCloud extends Performable {
     }
 
     @Override
-    public Player nextPlayer(Game game, Rules rules){
+    public Player nextPlayer(Game game, Rules rules) {
         Optional<String> nextActionPlayer = game.getNextPlayerActionPhase();
         Player nextPlayer;
 

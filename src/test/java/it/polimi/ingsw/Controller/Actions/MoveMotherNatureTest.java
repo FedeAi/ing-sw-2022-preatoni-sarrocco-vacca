@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.GameManager;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
@@ -60,7 +61,9 @@ class MoveMotherNatureTest {
         // checking if the nickname doesn't belong to the game
         // Nicolò isn't in the game
         moveMotherNature = new MoveMotherNature("Nicolò", movement);
-        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
+        assertThrows(InvalidPlayerException.class, () -> {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -69,7 +72,9 @@ class MoveMotherNatureTest {
         // checking if the player argument is the actual round owner
         // p2 is the actual round owner, while I try to pass p1
         moveMotherNature = new MoveMotherNature(p1.getNickname(), movement);
-        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
+        assertThrows(RoundOwnerException.class, () -> {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -77,7 +82,9 @@ class MoveMotherNatureTest {
     void wrongStateTest() {
         // checks if the game is set to the correct game state
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
+        assertThrows(WrongStateException.class, () -> {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -87,7 +94,9 @@ class MoveMotherNatureTest {
         final int cardValue = 1;
         card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
+        assertThrows(GameException.class, () -> {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -99,7 +108,9 @@ class MoveMotherNatureTest {
         card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
         moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
-        assertFalse(moveMotherNature.canPerform(game, gameManager.getRules()));
+        assertThrows(InvalidIndexException.class, () -> {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -109,7 +120,9 @@ class MoveMotherNatureTest {
         final int newCardValue = 5;
         card = p3.getCards().stream().filter(c -> c.getValue() == newCardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-        assertTrue(moveMotherNature.canPerform(game, gameManager.getRules()));
+        assertDoesNotThrow(() -> {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        });
     }
 
     /**
@@ -121,7 +134,7 @@ class MoveMotherNatureTest {
     void singleIslandConquer() {
         // Simple action test
         EnumMap<Color, String> profs = new EnumMap<Color, String>(Color.class);
-        profs.put(profColor,game.getRoundOwner().getNickname());
+        profs.put(profColor, game.getRoundOwner().getNickname());
         game.setProfessors(profs);
         // Now Fede controls the BLUE professor
         // Next we will be adding some students to the island we're going to go to
@@ -135,8 +148,11 @@ class MoveMotherNatureTest {
         p3.setAndRemovePlayedCard(card);
 
         moveMotherNature = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
-
+        try {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        } catch(Exception e) {
+            fail(e.getMessage());
+        }
         // Checking if motherNature has in fact moved
         assertEquals(nextPosition, game.getMotherNature().getPosition());
         // Now, we check if Fede now controls the island
@@ -169,7 +185,11 @@ class MoveMotherNatureTest {
         p3.setAndRemovePlayedCard(card);
         // Now we move MN
         moveMotherNature = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
+        try {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        } catch(Exception e) {
+            fail(e.getMessage());
+        }
         // Checking if motherNature has in fact moved
         assertEquals(nextPosition, game.getMotherNature().getPosition());
         // Now, we check if Fede now controls the island
@@ -189,7 +209,11 @@ class MoveMotherNatureTest {
         int next = game.getIslandContainer().correctIndex(2, game.getMotherNature().getPosition());
         game.getIslandContainer().get(next).setOwner(p3.getNickname());
         moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
+        try {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        } catch(Exception e) {
+            fail(e.getMessage());
+        }
         // FIXME THIS SOMETIMES FAILS? MAYBE RELATED TO THE -1 CASE? (MAYBE NOT)
         assertTrue(game.getIslandContainer().get(game.getMotherNature().getPosition()) instanceof SuperIsland);
         assertEquals(game.getIslandContainer().size(), oldIslands - 1);
@@ -218,7 +242,11 @@ class MoveMotherNatureTest {
         p3.setAndRemovePlayedCard(card);
         // Now we move MN
         moveMotherNature = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
+        try {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        } catch(Exception e) {
+            fail(e.getMessage());
+        }
         // Checking if motherNature has in fact moved
         assertEquals(nextPosition, game.getMotherNature().getPosition());
         // Now, we check if Fede now controls the island
@@ -236,7 +264,11 @@ class MoveMotherNatureTest {
         }
         int oldIslands = game.getIslandContainer().size();
         moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
+        try {
+            moveMotherNature.performMove(game, gameManager.getRules());
+        } catch(Exception e) {
+            fail(e.getMessage());
+        }
         assertTrue(game.getIslandContainer().get(game.getMotherNature().getPosition()) instanceof SuperIsland);
         assertEquals(game.getIslandContainer().size(), oldIslands - 1);
     }

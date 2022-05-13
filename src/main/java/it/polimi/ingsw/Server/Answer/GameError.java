@@ -6,6 +6,11 @@ public class GameError implements Answer {
     private final ErrorType error;
     private final String message;
 
+    public GameError(String message) {
+        this.message = message;
+        error = null;
+    }
+
     public GameError(ErrorType error) {
         this.error = error;
         this.message = null;

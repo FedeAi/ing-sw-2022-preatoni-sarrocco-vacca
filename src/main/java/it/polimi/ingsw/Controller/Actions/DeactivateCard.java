@@ -13,7 +13,7 @@ import it.polimi.ingsw.Model.Player;
  */
 public class DeactivateCard extends Performable {
 
-    DeactivateCard(String player) {
+    public DeactivateCard(String player) {
         super(player);
     }
 
@@ -22,7 +22,7 @@ public class DeactivateCard extends Performable {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
         super.canPerform(game, rules);
         if (!game.getActiveCharacter().isPresent()){
-            throw new GameException("You must have activated a card in order to use this action");
+            throw new GameException("You must have activated a card in order to use this action.");
         }
     }
 

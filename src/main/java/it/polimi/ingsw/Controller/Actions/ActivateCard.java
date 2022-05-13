@@ -2,10 +2,7 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Exceptions.GameException;
-import it.polimi.ingsw.Exceptions.InvalidPlayerException;
-import it.polimi.ingsw.Exceptions.RoundOwnerException;
-import it.polimi.ingsw.Exceptions.WrongStateException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -39,16 +36,16 @@ public class ActivateCard extends Performable {
         }
 
         if (choice < 0 || choice >= Constants.NUM_CHARACTER_CARDS) {
-            throw new GameException("The selected character card is invalid (index from 0 to 2)");
+            throw new InvalidIndexException("character card", 0, Constants.NUM_CHARACTER_CARDS - 1, choice);
         }
 
         CharacterCard chosenCard = game.getCharacterCards().get(choice);
         // Verify that the player has enough money
         if (player.getBalance() < chosenCard.getPrice()) {
-            throw new GameException("You don't have enough money! The selected card costs " + chosenCard.getPrice());
+            throw new GameException("You don't have enough money! The selected card costs " + chosenCard.getPrice() + ".");
         }
         if (chosenCard.isActive()) {
-            throw new GameException("The selected card is already active");
+            throw new GameException("The selected card is already active.");
         }
     }
 

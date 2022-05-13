@@ -9,7 +9,15 @@ import java.util.logging.Logger;
 
 import it.polimi.ingsw.Client.messages.*;
 import it.polimi.ingsw.Constants.Constants;
+import it.polimi.ingsw.Constants.ErrorType;
+import it.polimi.ingsw.Controller.Actions.*;
+import it.polimi.ingsw.Controller.Actions.CharacterActions.*;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
+import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
+import it.polimi.ingsw.Server.Answer.GameError;
 import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
 import it.polimi.ingsw.Server.Answer.SerializedAnswer;
 
@@ -89,7 +97,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * Method readFromStream reads a serializable object from the input stream, using
      * ObjectInputStream library.
      *
-     * @throws IOException when the client is not online anymore.
+     * @throws IOException            when the client is not online anymore.
      * @throws ClassNotFoundException when the serializable object is not part of any class.
      */
     public synchronized void readFromStream() throws IOException, ClassNotFoundException {    // TODO
@@ -133,7 +141,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * another one relying on the implementation type of the message received.
      *
      * @param command of type Message - the Message interface type command, which needs to be checked
-     *     in order to perform an action.
+     *                in order to perform an action.
      */
     public void actionHandler(Message command) {
         System.out.println("Debug: MESSAGE RECEIVED: " + command.getClass().getName());
@@ -143,12 +151,42 @@ public class SocketClientConnection implements ClientConnection, Runnable {
     }
 
     public void actionHandler(Action action) {
-        System.out.println("Debug: ACTION RECEIVED: " + action.action.name());
+        System.out.println("Debug: ACTION RECEIVED: " + action.actionType.name());
+        Performable move;
         /*if (command instanceof LoginMessage) {
             setupConnection((LoginMessage) command);
         }*/
+        String nickname = server.getNicknameByID(clientID);
+        switch (action.actionType) {
+            case PLAY_CARD -> move = new PlayCard(nickname, action.int0);
+            case MOVE_MOTHER_NATURE -> move = new MoveMotherNature(nickname, action.int0);
+            case MOVE_STUDENT_ISLAND -> move = new MoveStudentFromEntryToIsland(nickname, action.color0, action.int0);
+            case MOVE_STUDENT_HALL -> move = new MoveStudentFromEntryToHall(nickname, action.color0);
+            case CHOOSE_CLOUD -> move = new ChooseCloud(nickname, action.int0);
+            case ACTIVATE_CARD -> move = new ActivateCard(nickname, action.int0);
+            case DEACTIVATE_CARD -> move = new DeactivateCard(nickname);
+            case GRANDMA_BLOCK -> move = new GrandmaBlockIsland(nickname, action.int0);
+            case HERALD_CHOOSE -> move = new HeraldChooseIsland(nickname, action.int0);
+            case JOKER_SWAP -> move = new JokerSwapStudents(nickname, action.color0, action.color1);
+            case MINSTREL_SWAP -> move = new MinstrelSwapStudents(nickname, action.color0, action.color1);
+            case MONK_MOVE -> move = new MonkMoveToIsland(nickname, action.color0, action.int0);
+            case MUSHROOM_CHOOSE -> move = new MushroomChooseColor(nickname, action.color0);
+            case PRINCESS_MOVE -> move = new PrincessMoveToEntry(nickname, action.color0);
+            case THIEF_CHOOSE -> move = new ThiefChooseColor(nickname, action.color0);
+            // TODO CHECK THIS
+            default -> {
+                server.getClientByID(clientID).send(new GameError(ErrorType.INVALID_MOVE, "Specified move is badly formatted."));
+                return;
+            }
+        }
+        try {
+            server.getGameByID(clientID).performAction(move);
+        } catch (GameException | InvalidPlayerException | RoundOwnerException e) {
+            // FIXME game error or custom message?
+            server.getClientByID(clientID).send(new GameError(e.getMessage()));
+        }
     }
-    
+
     /**
      * Method setupConnection checks the validity of the connection message received from the client.
      *
@@ -175,7 +213,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * parameter to the server function "setTotalPlayers".
      *
      * @param message of type RequestPlayersNumber - the action received from the user. This method
-     *     iterates on it until it finds a NumberOfPlayers type.
+     *                iterates on it until it finds a NumberOfPlayers type.
      */
     public void setup(ReqPlayersMessage message) {
         SerializedAnswer ans = new SerializedAnswer();
