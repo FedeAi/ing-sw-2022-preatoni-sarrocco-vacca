@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Constants.Constants;
+import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.*;
 import it.polimi.ingsw.Exceptions.GameException;
@@ -95,7 +97,7 @@ public class GameHandler {
         if (started == 0){
             started = 1;
         }
-        String nickname = game.getActivePlayers().get(playersNumber - game.getAvailableMagicians().size()).getNickname();
+        String nickname = game.getActivePlayers().get(Magician.values().length - game.getAvailableMagicians().size()).getNickname();
         ReqMagicianMessage req = new ReqMagicianMessage("Please choose your magician", game.getAvailableMagicians());
 
         server.getClientByID(server.getIDByNickname(nickname)).send(req);

@@ -46,7 +46,7 @@ public class Game {
         this.bag = new Bag(Constants.INITIAL_BAG_SIZE);
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
-        magicians = new ArrayList<>();
+        magicians = new ArrayList<>(Arrays.stream(Magician.values()).toList());
         islandContainer = new IslandContainer();
         clouds = new ArrayList<>();
         characterCards = new ArrayList<>();
