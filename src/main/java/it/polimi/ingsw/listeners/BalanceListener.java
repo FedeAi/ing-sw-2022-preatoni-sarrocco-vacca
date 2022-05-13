@@ -1,6 +1,6 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Server.Answer.game.BalanceMessage;
+import it.polimi.ingsw.Server.Answer.modelUpdate.BalanceMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;

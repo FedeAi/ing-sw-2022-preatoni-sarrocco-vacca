@@ -1,20 +1,14 @@
-package it.polimi.ingsw.Server.Answer.game;
+package it.polimi.ingsw.Server.Answer.modelUpdate;
 
-import it.polimi.ingsw.Constants.Pair;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Server.Answer.Answer;
-
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * PlayedCardMessage class is an Answer used for sending infos about the cards that have been played to the client.
+ * PlayedCardMessage class is a ModelMessage used for sending infos about the cards that have been played to the client.
  *
  * @author Federico Sarrocco, Alessandro Vacca
- * @see Answer
+ * @see ModelMessage
  */
-public class PlayedCardMessage implements Answer {
+public class PlayedCardMessage implements ModelMessage {
     private final AssistantCard message;
     private final String player;
 
@@ -33,7 +27,7 @@ public class PlayedCardMessage implements Answer {
      * Method getMessage returns the message of this Answer object.
      *
      * @return the message (type Object) of this Answer object.
-     * @see Answer#getMessage()
+     * @see ModelMessage#getMessage()
      */
     @Override
     public AssistantCard getMessage() {

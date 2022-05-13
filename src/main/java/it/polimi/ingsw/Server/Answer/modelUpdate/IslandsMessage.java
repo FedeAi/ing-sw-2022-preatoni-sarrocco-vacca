@@ -1,16 +1,14 @@
-package it.polimi.ingsw.Server.Answer.game;
+package it.polimi.ingsw.Server.Answer.modelUpdate;
 
-import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
-import it.polimi.ingsw.Server.Answer.Answer;
 
 /**
- * IslandMessage class is an Answer used for ........
+ * IslandMessage class is a ModelMessage used for ........
  *
  * @author GC30
- * @see Answer
+ * @see ModelMessage
  */
-public class IslandsMessage implements Answer {
+public class IslandsMessage implements ModelMessage {
     private final IslandContainer message;
 
     /**
@@ -26,7 +24,7 @@ public class IslandsMessage implements Answer {
      * Method getMessage returns the message of this Answer object.
      *
      * @return the message (type Object) of this Answer object.
-     * @see Answer#getMessage()
+     * @see ModelMessage#getMessage()
      */
     @Override
     public IslandContainer getMessage() {

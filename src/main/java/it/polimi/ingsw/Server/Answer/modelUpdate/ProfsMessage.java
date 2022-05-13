@@ -1,17 +1,16 @@
-package it.polimi.ingsw.Server.Answer.game;
+package it.polimi.ingsw.Server.Answer.modelUpdate;
 
 import it.polimi.ingsw.Constants.Color;
-import it.polimi.ingsw.Server.Answer.Answer;
 
 import java.util.EnumMap;
 
 /**
- * MoveMessage class is an Answer used for sending infos about a move action to the client.
+ * MoveMessage class is a ModelMessage used for sending infos about a move action to the client.
  *
  * @author Alessandro Vacca
- * @see Answer
+ * @see ModelMessage
  */
-public class ProfsMessage implements Answer {
+public class ProfsMessage implements ModelMessage {
   private final EnumMap<Color, String> message;
 
   /**
@@ -27,7 +26,7 @@ public class ProfsMessage implements Answer {
    * Method getMessage returns the message of this Answer object.
    *
    * @return the message (type Object) of this Answer object.
-   * @see Answer#getMessage()
+   * @see ModelMessage#getMessage()
    */
   @Override
   public EnumMap<Color, String> getMessage() {

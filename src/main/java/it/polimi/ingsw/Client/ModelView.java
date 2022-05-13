@@ -33,6 +33,7 @@ public class ModelView {
     private List<Cloud> clouds;
     private List<CharacterCard> characterCards;
     private Map<String, AssistantCard> playedCards;
+    private int motherNature;
 
     private boolean isInputActive = true; // TODO FIXME this must be set not true forever
 
@@ -159,6 +160,13 @@ public class ModelView {
         this.playedCards.put(player, playedCard);
     }
 
+    public void setMotherNature(int position){
+        motherNature = position;
+    }
+
+    public int getMotherNature(){
+        return motherNature;
+    }
     public boolean isInputActive() {
         return isInputActive;
     }

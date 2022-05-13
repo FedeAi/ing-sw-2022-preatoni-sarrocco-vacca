@@ -1,6 +1,6 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Server.Answer.game.MoveMotherMessage;
+import it.polimi.ingsw.Server.Answer.modelUpdate.MoveMotherMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;

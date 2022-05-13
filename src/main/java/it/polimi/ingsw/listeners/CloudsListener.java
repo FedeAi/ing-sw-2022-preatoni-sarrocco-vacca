@@ -1,7 +1,7 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Model.Cloud;
-import it.polimi.ingsw.Server.Answer.game.CloudsMessage;
+import it.polimi.ingsw.Server.Answer.modelUpdate.CloudsMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;

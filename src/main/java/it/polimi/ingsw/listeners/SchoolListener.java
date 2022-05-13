@@ -1,8 +1,7 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Constants.Pair;
 import it.polimi.ingsw.Model.School;
-import it.polimi.ingsw.Server.Answer.game.SchoolMessage;
+import it.polimi.ingsw.Server.Answer.modelUpdate.SchoolMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;

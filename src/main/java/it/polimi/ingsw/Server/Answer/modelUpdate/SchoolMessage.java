@@ -1,16 +1,14 @@
-package it.polimi.ingsw.Server.Answer.game;
+package it.polimi.ingsw.Server.Answer.modelUpdate;
 
-import it.polimi.ingsw.Constants.Pair;
 import it.polimi.ingsw.Model.School;
-import it.polimi.ingsw.Server.Answer.Answer;
 
 /**
- * MoveMessage class is an Answer used for sending infos about a move action to the client.
+ * MoveMessage class is a ModelMessage used for sending infos about a move action to the client.
  *
  * @author Alessandro Vacca
- * @see Answer
+ * @see ModelMessage
  */
-public class SchoolMessage implements Answer {
+public class SchoolMessage implements ModelMessage {
   private final School message;
   private final String player;
   /**
@@ -27,7 +25,7 @@ public class SchoolMessage implements Answer {
    * Method getMessage returns the message of this Answer object.
    *
    * @return the message (type Object) of this Answer object.
-   * @see Answer#getMessage()
+   * @see ModelMessage#getMessage()
    */
   @Override
   public School getMessage() {

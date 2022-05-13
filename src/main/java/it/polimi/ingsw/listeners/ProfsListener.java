@@ -1,7 +1,7 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Constants.Color;
-import it.polimi.ingsw.Server.Answer.game.ProfsMessage;
+import it.polimi.ingsw.Server.Answer.modelUpdate.ProfsMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;

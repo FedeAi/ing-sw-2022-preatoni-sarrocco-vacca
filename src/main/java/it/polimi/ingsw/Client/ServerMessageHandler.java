@@ -7,6 +7,7 @@ import it.polimi.ingsw.Server.Answer.Answer;
 import it.polimi.ingsw.Server.Answer.ConnectionMessage;
 import it.polimi.ingsw.Server.Answer.ReqMagicianMessage;
 import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
+import it.polimi.ingsw.Server.Answer.modelUpdate.*;
 
 import java.beans.PropertyChangeSupport;
 
@@ -59,7 +60,38 @@ public class ServerMessageHandler {
     Answer answer = modelView.getServerAnswer();
     if (answer instanceof ConnectionMessage) {
       ConnectionMessage connectionMessage = (ConnectionMessage) answer;
-      System.out.println(connectionMessage.getMessage());
+      System.out.println(connectionMessage.getMessage()); // TODO
+    }
+    else if(answer instanceof ModelMessage){
+      handleGameMessage((ModelMessage) answer);
+    }
+
+  }
+
+  void handleGameMessage(ModelMessage answer){
+    if(answer instanceof BalanceMessage){
+      modelView.setBalance(((BalanceMessage) answer).getMessage());
+    }
+    else if(answer instanceof CloudsMessage){
+      modelView.setClouds(((CloudsMessage)answer).getMessage());
+    }
+    else if(answer instanceof HandMessage){
+      modelView.setHand(((HandMessage)answer).getMessage());
+    }
+    else if(answer instanceof IslandsMessage){
+      modelView.setIslandContainer(((IslandsMessage)answer).getMessage());
+    }
+    else if(answer instanceof MoveMotherMessage){
+      modelView.setMotherNature(((MoveMotherMessage)answer).getMessage());
+    }
+    else if(answer instanceof PlayedCardMessage message){
+      modelView.setPlayedCards(message.getPlayer(), message.getMessage());
+    }
+    else if(answer instanceof ProfsMessage){
+      modelView.setProfessors(((ProfsMessage)answer).getMessage());
+    }
+    else if(answer instanceof SchoolMessage message){
+      modelView.setPlayerSchool(message.getPlayer(), message.getMessage());
     }
   }
 

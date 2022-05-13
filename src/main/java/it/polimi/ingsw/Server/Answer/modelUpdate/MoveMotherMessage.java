@@ -1,14 +1,12 @@
-package it.polimi.ingsw.Server.Answer.game;
-
-import it.polimi.ingsw.Server.Answer.Answer;
+package it.polimi.ingsw.Server.Answer.modelUpdate;
 
 /**
- * MoveMessage class is an Answer used for sending infos about a move action to the client.
+ * MoveMessage class is a ModelMessage used for sending infos about a move action to the client.
  *
  * @author GC30
- * @see Answer
+ * @see ModelMessage
  */
-public class MoveMotherMessage implements Answer {
+public class MoveMotherMessage implements ModelMessage {
   private final int island;
 
   /**
@@ -24,7 +22,7 @@ public class MoveMotherMessage implements Answer {
    * Method getMessage returns the message of this Answer object.
    *
    * @return the message (type Object) of this Answer object.
-   * @see Answer#getMessage()
+   * @see ModelMessage#getMessage()
    */
   @Override
   public Integer getMessage() {

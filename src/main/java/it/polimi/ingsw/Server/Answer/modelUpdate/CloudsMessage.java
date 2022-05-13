@@ -1,36 +1,35 @@
-package it.polimi.ingsw.Server.Answer.game;
+package it.polimi.ingsw.Server.Answer.modelUpdate;
 
 import it.polimi.ingsw.Model.Cloud;
-import it.polimi.ingsw.Server.Answer.Answer;
 
 import java.util.List;
 
 /**
- * MoveMessage class is an Answer used for sending infos about a move action to the client.
+ * MoveMessage class is a ModelMessage used for sending infos about a move action to the client.
  *
  * @author Alessandro Vacca
- * @see Answer
+ * @see ModelMessage
  */
-public class BalanceMessage implements Answer {
-  private final int message;
+public class CloudsMessage implements ModelMessage {
+  private final List<Cloud> message;
 
   /**
    * Constructor MoveMessage creates a new MoveMessage instance.
    *
    * @param clouds .................
    */
-  public BalanceMessage(int balance) {
-    this.message = balance;
+  public CloudsMessage(List<Cloud> clouds) {
+    this.message = clouds;
   }
 
   /**
    * Method getMessage returns the message of this Answer object.
    *
    * @return the message (type Object) of this Answer object.
-   * @see Answer#getMessage()
+   * @see ModelMessage#getMessage()
    */
   @Override
-  public Integer getMessage() {
+  public List<Cloud> getMessage() {
     return message;
   }
 }
