@@ -55,9 +55,10 @@ public class InputToMessage implements PropertyChangeListener {
 
         try {
             switch (command.toUpperCase()) {
-                case "LIST" -> {
-
-                }
+//                case "LIST" -> {
+//
+//                }
+                case "MAGICIAN" -> actionToSend = messageBuilder.chooseMagician(in);
                 case "PLAYCARD" -> actionToSend = messageBuilder.playCard(in);
                 case "CLOUD" -> actionToSend = messageBuilder.chooseCloud(in);
                 case "MOVEMOTHER" -> actionToSend = messageBuilder.moveMother(in);

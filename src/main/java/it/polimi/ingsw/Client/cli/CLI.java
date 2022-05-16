@@ -60,7 +60,11 @@ public class CLI implements UI {
         setup();
         while (isActiveGame()) {
             input.reset();
-            String cmd = input.nextLine();
+//            String cmd = input.nextLine();
+            String cmd;
+            while ((cmd = input.nextLine()).isEmpty()) {
+                System.out.print(cmd + ">");
+            }
             listeners.firePropertyChange("action", null, cmd);
         }
         input.close();

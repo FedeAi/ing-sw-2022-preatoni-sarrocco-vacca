@@ -157,6 +157,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         }*/
         String nickname = server.getNicknameByID(clientID);
         switch (action.actionType) {
+            case CHOOSE_MAGICIAN -> move = new ChooseMagician(nickname, action.int0);
             case PLAY_CARD -> move = new PlayCard(nickname, action.int0);
             case MOVE_MOTHER_NATURE -> move = new MoveMotherNature(nickname, action.int0);
             case MOVE_STUDENT_ISLAND -> move = new MoveStudentFromEntryToIsland(nickname, action.color0, action.int0);
@@ -228,7 +229,8 @@ public class SocketClientConnection implements ClientConnection, Runnable {
                         boolean expertMode = (((SetupMessage) command).expertMode);
                         server.setTotalPlayers(playerNumber);
                         server.getGameByID(clientID).setPlayersNumber(playerNumber);
-                        server.getClientByID(this.clientID).send(new CustomMessage("Success: player number " + "set to " + playerNumber));
+                        server.getGameByID(clientID).setExportMode(expertMode);
+                        server.getClientByID(this.clientID).send(new CustomMessage("Success: player number " + "set to " + playerNumber + ", game mode: " + (expertMode ? "expert" : "normal")));
                         break;
                     // FIXME custom exception
                     } catch (Exception e) {

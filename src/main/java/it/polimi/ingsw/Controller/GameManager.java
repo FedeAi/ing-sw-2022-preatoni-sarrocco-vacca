@@ -35,7 +35,6 @@ public class GameManager implements PropertyChangeListener {
     public GameManager(Game game) {
 
         this.game = game;   //new Game(new Bag(Constants.INITIAL_BAG_SIZE))
-        this.game.setGameState(GameState.GAME_ROOM);
         rules = new Rules();
         this.roundManager = new RoundManager(this);
         this.roundManager.addListener(this);
@@ -111,6 +110,8 @@ public class GameManager implements PropertyChangeListener {
     }
     private void initRoundManager(){
         game.setPlayersActionPhase(game.getPlayers());
+        game.setRoundOwner(game.getPlayers().get(0));
+        game.setGameState(GameState.SETUP_CHOOSE_MAGICIAN);
     }
 
     private void initIslands() {

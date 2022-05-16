@@ -44,7 +44,8 @@ public class PlayCard extends Performable {
 
 
     @Override
-    public void performMove(Game game, Rules rules) {
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
         Player player = getPlayer(game);
         AssistantCard playedCard = player.getCards().stream().filter(c -> c.getValue() == choice).findFirst().get();
         game.playCard(player, playedCard);

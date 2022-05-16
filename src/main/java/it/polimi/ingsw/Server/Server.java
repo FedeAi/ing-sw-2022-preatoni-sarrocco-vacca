@@ -167,7 +167,7 @@ public class Server {
         waiting.add(c);
         if (waiting.size() == 1) {
             c.setup(
-                    new ReqPlayersMessage(
+                    new ReqPlayersMessage( //FIXME don't manage client side
                             idMapClient.get(c.getClientID()).getNickname()
                                     + ", you are"
                                     + " the lobby host.\nChoose the number of players! [2/3]"));
@@ -178,10 +178,10 @@ public class Server {
                 currentGame.sendAll(new CustomMessage("Match starting in " + i));
                 TimeUnit.MILLISECONDS.sleep(500);
             }
-            currentGame.sendAll(new CustomMessage("The match has started!"));
+            currentGame.startGame();
             waiting.clear();
-            //FIXME why setup isn't called by client
-            currentGame.setup();
+            //Note now this is now an action
+            //  currentGame.magicianSetup();
         } else {
             currentGame.sendAll(
                     new CustomMessage((totalPlayers - waiting.size()) + " slots left."));
@@ -217,15 +217,14 @@ public class Server {
      *     server socket and client socket.
      * @return Integer - the client ID if everything goes fine, null otherwise.
      */
-    public synchronized Integer registerConnection(
-        String nickname, SocketClientConnection socketClientHandler) {
+     public synchronized Integer registerConnection(String nickname, SocketClientConnection socketClientHandler) {
         Integer clientID = nameMapId.get(nickname);
 
         if (clientID == null) { // Player has never connected to the server before.
             if (waiting.isEmpty()) {
                 currentGame = new GameHandler(this);
             }
-            if (nameMapId.keySet().stream().anyMatch(nickname::equalsIgnoreCase)) {
+            if (nameMapId.keySet().stream().anyMatch(nickname::equalsIgnoreCase)) { //disconnected case
                 SerializedAnswer error = new SerializedAnswer();
                 error.setServerAnswer(new GameError(ErrorType.DUPLICATE_NICKNAME));
                 socketClientHandler.sendSocketMessage(error);
@@ -245,9 +244,11 @@ public class Server {
                 //client.send(new GameError(ErrorType.FULLSERVER));
                 return null;
             }
+
             idMapClient.put(clientID, client);
             nameMapId.put(nickname, clientID);
             idMapName.put(clientID, nickname);
+
             clientToConnection.put(client, socketClientHandler);
             System.out.println(
                     Constants.getInfo()

@@ -4,6 +4,7 @@ package it.polimi.ingsw.Constants;
  * Class Action contains all the possible user actions
  */
 public enum ActionType {
+    CHOOSE_MAGICIAN,
     PLAY_CARD,
     MOVE_MOTHER_NATURE,
     MOVE_STUDENT_ISLAND,

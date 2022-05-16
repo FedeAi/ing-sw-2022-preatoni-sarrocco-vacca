@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.*;
@@ -33,7 +32,7 @@ public class GameHandler {
     private final PropertyChangeSupport controllerListener = new PropertyChangeSupport(this);
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final Random rnd = new Random();
-    private int started;
+    private boolean isStarted;
     private int playersNumber;
 
     /**
@@ -43,7 +42,7 @@ public class GameHandler {
      */
     public GameHandler(Server server) {
         this.server = server;
-        started = 0;
+        isStarted = false;
         game = new Game();
         controller = new GameManager(game);   // new GameManager(game, this);
         controllerListener.addPropertyChangeListener(controller);
@@ -71,8 +70,17 @@ public class GameHandler {
         playersNumber = number;
     }
 
+    public void setExportMode(boolean expert) {
+        game.setExpertMode(expert);
+    }
+
     public boolean isStarted() {
-        return started > 0;
+        return isStarted;
+    }
+
+    public void startGame() {
+        sendAll(new CustomMessage("The match has started!"));
+        controller.initGame();
     }
 
     public void endGame() {
@@ -93,16 +101,15 @@ public class GameHandler {
         game.getPlayerByID(id).setConnected(false);
     }
 
-    public void setup() {
-        if (started == 0){
-            started = 1;
-        }
-        String nickname = game.getActivePlayers().get(Magician.values().length - game.getAvailableMagicians().size()).getNickname();
-        ReqMagicianMessage req = new ReqMagicianMessage("Please choose your magician", game.getAvailableMagicians());
-
-        server.getClientByID(server.getIDByNickname(nickname)).send(req);
-        sendAllExcept(new CustomMessage("User " + nickname + " is choosing his magician!"), server.getIDByNickname(nickname));
-    }
+//    public void magicianSetup() {
+//        isStarted = true;
+//
+//        String nickname = game.getActivePlayers().get(Magician.values().length - game.getAvailableMagicians().size()).getNickname();
+//        ReqMagicianMessage req = new ReqMagicianMessage("Please choose your magician", game.getAvailableMagicians());
+//
+//        server.getClientByID(server.getIDByNickname(nickname)).send(req);
+//        sendAllExcept(new CustomMessage("User " + nickname + " is choosing his magician!"), server.getIDByNickname(nickname));
+//    }
 
     public void performAction(Performable action) throws InvalidPlayerException, RoundOwnerException, GameException {
         controller.performAction(action);

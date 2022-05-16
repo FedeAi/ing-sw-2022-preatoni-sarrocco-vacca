@@ -34,7 +34,7 @@ public abstract class Performable {
         Player player = player_opt.get();
 
         // Checks if the player is the round owner
-        if (!game.getRoundOwner().equals(player)) {
+        if (!player.equals(game.getRoundOwner())) {
             throw new RoundOwnerException(game.getRoundOwner().getNickname());
         }
     }

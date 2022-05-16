@@ -24,6 +24,7 @@ public class MessageBuilder {
     private final String MUSHROOM_ERROR = "syntax mushroom error: mushroom color (ex: mushroom blue) ";
     private final String PRINCESS_ERROR = "syntax princess error: princess color (ex: princess yellow) ";
     private final String THIEF_ERROR = "syntax thief error: thief color (ex: thief green) ";
+    private final String MAGICIAN_ERROR = "syntax thief error: MAGICIAN color (ex: magician 1) ";
 
     public Action playCard(String[] in){
         try{
@@ -32,6 +33,16 @@ public class MessageBuilder {
             return actionToSend;
         }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(Constants.ANSI_RED + PLAY_CARD_ERROR + Constants.ANSI_RESET);
+            return null;
+        }
+    }
+    public Action chooseMagician(String[] in){
+        try{
+            Action actionToSend;
+            actionToSend = new Action(ActionType.CHOOSE_MAGICIAN, Integer.parseInt(in[1]));
+            return actionToSend;
+        }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(Constants.ANSI_RED + MAGICIAN_ERROR + Constants.ANSI_RESET);
             return null;
         }
     }
@@ -101,13 +112,12 @@ public class MessageBuilder {
             return null;
         }
     }
-    public Message setupMessage(String[] in){
+    public Message setupMessage(String[] in) {
         try {
             Message messageToSend;
             messageToSend = new SetupMessage(Integer.parseInt(in[1]), in[2].equalsIgnoreCase("expert"));
             return messageToSend;
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(Constants.ANSI_RED + SETUP_ERROR + Constants.ANSI_RESET);
             return null;
         }

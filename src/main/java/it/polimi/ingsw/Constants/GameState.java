@@ -10,6 +10,8 @@ public enum GameState {
     TURN_STARTED,
     TURN_ENDED,
 
+    SETUP_CHOOSE_MAGICIAN,
+
     /* planning */
 
     PLANNING_CHOOSE_CARD, //choosing assistant card -->3 consequence

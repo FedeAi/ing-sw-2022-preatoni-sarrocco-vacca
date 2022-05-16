@@ -25,7 +25,7 @@ public class Game {
     public static final String ROUND_OWNER_LISTENER = "roundOwnerListener";
 
     private final List<Player> players;
-    private final List<Magician> magicians;
+    private final List<Magician> availableMagicians;
     private final List<Cloud> clouds;
     private final Bag bag;
     private int balance;
@@ -46,7 +46,7 @@ public class Game {
         this.bag = new Bag(Constants.INITIAL_BAG_SIZE);
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
-        magicians = new ArrayList<>(Arrays.stream(Magician.values()).toList());
+        availableMagicians = new ArrayList<>(Arrays.stream(Magician.values()).toList());
         islandContainer = new IslandContainer();
         clouds = new ArrayList<>();
         characterCards = new ArrayList<>();
@@ -151,8 +151,8 @@ public class Game {
      */
     public void chooseMagician(Player p, Magician magician) {
         p.setMagician(magician);
-        List<Magician> oldMagicians = new ArrayList<>(magicians);
-        magicians.remove(magician);
+        List<Magician> oldMagicians = new ArrayList<>(availableMagicians);
+        availableMagicians.remove(magician);
         playersActionPhase = players;
     }
 
@@ -262,7 +262,7 @@ public class Game {
     }
 
     public List<Magician> getAvailableMagicians() { //choice for available magicians; main character
-        return magicians;
+        return availableMagicians;
     }
 
     public List<Player> getPlayers() {
@@ -368,5 +368,9 @@ public class Game {
             }
         }
         return null;
+    }
+
+    public void removeMagician(int chooseRemove){
+        availableMagicians.remove(chooseRemove);
     }
 }
