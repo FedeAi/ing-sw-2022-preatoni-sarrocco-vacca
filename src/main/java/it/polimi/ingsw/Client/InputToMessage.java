@@ -6,9 +6,11 @@ import it.polimi.ingsw.Client.messages.Message;
 import it.polimi.ingsw.Client.messages.MessageBuilder;
 import it.polimi.ingsw.Client.messages.turn.EndTurnMessage;
 import it.polimi.ingsw.Constants.Constants;
+import it.polimi.ingsw.Constants.GameState;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 /**
  * ActionBuilder class builds messages
@@ -55,15 +57,13 @@ public class InputToMessage implements PropertyChangeListener {
 
         try {
             switch (command.toUpperCase()) {
-//                case "LIST" -> {
-//
-//                }
+
                 case "MAGICIAN" -> actionToSend = messageBuilder.chooseMagician(in);
                 case "PLAYCARD" -> actionToSend = messageBuilder.playCard(in);
                 case "CLOUD" -> actionToSend = messageBuilder.chooseCloud(in);
                 case "MOVEMOTHER" -> actionToSend = messageBuilder.moveMother(in);
-                case "STUDENTSISLAND" -> actionToSend = messageBuilder.moveStudentIsland(in);
-                case "STUDENTSHALL"-> actionToSend = messageBuilder.moveStudentHall(in);
+                case "STUDENTISLAND" -> actionToSend = messageBuilder.moveStudentIsland(in);
+                case "STUDENTHALL"-> actionToSend = messageBuilder.moveStudentHall(in);
                 case "ACTIVATE"-> actionToSend = messageBuilder.activateCard(in);
                 case "DEACTIVATE"-> actionToSend = messageBuilder.deactivateCard(in);
                 case "SETUP" -> messageToSend = messageBuilder.setupMessage(in);
@@ -98,5 +98,6 @@ public class InputToMessage implements PropertyChangeListener {
         }
         return false;
     }
+
 }
 

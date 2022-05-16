@@ -299,12 +299,12 @@ public class Game {
     }
 
     public void setRoundOwner(Player roundOwner) {
-        if(this.roundOwner != roundOwner){
-            listeners.firePropertyChange(ROUND_OWNER_LISTENER, this.roundOwner, roundOwner.getNickname());
-            this.roundOwner = roundOwner;
-
+        String prevRoundOwner = null;
+        if(this.roundOwner != null) {
+            prevRoundOwner = this.roundOwner.getNickname();
         }
-
+        this.roundOwner = roundOwner;
+        listeners.firePropertyChange(ROUND_OWNER_LISTENER, prevRoundOwner, roundOwner.getNickname());
     }
 
     public EnumMap<Color, String> getProfessors() {

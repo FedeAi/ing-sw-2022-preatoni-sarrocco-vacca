@@ -5,7 +5,7 @@ import it.polimi.ingsw.Constants.Animals;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class AssistantCard extends Card implements Serializable {
+public class AssistantCard extends Card {
 
     private int maxMoves;
     private int value;

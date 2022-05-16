@@ -25,6 +25,7 @@ public class CLI implements UI {
     private final ModelView modelView;
     private final ServerMessageHandler serverMessageHandler;
     private boolean activeGame;
+    private final String SHOW_ERROR = "syntax show error: show #item (ex: show school) ";
 
     private ConnectionSocket connectionSocket;
 
@@ -63,7 +64,13 @@ public class CLI implements UI {
 //            String cmd = input.nextLine();
             String cmd;
             while ((cmd = input.nextLine()).isEmpty()) {}   // While loop needed to handle the case the input string is "", ( linux problem )
-            listeners.firePropertyChange("action", null, cmd);
+
+            switch (cmd.split(" ")[0].toUpperCase()){
+                case "SHOW" -> handleView(cmd);  //printable command
+                default -> listeners.firePropertyChange("action", null, cmd);
+            }
+
+
         }
         input.close();
         output.close();
@@ -124,13 +131,13 @@ public class CLI implements UI {
 
         if(player.equals(owner)) {
 
-            if(oldState != newState){
-                System.out.println(Constants.ANSI_GREEN +"You are passed to : " + newState + " make your choice" + Constants.ANSI_RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
-            }
+//            if(oldState != newState){
+                System.out.println(Constants.ANSI_GREEN +"You are in " + newState + " state, make your choice" + Constants.ANSI_RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
+//            }
         }else{
-            if(oldState != newState){
+//            if(oldState != newState){
                 System.out.println(Constants.ANSI_CYAN + "Player " + player + "is in " + newState + Constants.ANSI_RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
-            }
+//            }
         }
     }
 
@@ -163,5 +170,19 @@ public class CLI implements UI {
         }
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+    private void handleView(String cmd){
+        String[] in = cmd.split(" ");
+        if(in.length > 1) {
+            String command = in[1];
+
+            switch (command.toUpperCase()) {
+                case "SCHOOL" -> showSchool(cmd);
+                case "ACTIONS" ->showActions() ;
+                case "BOARD" -> showBoard() ;
+                case "CLOUDS" -> showClouds();
+                default ->  System.out.println(Constants.ANSI_RED + SHOW_ERROR + Constants.ANSI_RESET);
+            }
+        }
     }
 }

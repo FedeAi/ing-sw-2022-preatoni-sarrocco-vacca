@@ -5,6 +5,7 @@ import it.polimi.ingsw.Server.Answer.modelUpdate.HandMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public class HandListener extends AbsListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        HandMessage message = new HandMessage((List<AssistantCard>) evt.getNewValue());
+        HandMessage message = new HandMessage((ArrayList<AssistantCard>) evt.getNewValue());
         virtualClient.send(message);    
     }
 }

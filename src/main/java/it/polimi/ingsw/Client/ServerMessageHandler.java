@@ -104,6 +104,7 @@ public class ServerMessageHandler {
     else if(answer instanceof RoundOwnerMessage message){
       String previousOwner = modelView.getRoundOwner();
       modelView.setRoundOwner(message.getMessage());
+      System.out.println(message.getMessage());
       view.firePropertyChange(NEXT_ROUNDOWNER_LISTENER, previousOwner , message.getMessage());
     }
     else if(answer instanceof MagicianMessage message){

@@ -28,7 +28,7 @@ public class GameManager implements PropertyChangeListener {
     private final Game game;
     private final Rules rules;
     private RoundManager roundManager;
-    private boolean isHard_temp = true;
+    private boolean isHard_temp = false;
     private final PropertyChangeSupport controllerListeners = new PropertyChangeSupport(this);
 
 
@@ -65,10 +65,10 @@ public class GameManager implements PropertyChangeListener {
         initSchools();
         initClouds();
         initRoundManager();
-        if (isHard_temp) {
+        //TODO fireproprietychange should change
+        if (isHard_temp == true) {
             game.setExpertMode(true);
             initCharacters();
-
             game.initBalance(Constants.NUM_COINS);
             initPlayersBalance();
         }

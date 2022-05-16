@@ -7,6 +7,7 @@ import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Server.VirtualClient;
 import it.polimi.ingsw.listeners.BalanceListener;
+import it.polimi.ingsw.listeners.HandListener;
 import it.polimi.ingsw.listeners.MoveMotherListener;
 import it.polimi.ingsw.listeners.SchoolListener;
 
@@ -59,7 +60,7 @@ public class Player implements PropertyChangeListener {
      * @param client virtualClient - the VirtualClient on the server.
      */
     public void createListeners(VirtualClient client){
-        listeners.addPropertyChangeListener(HAND_LISTENER, new MoveMotherListener(client));
+        listeners.addPropertyChangeListener(HAND_LISTENER, new HandListener(client));
         listeners.addPropertyChangeListener(SCHOOL_LISTENER, new SchoolListener(client));   // TODO ricordarsi di fare sendall
         listeners.addPropertyChangeListener(BALANCE_LISTENER, new BalanceListener(client));
     }

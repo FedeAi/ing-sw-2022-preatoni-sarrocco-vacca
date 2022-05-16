@@ -40,40 +40,44 @@ public class RoundManager {
         action.performMove(gameInstance, gameManager.getRules());
         /* this line is reached only if the action is performable  */
 
-        handleNextPlayer(action);
-        handleStateChange(action);
+        GameState nextState = action.nextState(gameInstance, gameManager.getRules());
+        Player nextPlayer = action.nextPlayer(gameInstance, gameManager.getRules());
+
+        if(nextPlayer == null && nextState == GameState.ACTION_MOVE_STUDENTS){
+            nextPlayer = setActionOrder(gameInstance);
+        }
+        gameInstance.setGameState(nextState);
+        gameInstance.setRoundOwner(nextPlayer);
 
         WinController.check(gameInstance);
 
     }
 
-
-    public void handleStateChange(Performable action){
-        GameState nextState = action.nextState(gameInstance, gameManager.getRules());
-        gameInstance.setGameState(nextState);
-
-        // phase change from planning to action
-        if(action instanceof PlayCard &&  nextState == GameState.ACTION_MOVE_STUDENTS){
-            setActionOrder(gameInstance);
-        }
-    }
-
-    public void handleNextPlayer(Performable action){
-        Player nextPlayer = action.nextPlayer(gameInstance, gameManager.getRules());
-        gameInstance.setRoundOwner(nextPlayer);
-    }
+//
+//
+//    public nextPlayer handleNextPlayer(Performable action){
+//        Player nextPlayer = action.nextPlayer(gameInstance, gameManager.getRules());
+//        ret
+//        if(nextPlayer==null){
+//            // planning -> action : ordering players
+//            if(action.nextState(gameInstance, gameManager.getRules()) == GameState.ACTION_MOVE_STUDENTS){
+//                nextPlayer = setActionOrder(gameInstance);
+//            }
+//        }
+//        gameInstance.setRoundOwner(nextPlayer);
+//    }
 
     /**
      * choose Player orders for action phase
      */
-    private void setActionOrder(Game game) {
+    private Player setActionOrder(Game game) {
         List<Player> planningPhasePlayers = game.getOrderedPlanningPlayers();
 
         // compare by cards value
         Comparator<Player> compareByCardValue = (Player p1, Player p2) -> p1.getPlayedCard().getValue() - p2.getPlayedCard().getValue();
         planningPhasePlayers.sort(compareByCardValue);
         game.setPlayersActionPhase(planningPhasePlayers);
-        game.setRoundOwner(planningPhasePlayers.get(0));
+       return planningPhasePlayers.get(0);
     }
 
 }
