@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.cli;
 
 import it.polimi.ingsw.Client.*;
+import it.polimi.ingsw.Constants.CLIColors;
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
@@ -63,9 +64,10 @@ public class CLI implements UI {
             input.reset();
 //            String cmd = input.nextLine();
             String cmd;
-            while ((cmd = input.nextLine()).isEmpty()) {}   // While loop needed to handle the case the input string is "", ( linux problem )
+            while ((cmd = input.nextLine()).isEmpty()) {
+            }   // While loop needed to handle the case the input string is "", ( linux problem )
 
-            switch (cmd.split(" ")[0].toUpperCase()){
+            switch (cmd.split(" ")[0].toUpperCase()) {
                 case "SHOW" -> handleView(cmd);  //printable command
                 default -> listeners.firePropertyChange("action", null, cmd);
             }
@@ -116,38 +118,42 @@ public class CLI implements UI {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case ServerMessageHandler.GAME_ERROR_LISTENER ->  System.out.println(((GameError) evt.getNewValue()).getMessage());
-            case ServerMessageHandler.CUSTOM_MESSAGE_LISTER -> System.out.println(((CustomMessage) evt.getNewValue()).getMessage());
-            case ServerMessageHandler.GAME_STATE_LISTENER -> statePrinter((GameState) evt.getOldValue(), (GameState) evt.getNewValue());
-            case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER -> roundPrinter((String) evt.getOldValue(), (String) evt.getNewValue());
+            case ServerMessageHandler.GAME_ERROR_LISTENER ->
+                    System.out.println(((GameError) evt.getNewValue()).getMessage());
+            case ServerMessageHandler.CUSTOM_MESSAGE_LISTER ->
+                    System.out.println(((CustomMessage) evt.getNewValue()).getMessage());
+            case ServerMessageHandler.GAME_STATE_LISTENER ->
+                    statePrinter((GameState) evt.getOldValue(), (GameState) evt.getNewValue());
+            case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER ->
+                    roundPrinter((String) evt.getOldValue(), (String) evt.getNewValue());
         }
 
     }
 
-    public void statePrinter(GameState oldState, GameState newState){
+    public void statePrinter(GameState oldState, GameState newState) {
 
         String owner = modelView.getRoundOwner();
         String player = modelView.getPlayerName();
 
-        if(player.equals(owner)) {
+        if (player.equals(owner)) {
 
 //            if(oldState != newState){
-                System.out.println(Constants.ANSI_GREEN +"You are in " + newState + " state, make your choice" + Constants.ANSI_RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
+            System.out.println(CLIColors.ANSI_GREEN + "You are in " + newState + " state, make your choice" + CLIColors.RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
 //            }
-        }else{
+        } else {
 //            if(oldState != newState){
-                System.out.println(Constants.ANSI_CYAN + "Player " + player + "is in " + newState + Constants.ANSI_RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
+            System.out.println(CLIColors.ANSI_CYAN + "Player " + player + "is in " + newState + CLIColors.RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
 //            }
         }
     }
 
-    public void roundPrinter(String oldRoundOwner, String newRoundOwner){
+    public void roundPrinter(String oldRoundOwner, String newRoundOwner) {
         String player = modelView.getPlayerName();
-        if(!newRoundOwner.equals(oldRoundOwner)) {
+        if (!newRoundOwner.equals(oldRoundOwner)) {
             if (player.equals(newRoundOwner)) {
-                System.out.println(Constants.ANSI_BACKGROUND_BLACK + Constants.ANSI_WHITE + "You are the new round owner"  + Constants.ANSI_RESET);
-            }else{
-                System.out.println(Constants.ANSI_CYAN + newRoundOwner + "is the new round owner" + Constants.ANSI_RESET);
+                System.out.println(CLIColors.ANSI_BACKGROUND_BLACK.getEscape() + CLIColors.ANSI_WHITE + "You are the new round owner" + CLIColors.RESET);
+            } else {
+                System.out.println(CLIColors.ANSI_CYAN + newRoundOwner + "is the new round owner" + CLIColors.RESET);
             }
         }
     }
@@ -156,32 +162,32 @@ public class CLI implements UI {
     public boolean isActiveGame() {
         return activeGame;
     }
+
     public static void clearScreen() {
-        try{
-            if(System.getProperty("os.name").contains("Windows")){
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            }
-            else
+            } else
                 Runtime.getRuntime().exec("clear");
-        }
-        catch (IOException | InterruptedException e){
+        } catch (IOException | InterruptedException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
             Thread.currentThread().interrupt();
         }
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-    private void handleView(String cmd){
+
+    private void handleView(String cmd) {
         String[] in = cmd.split(" ");
-        if(in.length > 1) {
+        if (in.length > 1) {
             String command = in[1];
 
             switch (command.toUpperCase()) {
                 case "SCHOOL" -> showSchool(cmd);
-                case "ACTIONS" ->showActions() ;
-                case "BOARD" -> showBoard() ;
+                case "ACTIONS" -> showActions();
+                case "BOARD" -> showBoard();
                 case "CLOUDS" -> showClouds();
-                default ->  System.out.println(Constants.ANSI_RED + SHOW_ERROR + Constants.ANSI_RESET);
+                default -> System.out.println(CLIColors.ANSI_RED + SHOW_ERROR + CLIColors.RESET);
             }
         }
     }

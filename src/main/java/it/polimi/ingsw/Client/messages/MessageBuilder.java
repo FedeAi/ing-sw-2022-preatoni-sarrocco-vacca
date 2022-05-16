@@ -1,9 +1,8 @@
-package it.polimi.ingsw.Client.messages;import it.polimi.ingsw.Constants.ActionType;
+package it.polimi.ingsw.Client.messages;
+import it.polimi.ingsw.Constants.*;
 import it.polimi.ingsw.Constants.Color;
-import it.polimi.ingsw.Constants.Constants;
+import it.polimi.ingsw.Constants.CLIColors;
 
-import java.nio.file.NoSuchFileException;
-import java.util.Locale;
 
 
 public class MessageBuilder {
@@ -32,7 +31,7 @@ public class MessageBuilder {
             actionToSend = new Action(ActionType.PLAY_CARD, Integer.parseInt(in[1]));
             return actionToSend;
         }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            System.out.println(Constants.ANSI_RED + PLAY_CARD_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + PLAY_CARD_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -42,7 +41,7 @@ public class MessageBuilder {
             actionToSend = new Action(ActionType.CHOOSE_MAGICIAN, Integer.parseInt(in[1]));
             return actionToSend;
         }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            System.out.println(Constants.ANSI_RED + MAGICIAN_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + MAGICIAN_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -53,7 +52,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-            System.out.println(Constants.ANSI_RED + MOVE_MOTHER_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + MOVE_MOTHER_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -64,7 +63,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-            System.out.println(Constants.ANSI_RED + CHOOSE_CLOUD_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + CHOOSE_CLOUD_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -75,7 +74,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-            System.out.println(Constants.ANSI_RED + MOVE_STUDENT_ISLAND_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + MOVE_STUDENT_ISLAND_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -86,7 +85,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-            System.out.println(Constants.ANSI_RED + MOVE_STUDENT_HALL_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + MOVE_STUDENT_HALL_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -97,7 +96,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-            System.out.println(Constants.ANSI_RED + ACTIVATE_CARD_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + ACTIVATE_CARD_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -108,7 +107,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException e){
-            System.out.println(Constants.ANSI_RED + DEACTIVATE_CARD_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + DEACTIVATE_CARD_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -119,7 +118,7 @@ public class MessageBuilder {
             messageToSend = new SetupMessage(Integer.parseInt(in[1]), expertMode);
             return messageToSend;
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            System.out.println(Constants.ANSI_RED + SETUP_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + SETUP_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -130,7 +129,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(Constants.ANSI_RED + GRANDMA_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + GRANDMA_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -141,7 +140,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(Constants.ANSI_RED +  HERALD_ERROR+ Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED +  HERALD_ERROR+ CLIColors.RESET);
             return null;
         }
     }
@@ -152,7 +151,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(Constants.ANSI_RED +  JOKER_ERROR+ Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED +  JOKER_ERROR+ CLIColors.RESET);
             return null;
         }
     }
@@ -163,7 +162,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(Constants.ANSI_RED +  MINSTREL_ERROR+ Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED +  MINSTREL_ERROR+ CLIColors.RESET);
             return null;
         }
     }
@@ -174,7 +173,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(Constants.ANSI_RED +  MONK_ERROR+ Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED +  MONK_ERROR+ CLIColors.RESET);
             return null;
         }
     }
@@ -185,7 +184,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(Constants.ANSI_RED +  MUSHROOM_ERROR+ Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED +  MUSHROOM_ERROR+ CLIColors.RESET);
             return null;
         }
     }
@@ -196,7 +195,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(Constants.ANSI_RED +  PRINCESS_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED +  PRINCESS_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -207,7 +206,7 @@ public class MessageBuilder {
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(Constants.ANSI_RED +  THIEF_ERROR + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED +  THIEF_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -215,7 +214,4 @@ public class MessageBuilder {
         System.err.println("Disconnected from the server.");
         return new Disconnect();
     }
-
-
-
 }

@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.messages.LoginMessage;
 import it.polimi.ingsw.Client.messages.Message;
 import it.polimi.ingsw.Client.messages.MessageBuilder;
 import it.polimi.ingsw.Client.messages.turn.EndTurnMessage;
+import it.polimi.ingsw.Constants.CLIColors;
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.GameState;
 
@@ -33,7 +34,7 @@ public class InputToMessage implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (!modelView.isInputActive()) {
-            System.out.println(Constants.ANSI_RED + "Error: not your turn!" + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + "Error: not your turn!" + CLIColors.RESET);
         } else if (inputParserBuildMessage(evt.getNewValue().toString())) {
             if(actionToSend != null ) {
                 connectionSocket.send(actionToSend);
@@ -82,12 +83,12 @@ public class InputToMessage implements PropertyChangeListener {
                     return true;
                 }
                 default -> {
-                    System.out.println(Constants.ANSI_RED + "404 Command not found" + Constants.ANSI_RESET);
+                    System.out.println(CLIColors.ANSI_RED + "404 Command not found" + CLIColors.RESET);
                     return false;
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(Constants.ANSI_RED + "Input error; try again!" + Constants.ANSI_RESET);
+            System.out.println(CLIColors.ANSI_RED + "Input error; try again!" + CLIColors.RESET);
             return false;
         } catch (NumberFormatException e) {
             System.err.println("Numeric value required, operation not permitted!");

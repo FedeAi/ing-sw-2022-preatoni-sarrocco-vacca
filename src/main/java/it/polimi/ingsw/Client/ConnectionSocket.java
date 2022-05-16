@@ -4,6 +4,7 @@ import it.polimi.ingsw.Client.messages.Action;
 import it.polimi.ingsw.Client.messages.LoginMessage;
 import it.polimi.ingsw.Client.messages.Message;
 import it.polimi.ingsw.Client.messages.SerializedMessage;
+import it.polimi.ingsw.Constants.CLIColors;
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
@@ -55,13 +56,13 @@ public class ConnectionSocket {
     public boolean setup(String nickname, ModelView modelView, ServerMessageHandler serverMessageHandler) throws DuplicateNicknameException, InvalidNicknameException {
         try {
             System.out.println(
-                    Constants.ANSI_YELLOW + "Configuring socket connection..." + Constants.ANSI_RESET);
+                    CLIColors.ANSI_YELLOW + "Configuring socket connection..." + CLIColors.RESET);
             System.out.println(
-                    Constants.ANSI_YELLOW
+                    CLIColors.ANSI_YELLOW
                             + "Opening a socket server communication on port "
                             + serverPort
                             + "..."
-                            + Constants.ANSI_RESET);
+                            + CLIColors.RESET);
             Socket socket;
             try {
                 socket = new Socket(serverAddress, serverPort);
