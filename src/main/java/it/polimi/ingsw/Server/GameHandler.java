@@ -15,6 +15,7 @@ import it.polimi.ingsw.Server.Answer.ReqMagicianMessage;
 
 import java.beans.PropertyChangeSupport;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 /**
@@ -78,7 +79,16 @@ public class GameHandler {
         return isStarted;
     }
 
-    public void startGame() {
+    public void startGame() throws InterruptedException{
+        // add listeners for all players to the model
+        for (Player p : game.getPlayers()) {
+            game.createListeners(server.getClientByID(p.getID()));
+
+        }
+        for (int i = 3; i > 0; i--) {
+            sendAll(new CustomMessage("Match starting in " + i));
+            TimeUnit.MILLISECONDS.sleep(500);
+        }
         sendAll(new CustomMessage("The match has started!"));
         controller.initGame();
     }

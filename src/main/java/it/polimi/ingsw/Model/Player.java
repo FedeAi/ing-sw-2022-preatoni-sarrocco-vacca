@@ -103,6 +103,7 @@ public class Player implements PropertyChangeListener {
 
     public void setMagician(Magician magician) {
         this.magician = magician;
+        //TODO add listener
     }
 
     public void addCoin() {

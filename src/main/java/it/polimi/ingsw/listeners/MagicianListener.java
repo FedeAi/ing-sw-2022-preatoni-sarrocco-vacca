@@ -1,26 +1,30 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Model.Islands.IslandContainer;
-import it.polimi.ingsw.Server.Answer.modelUpdate.IslandsMessage;
+import it.polimi.ingsw.Constants.Magician;
+import it.polimi.ingsw.Model.Cloud;
+import it.polimi.ingsw.Server.Answer.modelUpdate.CloudsMessage;
+import it.polimi.ingsw.Server.Answer.modelUpdate.MagicianMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
+import java.util.List;
 
 /**
  * MoveMotherListener class is a AbsListener used for notifying the client after a move action.
  *
+ * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
 
 
-public class IslandsListener extends AbsListener {
+public class MagicianListener extends AbsListener {
 
     /**
-     * Constructor MoveMotherListener creates a new MoveListener instance.
+     * Constructor HandListener creates a new HandListener instance.
      *
-     * @param client of type VirtualClient - the virtual client on Server.
+     * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public IslandsListener(VirtualClient client) {
+    public MagicianListener(VirtualClient client) {
         super(client);
     }
 
@@ -32,7 +36,7 @@ public class IslandsListener extends AbsListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        IslandsMessage message = new IslandsMessage((IslandContainer) evt.getNewValue());
+        MagicianMessage message = new MagicianMessage((List<Magician>) evt.getNewValue());
         virtualClient.send(message);
     }
 }

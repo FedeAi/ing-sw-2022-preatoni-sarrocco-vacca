@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.cli.CLI;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Client.messages.turn.GameStartedMessage;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Server.Answer.*;
 import it.polimi.ingsw.Server.Answer.modelUpdate.*;
 
@@ -17,8 +18,10 @@ import java.beans.PropertyChangeSupport;
 public class ServerMessageHandler {
 
   public static final String GAME_SETUP_LISTENER = "gameSetup";
-  public static final String GAME_ERROR_LISTER = "gameError";
+  public static final String GAME_ERROR_LISTENER = "gameError";
   public static final String CUSTOM_MESSAGE_LISTER = "customMessage";
+  public static final String NEXT_ROUNDOWNER_LISTENER = "RoundOwner";
+  public static final String GAME_STATE_LISTENER = "stateChange";
 
   private final ModelView modelView;
   private final PropertyChangeSupport view = new PropertyChangeSupport(this);
@@ -65,7 +68,7 @@ public class ServerMessageHandler {
       handleGameMessage((ModelMessage) answer);
     }
     else if(answer instanceof GameError){
-      view.firePropertyChange(GAME_ERROR_LISTER,null, answer);
+      view.firePropertyChange(GAME_ERROR_LISTENER,null, answer);
     }
     else if(answer instanceof CustomMessage){
       view.firePropertyChange(CUSTOM_MESSAGE_LISTER,null, answer);
@@ -90,7 +93,7 @@ public class ServerMessageHandler {
       modelView.setMotherNature(((MoveMotherMessage)answer).getMessage());
     }
     else if(answer instanceof PlayedCardMessage message){
-      modelView.setPlayedCards(message.getPlayer(), message.getMessage());
+      modelView.setPlayedCard(message.getPlayer(), message.getMessage());
     }
     else if(answer instanceof ProfsMessage){
       modelView.setProfessors(((ProfsMessage)answer).getMessage());
@@ -99,7 +102,17 @@ public class ServerMessageHandler {
       modelView.setPlayerSchool(message.getPlayer(), message.getMessage());
     }
     else if(answer instanceof RoundOwnerMessage message){
+      String previousOwner = modelView.getRoundOwner();
       modelView.setRoundOwner(message.getMessage());
+      view.firePropertyChange(NEXT_ROUNDOWNER_LISTENER, previousOwner , message.getMessage());
+    }
+    else if(answer instanceof MagicianMessage message){
+      modelView.setAvailableMagicians(message.getMessage());
+    }
+    else if(answer instanceof GameStateMessage message){
+      GameState previousState = modelView.getGameState();
+      modelView.setGameState(message.getMessage());
+      view.firePropertyChange(GAME_STATE_LISTENER, previousState, message.getMessage());
     }
   }
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import it.polimi.ingsw.Client.cli.CLI;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
@@ -31,9 +32,11 @@ public class ModelView {
     private List<AssistantCard> hand;
     private IslandContainer islandContainer;
     private List<Cloud> clouds;
+    private List<Magician> availableMagicians;
     private List<CharacterCard> characterCards;
     private Map<String, AssistantCard> playedCards;
     private int motherNature;
+    private GameState gameState;
 
     private boolean isInputActive = true; // TODO FIXME this must be set not true forever
 
@@ -140,6 +143,10 @@ public class ModelView {
         return clouds;
     }
 
+    public void setAvailableMagicians(List<Magician> availableMagicians){
+        this.availableMagicians = availableMagicians;
+    }
+
     public void setClouds(List<Cloud> clouds) {
         this.clouds = clouds;
     }
@@ -156,7 +163,7 @@ public class ModelView {
         return playedCards;
     }
 
-    public void setPlayedCards(String player, AssistantCard playedCard) {
+    public void setPlayedCard(String player, AssistantCard playedCard) {
         this.playedCards.put(player, playedCard);
     }
 
@@ -184,5 +191,11 @@ public class ModelView {
         return gui;
     }
 
+    public GameState getGameState(){
+        return gameState;
+    }
 
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
 }

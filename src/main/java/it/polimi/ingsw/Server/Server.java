@@ -174,10 +174,7 @@ public class Server {
         } else if (waiting.size() == totalPlayers) {
             System.err.println(
                     Constants.getInfo() + "Minimum player number reached. The match is starting.");
-            for (int i = 3; i > 0; i--) {
-                currentGame.sendAll(new CustomMessage("Match starting in " + i));
-                TimeUnit.MILLISECONDS.sleep(500);
-            }
+
             currentGame.startGame();
             waiting.clear();
             //Note now this is now an action

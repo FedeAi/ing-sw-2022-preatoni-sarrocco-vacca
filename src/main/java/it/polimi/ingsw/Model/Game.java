@@ -17,12 +17,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Game {
+
     public static final String MOVE_MOTHER_LISTENER = "moveMotherListener";
     public static final String ISLANDS_LISTENER = "islandsListener";
     public static final String PLAYED_CARD_LISTENER = "playedCardListener";
     public static final String CLOUDS_LISTENER = "cloudsListener";
     public static final String PROFS_LISTENER = "profsListener";
     public static final String ROUND_OWNER_LISTENER = "roundOwnerListener";
+    public static final String MAGICIANS_LISTENER = "magiciansListener";
+    public static final String GAME_STATE_LISTENER = "gameStateListener";
 
     private final List<Player> players;
     private final List<Magician> availableMagicians;
@@ -47,6 +50,8 @@ public class Game {
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
         availableMagicians = new ArrayList<>(Arrays.stream(Magician.values()).toList());
+        listeners.firePropertyChange(MAGICIANS_LISTENER, null, availableMagicians);
+
         islandContainer = new IslandContainer();
         clouds = new ArrayList<>();
         characterCards = new ArrayList<>();
@@ -66,7 +71,15 @@ public class Game {
         listeners.addPropertyChangeListener(CLOUDS_LISTENER, new CloudsListener(client));
         listeners.addPropertyChangeListener(PROFS_LISTENER, new ProfsListener(client));
         listeners.addPropertyChangeListener(ROUND_OWNER_LISTENER, new RoundOwnerListener(client));
+        listeners.addPropertyChangeListener(MAGICIANS_LISTENER, new MagicianListener(client));
+        listeners.addPropertyChangeListener(GAME_STATE_LISTENER, new GameStateListener(client));
+
+        // Player listeners
+        Optional<Player> player = getPlayerByNickname(client.getNickname());
+        player.ifPresent(value -> value.createListeners(client));
     }
+
+
 
     public void initProfessors() {
         professors = new EnumMap<Color, String>(Color.class);
@@ -277,6 +290,7 @@ public class Game {
     }
 
     public void setGameState(GameState gameState) {
+        listeners.firePropertyChange(GAME_STATE_LISTENER, this.gameState , gameState);
         this.gameState = gameState;
     }
 
@@ -286,7 +300,7 @@ public class Game {
 
     public void setRoundOwner(Player roundOwner) {
         if(this.roundOwner != roundOwner){
-            listeners.firePropertyChange(ROUND_OWNER_LISTENER, this.roundOwner, roundOwner);
+            listeners.firePropertyChange(ROUND_OWNER_LISTENER, this.roundOwner, roundOwner.getNickname());
             this.roundOwner = roundOwner;
 
         }
@@ -371,6 +385,8 @@ public class Game {
     }
 
     public void removeMagician(int chooseRemove){
+        ArrayList<Magician> previousList = new ArrayList<Magician>(availableMagicians);
         availableMagicians.remove(chooseRemove);
+        listeners.firePropertyChange(MAGICIANS_LISTENER, previousList, availableMagicians);
     }
 }

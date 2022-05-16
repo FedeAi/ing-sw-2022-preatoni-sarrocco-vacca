@@ -32,6 +32,6 @@ public class MoveMotherListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         MoveMotherMessage message = new MoveMotherMessage((int) evt.getNewValue());
-        virtualClient.sendAll(message); // FIXME
+        virtualClient.send(message);
     }
 }

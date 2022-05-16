@@ -2,9 +2,10 @@ package it.polimi.ingsw.Model.Islands;
 
 import it.polimi.ingsw.Constants.Color;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public abstract class Island {
+public abstract class Island implements Serializable {
     /*
         TODO I HAVEN'T SORTED THE SUPERISLAND BLOCKED CASE YET
         If we join an island with an adjacent one which is blocked,

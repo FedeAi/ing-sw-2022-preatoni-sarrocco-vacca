@@ -258,6 +258,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
             outputStream.writeObject(serverAnswer);
             outputStream.flush();
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             close();
         }
     }

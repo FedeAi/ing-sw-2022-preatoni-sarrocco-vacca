@@ -4,6 +4,7 @@ import it.polimi.ingsw.Client.*;
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import it.polimi.ingsw.Server.Answer.GameError;
 
@@ -11,7 +12,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,15 +43,15 @@ public class CLI implements UI {
         System.out.println(Constants.AUTHORS);
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(">Insert the server IP address");
-        System.out.print(">");
-        String ip = scanner.nextLine();
-
-        System.out.println(">Insert the server port");
-        System.out.print(">");
-        int port = scanner.nextInt();
-        Constants.setAddress(ip);
-        Constants.setPort(port);
+//        System.out.println(">Insert the server IP address");
+//        System.out.print(">");
+//        String ip = scanner.nextLine();
+//
+//        System.out.println(">Insert the server port");
+//        System.out.print(">");
+//        int port = scanner.nextInt();
+        Constants.setAddress("localhost");
+        Constants.setPort(8080);
         CLI cli = new CLI();
         cli.run();
     }
@@ -62,9 +62,7 @@ public class CLI implements UI {
             input.reset();
 //            String cmd = input.nextLine();
             String cmd;
-            while ((cmd = input.nextLine()).isEmpty()) {
-                System.out.print(cmd + ">");
-            }
+            while ((cmd = input.nextLine()).isEmpty()) {}   // While loop needed to handle the case the input string is "", ( linux problem )
             listeners.firePropertyChange("action", null, cmd);
         }
         input.close();
@@ -83,14 +81,15 @@ public class CLI implements UI {
                 nickname = input.nextLine();
             } while (nickname == null);
 
-            System.out.println(">You chose: " + nickname);
-            System.out.println(">Is it ok? [y/n] ");
-            System.out.print(">");
-            if (input.nextLine().equalsIgnoreCase("y")) {
-                confirmation = true;
-            } else {
-                nickname = null;
-            }
+//            System.out.println(">You chose: " + nickname);
+//            System.out.println(">Is it ok? [y/n] ");
+//            System.out.print(">");
+//            if (input.nextLine().equalsIgnoreCase("y")) {
+//                confirmation = true;
+//            } else {
+//                nickname = null;
+//            }
+            confirmation = true; // FIXME REMOVE JUST TEMP
         }
         connectionSocket = new ConnectionSocket();
         modelView.setPlayerName(nickname);
@@ -109,13 +108,43 @@ public class CLI implements UI {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if(Objects.equals(evt.getPropertyName(), ServerMessageHandler.GAME_ERROR_LISTER)){
-            System.out.println(((GameError) evt.getNewValue()).getMessage());
+        switch (evt.getPropertyName()) {
+            case ServerMessageHandler.GAME_ERROR_LISTENER ->  System.out.println(((GameError) evt.getNewValue()).getMessage());
+            case ServerMessageHandler.CUSTOM_MESSAGE_LISTER -> System.out.println(((CustomMessage) evt.getNewValue()).getMessage());
+            case ServerMessageHandler.GAME_STATE_LISTENER -> statePrinter((GameState) evt.getOldValue(), (GameState) evt.getNewValue());
+            case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER -> roundPrinter((String) evt.getOldValue(), (String) evt.getNewValue());
         }
-        else if(Objects.equals(evt.getPropertyName(), ServerMessageHandler.CUSTOM_MESSAGE_LISTER)){
-            System.out.println(((CustomMessage) evt.getNewValue()).getMessage());
+
+    }
+
+    public void statePrinter(GameState oldState, GameState newState){
+
+        String owner = modelView.getRoundOwner();
+        String player = modelView.getPlayerName();
+
+        if(player.equals(owner)) {
+
+            if(oldState != newState){
+                System.out.println(Constants.ANSI_GREEN +"You are passed to : " + newState + " make your choice" + Constants.ANSI_RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
+            }
+        }else{
+            if(oldState != newState){
+                System.out.println(Constants.ANSI_CYAN + "Player " + player + "is in " + newState + Constants.ANSI_RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
+            }
         }
     }
+
+    public void roundPrinter(String oldRoundOwner, String newRoundOwner){
+        String player = modelView.getPlayerName();
+        if(!newRoundOwner.equals(oldRoundOwner)) {
+            if (player.equals(newRoundOwner)) {
+                System.out.println(Constants.ANSI_BACKGROUND_BLACK + Constants.ANSI_WHITE + "You are the new round owner"  + Constants.ANSI_RESET);
+            }else{
+                System.out.println(Constants.ANSI_CYAN + newRoundOwner + "is the new round owner" + Constants.ANSI_RESET);
+            }
+        }
+    }
+
 
     public boolean isActiveGame() {
         return activeGame;

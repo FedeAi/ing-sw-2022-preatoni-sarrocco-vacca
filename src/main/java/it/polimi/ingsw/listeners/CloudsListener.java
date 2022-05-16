@@ -35,6 +35,6 @@ public class CloudsListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         CloudsMessage message = new CloudsMessage((List<Cloud>) evt.getNewValue());
-        virtualClient.sendAll(message);
+        virtualClient.send(message);
     }
 }

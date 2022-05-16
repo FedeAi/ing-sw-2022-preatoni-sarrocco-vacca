@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class IslandContainer implements Serializable {
-    private LinkedList<Island> islands;
+    private final LinkedList<Island> islands;
 
     public IslandContainer(LinkedList<Island> islands) {
         this.islands = islands;

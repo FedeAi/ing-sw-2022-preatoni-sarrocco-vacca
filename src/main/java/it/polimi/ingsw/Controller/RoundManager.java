@@ -40,8 +40,8 @@ public class RoundManager {
         action.performMove(gameInstance, gameManager.getRules());
         /* this line is reached only if the action is performable  */
 
-        handleStateChange(action);
         handleNextPlayer(action);
+        handleStateChange(action);
 
         WinController.check(gameInstance);
 
