@@ -120,6 +120,9 @@ public class ServerMessageHandler {
     else if(answer instanceof ModeMessage message){
       modelView.setExpert(message.getMessage());
     }
+    else if(answer instanceof CharactersMessage message){
+      modelView.setCharacterCards(message.getMessage());
+    }
   }
 
   public void setupMessageHandler(Answer answer){

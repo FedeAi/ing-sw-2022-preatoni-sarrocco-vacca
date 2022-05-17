@@ -27,6 +27,7 @@ public class Game {
     public static final String MAGICIANS_LISTENER = "magiciansListener";
     public static final String GAME_STATE_LISTENER = "gameStateListener";
     private static final String MODE_LISTENER = "modeListener";
+    private static final String CHARACTERS_LISTENER = "charactersListener";
 
     private final List<Player> players;
     private final List<Magician> availableMagicians;
@@ -61,6 +62,7 @@ public class Game {
     public void fireInitalState(){
         listeners.firePropertyChange(MAGICIANS_LISTENER, null, availableMagicians);
         listeners.firePropertyChange(MODE_LISTENER, null, expertMode);
+        listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
         players.forEach(Player::fireInitialState);
     }
 
@@ -79,6 +81,7 @@ public class Game {
         listeners.addPropertyChangeListener(MAGICIANS_LISTENER, new MagicianListener(client));
         listeners.addPropertyChangeListener(GAME_STATE_LISTENER, new GameStateListener(client));
         listeners.addPropertyChangeListener(MODE_LISTENER, new ModeListener(client));
+        listeners.addPropertyChangeListener(CHARACTERS_LISTENER, new CharactersListener(client));
 
         // Player listeners
         Optional<Player> player = getPlayerByNickname(client.getNickname());
@@ -330,6 +333,17 @@ public class Game {
 
     public List<CharacterCard> getCharacterCards() {
         return characterCards;
+    }
+
+    public void activateCharacterCard(int card, Rules rules){
+        ArrayList<CharacterCard> oldCharacters = new ArrayList<CharacterCard>(characterCards);
+        characterCards.get(card).activate(rules, this);
+        listeners.firePropertyChange(CHARACTERS_LISTENER, oldCharacters, characterCards);
+    }
+    public void deactivateCharacterCard(int card, Rules rules){
+        ArrayList<CharacterCard> oldCharacters = new ArrayList<CharacterCard>(characterCards);
+        characterCards.get(card).deactivate(rules, this);
+        listeners.firePropertyChange(CHARACTERS_LISTENER, oldCharacters, characterCards);
     }
 
     public IslandContainer getIslandContainer() {

@@ -63,8 +63,7 @@ public class ActivateCard extends Performable {
         }
 
         player.spendCoins(chosenCard.getPrice());
-
-        chosenCard.activate(rules, game);
+        game.activateCharacterCard(choice, rules);
     }
 
 }

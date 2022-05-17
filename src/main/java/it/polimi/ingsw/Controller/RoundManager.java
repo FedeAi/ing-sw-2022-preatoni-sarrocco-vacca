@@ -16,6 +16,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class RoundManager {
 
@@ -45,6 +46,12 @@ public class RoundManager {
 
         if(nextPlayer == null && nextState == GameState.ACTION_MOVE_STUDENTS){
             nextPlayer = setActionOrder(gameInstance);
+        }
+
+        // if next round is going to start
+        if(gameInstance.getGameState() == GameState.ACTION_CHOOSE_CLOUD && nextState == GameState.PLANNING_CHOOSE_CARD){
+            // deactivate Character effects if there is an active card TODO not here
+            IntStream.range(0, gameInstance.getCharacterCards().size()).filter(i -> gameInstance.getCharacterCards().get(i).isActive()).forEach(i->gameInstance.deactivateCharacterCard(i,gameManager.getRules()));
         }
 
         gameInstance.setRoundOwner(nextPlayer);

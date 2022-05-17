@@ -9,6 +9,7 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 public class ChooseCloud extends Performable {
     private final int choice;
@@ -45,10 +46,6 @@ public class ChooseCloud extends Performable {
         if (game.getNextPlayerActionPhase().isEmpty()) { //if end Turn
             game.refillClouds(); //refill of clouds
         }
-
-        // END OF PLAYER TURN -> deactivate Character effects if there is an active card TODO not here
-        game.getActiveCharacter().ifPresent(characterCard ->
-                characterCard.deactivate(rules, game));
 
     }
 

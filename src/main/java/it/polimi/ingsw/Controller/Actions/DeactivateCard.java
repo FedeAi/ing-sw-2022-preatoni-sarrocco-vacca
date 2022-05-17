@@ -8,6 +8,8 @@ import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
+import java.util.stream.IntStream;
+
 /**
  * It is used when a player decide not to go on with the effect of the active character Card (per i fino a)
  */
@@ -29,7 +31,8 @@ public class DeactivateCard extends Performable {
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
-        game.getActiveCharacter().ifPresent(characterCard -> characterCard.deactivate(rules, game));
+        // TODO DEACTIVATE A SINGLE CARD
+        IntStream.range(0, game.getCharacterCards().size()).filter(i -> game.getCharacterCards().get(i).isActive()).forEach(i->game.deactivateCharacterCard(i,rules));
     }
 
 
