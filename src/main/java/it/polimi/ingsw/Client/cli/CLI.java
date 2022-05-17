@@ -251,21 +251,26 @@ public class CLI implements UI {
      */
     private void showActions() {
 
-        String characters =  modelView.getCharacterCards().toString();
-        //Charcaters card that are available
-        String first = characters.split("")[0];
-        String second = characters.split("")[1];
-        String third = characters.split("")[2];
+            List<Integer> availableClouds = IntStream.range(0, modelView.getClouds().size())
+                    .filter(i -> !modelView.getClouds().get(i)
+                            .isEmpty()).boxed().toList();
+
 
         // modelView.getPlayedCards().getOrDefault(modelView.getRoundOwner()); bho poi spiego
-        System.out.println(CLIColors.ANSI_GREEN + "Follow there are the possible moves available in this moment: " + CLIColors.RESET);
+        System.out.println(CLIColors.ANSI_GREEN + "These are all the possible moves available at this moment: " + CLIColors.RESET);
+
+        switch (modelView.getGameState()) {
+            case SETUP_CHOOSE_MAGICIAN -> System.out.println(CLIColors.ANSI_GREEN + "magician " + modelView.getAvailableMagiciansStr() + CLIColors.RESET); // CHECK i mean available magicians
+            case PLANNING_CHOOSE_CARD -> System.out.println(CLIColors.ANSI_GREEN + "playcard " + modelView.getHand().stream().map(AssistantCard::getValue).toList() + CLIColors.RESET);
+            case ACTION_MOVE_STUDENTS -> System.out.println(CLIColors.ANSI_GREEN + " studentisland \n studentshall"  + CLIColors.RESET);
+            case ACTION_MOVE_MOTHER -> System.out.println(CLIColors.ANSI_GREEN + " movemother 0 - "+modelView.getPlayedCards().get(modelView.getPlayerName()).getMaxMoves()  + CLIColors.RESET);
+            case ACTION_CHOOSE_CLOUD -> System.out.println(CLIColors.ANSI_GREEN + " cloud " + availableClouds + CLIColors.RESET);
+        }
         if(modelView.getExpert()){
-            switch (modelView.getGameState()) {
-                case SETUP_CHOOSE_MAGICIAN -> System.out.println(CLIColors.ANSI_GREEN + "magician 0 - " /*+ modelView.getPlayerMapMagician().keySet().size()*/ + CLIColors.RESET); // CHECK i mean available magicians
-                case PLANNING_CHOOSE_CARD -> System.out.println(CLIColors.ANSI_GREEN + "playcard 0 - " /*+ modelView.getPlayedCards().get(modelView.getRoundOwner()) */+ CLIColors.RESET);
-                case ACTION_MOVE_STUDENTS -> System.out.println(CLIColors.ANSI_GREEN + " studentisland 0- \n studentshall 0-"  + CLIColors.RESET);
-                case ACTION_MOVE_MOTHER -> System.out.println(CLIColors.ANSI_GREEN + " movemother 0- "  + CLIColors.RESET);
-                case ACTION_CHOOSE_CLOUD -> System.out.println(CLIColors.ANSI_GREEN + " cloud 0 - "  + CLIColors.RESET);
+            if(modelView.getGameState() != GameState.SETUP_CHOOSE_MAGICIAN){
+                System.out.println("Characters:");
+                modelView.getCharacterCards().stream().map(c -> c.getCharacter().toString()).forEach(System.out::println);
+                System.out.println(CLIColors.ANSI_BLUE + "Your Balance:  " + modelView.getBalance() + CLIColors.RESET);
             }
         }
         else{
@@ -283,7 +288,7 @@ public class CLI implements UI {
      * Board print
      */
     private void showBoard() {
-        Printable.printBoard(modelView.getIslandContainer(), modelView.getClouds());
+        Printable.printBoard(modelView.getIslandContainer(), modelView.getClouds(), modelView.getMotherNature());
     }
     /**
      * Clouds print
@@ -325,7 +330,7 @@ public class CLI implements UI {
      */
     private boolean validateNickname(String user ){
         boolean validate = false;
-        Pattern p = Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$");
+        Pattern p = Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$");
         Matcher m = p.matcher(user);
         if(m.matches()){
             validate = true;

@@ -8,8 +8,8 @@ public enum CLIColors {
     ANSI_PURPLE("\u001B[35m"),
     ANSI_CYAN("\033[36m"),
     ANSI_WHITE("\033[37m"),
+    ANSI_PINK("\u001B[35m"),
     ANSI_BACKGROUND_BLACK("\033[40m");
-
     public static final String RESET = "\u001B[0m";
 
     private String escape;
