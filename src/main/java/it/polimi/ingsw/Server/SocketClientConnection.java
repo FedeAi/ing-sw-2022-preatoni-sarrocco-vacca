@@ -235,7 +235,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
                     // FIXME custom exception
                     } catch (Exception e) {
                         server.getClientByID(this.clientID).send(new CustomMessage("Error: not a valid " + "input! Please provide a value of 2 or 3."));
-                        server.getClientByID(this.clientID).send(new ReqPlayersMessage("Choose the number" + " of players! [2/3]"));
+                        server.getClientByID(this.clientID).send(new ReqPlayersMessage("Choose the number" + " of players!\n setup [2/3] [?expert]"));
                     }
                 }
             } catch (ClassNotFoundException | IOException e) {

@@ -11,7 +11,7 @@ import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import it.polimi.ingsw.Server.Answer.GameError;
-import it.polimi.ingsw.listeners.AbsListener;
+import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
@@ -141,10 +141,16 @@ public class CLI implements UI {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case ServerMessageHandler.GAME_ERROR_LISTENER -> System.out.println(((GameError) evt.getNewValue()).getMessage());
-            case ServerMessageHandler.CUSTOM_MESSAGE_LISTER -> System.out.println(((CustomMessage) evt.getNewValue()).getMessage());
-            case ServerMessageHandler.GAME_STATE_LISTENER -> statePrinter((GameState) evt.getOldValue(), (GameState) evt.getNewValue());
-            case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER -> roundPrinter((String) evt.getOldValue(), (String) evt.getNewValue());
+            case ServerMessageHandler.GAME_ERROR_LISTENER ->
+                    System.out.println(CLIColors.ANSI_RED + ((GameError) evt.getNewValue()).getMessage() + CLIColors.RESET);
+            case ServerMessageHandler.REQ_PLAYERS_LISTENER ->
+                    System.out.println(CLIColors.ANSI_GREEN + ((ReqPlayersMessage) evt.getNewValue()).getMessage() + CLIColors.RESET);
+            case ServerMessageHandler.CUSTOM_MESSAGE_LISTER ->
+                    System.out.println(((CustomMessage) evt.getNewValue()).getMessage());
+            case ServerMessageHandler.GAME_STATE_LISTENER ->
+                    statePrinter((GameState) evt.getOldValue(), (GameState) evt.getNewValue());
+            case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER ->
+                    roundPrinter((String) evt.getOldValue(), (String) evt.getNewValue());
         }
 
     }
@@ -172,6 +178,7 @@ public class CLI implements UI {
     public void roundPrinter(String oldRoundOwner, String newRoundOwner) {
         String player = modelView.getPlayerName();
         if (!newRoundOwner.equals(oldRoundOwner)) {
+            clearScreen();  // FIXME Seams not to work
             if (player.equals(newRoundOwner)) {
                 System.out.println(CLIColors.ANSI_BACKGROUND_BLACK.getEscape() + CLIColors.ANSI_WHITE + "You are the new round owner" + CLIColors.RESET);
             } else {

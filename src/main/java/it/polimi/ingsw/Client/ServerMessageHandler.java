@@ -19,6 +19,7 @@ public class ServerMessageHandler {
 
   public static final String GAME_SETUP_LISTENER = "gameSetup";
   public static final String GAME_ERROR_LISTENER = "gameError";
+  public static final String REQ_PLAYERS_LISTENER = "reqPlayers";
   public static final String CUSTOM_MESSAGE_LISTER = "customMessage";
   public static final String NEXT_ROUNDOWNER_LISTENER = "RoundOwner";
   public static final String GAME_STATE_LISTENER = "stateChange";
@@ -60,9 +61,11 @@ public class ServerMessageHandler {
    */
   public void answerHandler() {
     Answer answer = modelView.getServerAnswer();
-    if (answer instanceof ConnectionMessage) {
-      ConnectionMessage connectionMessage = (ConnectionMessage) answer;
-      System.out.println(connectionMessage.getMessage()); // TODO
+    if (answer instanceof ConnectionMessage connectionMessage) {
+      System.out.println(connectionMessage.getMessage());
+    }
+    else if (answer instanceof ReqPlayersMessage){
+      view.firePropertyChange(REQ_PLAYERS_LISTENER,null, answer);
     }
     else if(answer instanceof ModelMessage){
       handleGameMessage((ModelMessage) answer);
@@ -104,7 +107,6 @@ public class ServerMessageHandler {
     else if(answer instanceof RoundOwnerMessage message){
       String previousOwner = modelView.getRoundOwner();
       modelView.setRoundOwner(message.getMessage());
-      System.out.println(message.getMessage());
       view.firePropertyChange(NEXT_ROUNDOWNER_LISTENER, previousOwner , message.getMessage());
     }
     else if(answer instanceof MagicianMessage message){
@@ -113,7 +115,7 @@ public class ServerMessageHandler {
     else if(answer instanceof GameStateMessage message){
       GameState previousState = modelView.getGameState();
       modelView.setGameState(message.getMessage());
-      view.firePropertyChange(GAME_STATE_LISTENER, previousState, message.getMessage());
+      view.firePropertyChange(GAME_STATE_LISTENER, null, message.getMessage()); // todo remove previousstate to trigger (also in game model)
     }
   }
 

@@ -290,7 +290,7 @@ public class Game {
     }
 
     public void setGameState(GameState gameState) {
-        listeners.firePropertyChange(GAME_STATE_LISTENER, this.gameState , gameState);
+        listeners.firePropertyChange(GAME_STATE_LISTENER, null , gameState);
         this.gameState = gameState;
     }
 

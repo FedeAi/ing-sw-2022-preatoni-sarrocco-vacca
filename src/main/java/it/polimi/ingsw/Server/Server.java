@@ -167,10 +167,11 @@ public class Server {
         waiting.add(c);
         if (waiting.size() == 1) {
             c.setup(
-                    new ReqPlayersMessage( //FIXME don't manage client side
+                    new ReqPlayersMessage(
                             idMapClient.get(c.getClientID()).getNickname()
                                     + ", you are"
-                                    + " the lobby host.\nChoose the number of players! [2/3]"));
+                                    + " the lobby host.\nChoose the number of players! \n" +
+                                    "setup [2/3] [?expert]"));
         } else if (waiting.size() == totalPlayers) {
             System.err.println(
                     Constants.getInfo() + "Minimum player number reached. The match is starting.");

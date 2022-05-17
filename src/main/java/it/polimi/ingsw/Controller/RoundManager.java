@@ -46,8 +46,9 @@ public class RoundManager {
         if(nextPlayer == null && nextState == GameState.ACTION_MOVE_STUDENTS){
             nextPlayer = setActionOrder(gameInstance);
         }
-        gameInstance.setGameState(nextState);
+
         gameInstance.setRoundOwner(nextPlayer);
+        gameInstance.setGameState(nextState);
 
         WinController.check(gameInstance);
 
