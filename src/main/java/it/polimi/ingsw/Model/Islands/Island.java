@@ -37,4 +37,8 @@ public abstract class Island implements Serializable {
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
+
+    public int size() {
+        return 1;
+    }
 }

@@ -1,13 +1,13 @@
 package it.polimi.ingsw.Client.cli;
 
 import it.polimi.ingsw.Client.*;
-import it.polimi.ingsw.Constants.CLIColors;
+import it.polimi.ingsw.Constants.*;
 import it.polimi.ingsw.Constants.Character;
-import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
-import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
+import it.polimi.ingsw.Model.Cloud;
+import it.polimi.ingsw.Model.Islands.IslandContainer;
 import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import it.polimi.ingsw.Server.Answer.GameError;
@@ -216,10 +216,13 @@ public class CLI implements UI {
         String[] in = cmd.split(" ");
         if (in.length > 1) { //if the show has enough arc
             String command = in[1];
-            String nickname = in[2];
 
             switch (command.toUpperCase()) {
-                case "SCHOOL" -> showSchool(modelView, nickname);
+                case "SCHOOL" -> {
+                    if(in.length > 2) {
+                        String nickname = in[2];
+                        showSchool(modelView, nickname);
+                    }}
                 case "ACTIONS" -> showActions();
                 case "BOARD" -> showBoard();
                 case "CLOUDS" -> showClouds();
@@ -280,7 +283,7 @@ public class CLI implements UI {
      * Board print
      */
     private void showBoard() {
-
+        Printable.printBoard(modelView.getIslandContainer(), modelView.getClouds());
     }
     /**
      * Clouds print

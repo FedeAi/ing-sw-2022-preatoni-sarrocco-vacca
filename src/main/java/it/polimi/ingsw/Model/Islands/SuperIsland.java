@@ -24,7 +24,7 @@ public class SuperIsland extends Island {
 
     }
 
-    List<BaseIsland> getBaseIslands() {
+    public List<BaseIsland> getBaseIslands() {
         return islands;
     }
 
@@ -61,5 +61,10 @@ public class SuperIsland extends Island {
     public void addStudent(Color student) {
         // we decided to add the student to the first island of the super island group
         islands.get(0).addStudent(student);
+    }
+
+    @Override
+    public int size() {
+        return islands.size();
     }
 }
