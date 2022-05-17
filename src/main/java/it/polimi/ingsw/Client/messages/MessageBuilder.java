@@ -118,7 +118,7 @@ public class MessageBuilder {
         try {
             Message messageToSend;
             boolean expertMode = in.length > 2 && in[2].equalsIgnoreCase("expert");
-            // modelView.setExpert(expertMode);
+            modelView.setExpert(expertMode);
             messageToSend = new SetupMessage(Integer.parseInt(in[1]), expertMode);
             return messageToSend;
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
