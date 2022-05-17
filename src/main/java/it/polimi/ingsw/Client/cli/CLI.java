@@ -22,6 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * ClI implements the UI and that is the command line interface of view concept
@@ -38,7 +40,7 @@ public class CLI implements UI {
     private final ModelView modelView;
     private final ServerMessageHandler serverMessageHandler;
     private boolean activeGame;
-    private final String SHOW_ERROR = "syntax show error: show #item and opt a specific user (ex: show school user) otherwise it ll be printed all school ";
+    private final String SHOW_ERROR = "SHOW not well formatted: show [SCHOOL/ACTIONS/BOARD/CLOUDS] [?user] (ex: show school user)";
 
     private ConnectionSocket connectionSocket;
     /**
@@ -271,15 +273,6 @@ public class CLI implements UI {
                 System.out.println("Characters:");
                 modelView.getCharacterCards().stream().map(c -> c.getCharacter().toString()).forEach(System.out::println);
                 System.out.println(CLIColors.ANSI_BLUE + "Your Balance:  " + modelView.getBalance() + CLIColors.RESET);
-            }
-        }
-        else{
-            switch (modelView.getGameState()) {
-                case SETUP_CHOOSE_MAGICIAN -> System.out.println(CLIColors.ANSI_GREEN + "magician 0 - " /*+ modelView.getPlayerMapMagician().keySet().size()*/ + CLIColors.RESET); // CHECK i mean available magicians
-                case PLANNING_CHOOSE_CARD -> System.out.println(CLIColors.ANSI_GREEN + "playcard 0 - \n" /*+ modelView.getPlayedCards().get(modelView.getRoundOwner()) */+ first + "\n" + second + "\n" + third+ "\n" + CLIColors.RESET);
-                case ACTION_MOVE_STUDENTS -> System.out.println(CLIColors.ANSI_GREEN + " studentisland 0- \n studentshall 0- \n" + first + "\n" + second + "\n" + third+ "\n" + CLIColors.RESET);
-                case ACTION_MOVE_MOTHER -> System.out.println(CLIColors.ANSI_GREEN + " movemother 0- " + first + "\n" + second + "\n" + third+ "\n" + CLIColors.RESET);
-                case ACTION_CHOOSE_CLOUD -> System.out.println(CLIColors.ANSI_GREEN + " cloud 0 - "+ first + "\n" + second + "\n" + third+ "\n" + CLIColors.RESET);
             }
         }
 

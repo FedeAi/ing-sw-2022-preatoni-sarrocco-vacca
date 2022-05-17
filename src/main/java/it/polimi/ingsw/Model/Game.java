@@ -26,6 +26,7 @@ public class Game {
     public static final String ROUND_OWNER_LISTENER = "roundOwnerListener";
     public static final String MAGICIANS_LISTENER = "magiciansListener";
     public static final String GAME_STATE_LISTENER = "gameStateListener";
+    private static final String MODE_LISTENER = "modeListener";
 
     private final List<Player> players;
     private final List<Magician> availableMagicians;
@@ -46,18 +47,21 @@ public class Game {
     //private Comparator<Integer> influenceComparator = Comparator.comparing((i1,i2)->(i1.intValue()-i2));
 
     public Game() {
+
         this.bag = new Bag(Constants.INITIAL_BAG_SIZE);
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
         availableMagicians = new ArrayList<>(Arrays.stream(Magician.values()).toList());
-        listeners.firePropertyChange(MAGICIANS_LISTENER, null, availableMagicians);
-
         islandContainer = new IslandContainer();
         clouds = new ArrayList<>();
         characterCards = new ArrayList<>();
         initProfessors();
-        expertMode = false;
+    }
 
+    public void fireInitalState(){
+        listeners.firePropertyChange(MAGICIANS_LISTENER, null, availableMagicians);
+        listeners.firePropertyChange(MODE_LISTENER, null, expertMode);
+        players.forEach(Player::fireInitialState);
     }
 
     /**
@@ -65,6 +69,7 @@ public class Game {
      * @param client virtualClient - the VirtualClient on the server.
      */
     public void createListeners(VirtualClient client){
+        
         listeners.addPropertyChangeListener(MOVE_MOTHER_LISTENER, new MoveMotherListener(client));
         listeners.addPropertyChangeListener(ISLANDS_LISTENER, new IslandsListener(client));
         listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
@@ -73,6 +78,7 @@ public class Game {
         listeners.addPropertyChangeListener(ROUND_OWNER_LISTENER, new RoundOwnerListener(client));
         listeners.addPropertyChangeListener(MAGICIANS_LISTENER, new MagicianListener(client));
         listeners.addPropertyChangeListener(GAME_STATE_LISTENER, new GameStateListener(client));
+        listeners.addPropertyChangeListener(MODE_LISTENER, new ModeListener(client));
 
         // Player listeners
         Optional<Player> player = getPlayerByNickname(client.getNickname());
@@ -149,8 +155,6 @@ public class Game {
         return getPlayerByNickname(name).isPresent();
     }
 
-
-    // FIXME GIGANTESCO
     public void createPlayer(int playerID, String nickname) {
         Player p = new Player(playerID, nickname);
         players.add(p);
@@ -176,6 +180,7 @@ public class Game {
     // This will likely need a MUCH better solution
     public void setExpertMode(boolean expertMode) {
         this.expertMode = expertMode;
+        listeners.firePropertyChange(MODE_LISTENER, null, expertMode);
     }
 
     /**

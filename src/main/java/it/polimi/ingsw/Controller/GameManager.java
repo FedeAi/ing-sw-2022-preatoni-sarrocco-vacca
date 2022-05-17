@@ -57,22 +57,18 @@ public class GameManager implements PropertyChangeListener {
     }
 
     public void initGame() {
-        // init Model
-        // TODO canGameBeInitialized() ? ok : throwExce (ad esempio se non ci sono abbastanza giocatori )
         initMotherNature();
         initIslands();
         fillBag();
         initSchools();
         initClouds();
         initRoundManager();
-        //TODO fireproprietychange should change
-        if (isHard_temp == true) {
-            game.setExpertMode(true);
+        if (game.isExpertMode()) {
             initCharacters();
             game.initBalance(Constants.NUM_COINS);
             initPlayersBalance();
         }
-
+        game.fireInitalState();
     }
 
     private void initCharacters() {
@@ -150,13 +146,12 @@ public class GameManager implements PropertyChangeListener {
     private void initClouds() {
         int numClouds = game.getPlayers().size();
         LinkedList<Cloud> clouds = new LinkedList<>();
-
         for (int i = 0; i < numClouds; i++) {
             Cloud cloud = new Cloud();
-            cloud.addStudents(game.getBag().extract(Rules.getStudentsPerTurn(game.numPlayers()))); //init fill
             clouds.add(cloud);
         }
         game.initClouds(clouds);
+        game.refillClouds();
 
     }
 

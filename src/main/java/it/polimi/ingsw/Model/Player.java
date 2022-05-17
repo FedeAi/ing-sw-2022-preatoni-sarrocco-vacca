@@ -20,6 +20,7 @@ import java.util.Objects;
 
 // TODO remove playedCard at the end of the turn
 public class Player implements PropertyChangeListener {
+
     public static final String HAND_LISTENER = "handListener";
     public static final String SCHOOL_LISTENER = "schoolListener";
     public static final String BALANCE_LISTENER = "balanceListener";
@@ -65,6 +66,11 @@ public class Player implements PropertyChangeListener {
         listeners.addPropertyChangeListener(BALANCE_LISTENER, new BalanceListener(client));
     }
 
+    public void fireInitialState(){
+        listeners.firePropertyChange(HAND_LISTENER, null, cards);
+        listeners.firePropertyChange(SCHOOL_LISTENER, null, school);
+        listeners.firePropertyChange(BALANCE_LISTENER, null, balance);
+    }
 
     public void initBalance(int balance) {
         this.balance = balance;

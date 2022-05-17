@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import it.polimi.ingsw.Client.cli.CLI;
 import it.polimi.ingsw.Client.gui.GUI;
@@ -37,7 +38,7 @@ public class ModelView {
     private Map<String, AssistantCard> playedCards;
     private int motherNature;
     private GameState gameState;
-    private boolean expert = false; // TODO make listener
+    private boolean expert = false;
 
     private boolean isInputActive = true; // TODO FIXME this must be set not true forever
 
@@ -146,6 +147,10 @@ public class ModelView {
 
     public void setAvailableMagicians(List<Magician> availableMagicians){
         this.availableMagicians = availableMagicians;
+    }
+
+    public List<String> getAvailableMagiciansStr(){
+        return availableMagicians.stream().map(Enum::toString).collect(Collectors.toList());
     }
 
     public void setClouds(List<Cloud> clouds) {
