@@ -1,4 +1,5 @@
 package it.polimi.ingsw.Client.messages;
+import it.polimi.ingsw.Client.ModelView;
 import it.polimi.ingsw.Constants.*;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.CLIColors;
@@ -6,6 +7,8 @@ import it.polimi.ingsw.Constants.CLIColors;
 
 
 public class MessageBuilder {
+
+    ModelView modelView;
 
     private final String PLAY_CARD_ERROR = "syntax playcard #card (ex: playcard 5) ";
     private final String SETUP_ERROR = "syntax setup error: setup #player #mod (ex: setup 2 expert)";
@@ -115,6 +118,7 @@ public class MessageBuilder {
         try {
             Message messageToSend;
             boolean expertMode = in.length > 2 && in[2].equalsIgnoreCase("expert");
+            modelView.setExpert(expertMode);
             messageToSend = new SetupMessage(Integer.parseInt(in[1]), expertMode);
             return messageToSend;
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {

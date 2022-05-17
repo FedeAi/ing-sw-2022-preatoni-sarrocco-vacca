@@ -37,6 +37,7 @@ public class ModelView {
     private Map<String, AssistantCard> playedCards;
     private int motherNature;
     private GameState gameState;
+    private boolean expert;
 
     private boolean isInputActive = true; // TODO FIXME this must be set not true forever
 
@@ -184,6 +185,8 @@ public class ModelView {
         isInputActive = false;
     }
 
+
+
     public CLI getCli(){
         return cli;
     }
@@ -197,5 +200,12 @@ public class ModelView {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public void setExpert(boolean expertMode) {
+        expert = expertMode;
+    }
+    public boolean getExpert(){
+        return expert;
     }
 }
