@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -212,5 +213,12 @@ public class ModelView {
     }
     public boolean getExpert(){
         return expert;
+    }
+    public List<String> getPlayers() {
+        List<String> players = new ArrayList<>();
+        for (String s : playerMapSchool.keySet()) {
+            players.add(s);
+        }
+        return players;
     }
 }

@@ -4,8 +4,10 @@ import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
 import it.polimi.ingsw.Model.Islands.SuperIsland;
+import it.polimi.ingsw.Model.School;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,20 +29,25 @@ public class Printable {
     static final String space = "   ";
 
 
-    public static void printBoard(IslandContainer islandContainer, List<Cloud> clouds, int mn) {
+    public static void printBoard(IslandContainer islandContainer, List<Cloud> clouds, int mn, List<String> players, Map<String, School> schoolMap) {
         String[] island = {" ▄█████████████████▄ ",
                 "██  " + ANSI_RED + "█" + RESET + ":%02d     " + ANSI_YELLOW + "█" + RESET + ":%02d  ██",
                 "██  " + ANSI_BLUE + "█" + RESET + ":%02d     " + ANSI_GREEN + "█" + RESET + ":%02d  ██",
                 "██  " + ANSI_PINK + "█" + RESET + ":%02d     " + "      ██",
                 "██                 ██",
-                "██   " + ANSI_BRED + "%s" + RESET + "             ██",
-                "██  " + ANSI_BRED + "%s" + RESET + "            ██",
+                "██   " + ANSI_BRED + "%s" + RESET + "  %s  ██",
+                "██  " + ANSI_BRED + "%s" + RESET + "   ♜:%01d      ██",
                 " ▀█████████████████▀ ",
         };
         String[] cloud = {
                 ""
         };
-        String[][] islands = prepareIslands(island, islandContainer, mn);
+        Map<String, TowerColor> map = new HashMap<>();
+        for(int i = 0; i < players.size() - 1; i++) {
+            String p = players.get(i);
+            map.put(p, schoolMap.get(p).getTowerColor());
+        }
+        String[][] islands = prepareIslands(island, islandContainer, mn, map);
         topRow(islands);
         topMidRow(islands);
         bottomMidRow(islands);
@@ -100,7 +107,7 @@ public class Printable {
         System.out.println();
     }
 
-    private static String[] islandFormat(boolean isMerged, boolean motherNature, String pIsland[], Map<Color, Integer> map) {
+    private static String[] islandFormat(boolean isMerged, boolean motherNature, String pIsland[], Map<Color, Integer> map, int towers, String towerColor) {
         String[] island = Arrays.copyOf(pIsland, pIsland.length);
         String s = "   ";
         if (isMerged) {
@@ -112,17 +119,17 @@ public class Printable {
             island[2] = String.format(island[2], map.getOrDefault(Color.BLUE, 0), map.getOrDefault(Color.GREEN, 0));
             island[3] = String.format(island[3], map.getOrDefault(Color.PINK, 0));
             if (motherNature) {
-                island[5] = String.format(island[5], "█");
-                island[6] = String.format(island[6], "███");
+                island[5] = String.format(island[5], "█", towerColor);
+                island[6] = String.format(island[6], "███", towers);
             } else {
-                island[5] = String.format(island[5], " ");
-                island[6] = String.format(island[6], s);
+                island[5] = String.format(island[5], " ", towerColor);
+                island[6] = String.format(island[6], s, towers);
             }
         }
         return island;
     }
 
-    private static String[][] prepareIslands(String[] island, IslandContainer islandContainer, int mn) {
+    private static String[][] prepareIslands(String[] island, IslandContainer islandContainer, int mn, Map<String, TowerColor> map) {
         String[][] stringIslands = new String[12][];
         int i = 0;
         boolean motherNature;
@@ -134,30 +141,26 @@ public class Printable {
             }
             if (isl instanceof SuperIsland) {
                 int n = isl.size(); // 3 isole, i = 4
-                stringIslands[i] = islandFormat(false, motherNature, island, isl.getStudents());
+                stringIslands[i] = islandFormat(false, motherNature, island, isl.getStudents(), n, getOwnerColor(isl.getOwner(), map));
                 for (int j = 0; j < n - 1; j++) {
                     i++;
-                    stringIslands[i] = islandFormat(true, false, island, isl.getStudents());
+                    stringIslands[i] = islandFormat(true, false, island, isl.getStudents(), 0, getOwnerColor(null, null));
                 }
             } else {
-                stringIslands[i] = islandFormat(false, motherNature, island, isl.getStudents());
+                int towers = getOwnerColor(isl.getOwner(), map).equals("     ") ? 0 : 1;
+                stringIslands[i] = islandFormat(false, motherNature, island, isl.getStudents(), towers, getOwnerColor(isl.getOwner(), map));
             }
             i++;
         }
         return stringIslands;
     }
 
-    private static String getOwnerColor(Island island, Map<String, TowerColor> map) {
-        String s = "    ";
-        String tower = "♜";
-        if (island.getOwner() == null) {
+    private static String getOwnerColor(String owner, Map<String, TowerColor> map) {
+        String s = "     ";
+        if (owner == null) {
             return s;
         } else {
-            switch (map.get(island.getOwner())) {
-                case TowerColor.BLACK -> s = ANSI_BLACK + "" + RESET + ":%01d";
-                case TowerColor.WHITE -> s = ANSI_WHITE + "" + RESET + ":%01d";
-                case TowerColor.GRAY -> s= ANSI_GREY + "" + RESET + ":%01d";
-            }
+            return map.get(owner).toString();
         }
     }
 }

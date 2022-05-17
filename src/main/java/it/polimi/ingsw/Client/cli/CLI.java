@@ -281,7 +281,7 @@ public class CLI implements UI {
      * Board print
      */
     private void showBoard() {
-        Printable.printBoard(modelView.getIslandContainer(), modelView.getClouds(), modelView.getMotherNature());
+        Printable.printBoard(modelView.getIslandContainer(), modelView.getClouds(), modelView.getMotherNature(), modelView.getPlayers(), modelView.getPlayerMapSchool());
     }
     /**
      * Clouds print
