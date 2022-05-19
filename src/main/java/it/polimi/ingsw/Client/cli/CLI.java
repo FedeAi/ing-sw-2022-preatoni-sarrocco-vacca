@@ -61,18 +61,18 @@ public class CLI implements UI {
             System.out.println(Constants.ERIANTYS);
             System.out.println(Constants.AUTHORS);
             Scanner scanner = new Scanner(System.in);
-//        System.out.println(">Insert the server IP address");
-//        System.out.print(">");
-//        String ip = scanner.nextLine();
+        System.out.println(">Insert the server IP address");
+        System.out.print(">");
+        String ip = scanner.nextLine();
 //        validateIp(ip);
-//        System.out.println(">Insert the server port");
-//        System.out.print(">");
-//        String port = scanner.nextLine();
+        System.out.println(">Insert the server port");
+        System.out.print(">");
+        String port = scanner.nextLine();
 //        validatePort(port);
 //
 //       }while(validatePort(port) == -1 || validateIp(ip) = false);
-        Constants.setAddress("localhost");
-        Constants.setPort(8080);
+        Constants.setAddress(ip);
+        Constants.setPort(Integer.parseInt(port));
         CLI cli = new CLI();
         cli.run();
     }
