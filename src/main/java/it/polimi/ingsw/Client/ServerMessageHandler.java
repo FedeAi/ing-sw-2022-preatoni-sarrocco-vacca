@@ -23,6 +23,7 @@ public class ServerMessageHandler {
   public static final String CUSTOM_MESSAGE_LISTER = "customMessage";
   public static final String NEXT_ROUNDOWNER_LISTENER = "RoundOwner";
   public static final String GAME_STATE_LISTENER = "stateChange";
+  public static final String PLAYED_CARD_LISTENER = "playedCard";
 
   private final ModelView modelView;
   private final PropertyChangeSupport view = new PropertyChangeSupport(this);
@@ -97,6 +98,7 @@ public class ServerMessageHandler {
     }
     else if(answer instanceof PlayedCardMessage message){
       modelView.setPlayedCard(message.getPlayer(), message.getMessage());
+      view.firePropertyChange(PLAYED_CARD_LISTENER, null, message); // todo remove previousstate to trigger (also in game model)
     }
     else if(answer instanceof ProfsMessage){
       modelView.setProfessors(((ProfsMessage)answer).getMessage());

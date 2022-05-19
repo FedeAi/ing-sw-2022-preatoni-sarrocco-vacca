@@ -63,6 +63,7 @@ public class Game {
         listeners.firePropertyChange(MAGICIANS_LISTENER, null, availableMagicians);
         listeners.firePropertyChange(MODE_LISTENER, null, expertMode);
         listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
+        listeners.firePropertyChange(PROFS_LISTENER, null, professors);
         players.forEach(Player::fireInitialState);
     }
 
@@ -220,7 +221,7 @@ public class Game {
     }
 
     public void setProfessors(EnumMap<Color, String> professors) {
-        EnumMap<Color, String> oldProfs = new EnumMap<>(professors);
+        EnumMap<Color, String> oldProfs = new EnumMap<>(this.professors);
         this.professors = professors;
         listeners.firePropertyChange(PROFS_LISTENER, oldProfs, professors);
     }

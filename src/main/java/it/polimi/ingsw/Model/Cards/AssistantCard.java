@@ -45,4 +45,9 @@ public class AssistantCard extends Card {
     public int hashCode() {
         return Objects.hash(maxMoves, value, type);
     }
+
+    @Override
+    public String toString() {
+        return "card " + getValue() + ", max moves: " + getMaxMoves();
+    }
 }
