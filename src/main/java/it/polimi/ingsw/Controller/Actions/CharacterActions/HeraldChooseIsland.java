@@ -32,7 +32,7 @@ public class HeraldChooseIsland extends Performable {
 
         // is action legal check
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(HeraldCharacter.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }

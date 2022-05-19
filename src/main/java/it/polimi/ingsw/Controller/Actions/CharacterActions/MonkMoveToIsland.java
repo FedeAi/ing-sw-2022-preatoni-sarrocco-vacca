@@ -39,7 +39,7 @@ public class MonkMoveToIsland extends Performable {
         }
 
         // Simple check to see if we have an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(MonkCharacter.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
@@ -67,12 +67,12 @@ public class MonkMoveToIsland extends Performable {
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         // Redundant card presence check and general canPerform() check, then we execute the action
-        if (game.getActiveCharacter().isPresent()) {
-            MonkCharacter monk = (MonkCharacter) game.getActiveCharacter().get();
+        if (game.getActiveCharacter(MonkCharacter.class).isPresent()) {
+            MonkCharacter monk = (MonkCharacter) game.getActiveCharacter(MonkCharacter.class).get();
             monk.moveStudent(student);
             // Now we add the student to the specified island
             game.addIslandStudent(islandIndex, student);
-            monk.deactivate(rules, game);
+            game.deactivateCharacterCard(game.getCharacterCards().indexOf(monk), rules);
         }
     }
 }

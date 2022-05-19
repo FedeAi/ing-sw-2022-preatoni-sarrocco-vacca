@@ -33,7 +33,7 @@ public class MushroomChooseColor extends Performable {
         }
 
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(MushroomCharacter.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
@@ -51,7 +51,7 @@ public class MushroomChooseColor extends Performable {
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
-        Optional<CharacterCard> mushRoomCard = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof MushroomCharacter).findFirst();
+        Optional<CharacterCard> mushRoomCard = game.getActiveCharacter(MushroomCharacter.class);
         mushRoomCard.ifPresent(characterCard -> ((MushroomCharacter) characterCard).setStudent(this.student));
     }
 

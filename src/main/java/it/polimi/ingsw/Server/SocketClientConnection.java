@@ -164,7 +164,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
             case MOVE_STUDENT_HALL -> move = new MoveStudentFromEntryToHall(nickname, action.color0);
             case CHOOSE_CLOUD -> move = new ChooseCloud(nickname, action.int0);
             case ACTIVATE_CARD -> move = new ActivateCard(nickname, action.int0);
-            case DEACTIVATE_CARD -> move = new DeactivateCard(nickname);
+            case DEACTIVATE_CARD -> move = new DeactivateCard(nickname, action.int0);
             case GRANDMA_BLOCK -> move = new GrandmaBlockIsland(nickname, action.int0);
             case HERALD_CHOOSE -> move = new HeraldChooseIsland(nickname, action.int0);
             case JOKER_SWAP -> move = new JokerSwapStudents(nickname, action.color0, action.color1);

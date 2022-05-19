@@ -50,8 +50,8 @@ public class ActivateCard extends Performable {
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
-        performMove(game, rules);
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
         Player player = getPlayer(game);
 
         CharacterCard chosenCard = game.getCharacterCards().get(choice);

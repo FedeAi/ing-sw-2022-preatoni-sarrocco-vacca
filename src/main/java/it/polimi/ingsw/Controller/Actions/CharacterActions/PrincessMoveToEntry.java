@@ -34,7 +34,7 @@ public class PrincessMoveToEntry extends Performable {
         }
 
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(PrincessCharacter.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
@@ -55,8 +55,8 @@ public class PrincessMoveToEntry extends Performable {
         canPerform(game, rules);
         Player player = getPlayer(game);
         // to check instance of and make cast
-        if (game.getActiveCharacter().isPresent()) {
-            PrincessCharacter princessCharacter = (PrincessCharacter) game.getActiveCharacter().get();
+        if (game.getActiveCharacter(PrincessCharacter.class).isPresent()) {
+            PrincessCharacter princessCharacter = (PrincessCharacter) game.getActiveCharacter(PrincessCharacter.class).get();
             princessCharacter.moveStudent(student);
             player.getSchool().addStudentHall(student);
             game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors

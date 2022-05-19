@@ -23,7 +23,7 @@ public class CharactersMessage implements ModelMessage {
    */
   public CharactersMessage(List<CharacterCard> characterCards) {
     this.message = characterCards.stream().map(c ->
-            new ReducedCharacterCard(c.isActive(), c.getClass().getSimpleName())
+            new ReducedCharacterCard(c.isActive(), c.getClass().getSimpleName(), c.getPrice())
     ).toList();
   }
 

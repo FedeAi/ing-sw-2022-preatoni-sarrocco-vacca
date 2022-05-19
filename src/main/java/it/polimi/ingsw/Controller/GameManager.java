@@ -136,7 +136,9 @@ public class GameManager implements PropertyChangeListener {
 
     private void initPlayersBalance() {
         for (Player p : game.getPlayers()) {
-            game.incrementPlayerBalance(p.getNickname());
+            for(int i = 0; i < Constants.INITIAL_PLAYER_BALANCE; i++){
+                game.incrementPlayerBalance(p.getNickname());
+            }
         }
     }
 

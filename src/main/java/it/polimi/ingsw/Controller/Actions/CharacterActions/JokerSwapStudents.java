@@ -37,7 +37,7 @@ public class JokerSwapStudents extends Performable {
 
         // is action legal check
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(JokerCharacter.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
@@ -70,15 +70,15 @@ public class JokerSwapStudents extends Performable {
         Player player = getPlayer(game);
 
         // to check instance of and make cast
-        if (game.getActiveCharacter().isPresent()) {
-            JokerCharacter joker = (JokerCharacter) game.getActiveCharacter().get();
+        if (game.getActiveCharacter(JokerCharacter.class).isPresent()) {
+            JokerCharacter joker = (JokerCharacter) game.getActiveCharacter(JokerCharacter.class).get();
             joker.swapStudents(studentToPick, studentToPut);
             player.getSchool().addStudentEntry(studentToPick);
             player.getSchool().removeStudentFromEntry(studentToPut);
 
             // card deactivate
             if (joker.getSwappedStudents() >= JokerCharacter.maxSwaps) {
-                joker.deactivate(rules, game);
+                game.deactivateCharacterCard(game.getCharacterCards().indexOf(joker), rules);
             }
         }
     }

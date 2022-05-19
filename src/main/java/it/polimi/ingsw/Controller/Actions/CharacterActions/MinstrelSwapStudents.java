@@ -38,7 +38,7 @@ public class MinstrelSwapStudents extends Performable {
 
         // is action legal check
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(MinstrelCharacter.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
@@ -68,7 +68,7 @@ public class MinstrelSwapStudents extends Performable {
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
 
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(MinstrelCharacter.class);
         MinstrelCharacter minstrel = (MinstrelCharacter) card.get();
         Player player = getPlayer(game);
 

@@ -41,9 +41,9 @@ public class GrandmaBlockIsland extends Performable {
         }
 
         // Simple check to see if we have an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(CharacterCard.class);
         if (card.isEmpty()) {
-            throw new GameException("There isn't any active card present.");
+            throw new GameException("There isn't any active CharacterCard present.");
         }
 
         // We check if any of the cards on the table are of the GRANDMA type
@@ -69,11 +69,11 @@ public class GrandmaBlockIsland extends Performable {
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         // Redundant card presence check, then we execute the action
-        if (game.getActiveCharacter().isPresent()) {
-            GrandmaCharacter grandma = (GrandmaCharacter) game.getActiveCharacter().get();
+        if (game.getActiveCharacter(GrandmaCharacter.class).isPresent()) {
+            GrandmaCharacter grandma = (GrandmaCharacter) game.getActiveCharacter(GrandmaCharacter.class).get();
             grandma.moveBlockingCard();
             game.getIslandContainer().get(islandIndex).setBlocked(true);
-            grandma.deactivate(rules, game);
+            game.deactivateCharacterCard(game.getCharacterCards().indexOf(grandma), rules);
         }
     }
 

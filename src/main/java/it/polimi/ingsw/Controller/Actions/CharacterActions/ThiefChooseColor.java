@@ -37,7 +37,7 @@ public class ThiefChooseColor extends Performable {
         }
 
         // Simple check to see if we have an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(ThiefCharacter.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
@@ -62,8 +62,7 @@ public class ThiefChooseColor extends Performable {
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         // TODO TESTING
-        // Redundant card presence check and general canPerform() check, then we execute the action
-        if (game.getActiveCharacter().isPresent()) {
+        if (game.getActiveCharacter(ThiefCharacter.class).isPresent()) {
             List<Player> players = game.getPlayers();
             for (Player p : players) {
                 Map<Color, Integer> studentsHall = p.getSchool().getStudentsHall();
@@ -80,8 +79,8 @@ public class ThiefChooseColor extends Performable {
                     studentsHall.put(chosenColor, 0);
                 }
             }
-            ThiefCharacter thief = (ThiefCharacter) game.getActiveCharacter().get();
-            thief.deactivate(rules, game);
+            ThiefCharacter thief = (ThiefCharacter) game.getActiveCharacter(ThiefCharacter.class).get();
+            game.deactivateCharacterCard(game.getCharacterCards().indexOf(thief), rules);
         }
     }
 }

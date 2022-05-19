@@ -16,12 +16,12 @@ public class MessageBuilder {
     private final String MOVE_STUDENT_ISLAND_ERROR = "syntax students to island error: studentsisland color #island (ex studentsisland red 3)";
     private final String MOVE_STUDENT_HALL_ERROR = "syntax students to island error: studentshall color #island (ex: studentshall blue 1)";
     private final String ACTIVATE_CARD_ERROR = "syntax activate error: activate #card (ex: activate 1)";
-    private final String DEACTIVATE_CARD_ERROR = "syntax deactivate error: deactivate (ex:deactivate (no needed the number )";
+    private final String DEACTIVATE_CARD_ERROR = "syntax deactivate error: deactivate #card (ex:deactivate 2)";
     private final String GRANDMA_ERROR = "syntax grandma error: grandma #island (ex: grandma 2)";
     private final String HERALD_ERROR = "syntax herlad error: herald #island (ex: herald 3)";
     private final String JOKER_ERROR = "syntax joker error: joker color color (ex: joker blue red) ";
     private final String MINSTREL_ERROR = "syntax minstrel error: mintrel color color (ex: minstrel blue red) ";
-    private final String MONK_ERROR = "syntax minstrel error: mintrel color color (ex: minstrel blue red) ";
+    private final String MONK_ERROR = "syntax minstrel error: mintrel color color (ex: minstrel blue red) "; // fixme description
     private final String MUSHROOM_ERROR = "syntax mushroom error: mushroom color (ex: mushroom blue) ";
     private final String PRINCESS_ERROR = "syntax princess error: princess color (ex: princess yellow) ";
     private final String THIEF_ERROR = "syntax thief error: thief color (ex: thief green) ";
@@ -32,9 +32,7 @@ public class MessageBuilder {
     }
     public Action playCard(String[] in){
         try{
-            Action actionToSend;
-            actionToSend = new Action(ActionType.PLAY_CARD, Integer.parseInt(in[1]));
-            return actionToSend;
+            return new Action(ActionType.PLAY_CARD, Integer.parseInt(in[1]));
         }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + PLAY_CARD_ERROR + CLIColors.RESET); // TODO fire error listener no print
             return null;
@@ -55,9 +53,7 @@ public class MessageBuilder {
     }
     public Action moveMother(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.MOVE_MOTHER_NATURE, Integer.parseInt(in[1]));
-            return actionToSend;
+            return new Action(ActionType.MOVE_MOTHER_NATURE, Integer.parseInt(in[1]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
             System.out.println(CLIColors.ANSI_RED + MOVE_MOTHER_ERROR + CLIColors.RESET);
@@ -66,9 +62,7 @@ public class MessageBuilder {
     }
     public Action chooseCloud(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.CHOOSE_CLOUD, Integer.parseInt(in[1]));
-            return actionToSend;
+            return new Action(ActionType.CHOOSE_CLOUD, Integer.parseInt(in[1]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
             System.out.println(CLIColors.ANSI_RED + CHOOSE_CLOUD_ERROR + CLIColors.RESET);
@@ -77,9 +71,7 @@ public class MessageBuilder {
     }
     public Action moveStudentIsland(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.MOVE_STUDENT_ISLAND, Color.parseColor(in[1]) , Integer.parseInt(in[2]));
-            return actionToSend;
+            return new Action(ActionType.MOVE_STUDENT_ISLAND, Color.parseColor(in[1]) , Integer.parseInt(in[2]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
             System.out.println(CLIColors.ANSI_RED + MOVE_STUDENT_ISLAND_ERROR + CLIColors.RESET);
@@ -88,9 +80,7 @@ public class MessageBuilder {
     }
     public Action moveStudentHall(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.MOVE_STUDENT_HALL,  Color.parseColor(in[1]));
-            return actionToSend;
+            return new Action(ActionType.MOVE_STUDENT_HALL,  Color.parseColor(in[1]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
             System.out.println(CLIColors.ANSI_RED + MOVE_STUDENT_HALL_ERROR + CLIColors.RESET);
@@ -110,11 +100,9 @@ public class MessageBuilder {
     }
     public Action deactivateCard(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.DEACTIVATE_CARD);
-            return actionToSend;
+            return new Action(ActionType.DEACTIVATE_CARD, Integer.parseInt(in[1]));
         }
-        catch (IllegalArgumentException e){
+        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
             System.out.println(CLIColors.ANSI_RED + DEACTIVATE_CARD_ERROR + CLIColors.RESET);
             return null;
         }
@@ -133,9 +121,7 @@ public class MessageBuilder {
     }
     public Action grandmaBlock(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.GRANDMA_BLOCK,  Integer.parseInt(in[1]));
-            return actionToSend;
+            return new Action(ActionType.GRANDMA_BLOCK,  Integer.parseInt(in[1]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
             System.out.println(CLIColors.ANSI_RED + GRANDMA_ERROR + CLIColors.RESET);
@@ -144,9 +130,7 @@ public class MessageBuilder {
     }
     public Action heraldChoose(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.HERALD_CHOOSE,  Integer.parseInt(in[1]));
-            return actionToSend;
+            return new Action(ActionType.HERALD_CHOOSE,  Integer.parseInt(in[1]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
             System.out.println(CLIColors.ANSI_RED +  HERALD_ERROR+ CLIColors.RESET);
@@ -155,9 +139,7 @@ public class MessageBuilder {
     }
     public Action jokerSwap(String[] in){ //FIXME
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.JOKER_SWAP,  Color.parseColor(in[1]), Color.parseColor(in[2]));
-            return actionToSend;
+            return new Action(ActionType.JOKER_SWAP,  Color.parseColor(in[1]), Color.parseColor(in[2]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
             System.out.println(CLIColors.ANSI_RED +  JOKER_ERROR+ CLIColors.RESET);
@@ -166,9 +148,7 @@ public class MessageBuilder {
     }
     public Action minstrelSwap(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.MINSTREL_SWAP,  Color.parseColor(in[1]), Color.parseColor(in[2]));
-            return actionToSend;
+            return new Action(ActionType.MINSTREL_SWAP,  Color.parseColor(in[1]), Color.parseColor(in[2]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
             System.out.println(CLIColors.ANSI_RED +  MINSTREL_ERROR+ CLIColors.RESET);
@@ -177,9 +157,7 @@ public class MessageBuilder {
     }
     public Action monkMove(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.MONK_MOVE,  Color.parseColor(in[1]), Integer.parseInt(in[2]));
-            return actionToSend;
+            return new Action(ActionType.MONK_MOVE,  Color.parseColor(in[1]), Integer.parseInt(in[2]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
             System.out.println(CLIColors.ANSI_RED +  MONK_ERROR+ CLIColors.RESET);
@@ -188,9 +166,7 @@ public class MessageBuilder {
     }
     public Action mushroomChoose(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.MUSHROOM_CHOOSE,  Color.parseColor(in[1]));
-            return actionToSend;
+            return new Action(ActionType.MUSHROOM_CHOOSE,  Color.parseColor(in[1]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
             System.out.println(CLIColors.ANSI_RED +  MUSHROOM_ERROR+ CLIColors.RESET);
@@ -199,9 +175,7 @@ public class MessageBuilder {
     }
     public Action princessMove(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.PRINCESS_MOVE,  Color.parseColor(in[1]));
-            return actionToSend;
+            return new Action(ActionType.PRINCESS_MOVE,  Color.parseColor(in[1]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
             System.out.println(CLIColors.ANSI_RED +  PRINCESS_ERROR + CLIColors.RESET);
@@ -210,9 +184,7 @@ public class MessageBuilder {
     }
     public Action thiefChoose(String[] in){
         try {
-            Action actionToSend;
-            actionToSend = new Action(ActionType.THIEF_CHOOSE,  Color.parseColor(in[1]));
-            return actionToSend;
+            return new Action(ActionType.THIEF_CHOOSE,  Color.parseColor(in[1]));
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
             System.out.println(CLIColors.ANSI_RED +  THIEF_ERROR + CLIColors.RESET);

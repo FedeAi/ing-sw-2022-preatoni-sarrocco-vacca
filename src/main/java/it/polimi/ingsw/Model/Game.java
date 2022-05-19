@@ -340,20 +340,24 @@ public class Game {
     public void activateCharacterCard(int card, Rules rules){
         ArrayList<CharacterCard> oldCharacters = new ArrayList<CharacterCard>(characterCards);
         characterCards.get(card).activate(rules, this);
-        listeners.firePropertyChange(CHARACTERS_LISTENER, oldCharacters, characterCards);
+        listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
     }
     public void deactivateCharacterCard(int card, Rules rules){
         ArrayList<CharacterCard> oldCharacters = new ArrayList<CharacterCard>(characterCards);
         characterCards.get(card).deactivate(rules, this);
-        listeners.firePropertyChange(CHARACTERS_LISTENER, oldCharacters, characterCards);
+        listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
     }
 
     public IslandContainer getIslandContainer() {
         return islandContainer;
     }
 
-    public Optional<CharacterCard> getActiveCharacter() {
-        return characterCards.stream().filter(CharacterCard::isActive).findFirst();
+    public List<CharacterCard> getActiveCharacters() {
+        return characterCards.stream().filter(CharacterCard::isActive).toList();
+    }
+
+    public Optional<CharacterCard> getActiveCharacter(Class<? extends CharacterCard> cardType) {
+        return characterCards.stream().filter(c -> {return c.isActive() && (cardType.isInstance(c));}).findFirst();
     }
 
     public int numPlayers() {
