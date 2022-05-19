@@ -1,4 +1,5 @@
 package it.polimi.ingsw.Client.messages;
+import it.polimi.ingsw.Client.ModelView;
 import it.polimi.ingsw.Constants.*;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.CLIColors;
@@ -6,6 +7,7 @@ import it.polimi.ingsw.Constants.CLIColors;
 
 
 public class MessageBuilder {
+    private ModelView modelView;
 
     private final String PLAY_CARD_ERROR = "syntax playcard #card (ex: playcard 5) ";
     private final String SETUP_ERROR = "syntax setup error: setup #player #mod (ex: setup 2 expert)";
@@ -23,8 +25,11 @@ public class MessageBuilder {
     private final String MUSHROOM_ERROR = "syntax mushroom error: mushroom color (ex: mushroom blue) ";
     private final String PRINCESS_ERROR = "syntax princess error: princess color (ex: princess yellow) ";
     private final String THIEF_ERROR = "syntax thief error: thief color (ex: thief green) ";
-    private final String MAGICIAN_ERROR = "syntax magician error: MAGICIAN color (ex: magician 1) ";
+    private final String MAGICIAN_ERROR = "syntax magician error: MAGICIAN type (ex: magician king) ";
 
+    public MessageBuilder(ModelView modelView){
+        this.modelView = modelView;
+    }
     public Action playCard(String[] in){
         try{
             Action actionToSend;
@@ -38,7 +43,10 @@ public class MessageBuilder {
     public Action chooseMagician(String[] in){
         try{
             Action actionToSend;
-            actionToSend = new Action(ActionType.CHOOSE_MAGICIAN, Integer.parseInt(in[1]));
+            int magicianIndex = modelView.getAvailableMagiciansStr().indexOf(in[1].toUpperCase());
+            if(magicianIndex==-1)
+                throw new IllegalArgumentException();
+            actionToSend = new Action(ActionType.CHOOSE_MAGICIAN, magicianIndex);
             return actionToSend;
         }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + MAGICIAN_ERROR + CLIColors.RESET);
@@ -92,7 +100,7 @@ public class MessageBuilder {
     public Action activateCard(String[] in){
         try {
             Action actionToSend;
-            actionToSend = new Action(ActionType.ACTIVATE_CARD,  Integer.parseInt(in[1]));
+            actionToSend = new Action(ActionType.ACTIVATE_CARD,  Integer.parseInt(in[1]));  // TODO LIKE MAGICIAN name not index
             return actionToSend;
         }
         catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){

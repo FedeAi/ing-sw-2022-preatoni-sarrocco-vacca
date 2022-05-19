@@ -2,13 +2,9 @@ package it.polimi.ingsw.Client.cli;
 
 import it.polimi.ingsw.Client.*;
 import it.polimi.ingsw.Constants.*;
-import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Model.Cloud;
-import it.polimi.ingsw.Model.Islands.IslandContainer;
-import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import it.polimi.ingsw.Server.Answer.GameError;
 import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
@@ -22,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -40,7 +35,8 @@ public class CLI implements UI {
     private final ModelView modelView;
     private final ServerMessageHandler serverMessageHandler;
     private boolean activeGame;
-    private final String SHOW_ERROR = "SHOW not well formatted: show [SCHOOL/ACTIONS/BOARD/CLOUDS] [?user] (ex: show school user)";
+    private final String SHOW_COMMANDS = "[SCHOOL/ACTIONS/BOARD/CLOUDS/CARDS]";
+    private final String SHOW_COMMANDS_EXPERT = "[SCHOOL/ACTIONS/BOARD/CLOUDS/CARDS/BALANCE/CHARACTERCARDS]";
 
     private ConnectionSocket connectionSocket;
     /**
@@ -90,9 +86,9 @@ public class CLI implements UI {
             String cmd;
             while ((cmd = input.nextLine()).isEmpty()) {} //bug fixed for Linux: scanner take also 'enter' like a command
 
-            switch (cmd.split(" ")[0].toUpperCase()) { //splitting the command due there are two possible macro moves: show (printable command) and the effective actions
-                case "SHOW" -> handleView(cmd);  //printable command
-                default -> listeners.firePropertyChange("action", null, cmd); //if isn't present 'show', then firepropertychange
+            // cli commands can be model-show or action commands, if it's not a model-show command it's an action command
+            if(!handleView(cmd)){
+                listeners.firePropertyChange("action", null, cmd); //if it's not a model-show command it's an action
             }
         }
         input.close();
@@ -212,25 +208,37 @@ public class CLI implements UI {
         System.out.flush();
     }
     /**
-     * Hold the possible items that we should print
+     * Show possible actions or model representation
+     * @return true if cmd is a model-show command, false otherwise
      */
-    private void handleView(String cmd) {
+    private boolean handleView(String cmd) {
         String[] in = cmd.split(" ");
-        if (in.length > 1) { //if the show has enough arc
-            String command = in[1];
+        boolean isModelShowCommand = true;
+        if (in.length > 0) {
+            String command = in[0];
 
             switch (command.toUpperCase()) {
                 case "SCHOOL" -> {
-                    if(in.length > 2) {
+                    if(in.length > 1) {
                         String nickname = in[2];
                         showSchool(modelView, nickname);
                     }}
-                case "ACTIONS" -> showActions();
+                case "ACTIONS", "HELP" -> showCLICommands();
                 case "BOARD" -> showBoard();
                 case "CLOUDS" -> showClouds();
-                default -> System.out.println(CLIColors.ANSI_RED + SHOW_ERROR + CLIColors.RESET);
+                case "CARDS" -> showCards();
+                default -> isModelShowCommand = false;
             }
+            if(modelView.getExpert()){
+                switch (command.toUpperCase()){
+                    case "BALANCE" -> {showBalance(); isModelShowCommand = true;}
+                    case "CHARACTERCARDS" -> {showCharacters(); isModelShowCommand = true;}
+                }
+            }
+        }else {
+            isModelShowCommand = false;
         }
+        return isModelShowCommand;
     }
     /**
      * School print
@@ -251,32 +259,48 @@ public class CLI implements UI {
     /**
      * Possible actions based on state game and expert mode
      */
-    private void showActions() {
+    private void showCLICommands() {
+        // MODEL VIEW AVAILABLE COMMANDS
+        System.out.println(CLIColors.ANSI_GREEN + "These are all the possible show command available: " + CLIColors.RESET);
+        System.out.println(CLIColors.ANSI_BLUE + "\t" +(modelView.getExpert() ? SHOW_COMMANDS_EXPERT : SHOW_COMMANDS) +
+                " [?user] (ex: show school user)" + CLIColors.RESET);
 
-            List<Integer> availableClouds = IntStream.range(0, modelView.getClouds().size())
-                    .filter(i -> !modelView.getClouds().get(i)
-                            .isEmpty()).boxed().toList();
-
-
+        // ACTIONS AVAILABLE COMMANDS
         // modelView.getPlayedCards().getOrDefault(modelView.getRoundOwner()); bho poi spiego
-        System.out.println(CLIColors.ANSI_GREEN + "These are all the possible moves available at this moment: " + CLIColors.RESET);
+        System.out.println(CLIColors.ANSI_GREEN + "These are all the possible actions available at this moment: " + CLIColors.RESET);
+        List<Integer> availableClouds = IntStream.range(0, modelView.getClouds().size())
+                .filter(i -> !modelView.getClouds().get(i)
+                        .isEmpty()).boxed().toList();
 
         switch (modelView.getGameState()) {
-            case SETUP_CHOOSE_MAGICIAN -> System.out.println(CLIColors.ANSI_GREEN + "magician " + modelView.getAvailableMagiciansStr() + CLIColors.RESET); // CHECK i mean available magicians
-            case PLANNING_CHOOSE_CARD -> System.out.println(CLIColors.ANSI_GREEN + "playcard " + modelView.getHand().stream().map(AssistantCard::getValue).toList() + CLIColors.RESET);
-            case ACTION_MOVE_STUDENTS -> System.out.println(CLIColors.ANSI_GREEN + " studentisland \n studentshall"  + CLIColors.RESET);
-            case ACTION_MOVE_MOTHER -> System.out.println(CLIColors.ANSI_GREEN + " movemother 0 - "+modelView.getPlayedCards().get(modelView.getPlayerName()).getMaxMoves()  + CLIColors.RESET);
-            case ACTION_CHOOSE_CLOUD -> System.out.println(CLIColors.ANSI_GREEN + " cloud " + availableClouds + CLIColors.RESET);
+            case SETUP_CHOOSE_MAGICIAN -> System.out.println(CLIColors.ANSI_BLUE + "\t magician " + modelView.getAvailableMagiciansStr() + CLIColors.RESET); // CHECK i mean available magicians
+            case PLANNING_CHOOSE_CARD -> System.out.println(CLIColors.ANSI_BLUE + "\t playcard " + modelView.getHand().stream().map(AssistantCard::getValue).toList() + CLIColors.RESET);
+            case ACTION_MOVE_STUDENTS -> System.out.println(CLIColors.ANSI_BLUE + "\t studentisland \n studentshall"  + CLIColors.RESET);
+            case ACTION_MOVE_MOTHER -> System.out.println(CLIColors.ANSI_BLUE + "\t movemother 0 - "+modelView.getPlayedCards().get(modelView.getPlayerName()).getMaxMoves()  + CLIColors.RESET);
+            case ACTION_CHOOSE_CLOUD -> System.out.println(CLIColors.ANSI_BLUE + "\t cloud " + availableClouds + CLIColors.RESET);
         }
         if(modelView.getExpert()){
             if(modelView.getGameState() != GameState.SETUP_CHOOSE_MAGICIAN){
-                System.out.println("Characters:");
-                modelView.getCharacterCards().stream().map(c -> c.getCharacter().toString()).forEach(System.out::println);
-                System.out.println(CLIColors.ANSI_BLUE + "Your Balance:  " + modelView.getBalance() + CLIColors.RESET);
+                System.out.println(CLIColors.ANSI_GREEN + "Characters:" + CLIColors.RESET );
+                modelView.getCharacterCards().stream().map(c -> CLIColors.ANSI_BLUE +"\t"+ c.name + CLIColors.RESET).forEach(System.out::println);
             }
         }
-
     }
+
+    private void showBalance(){
+        System.out.println(CLIColors.ANSI_BLUE + "Your Balance:  " + modelView.getBalance() + CLIColors.RESET);
+    }
+
+    private void showCards(){
+        System.out.println(CLIColors.ANSI_BLUE + "Your Card:  " + modelView.getHand() + CLIColors.RESET);
+        modelView.getHand().stream().map(c -> CLIColors.ANSI_BLUE + "\t card " + c.getValue() + " max moves: " + c.getMaxMoves()
+                + CLIColors.RESET).forEach(System.out::println);
+    }
+    private void showCharacters(){
+        modelView.getCharacterCards().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c.name + CLIColors.RESET).forEach(System.out::println);
+    }
+
+
     /**
      * Board print
      */

@@ -28,7 +28,7 @@ public class InputToMessage implements PropertyChangeListener {
     public InputToMessage(ModelView modelView, ConnectionSocket connectionSocket){
         this.modelView = modelView;
         this.connectionSocket = connectionSocket;
-        messageBuilder = new MessageBuilder();
+        messageBuilder = new MessageBuilder(modelView);
     }
 
     @Override
