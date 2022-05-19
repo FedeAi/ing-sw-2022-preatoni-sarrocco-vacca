@@ -73,7 +73,7 @@ public class Constants {
         Constants.address = address;
     }
 
-    public String getAddress() {
+    public static String getAddress() {
         return address;
     }
 }
