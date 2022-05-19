@@ -74,7 +74,6 @@ public class Server {
      * between VirtualClient, nicknames and client ids. It also creates a new game session.
      */
     public Server() {
-
         socketServer = new SocketServer(Constants.getPort(), this);
         idMapClient = new HashMap<>();
         nameMapId = new HashMap<>();
@@ -178,8 +177,6 @@ public class Server {
 
             currentGame.startGame();
             waiting.clear();
-            //Note now this is now an action
-            //  currentGame.magicianSetup();
         } else {
             currentGame.sendAll(
                     new CustomMessage((totalPlayers - waiting.size()) + " slots left."));

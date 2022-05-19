@@ -180,7 +180,7 @@ public class CLI implements UI {
     public void roundPrinter(String oldRoundOwner, String newRoundOwner) {
         String player = modelView.getPlayerName();
         if (!newRoundOwner.equals(oldRoundOwner)) {
-            clearScreen();  // FIXME Seams not to work
+            //clearScreen();  // FIXME Seams not to work
             if (player.equals(newRoundOwner)) {
                 System.out.println(CLIColors.ANSI_BACKGROUND_BLACK.getEscape() + CLIColors.ANSI_WHITE + "You are the new round owner" + CLIColors.RESET);
             } else {

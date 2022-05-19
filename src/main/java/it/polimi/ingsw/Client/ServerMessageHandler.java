@@ -92,8 +92,8 @@ public class ServerMessageHandler {
     else if(answer instanceof IslandsMessage){
       modelView.setIslandContainer(((IslandsMessage)answer).getMessage());
     }
-    else if(answer instanceof MoveMotherMessage){
-      modelView.setMotherNature(((MoveMotherMessage)answer).getMessage());
+    else if(answer instanceof MotherMessage){
+      modelView.setMotherNature(((MotherMessage)answer).getMessage());
     }
     else if(answer instanceof PlayedCardMessage message){
       modelView.setPlayedCard(message.getPlayer(), message.getMessage());

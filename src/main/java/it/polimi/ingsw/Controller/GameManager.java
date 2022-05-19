@@ -89,7 +89,8 @@ public class GameManager implements PropertyChangeListener {
         Collections.shuffle(characters);
         List<CharacterCard> extractedCharacters = characters.subList(0, 3);
         extractedCharacters.forEach(CharacterCard::init);
-        game.initCharacterCards(characters.subList(0, 3));
+        ArrayList<CharacterCard> gameCharacters = new ArrayList<>(characters.subList(0, 3));
+        game.initCharacterCards(gameCharacters);
     }
 
 

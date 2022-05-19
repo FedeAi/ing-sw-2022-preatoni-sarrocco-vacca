@@ -2,8 +2,10 @@ package it.polimi.ingsw.Server.Answer.modelUpdate;
 
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
+import it.polimi.ingsw.Model.Cards.CharacterCards.ReducedCharacterCard;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * HandMessage class is a ModelMessage used for sending infos about the new client's hand.
@@ -12,7 +14,7 @@ import java.util.List;
  * @see ModelMessage
  */
 public class CharactersMessage implements ModelMessage {
-  private final List<CharacterCard> message;
+  private final List<ReducedCharacterCard> message;
 
   /**
    * Constructor HandMessage creates a new HandMessage instance.
@@ -20,7 +22,9 @@ public class CharactersMessage implements ModelMessage {
    * @param assistantCards .................
    */
   public CharactersMessage(List<CharacterCard> characterCards) {
-    this.message = characterCards;
+    this.message = characterCards.stream().map(c ->
+            new ReducedCharacterCard(c.isActive(), c.getClass().getName())
+    ).toList();
   }
 
   /**
@@ -30,7 +34,7 @@ public class CharactersMessage implements ModelMessage {
    * @see ModelMessage#getMessage()
    */
   @Override
-  public List<CharacterCard> getMessage() {
+  public List<ReducedCharacterCard> getMessage() {
     return message;
   }
 }

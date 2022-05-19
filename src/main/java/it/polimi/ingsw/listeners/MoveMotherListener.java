@@ -1,6 +1,6 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Server.Answer.modelUpdate.MoveMotherMessage;
+import it.polimi.ingsw.Server.Answer.modelUpdate.MotherMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
@@ -31,7 +31,7 @@ public class MoveMotherListener extends AbsListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        MoveMotherMessage message = new MoveMotherMessage((int) evt.getNewValue());
+        MotherMessage message = new MotherMessage((int) evt.getNewValue());
         virtualClient.send(message);
     }
 }

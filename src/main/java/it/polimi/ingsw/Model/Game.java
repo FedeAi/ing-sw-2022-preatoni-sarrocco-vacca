@@ -77,15 +77,16 @@ public class Game {
         listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
         listeners.addPropertyChangeListener(CLOUDS_LISTENER, new CloudsListener(client));
         listeners.addPropertyChangeListener(PROFS_LISTENER, new ProfsListener(client));
-        listeners.addPropertyChangeListener(ROUND_OWNER_LISTENER, new RoundOwnerListener(client));
         listeners.addPropertyChangeListener(MAGICIANS_LISTENER, new MagicianListener(client));
-        listeners.addPropertyChangeListener(GAME_STATE_LISTENER, new GameStateListener(client));
         listeners.addPropertyChangeListener(MODE_LISTENER, new ModeListener(client));
         listeners.addPropertyChangeListener(CHARACTERS_LISTENER, new CharactersListener(client));
 
         // Player listeners
         Optional<Player> player = getPlayerByNickname(client.getNickname());
         player.ifPresent(value -> value.createListeners(client));
+
+        listeners.addPropertyChangeListener(ROUND_OWNER_LISTENER, new RoundOwnerListener(client));
+        listeners.addPropertyChangeListener(GAME_STATE_LISTENER, new GameStateListener(client));
     }
 
 

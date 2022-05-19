@@ -6,7 +6,7 @@ package it.polimi.ingsw.Server.Answer.modelUpdate;
  * @author GC30
  * @see ModelMessage
  */
-public class MoveMotherMessage implements ModelMessage {
+public class MotherMessage implements ModelMessage {
   private final int island;
 
   /**
@@ -14,7 +14,7 @@ public class MoveMotherMessage implements ModelMessage {
    *
    * @param island .................
    */
-  public MoveMotherMessage(int island) {
+  public MotherMessage(int island) {
     this.island = island;
   }
 

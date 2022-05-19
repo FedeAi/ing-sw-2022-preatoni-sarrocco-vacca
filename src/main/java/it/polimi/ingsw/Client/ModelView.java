@@ -12,7 +12,7 @@ import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
+import it.polimi.ingsw.Model.Cards.CharacterCards.ReducedCharacterCard;
 import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
 import it.polimi.ingsw.Model.School;
@@ -35,7 +35,7 @@ public class ModelView {
     private IslandContainer islandContainer;
     private List<Cloud> clouds;
     private List<Magician> availableMagicians;
-    private List<CharacterCard> characterCards;
+    private List<ReducedCharacterCard> characterCards;
     private Map<String, AssistantCard> playedCards;
     private int motherNature;
     private GameState gameState;
@@ -158,11 +158,11 @@ public class ModelView {
         this.clouds = clouds;
     }
 
-    public List<CharacterCard> getCharacterCards() {
+    public List<ReducedCharacterCard> getCharacterCards() {
         return characterCards;
     }
 
-    public void setCharacterCards(List<CharacterCard> characterCards) {
+    public void setCharacterCards(List<ReducedCharacterCard> characterCards) {
         this.characterCards = characterCards;
     }
 

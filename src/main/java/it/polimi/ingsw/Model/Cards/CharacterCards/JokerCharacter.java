@@ -25,7 +25,7 @@ public class JokerCharacter extends CharacterCard {
         swappedStudents = 0;
         this.bag = bag;
         // students map
-        this.students = new EnumMap<Color, Integer>(Color.class);
+        this.students = new EnumMap<>(Color.class);
     }
 
     @Override

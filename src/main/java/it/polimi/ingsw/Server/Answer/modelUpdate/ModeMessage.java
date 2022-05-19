@@ -6,14 +6,14 @@ package it.polimi.ingsw.Server.Answer.modelUpdate;
  * @see ModelMessage
  */
 public class ModeMessage implements ModelMessage {
-  private final boolean message;
+  private final Boolean message;
 
   /**
    * Constructor MoveMessage creates a new MoveMessage instance.
    *
    * @param isExpert .................
    */
-  public ModeMessage(boolean isExpert) {
+  public ModeMessage(Boolean isExpert) {
     this.message = isExpert;
   }
 
