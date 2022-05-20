@@ -147,7 +147,7 @@ public class Printable {
                     stringIslands[i] = islandFormat(true, false, island, isl.getStudents(), 0, getOwnerColor(null, null));
                 }
             } else {
-                int towers = getOwnerColor(isl.getOwner(), map).equals("     ") ? 0 : 1;
+                int towers = getOwnerColor(isl.getOwner(), map).equals("         ") ? 0 : 1;
                 stringIslands[i] = islandFormat(false, motherNature, island, isl.getStudents(), towers, getOwnerColor(isl.getOwner(), map));
             }
             i++;
@@ -156,7 +156,7 @@ public class Printable {
     }
 
     private static String getOwnerColor(String owner, Map<String, TowerColor> map) {
-        String s = "     ";
+        String s = "         ";
         if (owner == null) {
             return s;
         } else {
