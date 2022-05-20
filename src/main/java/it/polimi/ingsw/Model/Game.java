@@ -20,7 +20,6 @@ public class Game {
 
     public static final String MOVE_MOTHER_LISTENER = "moveMotherListener";
     public static final String ISLANDS_LISTENER = "islandsListener";
-    public static final String PLAYED_CARD_LISTENER = "playedCardListener";
     public static final String CLOUDS_LISTENER = "cloudsListener";
     public static final String PROFS_LISTENER = "profsListener";
     public static final String ROUND_OWNER_LISTENER = "roundOwnerListener";
@@ -75,7 +74,6 @@ public class Game {
         
         listeners.addPropertyChangeListener(MOVE_MOTHER_LISTENER, new MoveMotherListener(client));
         listeners.addPropertyChangeListener(ISLANDS_LISTENER, new IslandsListener(client));
-        listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
         listeners.addPropertyChangeListener(CLOUDS_LISTENER, new CloudsListener(client));
         listeners.addPropertyChangeListener(PROFS_LISTENER, new ProfsListener(client));
         listeners.addPropertyChangeListener(MAGICIANS_LISTENER, new MagicianListener(client));
@@ -84,7 +82,7 @@ public class Game {
 
         // Player listeners
         Optional<Player> player = getPlayerByNickname(client.getNickname());
-        player.ifPresent(value -> value.createListeners(client));
+        player.ifPresent(p -> p.createListeners(client));
 
         listeners.addPropertyChangeListener(ROUND_OWNER_LISTENER, new RoundOwnerListener(client));
         listeners.addPropertyChangeListener(GAME_STATE_LISTENER, new GameStateListener(client));
@@ -386,7 +384,6 @@ public class Game {
 
     public void playCard(Player player, AssistantCard playedCard) {
         player.setAndRemovePlayedCard(playedCard);
-        listeners.firePropertyChange(PLAYED_CARD_LISTENER, null, playedCard);
     }
 
     /**

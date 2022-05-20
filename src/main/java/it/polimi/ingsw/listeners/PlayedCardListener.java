@@ -26,6 +26,6 @@ public class PlayedCardListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         PlayedCardMessage message = new PlayedCardMessage(virtualClient.getNickname(), (AssistantCard) evt.getNewValue());
-        virtualClient.send(message);
+        virtualClient.sendAll(message);
     }
 }

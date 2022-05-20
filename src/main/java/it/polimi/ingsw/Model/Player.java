@@ -6,10 +6,7 @@ import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Server.VirtualClient;
-import it.polimi.ingsw.listeners.BalanceListener;
-import it.polimi.ingsw.listeners.HandListener;
-import it.polimi.ingsw.listeners.MoveMotherListener;
-import it.polimi.ingsw.listeners.SchoolListener;
+import it.polimi.ingsw.listeners.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -24,6 +21,8 @@ public class Player implements PropertyChangeListener {
     public static final String HAND_LISTENER = "handListener";
     public static final String SCHOOL_LISTENER = "schoolListener";
     public static final String BALANCE_LISTENER = "balanceListener";
+    public static final String PLAYED_CARD_LISTENER = "playedCardListener";
+
 
     private final int playerID;
     private String nickname;
@@ -64,6 +63,7 @@ public class Player implements PropertyChangeListener {
         listeners.addPropertyChangeListener(HAND_LISTENER, new HandListener(client));
         listeners.addPropertyChangeListener(SCHOOL_LISTENER, new SchoolListener(client));   // TODO ricordarsi di fare sendall
         listeners.addPropertyChangeListener(BALANCE_LISTENER, new BalanceListener(client));
+        listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
     }
 
     public void fireInitialState(){
@@ -157,6 +157,7 @@ public class Player implements PropertyChangeListener {
         this.playedCard = playedCard;
         cards.remove(playedCard);
         listeners.firePropertyChange(HAND_LISTENER, oldCards, cards);
+        listeners.firePropertyChange(PLAYED_CARD_LISTENER, null, playedCard);
     }
 
     @Override
