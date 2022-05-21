@@ -33,4 +33,7 @@ public class Cloud implements Serializable {
         }
     }
 
+    public Map<Color, Integer> getStudents() {
+        return new EnumMap<>(students);
+    }
 }

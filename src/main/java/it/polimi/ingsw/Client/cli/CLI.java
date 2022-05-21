@@ -5,6 +5,7 @@ import it.polimi.ingsw.Constants.*;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
+import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import it.polimi.ingsw.Server.Answer.GameError;
 import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
@@ -226,9 +227,12 @@ public class CLI implements UI {
             switch (command.toUpperCase()) {
                 case "SCHOOL" -> {
                     if(in.length > 1) {
-                        String nickname = in[2];
+                        String nickname = in[1];
                         showSchool(modelView, nickname);
-                    }}
+                    } else {
+                        showSchool(modelView);
+                    }
+                }
                 case "ACTIONS", "HELP" -> showCLICommands();
                 case "BOARD" -> showBoard();
                 case "CLOUDS" -> showClouds();
@@ -247,20 +251,27 @@ public class CLI implements UI {
         }
         return isModelShowCommand;
     }
+
+
     /**
-     * School print
+     * The method showSchool prints the content of the player's school on the CLI
+     * @param modelView
      */
-    private void showSchool(ModelView modelView, String key) {
-     /*   Map<String, School> schoolMap = modelView.getPlayerMapSchool();
-        if(key == null){ //then we print the school for each player
-            for(int i = 0; i < schoolMap.keySet().size(); i++); //iterate each player
+    private void showSchool(ModelView modelView) {
+        Printable.printSchool(modelView.getPlayerMapSchool().get(modelView.getPlayerName()));
+    }
 
+    /**
+     * The method showSchool prints the content of the specified player's school on the CLI
+     * @param modelView
+     * @param nickname
+     */
+    private void showSchool(ModelView modelView, String nickname) {
+        Map<String, School> schools = modelView.getPlayerMapSchool();
+        if (schools.containsKey(nickname)) {
+            School school = schools.get(nickname);
+            Printable.printSchool(school);
         }
-        else if(key != null && schoolMap.containsKey(key) ){
-            modelView.getPlayerMapSchool().keySet().contains()
-        }
-   */
-
     }
 
     /**
@@ -325,12 +336,13 @@ public class CLI implements UI {
      * Board print
      */
     private void showBoard() {
-        Printable.printBoard(modelView.getIslandContainer(), modelView.getClouds(), modelView.getMotherNature(), modelView.getPlayers(), modelView.getPlayerMapSchool());
+        Printable.printBoard(modelView.getIslandContainer(), modelView.getMotherNature(), modelView.getPlayers(), modelView.getPlayerMapSchool());
     }
     /**
      * Clouds print
      */
     private void showClouds() {
+        Printable.printClouds(modelView.getClouds());
     }
     /**
      * input validation method: true if the string has matched with the pattern of Regex

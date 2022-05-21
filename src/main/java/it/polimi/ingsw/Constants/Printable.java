@@ -29,7 +29,7 @@ public class Printable {
     static final String space = "   ";
 
 
-    public static void printBoard(IslandContainer islandContainer, List<Cloud> clouds, int mn, List<String> players, Map<String, School> schoolMap) {
+    public static void printBoard(IslandContainer islandContainer, int mn, List<String> players, Map<String, School> schoolMap) {
         String[] island = {" ▄█████████████████▄ ",
                 "██  " + ANSI_RED + "█" + RESET + ":%02d     " + ANSI_YELLOW + "█" + RESET + ":%02d  ██",
                 "██  " + ANSI_BLUE + "█" + RESET + ":%02d     " + ANSI_GREEN + "█" + RESET + ":%02d  ██",
@@ -39,11 +39,8 @@ public class Printable {
                 "██  " + ANSI_BRED + "%s" + RESET + "   ♜:%01d      ██",
                 " ▀█████████████████▀ ",
         };
-        String[] cloud = {
-                ""
-        };
         Map<String, TowerColor> map = new HashMap<>();
-        for(int i = 0; i < players.size() - 1; i++) {
+        for (int i = 0; i < players.size() - 1; i++) {
             String p = players.get(i);
             map.put(p, schoolMap.get(p).getTowerColor());
         }
@@ -53,7 +50,6 @@ public class Printable {
         bottomMidRow(islands);
         bottomRow(islands);
     }
-
 
     private static void topRow(String[][] islands) {
         for (int i = 0; i < islands[0].length; i++) {
@@ -111,9 +107,7 @@ public class Printable {
         String[] island = Arrays.copyOf(pIsland, pIsland.length);
         String s = "   ";
         if (isMerged) {
-            for (int j = 0; j < island.length; j++) {
-                island[j] = emptyRow;
-            }
+            Arrays.fill(island, emptyRow);
         } else {
             island[1] = String.format(island[1], map.getOrDefault(Color.RED, 0), map.getOrDefault(Color.YELLOW, 0));
             island[2] = String.format(island[2], map.getOrDefault(Color.BLUE, 0), map.getOrDefault(Color.GREEN, 0));
@@ -162,5 +156,97 @@ public class Printable {
         } else {
             return map.get(owner).toString();
         }
+    }
+
+    public static void printClouds(List<Cloud> cloudContainer) {
+        String[] cloud = {" ▄█████████████████▄ ",
+                "██  " + ANSI_RED + "█" + RESET + ":%02d     " + ANSI_YELLOW + "█" + RESET + ":%02d  ██",
+                "██  " + ANSI_BLUE + "█" + RESET + ":%02d     " + ANSI_GREEN + "█" + RESET + ":%02d  ██",
+                "██  " + ANSI_PINK + "█" + RESET + ":%02d     " + "      ██",
+                " ▀█████████████████▀ ",
+        };
+
+        String[][] clouds = prepareClouds(cloudContainer, cloud);
+        for (int i = 0; i < clouds[0].length; i++) {
+            System.out.print(space);
+            System.out.print(clouds[0][i]);
+            System.out.print(space);
+            System.out.print(clouds[1][i]);
+            System.out.print(space);
+            System.out.print(clouds[2][i]);
+            System.out.println();
+        }
+    }
+
+    private static String[][] prepareClouds(List<Cloud> clouds, String[] cloud) {
+        String[][] preparedClouds = new String[3][];
+        int i = 0;
+        boolean hidden = false;
+        while (i < 3) {
+            if (clouds.get(i).isEmpty()) {
+                preparedClouds[i] = cloudFormat(true, cloud, clouds.get(i).getStudents());
+            } else {
+                preparedClouds[i] = cloudFormat(hidden, cloud, clouds.get(i).getStudents());
+            }
+            if (i == 1 && i == clouds.size() - 1) {
+                preparedClouds[2] = cloudFormat(true, cloud, clouds.get(0).getStudents());
+                break;
+            }
+            i++;
+        }
+        return preparedClouds;
+    }
+
+    private static String[] cloudFormat(boolean isHidden, String[] cloud, Map<Color, Integer> map) {
+        String[] formattedCloud = Arrays.copyOf(cloud, cloud.length);
+        if (isHidden) {
+            Arrays.fill(formattedCloud, emptyRow);
+        } else {
+            formattedCloud[1] = String.format(formattedCloud[1], map.getOrDefault(Color.RED, 0), map.getOrDefault(Color.YELLOW, 0));
+            formattedCloud[2] = String.format(formattedCloud[2], map.getOrDefault(Color.BLUE, 0), map.getOrDefault(Color.GREEN, 0));
+            formattedCloud[3] = String.format(formattedCloud[3], map.getOrDefault(Color.PINK, 0));
+        }
+        return formattedCloud;
+    }
+
+    public static void printSchool(School school) {
+        String[] schoolBoard = {"█████████████████████████████████████████",
+                "██   ENTRY  " + " " + "██" + "   HALL   " + "██" + "   TOWERS   " + "██",
+                "██   " + ANSI_GREEN + "█" + RESET + ":%02d    " + "██" + "   " + ANSI_GREEN + "█" + RESET + ":%02d   " + "██" + "    " + "♜:%01d" + "     " + "██",
+                "██   " + ANSI_RED + "█" + RESET + ":%02d    " + "██" + "   " + ANSI_RED + "█" + RESET + ":%02d   " + "██" + "            " + "██",
+                "██   " + ANSI_YELLOW + "█" + RESET + ":%02d    " + "██" + "   " + ANSI_YELLOW + "█" + RESET + ":%02d   " + "██" + "            " + "██",
+                "██   " + ANSI_PINK + "█" + RESET + ":%02d    " + "██" + "   " + ANSI_PINK + "█" + RESET + ":%02d   " + "██" + "   COLOR:   " + "██",
+                "██   " + ANSI_BLUE + "█" + RESET + ":%02d    " + "██" + "   " + ANSI_BLUE + "█" + RESET + ":%02d   " + "██" + "   %s    " + "██",
+                "█████████████████████████████████████████",
+        };
+
+        schoolBoard = prepareSchool(schoolBoard, school.getStudentsEntry(), school.getStudentsHall(), school.getNumTowers(), school.getTowerColor());
+
+        for (String s : schoolBoard) {
+            System.out.print(space);
+            System.out.print(s);
+            System.out.println();
+        }
+    }
+
+    private static String[] prepareSchool(String[] schoolTemplate, Map<Color, Integer> entry, Map<Color, Integer> hall, int towers, TowerColor tc) {
+        String[] school = Arrays.copyOf(schoolTemplate, schoolTemplate.length);
+        Color color = Color.GREEN;
+        String s;
+        if(tc == TowerColor.GRAY) {
+            s = "GRAY ";
+        } else {
+            s = tc.toString();
+        }
+        school[2] = String.format(school[2], entry.getOrDefault(color, 0), hall.getOrDefault(color, 0), towers);
+        color = Color.RED;
+        school[3] = String.format(school[3], entry.getOrDefault(color, 0), hall.getOrDefault(color, 0));
+        color = Color.YELLOW;
+        school[4] = String.format(school[4], entry.getOrDefault(color, 0), hall.getOrDefault(color, 0));
+        color = Color.PINK;
+        school[5] = String.format(school[5], entry.getOrDefault(color, 0), hall.getOrDefault(color, 0));
+        color = Color.BLUE;
+        school[6] = String.format(school[6], entry.getOrDefault(color, 0), hall.getOrDefault(color, 0), s);
+        return school;
     }
 }
