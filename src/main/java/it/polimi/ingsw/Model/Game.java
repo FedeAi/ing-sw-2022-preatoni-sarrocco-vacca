@@ -387,6 +387,11 @@ public class Game {
         listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
     }
 
+    public void setIslandBlock(int island, boolean isBlocked){
+        islandContainer.get(island).setBlocked(isBlocked);
+        listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
+    }
+
     public void joinPrevIsland(int island){
         islandContainer.joinPrevIsland(island);
         listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);

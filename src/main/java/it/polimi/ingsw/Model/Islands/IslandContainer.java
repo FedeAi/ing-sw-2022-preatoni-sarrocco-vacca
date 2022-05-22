@@ -79,6 +79,13 @@ public class IslandContainer implements Serializable {
     }
 
     public Island get(int index) {
-        return islands.get(index);
+        if (islands.get(index) instanceof BaseIsland){
+            return new BaseIsland((BaseIsland)islands.get(index));
+        } else if (islands.get(index) instanceof SuperIsland) {
+            return new SuperIsland((SuperIsland) islands.get(index));
+        }
+        else{
+            throw new RuntimeException("The island is neither a BaseIsland nor a SuperIsland");
+        }
     }
 }

@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class SuperIsland extends Island {
-    private String owner;
     List<BaseIsland> islands;
 
     public SuperIsland(List<Island> islands) {
+        super();
         this.islands = new ArrayList<>();
         for (Island island : islands) {
             if (island instanceof SuperIsland) {
@@ -22,6 +22,13 @@ public class SuperIsland extends Island {
             owner = owner == null ? island.getOwner() : owner;
         }
 
+    }
+
+    public SuperIsland(SuperIsland island) {
+        super();
+        islands = island.islands;
+        owner = island.owner;
+        isBlocked = island.isBlocked;
     }
 
     public List<BaseIsland> getBaseIslands() {
@@ -40,11 +47,6 @@ public class SuperIsland extends Island {
     }
 
     @Override
-    public String getOwner() {
-        return owner;
-    }
-
-    @Override
     public int getNumTower() {
         return islands.stream().reduce(0, (numTowers, island) -> numTowers + island.getNumTower(), Integer::sum);
     }
@@ -52,7 +54,7 @@ public class SuperIsland extends Island {
     @Override
     public void setOwner(String owner) {
         this.owner = owner;
-        for (Island island : islands) {
+        for (BaseIsland island : islands) {
             island.setOwner(owner);
         }
     }
