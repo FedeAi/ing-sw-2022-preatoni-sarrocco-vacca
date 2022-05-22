@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +44,8 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * @return the active (type boolean) of this SocketClientConnection object.
      */
     public synchronized boolean isActive() {
-        return active;
+        return !getSocket().isClosed();
+//        return active;
     }
 
     /**
@@ -62,7 +64,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
             clientID = -1;
             active = true;
         } catch (IOException e) {
-            System.err.println(Constants.getErr() + "Error during initialization of the client!");
+            System.err.println(Constants.getErr() + "Error socket-stream!");
             System.err.println(e.getMessage());
         }
     }
@@ -84,12 +86,13 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * @see it.polimi.ingsw.Server.Server#unregisterClient for more details.
      */
     public void close() {
-        server.unregisterClient(this.getClientID());
+        active = false;
         try {
             socket.close();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+        server.unregisterClient(this.getClientID());
     }
 
     /**
@@ -193,18 +196,27 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * @param command of type SetupConnection - the connection command.
      */
     private void setupConnection(LoginMessage command) {
-        try {
-            clientID = server.registerConnection(command.getNickname(), this);
-            if (clientID == null) {
-                active = false;
+        if (!server.isNicknameTaken(command.getNickname())) {
+            try {
+                clientID = server.registerNewConnection(command.getNickname(), this);
+                if (clientID == null) {
+                    active = false;
+                    return;
+                }
+                server.lobby(this);
+            } catch (InterruptedException e) {
+                System.err.println(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+
+        }else{
+            clientID = server.recoverConnection(command.getNickname(), this);
+            if(clientID!=null){
                 return;
             }
-            server.lobby(this);
-        } catch (InterruptedException e) {
-            System.err.println(e.getMessage());
-            Thread.currentThread().interrupt();
         }
     }
+
 
     /**
      * Method setPlayers is a setup method. It permits setting the number of the players in the match,
@@ -254,10 +266,22 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      */
     public void sendSocketMessage(SerializedAnswer serverAnswer) {
         try {
+//            System.out.println(serverAnswer.getServerAnswer().getClass());
             outputStream.reset();
             outputStream.writeObject(serverAnswer);
             outputStream.flush();
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            close();
+        }
+    }
+
+    public void ping() {
+        try {
+            outputStream.reset();
+            outputStream.writeObject(0);
+            outputStream.flush();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             close();
         }

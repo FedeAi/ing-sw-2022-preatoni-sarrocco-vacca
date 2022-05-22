@@ -40,6 +40,11 @@ public abstract class Performable {
             else
                 throw new RoundOwnerException("NULLLLL !!!");
         }
+
+        // Checks the number of active players, if I'm the only one solitario is a better game for me
+        if (game.numActivePlayers() == 1) {
+            throw new GameException("You are the only player, wait the others");
+        }
     }
 
     /**

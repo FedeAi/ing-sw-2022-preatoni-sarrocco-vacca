@@ -64,13 +64,26 @@ public class ChooseCloud extends Performable {
         }
     }
 
+    /**
+     *
+     * @param game
+     * @param rules
+     * @return null if there is no next player for the action phase (end of round)
+     */
     @Override
     public Player nextPlayer(Game game, Rules rules) {
         Optional<String> nextActionPlayer = game.getNextPlayerActionPhase();
         Player nextPlayer;
+        int i = 1;
+
+        while(nextActionPlayer.isPresent() && !game.getPlayerByNickname(nextActionPlayer.get()).get().isConnected()){
+            i++;
+            nextActionPlayer = game.getNextPlayerActionPhasePlus(i);
+
+        }
 
         if (nextActionPlayer.isEmpty()) { //if end Turn
-            nextPlayer = game.getOrderedPlanningPlayers().get(0);
+            nextPlayer = null;
         } else {
             Optional<Player> nextPlayerAction = game.getPlayerByNickname(nextActionPlayer.get());
             nextPlayer = nextPlayerAction.get();

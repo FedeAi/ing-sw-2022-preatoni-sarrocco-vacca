@@ -1,10 +1,12 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Server.Answer.Answer;
+import it.polimi.ingsw.Server.Answer.PingMessage;
 import it.polimi.ingsw.Server.Answer.SerializedAnswer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 /**
  * Virtual client interface; this is a representation of the virtual instance of the client, which
@@ -84,7 +86,13 @@ public class VirtualClient implements PropertyChangeListener {
     }
 
     public boolean isConnected(){
-        return socketClientConnection != null;      // TODO check the correctness
+        socketClientConnection.ping();
+//        send(0);
+        return socketClientConnection.isActive();      // TODO check the correctness
+    }
+
+    public void setSocketClientConnection(SocketClientConnection connection){
+        socketClientConnection = connection;
     }
 
     public GameHandler getGameHandler() {

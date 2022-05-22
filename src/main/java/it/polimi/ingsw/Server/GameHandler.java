@@ -53,6 +53,15 @@ public class GameHandler {
         game.createPlayer(player_id, nickName);
     }
 
+    public void reEnterPlayer(String nickName) {
+        game.addPlayerToBeReconnected(nickName);
+        game.createListeners(server.getClientByID(server.getIDByNickname(nickName)));
+        game.fireInitalState();
+        if(game.numActivePlayers()==1){
+            game.reEnterWaitingPlayers();
+        }
+    }
+
     public void sendAll(Answer message) {
         for (Player p : game.getPlayers()) {
             server.getClientByID(p.getID()).send(message);
@@ -107,8 +116,9 @@ public class GameHandler {
         }
     }
 
-    public void unregisterPlayer(int id) {
-        game.getPlayerByID(id).setConnected(false);
+    public synchronized void unregisterPlayer(int id) {
+        game.removeListeners(server.getClientByID(id));
+        game.setPlayerConnected(id, false);
     }
 
 //    public void magicianSetup() {

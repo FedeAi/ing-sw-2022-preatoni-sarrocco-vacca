@@ -1,9 +1,12 @@
 package it.polimi.ingsw.Client.cli;
 
 import it.polimi.ingsw.Client.*;
-import it.polimi.ingsw.Constants.*;
+import it.polimi.ingsw.Constants.CLIColors;
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
+import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Constants.Printable;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
@@ -15,7 +18,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -41,6 +47,7 @@ public class CLI implements UI {
     private final String SHOW_COMMANDS_EXPERT = "[SCHOOL/ACTIONS/BOARD/CLOUDS/CARDS/PROFS/BALANCE/CHARACTERCARDS]";
 
     private ConnectionSocket connectionSocket;
+
     /**
      * Constructor of the class
      */
@@ -60,7 +67,7 @@ public class CLI implements UI {
 
 //       do {
             clearScreen(); //cleaning terminal
-            System.out.println(Constants.ERIANTYS);
+        System.out.println(Constants.ERIANTYS);
             System.out.println(Constants.AUTHORS);
             Scanner scanner = new Scanner(System.in);
         System.out.println(">Insert the server IP address");
@@ -78,6 +85,7 @@ public class CLI implements UI {
         CLI cli = new CLI();
         cli.run();
     }
+
     /**
      * Run is a method that listen the input till the game is active
      */
@@ -86,16 +94,18 @@ public class CLI implements UI {
         while (isActiveGame()) {
             input.reset();
             String cmd;
-            while ((cmd = input.nextLine()).isEmpty()) {} //bug fixed for Linux: scanner take also 'enter' like a command
+            while ((cmd = input.nextLine()).isEmpty()) {
+            } //bug fixed for Linux: scanner take also 'enter' like a command
 
             // cli commands can be model-show or action commands, if it's not a model-show command it's an action command
-            if(!handleView(cmd)){
+            if (!handleView(cmd)) {
                 listeners.firePropertyChange("action", null, cmd); //if it's not a model-show command it's an action
             }
         }
         input.close();
         output.close();
     }
+
     /**
      * Setup ask the username and establishes the connection with the server
      */
@@ -109,7 +119,7 @@ public class CLI implements UI {
                 System.out.println(">Insert your nickname: ");
                 System.out.print(">");
                 nickname = input.nextLine();
-            } while(!validateNickname(nickname));
+            } while (!validateNickname(nickname));
 
 //            System.out.println(">You chose: " + nickname);
 //            System.out.println(">Is it ok? [y/n] ");
@@ -129,17 +139,19 @@ public class CLI implements UI {
                         "running. Please try again!");
                 CLI.main(null);
             }
-            System.out.println(CLIColors.ANSI_GREEN + "Socket Connection setup completed!"+ CLIColors.RESET);
+            System.out.println(CLIColors.ANSI_GREEN + "Socket Connection setup completed!" + CLIColors.RESET);
         } catch (DuplicateNicknameException | InvalidNicknameException e) {
             setup();
         }
         listeners.addPropertyChangeListener("action", new InputToMessage(modelView, connectionSocket));
     }
+
     /**
      * Proprierty changes of interest
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
         switch (evt.getPropertyName()) {
             case ServerMessageHandler.GAME_ERROR_LISTENER ->
                     System.out.println(CLIColors.ANSI_RED + ((GameError) evt.getNewValue()).getMessage() + CLIColors.RESET);
@@ -152,13 +164,14 @@ public class CLI implements UI {
             case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER ->
                     roundPrinter((String) evt.getOldValue(), (String) evt.getNewValue());
             case ServerMessageHandler.PLAYED_CARD_LISTENER -> {
-                    PlayedCardMessage msg = (PlayedCardMessage) evt.getNewValue();
-                    System.out.println(CLIColors.ANSI_GREEN+ "\t" + msg.getPlayer() + " played: " + msg.getMessage() + CLIColors.RESET);
+                PlayedCardMessage msg = (PlayedCardMessage) evt.getNewValue();
+                System.out.println(CLIColors.ANSI_GREEN + "\t" + msg.getPlayer() + " played: " + msg.getMessage() + CLIColors.RESET);
             }
             // TODO case activate card ...
         }
 
     }
+
     /**
      * Print the state of the game during the game itself
      */
@@ -177,6 +190,7 @@ public class CLI implements UI {
 //            }
         }
     }
+
     /**
      * Print the owner of the turn  during the game
      */
@@ -198,6 +212,7 @@ public class CLI implements UI {
     public boolean isActiveGame() {
         return activeGame;
     }
+
     /**
      * Clean the CLI of the users
      */
@@ -214,8 +229,10 @@ public class CLI implements UI {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
     /**
      * Show possible actions or model representation
+     *
      * @return true if cmd is a model-show command, false otherwise
      */
     private boolean handleView(String cmd) {
@@ -226,7 +243,7 @@ public class CLI implements UI {
 
             switch (command.toUpperCase()) {
                 case "SCHOOL" -> {
-                    if(in.length > 1) {
+                    if (in.length > 1) {
                         String nickname = in[1];
                         showSchool(modelView, nickname);
                     } else {
@@ -240,13 +257,19 @@ public class CLI implements UI {
                 case "PROFS" -> showProfs();
                 default -> isModelShowCommand = false;
             }
-            if(modelView.getExpert()){
-                switch (command.toUpperCase()){
-                    case "BALANCE" -> {showBalance(); isModelShowCommand = true;}
-                    case "CHARACTERCARDS" -> {showCharacters(); isModelShowCommand = true;}
+            if (modelView.getExpert()) {
+                switch (command.toUpperCase()) {
+                    case "BALANCE" -> {
+                        showBalance();
+                        isModelShowCommand = true;
+                    }
+                    case "CHARACTERCARDS" -> {
+                        showCharacters();
+                        isModelShowCommand = true;
+                    }
                 }
             }
-        }else {
+        } else {
             isModelShowCommand = false;
         }
         return isModelShowCommand;
@@ -255,6 +278,7 @@ public class CLI implements UI {
 
     /**
      * The method showSchool prints the content of the player's school on the CLI
+     *
      * @param modelView
      */
     private void showSchool(ModelView modelView) {
@@ -263,6 +287,7 @@ public class CLI implements UI {
 
     /**
      * The method showSchool prints the content of the specified player's school on the CLI
+     *
      * @param modelView
      * @param nickname
      */
@@ -280,11 +305,11 @@ public class CLI implements UI {
     private void showCLICommands() {
         // MODEL VIEW AVAILABLE COMMANDS
         System.out.println(CLIColors.ANSI_GREEN + "These are all the possible show command available: " + CLIColors.RESET);
-        System.out.println(CLIColors.ANSI_BLUE + "\t" +(modelView.getExpert() ? SHOW_COMMANDS_EXPERT : SHOW_COMMANDS) +
+        System.out.println(CLIColors.ANSI_BLUE + "\t" + (modelView.getExpert() ? SHOW_COMMANDS_EXPERT : SHOW_COMMANDS) +
                 " [?user] (ex: show school user)" + CLIColors.RESET);
 
         // ACTIONS AVAILABLE COMMANDS
-        if(Objects.equals(modelView.getRoundOwner(), modelView.getPlayerName())) {  // actions are available only if it's my turn
+        if (Objects.equals(modelView.getRoundOwner(), modelView.getPlayerName())) {  // actions are available only if it's my turn
             // modelView.getPlayedCards().getOrDefault(modelView.getRoundOwner()); bho poi spiego
             System.out.println(CLIColors.ANSI_GREEN + "These are all the possible actions available at this moment: " + CLIColors.RESET);
             List<Integer> availableClouds = IntStream.range(0, modelView.getClouds().size())
@@ -292,18 +317,21 @@ public class CLI implements UI {
                             .isEmpty()).boxed().toList();
 
             switch (modelView.getGameState()) {
-                case SETUP_CHOOSE_MAGICIAN -> System.out.println(CLIColors.ANSI_BLUE + "\t magician " + modelView.getAvailableMagiciansStr() + CLIColors.RESET); // CHECK i mean available magicians
-                case PLANNING_CHOOSE_CARD -> System.out.println(CLIColors.ANSI_BLUE + "\t playcard " + modelView.getHand().stream().map(AssistantCard::getValue).toList() + CLIColors.RESET);
+                case SETUP_CHOOSE_MAGICIAN ->
+                        System.out.println(CLIColors.ANSI_BLUE + "\t magician " + modelView.getAvailableMagiciansStr() + CLIColors.RESET); // CHECK i mean available magicians
+                case PLANNING_CHOOSE_CARD ->
+                        System.out.println(CLIColors.ANSI_BLUE + "\t playcard " + modelView.getHand().stream().map(AssistantCard::getValue).toList() + CLIColors.RESET);
                 case ACTION_MOVE_STUDENTS ->
                         System.out.println(CLIColors.ANSI_BLUE + "\t studentisland \n studentshall" + CLIColors.RESET);
                 case ACTION_MOVE_MOTHER ->
                         System.out.println(CLIColors.ANSI_BLUE + "\t movemother 0 - " + modelView.getPlayedCards().get(modelView.getPlayerName()).getMaxMoves() + CLIColors.RESET);
-                case ACTION_CHOOSE_CLOUD -> System.out.println(CLIColors.ANSI_BLUE + "\t cloud " + availableClouds + CLIColors.RESET);
+                case ACTION_CHOOSE_CLOUD ->
+                        System.out.println(CLIColors.ANSI_BLUE + "\t cloud " + availableClouds + CLIColors.RESET);
             }
             if (modelView.getExpert()) {
                 if (modelView.getGameState() != GameState.SETUP_CHOOSE_MAGICIAN) {
                     String characters = modelView.getCharacterCards().stream().map(c -> c.name).toList().toString(); // todo in teoria dal codice del activate si può attivare solo in movestudent e altro stato e basta
-                    String activeCharacters = modelView.getCharacterCards().stream().filter(c->c.isActive).map(c -> c.name).toList().toString(); // todo in teoria dal codice del activate si può attivare solo in movestudent e altro stato e basta
+                    String activeCharacters = modelView.getCharacterCards().stream().filter(c -> c.isActive).map(c -> c.name).toList().toString(); // todo in teoria dal codice del activate si può attivare solo in movestudent e altro stato e basta
                     System.out.println(CLIColors.ANSI_BLUE + "\t activate " + characters + CLIColors.RESET);
                     System.out.println(CLIColors.ANSI_BLUE + "\t deactivate " + activeCharacters + CLIColors.RESET);
                 }
@@ -311,23 +339,24 @@ public class CLI implements UI {
         }
     }
 
-    private void showBalance(){
+    private void showBalance() {
         System.out.println(CLIColors.ANSI_BLUE + "Your Balance:  " + modelView.getBalance() + CLIColors.RESET);
     }
 
-    private void showCards(){
+    private void showCards() {
         System.out.println(CLIColors.ANSI_BLUE + "Your Card:  " + CLIColors.RESET);
         modelView.getHand().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c
                 + CLIColors.RESET).forEach(System.out::println);
     }
-    private void showCharacters(){
+
+    private void showCharacters() {
         modelView.getCharacterCards().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c.name + ", price: " + c.price +
-                ", state: " + (c.isActive?"active": "no-active") + CLIColors.RESET).forEach(System.out::println);
+                ", state: " + (c.isActive ? "active" : "no-active") + CLIColors.RESET).forEach(System.out::println);
     }
 
-    private void showProfs(){
+    private void showProfs() {
         modelView.getProfessors().entrySet().stream()
-                .map(p -> CLIColors.ANSI_BLUE + "\t" +p.getKey() + "-> " + (p.getValue() == null ? "_" : p.getValue()) + CLIColors.RESET)
+                .map(p -> CLIColors.ANSI_BLUE + "\t" + p.getKey() + "-> " + (p.getValue() == null ? "_" : p.getValue()) + CLIColors.RESET)
                 .forEach(System.out::println);
     }
 
@@ -338,50 +367,55 @@ public class CLI implements UI {
     private void showBoard() {
         Printable.printBoard(modelView.getIslandContainer(), modelView.getMotherNature(), modelView.getPlayers(), modelView.getPlayerMapSchool());
     }
+
     /**
      * Clouds print
      */
     private void showClouds() {
         Printable.printClouds(modelView.getClouds());
     }
+
     /**
      * input validation method: true if the string has matched with the pattern of Regex
      */
-    private boolean validateIp(String ip){
+    private boolean validateIp(String ip) {
 
         boolean validate = false;
         ip = ip.toLowerCase();
         Pattern p = Pattern.compile("\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){4}\\b"); //pattern for validate the ip address
         Matcher m = p.matcher(ip);
-        if(m.matches() || ip.equals("localhost")){
+        if (m.matches() || ip.equals("localhost")) {
             validate = true;
         }
         return validate;
 
     }
+
     /**
      * input validation method: true if the string has matched with the pattern of Regex
+     *
      * @return integer because we passed a string (the pattern of regex required a string) and after we cast the port
      */
-    private int validatePort(String Port){
+    private int validatePort(String Port) {
 
         Pattern p = Pattern.compile("^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"); //pattern tto validate port
         Matcher m = p.matcher(Port);
         int port = Integer.parseInt(Port);
 
-         if( !(port > 1023 && m.matches())) { // below 1023 the are ports reserved for OS
-             return -1;
-         }
+        if (!(port > 1023 && m.matches())) { // below 1023 the are ports reserved for OS
+            return -1;
+        }
         return port;
     }
+
     /**
      * input validation method: true if the string has matched with the pattern of Regex
      */
-    private boolean validateNickname(String user ){
+    private boolean validateNickname(String user) {
         boolean validate = false;
         Pattern p = Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$");
         Matcher m = p.matcher(user);
-        if(m.matches()){
+        if (m.matches()) {
             validate = true;
         }
         return validate;

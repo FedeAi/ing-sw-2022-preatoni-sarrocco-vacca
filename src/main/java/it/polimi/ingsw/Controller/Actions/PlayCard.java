@@ -66,10 +66,17 @@ public class PlayCard extends Performable {
     @Override
     public Player nextPlayer(Game game, Rules rules){
         int playerIndex = game.getOrderedPlanningPlayers().indexOf(getPlayer(game));
-        if (playerIndex != game.getPlayers().size() - 1) {
-            return game.getOrderedPlanningPlayers().get(playerIndex + 1);
-        }
-        return null;
+
+        Player nextPlayer;
+        do{
+            if (playerIndex != game.getPlayers().size() - 1) {
+                nextPlayer = game.getOrderedPlanningPlayers().get(playerIndex + 1);
+            }
+            else{
+                nextPlayer = null;
+            }
+        } while ( nextPlayer!=null && !nextPlayer.isConnected());
+        return nextPlayer;
     }
 
 }

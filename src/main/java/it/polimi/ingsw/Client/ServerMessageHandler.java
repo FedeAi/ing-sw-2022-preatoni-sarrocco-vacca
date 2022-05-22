@@ -24,6 +24,7 @@ public class ServerMessageHandler {
   public static final String NEXT_ROUNDOWNER_LISTENER = "RoundOwner";
   public static final String GAME_STATE_LISTENER = "stateChange";
   public static final String PLAYED_CARD_LISTENER = "playedCard";
+  public static final String CONNECTED_PLAYERS_LISTENER = "connectedPlayers";
 
   private final ModelView modelView;
   private final PropertyChangeSupport view = new PropertyChangeSupport(this);
@@ -124,6 +125,10 @@ public class ServerMessageHandler {
     }
     else if(answer instanceof CharactersMessage message){
       modelView.setCharacterCards(message.getMessage());
+    }
+    else if(answer instanceof ConnectedPlayersMessage message) {
+      modelView.setConnectedPlayers(message.getMessage());
+      view.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, message.getMessage());
     }
   }
 

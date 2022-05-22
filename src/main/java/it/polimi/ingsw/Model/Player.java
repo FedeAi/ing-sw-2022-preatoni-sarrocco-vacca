@@ -12,6 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +35,7 @@ public class Player implements PropertyChangeListener {
     private int balance;
 
     protected final PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+    private final HashMap<VirtualClient, List<AbsListener>> clientMapLister = new HashMap<VirtualClient, List<AbsListener>>();
 
     // FIXME
 
@@ -60,10 +62,29 @@ public class Player implements PropertyChangeListener {
      * @param client virtualClient - the VirtualClient on the server.
      */
     public void createListeners(VirtualClient client){
-        listeners.addPropertyChangeListener(HAND_LISTENER, new HandListener(client));
-        listeners.addPropertyChangeListener(SCHOOL_LISTENER, new SchoolListener(client));   // TODO ricordarsi di fare sendall
-        listeners.addPropertyChangeListener(BALANCE_LISTENER, new BalanceListener(client));
-        listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, new PlayedCardListener(client));
+        ArrayList<AbsListener> createdListeners = new ArrayList<>();
+
+        createdListeners.add(0,new HandListener(client));
+        listeners.addPropertyChangeListener(HAND_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new SchoolListener(client));
+        listeners.addPropertyChangeListener(SCHOOL_LISTENER, createdListeners.get(0));   // TODO ricordarsi di fare sendall
+
+        createdListeners.add(0,new BalanceListener(client));
+        listeners.addPropertyChangeListener(BALANCE_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new PlayedCardListener(client));
+        listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, createdListeners.get(0));
+
+        clientMapLister.put(client, createdListeners);
+    }
+
+    public void removeListeners(VirtualClient client){
+        if(clientMapLister.containsKey(client)){
+            for(AbsListener listener : clientMapLister.get(client)){
+                listeners.removePropertyChangeListener(listener);
+            }
+        }
     }
 
     public void fireInitialState(){
@@ -89,10 +110,10 @@ public class Player implements PropertyChangeListener {
         return playerID;
     }
 
-    public boolean isConnected() {
+    public synchronized boolean isConnected() {
         return connected;
     }
-    public void setConnected(boolean connected) {
+    public synchronized void setConnected(boolean connected) {
         this.connected = connected;
     }
 

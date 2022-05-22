@@ -36,7 +36,7 @@ public abstract class MoveStudentFromEntry extends Performable {
         }
 
         // Checks if the player has not a student of Color color
-        if (player.getSchool().getStudentsEntry().get(color) == 0) {
+        if (player.getSchool().getStudentsEntry().getOrDefault(color, 0) == 0) {
             throw new GameException("You don't have any students of the selected color.");
         }
     }

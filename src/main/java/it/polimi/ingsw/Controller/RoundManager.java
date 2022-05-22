@@ -14,6 +14,7 @@ import it.polimi.ingsw.Controller.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -44,8 +45,18 @@ public class RoundManager {
         GameState nextState = action.nextState(gameInstance, gameManager.getRules());
         Player nextPlayer = action.nextPlayer(gameInstance, gameManager.getRules());
 
+        // Start the first planning phase
+        if(nextPlayer == null && gameInstance.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN){
+            nextPlayer = gameInstance.setPlanningOrder();
+        }
+
         if(nextPlayer == null && nextState == GameState.ACTION_MOVE_STUDENTS){
-            nextPlayer = setActionOrder(gameInstance);
+            nextPlayer = gameInstance.setActionOrder();
+        }
+        if(nextPlayer == null && nextState == GameState.PLANNING_CHOOSE_CARD){
+            // handle the disconnected players now re-connected
+            gameInstance.reEnterWaitingPlayers();
+            nextPlayer = gameInstance.setPlanningOrder();
         }
 
         // if next round is going to start
@@ -78,14 +89,8 @@ public class RoundManager {
     /**
      * choose Player orders for action phase
      */
-    private Player setActionOrder(Game game) {
-        List<Player> planningPhasePlayers = game.getOrderedPlanningPlayers();
 
-        // compare by cards value
-        Comparator<Player> compareByCardValue = (Player p1, Player p2) -> p1.getPlayedCard().getValue() - p2.getPlayedCard().getValue();
-        planningPhasePlayers.sort(compareByCardValue);
-        game.setPlayersActionPhase(planningPhasePlayers);
-       return planningPhasePlayers.get(0);
-    }
+
+
 
 }

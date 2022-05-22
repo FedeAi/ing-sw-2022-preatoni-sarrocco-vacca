@@ -44,9 +44,7 @@ public class ChooseMagician extends Performable {
         Player player = getPlayer(game);
 
         // setting the player choice
-        player.setMagician(game.getAvailableMagicians().get(choice));
-        // remove the player choice from the available magicians
-        game.removeMagician(choice);
+        game.chooseMagician(player, game.getAvailableMagicians().get(choice));
 
     }
 
@@ -71,9 +69,10 @@ public class ChooseMagician extends Performable {
         int currentPlayer = game.getPlayers().indexOf(getPlayer(game));
 
         if(currentPlayer == game.getPlayers().size()-1){ // last player
-            return game.getOrderedPlanningPlayers().get(0); //the first player of planning phase
+            return null; //the first player of planning phase
         }else{//others players
             return game.getPlayers().get(currentPlayer + 1);
         }
+
     }
 }

@@ -27,13 +27,16 @@ public class Game {
     public static final String GAME_STATE_LISTENER = "gameStateListener";
     private static final String MODE_LISTENER = "modeListener";
     private static final String CHARACTERS_LISTENER = "charactersListener";
+    private static final String CONNECTED_PLAYERS_LISTENER = "activePlayersListener";
 
     private final List<Player> players;
     private final List<Magician> availableMagicians;
     private final List<Cloud> clouds;
     private final Bag bag;
     private int balance;
-    private List<Player> playersActionPhase; // Ordered list of players for the action phase TODO ADD UML
+    private List<Player> playersActionPhase; // Ordered list of players for the action phase
+    private List<Player> playersPlanningPhase; // Ordered list of players for the planning phase
+    private List<String> playersReconnected; //List of players to be re-inserted in the game
     private boolean expertMode;
     private IslandContainer islandContainer;
     private MotherNature motherNature;
@@ -43,6 +46,7 @@ public class Game {
     private Player roundOwner;
 
     protected final PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+    private final HashMap<VirtualClient, List<AbsListener>> clientMapLister = new HashMap<VirtualClient, List<AbsListener>>();
 
     //private Comparator<Integer> influenceComparator = Comparator.comparing((i1,i2)->(i1.intValue()-i2));
 
@@ -51,10 +55,12 @@ public class Game {
         this.bag = new Bag(Constants.INITIAL_BAG_SIZE);
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
+        playersPlanningPhase = new ArrayList<>();
         availableMagicians = new ArrayList<>(Arrays.stream(Magician.values()).toList());
         islandContainer = new IslandContainer();
         clouds = new ArrayList<>();
         characterCards = new ArrayList<>();
+        playersReconnected = new ArrayList<>();
         initProfessors();
     }
 
@@ -63,6 +69,15 @@ public class Game {
         listeners.firePropertyChange(MODE_LISTENER, null, expertMode);
         listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
         listeners.firePropertyChange(PROFS_LISTENER, null, professors);
+
+        listeners.firePropertyChange(MOVE_MOTHER_LISTENER, null, motherNature.getPosition());
+        listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
+        listeners.firePropertyChange(CLOUDS_LISTENER, null, clouds);
+        listeners.firePropertyChange(ROUND_OWNER_LISTENER, null, roundOwner.getNickname());
+        listeners.firePropertyChange(GAME_STATE_LISTENER, null, gameState);
+
+        listeners.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, players.stream().map(Player::getNickname).toList());
+
         players.forEach(Player::fireInitialState);
     }
 
@@ -71,24 +86,56 @@ public class Game {
      * @param client virtualClient - the VirtualClient on the server.
      */
     public void createListeners(VirtualClient client){
-        
-        listeners.addPropertyChangeListener(MOVE_MOTHER_LISTENER, new MoveMotherListener(client));
-        listeners.addPropertyChangeListener(ISLANDS_LISTENER, new IslandsListener(client));
-        listeners.addPropertyChangeListener(CLOUDS_LISTENER, new CloudsListener(client));
-        listeners.addPropertyChangeListener(PROFS_LISTENER, new ProfsListener(client));
-        listeners.addPropertyChangeListener(MAGICIANS_LISTENER, new MagicianListener(client));
-        listeners.addPropertyChangeListener(MODE_LISTENER, new ModeListener(client));
-        listeners.addPropertyChangeListener(CHARACTERS_LISTENER, new CharactersListener(client));
+        ArrayList<AbsListener> createdListeners = new ArrayList<>();
+
+        createdListeners.add(0,new MoveMotherListener(client));
+        listeners.addPropertyChangeListener(MOVE_MOTHER_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new IslandsListener(client));
+        listeners.addPropertyChangeListener(ISLANDS_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new CloudsListener(client));
+        listeners.addPropertyChangeListener(CLOUDS_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new ProfsListener(client));
+        listeners.addPropertyChangeListener(PROFS_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new MagicianListener(client));
+        listeners.addPropertyChangeListener(MAGICIANS_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new ModeListener(client));
+        listeners.addPropertyChangeListener(MODE_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new CharactersListener(client));
+        listeners.addPropertyChangeListener(CHARACTERS_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new ConnectedPlayerListener(client));
+        listeners.addPropertyChangeListener(CONNECTED_PLAYERS_LISTENER, createdListeners.get(0));
 
         // Player listeners
         Optional<Player> player = getPlayerByNickname(client.getNickname());
         player.ifPresent(p -> p.createListeners(client));
 
-        listeners.addPropertyChangeListener(ROUND_OWNER_LISTENER, new RoundOwnerListener(client));
-        listeners.addPropertyChangeListener(GAME_STATE_LISTENER, new GameStateListener(client));
+        createdListeners.add(0,new RoundOwnerListener(client));
+        listeners.addPropertyChangeListener(ROUND_OWNER_LISTENER, createdListeners.get(0));
+
+        createdListeners.add(0,new GameStateListener(client));
+        listeners.addPropertyChangeListener(GAME_STATE_LISTENER, createdListeners.get(0));
+
+        clientMapLister.put(client, createdListeners);
     }
 
+    public void removeListeners(VirtualClient client){
+        if(clientMapLister.containsKey(client)){
+            for(AbsListener listener : clientMapLister.get(client)){
+                listeners.removePropertyChangeListener(listener);
+            }
+        }
 
+        // Player listeners
+        Optional<Player> player = getPlayerByNickname(client.getNickname());
+        player.ifPresent(p -> p.removeListeners(client));
+    }
 
     public void initProfessors() {
         professors = new EnumMap<Color, String>(Color.class);
@@ -244,27 +291,77 @@ public class Game {
      * @return ordered players List for the next planning phase
      */
     public List<Player> getOrderedPlanningPlayers() {
-        ArrayList<Player> orderedPlanningPLayers = new ArrayList<Player>();
+        return new ArrayList<>(playersPlanningPhase);
+    }
+
+    public List<Player> getOrderedActionPlayers() {
+        return new ArrayList<>(playersActionPhase);
+    }
+
+    /**
+     * compute the new action order, if there are disconnected player they are put at the end of the turn
+     * @return
+     */
+    public Player setActionOrder() {
+        // compare by cards value
+        Comparator<Player> compareByCardValue = (Player p1, Player p2) -> {
+            int value = 0;
+            if(p1.isConnected() && p2.isConnected()) {
+                value = p1.getPlayedCard().getValue() - p2.getPlayedCard().getValue();
+            }
+            else if(!p1.isConnected() && p2.isConnected()){
+                value = -1;
+            }
+            else if(p1.isConnected() && !p2.isConnected()){
+                value = 1;
+            }
+            return value;
+        };
+        playersPlanningPhase.sort(compareByCardValue);
+        playersActionPhase = playersPlanningPhase;
+        return playersActionPhase.get(0);
+    }
+
+    /**
+     * compute the planning order, it takes in account only the active players
+     * @return the first Player for the planning phase
+     */
+    public Player setPlanningOrder() {
+        playersPlanningPhase.clear();
         int playerIndex = players.indexOf(playersActionPhase.get(0));
         for (int i = 0; i < players.size(); i++) {
-            orderedPlanningPLayers.add(players.get((playerIndex + i) % players.size()));
+            Player p = players.get((playerIndex + i) % players.size());
+            if(p.isConnected()){
+                playersPlanningPhase.add(p);
+            }
+
         }
-        return orderedPlanningPLayers;
+        return playersPlanningPhase.get(0);
+    }
+
+
+    /**
+     * it computes the next player in action phase, if it's end of turn it returns an Empty Optional
+     * Warning this method works only if the game is in action phase
+     * @param distance is the number of players to skip, e.g. distance 2 it returns not the next but the next next
+     * @return
+     */
+    public Optional<String> getNextPlayerActionPhasePlus(int distance) {
+        List<Player> players = playersActionPhase;
+        int index = players.indexOf(roundOwner) + distance;
+        if (index >= players.size()) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(players.get(index).getNickname());
     }
 
     /**
      * it computes the next player in action phase, if it's end of turn it returns an Empty Optional
      * Warning this method works only if the game is in action phase
-     *
      * @return
      */
     public Optional<String> getNextPlayerActionPhase() {
-        List<Player> players = playersActionPhase;
-        int index = players.indexOf(roundOwner) + 1;
-        if (index >= players.size()) {
-            return Optional.empty();
-        }
-        return Optional.ofNullable(players.get(index).getNickname());
+        return getNextPlayerActionPhasePlus(1);
     }
 
     /**
@@ -361,6 +458,9 @@ public class Game {
     public int numPlayers() {
         return players.size();
     }
+    public int numActivePlayers() {
+        return players.stream().filter(Player::isConnected).toList().size();
+    }
 
     public void refillClouds() {
         for (Cloud c : clouds) {
@@ -430,5 +530,22 @@ public class Game {
         ArrayList<Magician> previousList = new ArrayList<Magician>(availableMagicians);
         availableMagicians.remove(chooseRemove);
         listeners.firePropertyChange(MAGICIANS_LISTENER, previousList, availableMagicians);
+    }
+
+    public void addPlayerToBeReconnected(String player){
+        playersReconnected.add(player);
+    }
+
+    public void setPlayerConnected(int player, boolean isConnected){
+        getPlayerByID(player).setConnected(isConnected);
+        listeners.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, players.stream().filter(Player::isConnected).map(Player::getNickname).toList());
+    }
+    public void reEnterWaitingPlayers(){
+        for(Player p : players){
+            if(playersReconnected.contains(p.getNickname())){
+                setPlayerConnected(p.getID(), true);
+            }
+        }
+        playersReconnected.clear();
     }
 }

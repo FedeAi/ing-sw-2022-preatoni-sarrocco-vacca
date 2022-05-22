@@ -27,6 +27,7 @@ public class ModelView {
     private final GUI gui;
 
     /** Model data **/
+    private List<String> connectedPlayers;
     private Map<Color, String> professors;
     private int balance;
     private Map<String, Magician> playerMapMagician;
@@ -54,7 +55,7 @@ public class ModelView {
         gui = null;
         this.playedCards = new HashMap<String, AssistantCard>();
         this.playerMapSchool = new HashMap <String, School>() ;
-
+        this.connectedPlayers = new ArrayList<>();
     }
 
     /**
@@ -67,6 +68,7 @@ public class ModelView {
         this.cli = null;
         this.playedCards = new HashMap<String, AssistantCard>();
         this.playerMapSchool = new HashMap <String, School>() ;
+        this.connectedPlayers = new ArrayList<>();
     }
     /** Getter and Setter **/
 
@@ -178,6 +180,14 @@ public class ModelView {
         motherNature = position;
     }
 
+    public void setConnectedPlayers(List<String> connectedPlayers) {
+        this.connectedPlayers = connectedPlayers;
+    }
+
+    public List<String> getConnectedPlayers() {
+        return connectedPlayers;
+    }
+
     public int getMotherNature(){
         return motherNature;
     }
@@ -211,14 +221,14 @@ public class ModelView {
     public void setExpert(boolean expertMode) {
         expert = expertMode;
     }
+
     public boolean getExpert(){
         return expert;
     }
+
     public List<String> getPlayers() {
         List<String> players = new ArrayList<>();
-        for (String s : playerMapSchool.keySet()) {
-            players.add(s);
-        }
+        players.addAll(playerMapSchool.keySet());
         return players;
     }
 }

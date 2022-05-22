@@ -151,6 +151,10 @@ public class Server {
         return nameMapId.get(nickname);
     }
 
+    public boolean isNicknameTaken(String nickname){
+        return !(nameMapId.get(nickname) == null);
+    }
+
     /**
      * Method lobby creates or handle a lobby, which is a common room used before a match. In this
      * room, connected players are waiting for other ones, in order to reach the correct players'
@@ -194,11 +198,11 @@ public class Server {
         VirtualClient client = idMapClient.get(clientID);
         System.out.println(
                 Constants.getInfo() + "Unregistering client " + client.getNickname() + "...");
-        idMapClient.remove(clientID);
-        nameMapId.remove(client.getNickname());
+//        idMapClient.remove(clientID);
+//        nameMapId.remove(client.getNickname());
         waiting.remove(clientToConnection.get(client));
-        idMapName.remove(client.getClientID());
-        clientToConnection.remove(client);
+//        idMapName.remove(client.getClientID());
+//        clientToConnection.remove(client);
         System.out.println(Constants.getInfo() + "Client has been successfully unregistered.");
     }
 
@@ -212,7 +216,7 @@ public class Server {
      *     server socket and client socket.
      * @return Integer - the client ID if everything goes fine, null otherwise.
      */
-     public synchronized Integer registerConnection(String nickname, SocketClientConnection socketClientHandler) {
+     public synchronized Integer registerNewConnection(String nickname, SocketClientConnection socketClientHandler) {
         Integer clientID = nameMapId.get(nickname);
 
         if (clientID == null) { // Player has never connected to the server before.
@@ -258,16 +262,26 @@ public class Server {
                 currentGame.sendAll(
                         new CustomMessage("Client " + client.getNickname() + " joined the game"));
             }
-        } else {
+        }
+        return clientID;
+    }
+
+    public Integer recoverConnection(String nickname, SocketClientConnection socketClientHandler){
+        Integer clientID = nameMapId.get(nickname);
+        if(clientID != null) {
             VirtualClient client = idMapClient.get(clientID);
             if (client.isConnected()) {
                 SerializedAnswer ans = new SerializedAnswer();
                 ans.setServerAnswer(new GameError(ErrorType.DUPLICATE_NICKNAME));
                 socketClientHandler.sendSocketMessage(ans);
                 return null;
+            } else {
+                client.setSocketClientConnection(socketClientHandler);
+                client.getGameHandler().reEnterPlayer(nickname);
+                client.getGameHandler().sendAllExcept(new CustomMessage(nickname + " has reconnected and is waiting to be re-entered in the game"), clientID);
             }
         }
-        return clientID;
+       return clientID;
     }
 
     /**
