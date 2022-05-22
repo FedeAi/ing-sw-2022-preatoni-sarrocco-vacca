@@ -57,7 +57,7 @@ public class HeraldChooseIsland extends Performable {
         if (islandNewOwner_opt.isPresent()) {
             String islandPrevOwner = island.getOwner();
             if (!islandNewOwner_opt.get().equals(islandPrevOwner)) {
-                island.setOwner(islandNewOwner_opt.get());
+                game.setIslandOwner(islandIndex,islandNewOwner_opt.get());
                 // remove tower to the player
                 Optional<Player> islandOwnerPlayer_opt = game.getPlayerByNickname(islandNewOwner_opt.get());
                 islandOwnerPlayer_opt.ifPresent(owner -> owner.getSchool().decreaseTowers());

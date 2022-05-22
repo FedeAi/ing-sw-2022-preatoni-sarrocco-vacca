@@ -11,15 +11,25 @@ public abstract class Island implements Serializable {
         If we join an island with an adjacent one which is blocked,
         is the SuperIsland blocked or not?
     */
+
     protected boolean isBlocked;
+    protected String owner;
+
+    protected Island(){
+        isBlocked = false;
+    }
 
     public abstract Map<Color, Integer> getStudents();
 
-    public abstract String getOwner();
+    public String getOwner() {
+        return owner;
+    }
 
     public abstract int getNumTower();
 
-    public abstract void setOwner(String owner);
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 
     public abstract void addStudent(Color student);
 

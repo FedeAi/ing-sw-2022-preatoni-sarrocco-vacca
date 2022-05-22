@@ -74,7 +74,7 @@ public class MoveMotherNature extends Performable {
                 }
             }
         } else {
-            island.setBlocked(false);
+            game.setIslandBlock(newMotherPosition,false);
             Optional<CharacterCard> card = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof GrandmaCharacter).findFirst();
             if (card.isEmpty()) {
                 return;
