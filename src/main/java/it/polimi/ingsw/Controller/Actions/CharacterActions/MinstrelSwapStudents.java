@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.GameException;
@@ -40,12 +41,7 @@ public class MinstrelSwapStudents extends Performable {
         // there is no an active card
         Optional<CharacterCard> card = game.getActiveCharacter(MinstrelCharacter.class);
         if (card.isEmpty()) {
-            throw new GameException("There isn't any active card present.");
-        }
-
-        // the active card is not the right one
-        if (!(card.get() instanceof MinstrelCharacter)) {
-            throw new GameException("The card that has been activated in this turn is not of the minstrel type.");
+            throw new GameException("There isn't any active card present of the minstrel type.");
         }
 
         MinstrelCharacter minstrel = (MinstrelCharacter) card.get();
@@ -59,8 +55,14 @@ public class MinstrelSwapStudents extends Performable {
         if (player.getSchool().getStudentsEntry().getOrDefault(studentFromEntry, 0) <= 0) {
             throw new GameException("There isn't any student of the specified color (" + studentFromEntry.toString() + ") in your school's entry.");
         }
+        // The hall doesn't have enough students
         if (player.getSchool().getStudentsHall().getOrDefault(studentFromHall, 0) <= 0) {
             throw new GameException("There isn't any student of the specified color (" + studentFromHall.toString() + ") in your school's hall.");
+        }
+
+        Player p = getPlayer(game);
+        if (p.getSchool().getStudentsHall().get(studentFromEntry) >= Constants.SCHOOL_LANE_SIZE) {
+            throw new GameException("You already have the maximum amount (" + Constants.SCHOOL_LANE_SIZE + ") of " + studentFromEntry + " students in your school's hall!");
         }
     }
 

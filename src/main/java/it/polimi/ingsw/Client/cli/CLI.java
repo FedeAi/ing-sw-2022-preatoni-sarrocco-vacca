@@ -297,7 +297,7 @@ public class CLI implements UI {
                 case ACTION_MOVE_STUDENTS ->
                         System.out.println(CLIColors.ANSI_BLUE + "\t studentisland \n studentshall" + CLIColors.RESET);
                 case ACTION_MOVE_MOTHER ->
-                        System.out.println(CLIColors.ANSI_BLUE + "\t movemother 0 - " + modelView.getPlayedCards().get(modelView.getPlayerName()).getMaxMoves() + CLIColors.RESET);
+                        System.out.println(CLIColors.ANSI_BLUE + "\t movemother 1 - " + modelView.getPlayedCards().get(modelView.getPlayerName()).getMaxMoves() + CLIColors.RESET);
                 case ACTION_CHOOSE_CLOUD -> System.out.println(CLIColors.ANSI_BLUE + "\t cloud " + availableClouds + CLIColors.RESET);
             }
             if (modelView.getExpert()) {

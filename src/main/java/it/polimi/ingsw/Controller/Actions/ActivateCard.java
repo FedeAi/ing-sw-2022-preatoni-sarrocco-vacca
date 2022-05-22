@@ -8,8 +8,6 @@ import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
-import java.util.Optional;
-
 public class ActivateCard extends Performable {
 
     private final int choice;
@@ -46,6 +44,9 @@ public class ActivateCard extends Performable {
         }
         if (chosenCard.isActive()) {
             throw new GameException("The selected card is already active.");
+        }
+        if (chosenCard.getActivatingPlayer().equals(myNickName)){
+            throw new GameException("You can activate a card once per turn.");
         }
     }
 
