@@ -50,7 +50,7 @@ public class MoveMotherNature extends Performable {
             if (islandNewOwner_opt.isPresent()) {
                 String islandPrevOwner = island.getOwner();
                 if (!islandNewOwner_opt.get().equals(islandPrevOwner)) {
-                    island.setOwner(islandNewOwner_opt.get());
+                    game.setIslandOwner(newMotherPosition, islandNewOwner_opt.get());
                     // remove tower to the player
                     Optional<Player> islandOwnerPlayer_opt = game.getPlayerByNickname(islandNewOwner_opt.get());
                     islandOwnerPlayer_opt.ifPresent(owner -> owner.getSchool().decreaseTowers());
@@ -63,12 +63,12 @@ public class MoveMotherNature extends Performable {
             IslandContainer islandContainer = game.getIslandContainer();
             Island prevIsland = islandContainer.prevIsland(newMotherPosition);
             if (Island.checkJoin(prevIsland, island)) {
-                islandContainer.joinPrevIsland(newMotherPosition);
+                game.joinPrevIsland(newMotherPosition);
                 game.moveMotherNature(-1);
             }
             Island nextIsland = islandContainer.nextIsland(newMotherPosition);
             if (Island.checkJoin(island, nextIsland)) {
-                islandContainer.joinNextIsland(newMotherPosition);
+                game.joinNextIsland(newMotherPosition);
                 if(newMotherPosition == islandContainer.size()){
                     game.moveMotherNature(0);
                 }

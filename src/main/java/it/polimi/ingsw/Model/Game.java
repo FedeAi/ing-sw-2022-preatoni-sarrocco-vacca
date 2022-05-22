@@ -382,6 +382,21 @@ public class Game {
         listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);  // TODO old value?
     }
 
+    public void setIslandOwner(int island, String owner){
+        islandContainer.get(island).setOwner(owner);
+        listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
+    }
+
+    public void joinPrevIsland(int island){
+        islandContainer.joinPrevIsland(island);
+        listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
+    }
+
+    public void joinNextIsland(int island){
+        islandContainer.joinNextIsland(island);
+        listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
+    }
+
     public void playCard(Player player, AssistantCard playedCard) {
         player.setAndRemovePlayedCard(playedCard);
     }
