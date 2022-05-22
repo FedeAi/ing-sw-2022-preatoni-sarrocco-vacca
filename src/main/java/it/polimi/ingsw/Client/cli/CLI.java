@@ -29,7 +29,8 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 /**
- * ClI implements the UI and that is the command line interface of view concept
+ * CLI is the main class for everything regarding the CLI client.
+ * It parses the user input and prints all that's needed to play the game.
  *
  * @author Davide Preatoni, Federico Sarrocco, Alessandro Vacca
  */
@@ -147,7 +148,9 @@ public class CLI implements UI {
     }
 
     /**
-     * Proprierty changes of interest
+     * Listener pattern implementation.
+     * This prints all the necessary information from the server at the moment of reception.
+     * @param evt the information to be printed
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -173,7 +176,9 @@ public class CLI implements UI {
     }
 
     /**
-     * Print the state of the game during the game itself
+     * Prints the current state and the current player of the game.
+     * @param oldState the old state of the game
+     * @param newState the new state of the game
      */
     public void statePrinter(GameState oldState, GameState newState) {
 
@@ -192,7 +197,9 @@ public class CLI implements UI {
     }
 
     /**
-     * Print the owner of the turn  during the game
+     * Prints the owner of the turn during the game
+     * @param oldRoundOwner the previous round owner
+     * @param newRoundOwner the current round owner
      */
     public void roundPrinter(String oldRoundOwner, String newRoundOwner) {
         String player = modelView.getPlayerName();
@@ -201,7 +208,7 @@ public class CLI implements UI {
             if (player.equals(newRoundOwner)) {
                 System.out.println(CLIColors.ANSI_BACKGROUND_BLACK.getEscape() + CLIColors.ANSI_WHITE + "You are the new round owner" + CLIColors.RESET);
             } else {
-                System.out.println(CLIColors.ANSI_CYAN + newRoundOwner + "is the new round owner" + CLIColors.RESET);
+                System.out.println(CLIColors.ANSI_CYAN + newRoundOwner + " is the new round owner" + CLIColors.RESET);
             }
         }
     }
@@ -214,7 +221,7 @@ public class CLI implements UI {
     }
 
     /**
-     * Clean the CLI of the users
+     * Clean the CLI of the user
      */
     public static void clearScreen() {
         try {
@@ -231,9 +238,8 @@ public class CLI implements UI {
     }
 
     /**
-     * Show possible actions or model representation
-     *
-     * @return true if cmd is a model-show command, false otherwise
+     * Shows the possible actions or the model representation
+     * @return true if the input is correct, false otherwise
      */
     private boolean handleView(String cmd) {
         String[] in = cmd.split(" ");
@@ -278,8 +284,7 @@ public class CLI implements UI {
 
     /**
      * The method showSchool prints the content of the player's school on the CLI
-     *
-     * @param modelView
+     * @param modelView the client's model representation
      */
     private void showSchool(ModelView modelView) {
         Printable.printSchool(modelView.getPlayerMapSchool().get(modelView.getPlayerName()));
@@ -287,9 +292,8 @@ public class CLI implements UI {
 
     /**
      * The method showSchool prints the content of the specified player's school on the CLI
-     *
-     * @param modelView
-     * @param nickname
+     * @param modelView the client's model representation
+     * @param nickname the specified player's nickname
      */
     private void showSchool(ModelView modelView, String nickname) {
         Map<String, School> schools = modelView.getPlayerMapSchool();
@@ -300,7 +304,7 @@ public class CLI implements UI {
     }
 
     /**
-     * Possible actions based on state game and expert mode
+     *  Possible actions based on state game and expert mode.
      */
     private void showCLICommands() {
         // MODEL VIEW AVAILABLE COMMANDS
@@ -324,9 +328,8 @@ public class CLI implements UI {
                 case ACTION_MOVE_STUDENTS ->
                         System.out.println(CLIColors.ANSI_BLUE + "\t studentisland \n studentshall" + CLIColors.RESET);
                 case ACTION_MOVE_MOTHER ->
-                        System.out.println(CLIColors.ANSI_BLUE + "\t movemother 0 - " + modelView.getPlayedCards().get(modelView.getPlayerName()).getMaxMoves() + CLIColors.RESET);
-                case ACTION_CHOOSE_CLOUD ->
-                        System.out.println(CLIColors.ANSI_BLUE + "\t cloud " + availableClouds + CLIColors.RESET);
+                        System.out.println(CLIColors.ANSI_BLUE + "\t movemother 1 - " + modelView.getPlayedCards().get(modelView.getPlayerName()).getMaxMoves() + CLIColors.RESET);
+                case ACTION_CHOOSE_CLOUD -> System.out.println(CLIColors.ANSI_BLUE + "\t cloud " + availableClouds + CLIColors.RESET);
             }
             if (modelView.getExpert()) {
                 if (modelView.getGameState() != GameState.SETUP_CHOOSE_MAGICIAN) {
@@ -339,22 +342,34 @@ public class CLI implements UI {
         }
     }
 
-    private void showBalance() {
+    /**
+     *  Prints the player's balance.
+     */
+    private void showBalance(){
         System.out.println(CLIColors.ANSI_BLUE + "Your Balance:  " + modelView.getBalance() + CLIColors.RESET);
     }
 
-    private void showCards() {
-        System.out.println(CLIColors.ANSI_BLUE + "Your Card:  " + CLIColors.RESET);
+    /**
+     *  Prints the player's hand.
+     */
+    private void showCards(){
+        System.out.println(CLIColors.ANSI_BLUE + "Your Cards:  " + CLIColors.RESET);
         modelView.getHand().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c
                 + CLIColors.RESET).forEach(System.out::println);
     }
 
-    private void showCharacters() {
+    /**
+     *  This method returns the character cards present in the current game.
+     */
+    private void showCharacters(){
         modelView.getCharacterCards().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c.name + ", price: " + c.price +
                 ", state: " + (c.isActive ? "active" : "no-active") + CLIColors.RESET).forEach(System.out::println);
     }
 
-    private void showProfs() {
+    /**
+     *  Prints the current owners of the game's professors.
+     */
+    private void showProfs(){
         modelView.getProfessors().entrySet().stream()
                 .map(p -> CLIColors.ANSI_BLUE + "\t" + p.getKey() + "-> " + (p.getValue() == null ? "_" : p.getValue()) + CLIColors.RESET)
                 .forEach(System.out::println);
@@ -362,14 +377,14 @@ public class CLI implements UI {
 
 
     /**
-     * Board print
+     *  Prints the representation of the game's board (the islands).
      */
     private void showBoard() {
         Printable.printBoard(modelView.getIslandContainer(), modelView.getMotherNature(), modelView.getPlayers(), modelView.getPlayerMapSchool());
     }
 
     /**
-     * Clouds print
+     *  Prints the representation of the game's clouds.
      */
     private void showClouds() {
         Printable.printClouds(modelView.getClouds());
@@ -411,7 +426,7 @@ public class CLI implements UI {
     /**
      * input validation method: true if the string has matched with the pattern of Regex
      */
-    private boolean validateNickname(String user) {
+    private boolean validateNickname(String user){
         boolean validate = false;
         Pattern p = Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$");
         Matcher m = p.matcher(user);

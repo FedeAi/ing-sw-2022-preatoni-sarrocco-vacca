@@ -14,7 +14,7 @@ public class Constants {
     public static final int NUM_ASSISTANT_CARDS = 10;
     public static final int NUM_COINS = 20;
     public static final int INITIAL_PLAYER_BALANCE = 1;
-
+    public static final int SCHOOL_LANE_SIZE = 10;
     public static int port = 8080;
     public static String address;
 

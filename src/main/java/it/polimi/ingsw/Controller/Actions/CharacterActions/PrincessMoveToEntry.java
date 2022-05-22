@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.GameException;
@@ -33,19 +34,19 @@ public class PrincessMoveToEntry extends Performable {
             throw new WrongStateException("state you access by activating the princess card.");
         }
 
+        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof PrincessCharacter)) {
+            throw new GameException("There isn't any character card of the type princess on the table.");
+        }
+
         // there is no an active card
         Optional<CharacterCard> card = game.getActiveCharacter(PrincessCharacter.class);
         if (card.isEmpty()) {
-            throw new GameException("There isn't any active card present.");
+            throw new GameException("There isn't any active card present of the princess type.");
         }
 
-        // the active card is not the right one
-        if (!(card.get() instanceof PrincessCharacter)) {
-            throw new GameException("The card that has been activated in this turn is not of the princess type.");
-        }
-
-        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof PrincessCharacter)) {
-            throw new GameException("There isn't any character card of the type princess on the table.");
+        Player p = getPlayer(game);
+        if (p.getSchool().getStudentsHall().get(student) >= Constants.SCHOOL_LANE_SIZE) {
+            throw new GameException("You already have the maximum amount (" + Constants.SCHOOL_LANE_SIZE + ") of " + student + " students in your school's hall!");
         }
     }
 
