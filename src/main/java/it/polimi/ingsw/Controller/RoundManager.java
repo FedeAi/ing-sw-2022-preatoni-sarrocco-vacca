@@ -10,14 +10,9 @@ import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.listeners.RoundOwnerListener;
-import it.polimi.ingsw.Controller.*;
-import java.beans.PropertyChangeEvent;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.stream.IntStream;
 
 public class RoundManager {
@@ -44,7 +39,10 @@ public class RoundManager {
         /* this line is reached only if the action is performable  */
         updateRoundOwnerAndGameState(action);
 
-        WinController.check(gameInstance);
+        String winner = WinController.check(gameInstance);
+        if (winner != null) {
+            gameManager.getGameHandler().sendVictory(winner);
+        }
 
     }
 
