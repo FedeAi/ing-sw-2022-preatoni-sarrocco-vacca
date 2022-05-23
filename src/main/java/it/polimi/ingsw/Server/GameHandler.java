@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.*;
@@ -8,13 +9,12 @@ import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Server.Answer.Answer;
-import it.polimi.ingsw.Server.Answer.ConnectionMessage;
-import it.polimi.ingsw.Server.Answer.CustomMessage;
-import it.polimi.ingsw.Server.Answer.ReqMagicianMessage;
+import it.polimi.ingsw.Server.Answer.*;
 
 import java.beans.PropertyChangeSupport;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -34,7 +34,9 @@ public class GameHandler {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final Random rnd = new Random();
     private boolean isStarted;
+    private boolean isEnded;
     private int playersNumber;
+    Timer timer = new Timer("WinningTimer"); // to decree victory in case of 1 player remaining
 
     /**
      * Constructor GameHandler creates a new GameHandler instance.
@@ -44,6 +46,7 @@ public class GameHandler {
     public GameHandler(Server server) {
         this.server = server;
         isStarted = false;
+        isEnded = false;
         game = new Game();
         controller = new GameManager(game, this);   // new GameManager(game, this);
         controllerListener.addPropertyChangeListener(controller);
@@ -63,6 +66,7 @@ public class GameHandler {
     }
 
     public void reEnterWaitingPlayers(){
+        stopWinningTimer();
         game.getWaitingPlayersReconnected().forEach(p -> sendAll(new CustomMessage(p + " is back in the play")));
         game.reEnterWaitingPlayers();
     }
@@ -93,6 +97,14 @@ public class GameHandler {
         return isStarted;
     }
 
+    public synchronized boolean isEnded() {
+        return isEnded;
+    }
+
+    public synchronized void setEnded() {
+        isEnded = true;
+    }
+
     public void startGame() throws InterruptedException{
         // add listeners for all players to the model
         for (Player p : game.getPlayers()) {
@@ -108,6 +120,7 @@ public class GameHandler {
     }
 
     public void endGame() {
+        setEnded();
         while (!game.getActivePlayers().isEmpty()) {
             server.getClientByID(game.getActivePlayers().get(0).getID()).getConnection().close();
         }
@@ -125,7 +138,30 @@ public class GameHandler {
         game.removeListeners(server.getClientByID(id));
         game.setPlayerConnected(id, false);
         controller.handleNewRoundOwnerOnDisconnect(server.getNicknameByID(id));
+        startWinningTimer();
     }
+
+    private void startWinningTimer() {
+        if(game.numActivePlayers()== 1 && !isEnded()){
+            TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    sendAll( new CustomMessage("You WON, you are the only player and are passed "+ Constants.DELAY_WINNING_TIMER + " seconds")); // TODO WIN MESSAGE
+                    sendAll( new WinMessage(game.getPlayers().stream().filter(Player::isConnected).findFirst().get().getNickname())); // TODO WIN MESSAGE
+                    endGame();
+                }
+            };
+
+            timer.schedule(timerTask, Constants.DELAY_WINNING_TIMER * 1000);
+        }
+    }
+
+    private void stopWinningTimer(){
+        timer.cancel();
+        timer = new Timer("winningTimer");
+    }
+
+
 
 //    public void magicianSetup() {
 //        isStarted = true;

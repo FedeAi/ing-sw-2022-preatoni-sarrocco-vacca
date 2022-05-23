@@ -77,7 +77,7 @@ public class RoundManager {
     }
 
     public void handleNewRoundOwnerOnDisconnect(String nickname) {
-        if(nickname.equals(gameInstance.getRoundOwner().getNickname())){
+        if(nickname.equals(gameInstance.getRoundOwner().getNickname()) && gameInstance.numActivePlayers()> 1){
             switch (gameInstance.getGameState()){
                 case PLANNING_CHOOSE_CARD -> updateRoundOwnerAndGameState(new PlayCard(nickname, -1));
                 default -> updateRoundOwnerAndGameState(new ChooseCloud(nickname, -1));

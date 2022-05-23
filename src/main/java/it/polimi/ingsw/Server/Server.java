@@ -277,8 +277,8 @@ public class Server {
                 return null;
             } else {
                 client.setSocketClientConnection(socketClientHandler);
-                client.getGameHandler().reEnterPlayer(nickname);
                 client.getGameHandler().sendAllExcept(new CustomMessage(nickname + " has reconnected and is waiting to be re-entered in the game"), clientID);
+                client.getGameHandler().reEnterPlayer(nickname);
             }
         }
        return clientID;

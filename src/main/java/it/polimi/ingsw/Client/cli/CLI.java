@@ -12,6 +12,7 @@ import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import it.polimi.ingsw.Server.Answer.GameError;
 import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
+import it.polimi.ingsw.Server.Answer.WinMessage;
 import it.polimi.ingsw.Server.Answer.modelUpdate.PlayedCardMessage;
 
 import java.beans.PropertyChangeEvent;
@@ -170,8 +171,30 @@ public class CLI implements UI {
                 PlayedCardMessage msg = (PlayedCardMessage) evt.getNewValue();
                 System.out.println(CLIColors.ANSI_GREEN + "\t" + msg.getPlayer() + " played: " + msg.getMessage() + CLIColors.RESET);
             }
+
+            case ServerMessageHandler.WIN_MESSAGE_LISTER -> {
+                WinMessage msg = (WinMessage) evt.getNewValue();
+                printWinner(msg.getMessage());
+            }
+
             // TODO case activate card ...
         }
+
+    }
+
+    private void printWinner(String player) {
+        if(player.equals(modelView.getPlayerName())){
+            System.out.println(CLIColors.ANSI_GREEN + "\n\n\n\t" + "#############################################"
+                    + "\n\n\n\t" + "YOU WON   :))))" +
+                    "\n\n\n\t" + "#############################################"
+                            +CLIColors.RESET);
+        }else{
+            System.out.println(CLIColors.ANSI_RED + "\n\n\n\t" + "#############################################"
+                    + "\n\n\n\t" + player + "won :(" +
+                    "\n\n\n\t" + "#############################################"
+                    +CLIColors.RESET);
+        }
+
 
     }
 

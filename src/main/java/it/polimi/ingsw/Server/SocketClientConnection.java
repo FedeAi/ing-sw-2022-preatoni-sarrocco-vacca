@@ -127,10 +127,11 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         } catch (IOException e) {
             GameHandler game = server.getGameByID(clientID);
             String player = server.getNicknameByID(clientID);
-            server.unregisterClient(clientID);
-            if (game.isStarted()) {
-                game.endGame(player);
-            }
+            close();
+//            server.unregisterClient(clientID);
+//            if (game.isStarted()) {
+//                game.endGame(player);
+//            }
             System.err.println(Constants.getInfo() + e.getMessage());
         } catch (ClassNotFoundException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);

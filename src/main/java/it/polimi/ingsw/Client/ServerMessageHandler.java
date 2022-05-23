@@ -21,6 +21,7 @@ public class ServerMessageHandler {
   public static final String GAME_ERROR_LISTENER = "gameError";
   public static final String REQ_PLAYERS_LISTENER = "reqPlayers";
   public static final String CUSTOM_MESSAGE_LISTER = "customMessage";
+  public static final String WIN_MESSAGE_LISTER = "winMessage";
   public static final String NEXT_ROUNDOWNER_LISTENER = "RoundOwner";
   public static final String GAME_STATE_LISTENER = "stateChange";
   public static final String PLAYED_CARD_LISTENER = "playedCard";
@@ -77,6 +78,9 @@ public class ServerMessageHandler {
     }
     else if(answer instanceof CustomMessage){
       view.firePropertyChange(CUSTOM_MESSAGE_LISTER,null, answer);
+    }
+    else if(answer instanceof WinMessage){
+      view.firePropertyChange(WIN_MESSAGE_LISTER,null, answer);
     }
 
   }
