@@ -1,6 +1,5 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Server.Answer.modelUpdate.BalanceMessage;
 import it.polimi.ingsw.Server.Answer.modelUpdate.ModeMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
@@ -21,8 +20,8 @@ public class ModeListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public ModeListener(VirtualClient client) {
-        super(client);
+    public ModeListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

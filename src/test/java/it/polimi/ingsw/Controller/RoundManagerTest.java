@@ -6,6 +6,8 @@ import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +24,7 @@ class RoundManagerTest {
 
     @BeforeEach
     void init() {
-        gameManager = new GameManager(new Game());
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
         p1 = new Player(0, "Ale");
         p2 = new Player(1, "Davide");
         p3 = new Player(2, "Fede");
@@ -37,6 +39,28 @@ class RoundManagerTest {
     @Test
     @DisplayName("Check player action order")
     void checkPlayerActionOrder() {
+        action = new ChooseMagician(p1.getNickname(), 0);
+        try {
+            gameManager.performAction(action);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+        action = new ChooseMagician(p2.getNickname(), 0);
+        try {
+            gameManager.performAction(action);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+        action = new ChooseMagician(p3.getNickname(), 0);
+        try {
+            gameManager.performAction(action);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+
         action = new PlayCard(p1.getNickname(), 1);
         try {
             gameManager.performAction(action);
@@ -76,17 +100,33 @@ class RoundManagerTest {
 
     }
 
-    @Test
-    @DisplayName(" test")
-    void performeAction() {
-    }
 
     @Test
     @DisplayName("Basic state of game test")
     void handleStateChange() {
-        //2 cases: make an action that doesn't change the state and another one that it chan
-        // doesn't change the state of game
+        action = new ChooseMagician(p1.getNickname(), 0);
+        try {
+            gameManager.performAction(action);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+        action = new ChooseMagician(p2.getNickname(), 0);
+        try {
+            gameManager.performAction(action);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
+        action = new ChooseMagician(p3.getNickname(), 0);
+        try {
+            gameManager.performAction(action);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
         // PLANNING PHASE
+        game.setGameState(GameState.PLANNING_CHOOSE_CARD);
         GameState prevState = game.getGameState();
         action = new PlayCard(game.getRoundOwner().getNickname(), 1);
         try {

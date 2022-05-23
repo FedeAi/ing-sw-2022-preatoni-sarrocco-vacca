@@ -43,7 +43,7 @@ public class ChooseCloud extends Performable {
         player.getSchool().addStudentsEntry(game.pickCloud(choice));
 
 
-        if (game.getNextPlayerActionPhase().isEmpty()) { //if end Turn
+        if (nextPlayer(game, rules) == null) { //if end Turn
             game.refillClouds(); //refill of clouds
         }
 
@@ -56,8 +56,7 @@ public class ChooseCloud extends Performable {
 
     @Override
     public GameState nextState(Game game, Rules rules) {
-        Optional<String> nextActionPlayer = game.getNextPlayerActionPhase();
-        if (nextActionPlayer.isEmpty()) { //if end Turn
+        if (nextPlayer(game, rules) == null) { //if end Turn
             return GameState.PLANNING_CHOOSE_CARD;
         } else {    // next player turn -> move students
             return GameState.ACTION_MOVE_STUDENTS;

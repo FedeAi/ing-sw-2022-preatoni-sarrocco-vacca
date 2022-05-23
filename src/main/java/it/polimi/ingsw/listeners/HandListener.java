@@ -6,7 +6,6 @@ import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * MoveMotherListener class is a AbsListener used for notifying the client after a move action.
@@ -23,8 +22,8 @@ public class HandListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public HandListener(VirtualClient client) {
-        super(client);
+    public HandListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

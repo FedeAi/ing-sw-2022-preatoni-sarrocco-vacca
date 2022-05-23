@@ -19,7 +19,7 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
     protected void canPerform(Game game, Rules rules) throws GameException, InvalidPlayerException, RoundOwnerException {
         super.canPerform(game, rules);
         Player p = getPlayer(game);
-        if (p.getSchool().getStudentsHall().get(color) >= Constants.SCHOOL_LANE_SIZE) {
+        if (p.getSchool().getStudentsHall().getOrDefault(color, 0) >= Constants.SCHOOL_LANE_SIZE) {
             throw new GameException("You already have the maximum amount (" + Constants.SCHOOL_LANE_SIZE + ") of " + color + " students in your school's hall!");
         }
     }

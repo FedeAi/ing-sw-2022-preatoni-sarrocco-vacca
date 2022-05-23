@@ -65,7 +65,7 @@ public class ChooseMagician extends Performable {
 
     @Override
     public Player nextPlayer(Game game, Rules rules) {
-
+        // todo HANDLE NEXT PLAYER NOT CONNECTED -> END GAME
         int currentPlayer = game.getPlayers().indexOf(getPlayer(game));
 
         if(currentPlayer == game.getPlayers().size()-1){ // last player

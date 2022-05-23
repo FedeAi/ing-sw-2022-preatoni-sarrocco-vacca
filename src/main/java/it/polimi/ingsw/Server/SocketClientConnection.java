@@ -43,7 +43,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      *
      * @return the active (type boolean) of this SocketClientConnection object.
      */
-    public synchronized boolean isActive() {
+    public boolean isActive() {
         return !getSocket().isClosed();
 //        return active;
     }

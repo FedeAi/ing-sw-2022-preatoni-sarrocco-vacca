@@ -1,9 +1,7 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Server.Answer.modelUpdate.CharactersMessage;
-import it.polimi.ingsw.Server.Answer.modelUpdate.HandMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
@@ -24,8 +22,8 @@ public class CharactersListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public CharactersListener(VirtualClient client) {
-        super(client);
+    public CharactersListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

@@ -20,8 +20,8 @@ public class RoundOwnerListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public RoundOwnerListener(VirtualClient client) {
-        super(client);
+    public RoundOwnerListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

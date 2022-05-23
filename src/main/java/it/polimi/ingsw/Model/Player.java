@@ -64,16 +64,16 @@ public class Player implements PropertyChangeListener {
     public void createListeners(VirtualClient client){
         ArrayList<AbsListener> createdListeners = new ArrayList<>();
 
-        createdListeners.add(0,new HandListener(client));
+        createdListeners.add(0,new HandListener(client, HAND_LISTENER));
         listeners.addPropertyChangeListener(HAND_LISTENER, createdListeners.get(0));
 
-        createdListeners.add(0,new SchoolListener(client));
+        createdListeners.add(0,new SchoolListener(client, SCHOOL_LISTENER));
         listeners.addPropertyChangeListener(SCHOOL_LISTENER, createdListeners.get(0));   // TODO ricordarsi di fare sendall
 
-        createdListeners.add(0,new BalanceListener(client));
+        createdListeners.add(0,new BalanceListener(client, BALANCE_LISTENER));
         listeners.addPropertyChangeListener(BALANCE_LISTENER, createdListeners.get(0));
 
-        createdListeners.add(0,new PlayedCardListener(client));
+        createdListeners.add(0,new PlayedCardListener(client, PLAYED_CARD_LISTENER));
         listeners.addPropertyChangeListener(PLAYED_CARD_LISTENER, createdListeners.get(0));
 
         clientMapLister.put(client, createdListeners);
@@ -82,7 +82,7 @@ public class Player implements PropertyChangeListener {
     public void removeListeners(VirtualClient client){
         if(clientMapLister.containsKey(client)){
             for(AbsListener listener : clientMapLister.get(client)){
-                listeners.removePropertyChangeListener(listener);
+                listeners.removePropertyChangeListener(listener.getPropertyName(), listener);
             }
         }
     }

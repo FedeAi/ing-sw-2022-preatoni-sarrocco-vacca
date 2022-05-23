@@ -45,7 +45,7 @@ public class GameHandler {
         this.server = server;
         isStarted = false;
         game = new Game();
-        controller = new GameManager(game);   // new GameManager(game, this);
+        controller = new GameManager(game, this);   // new GameManager(game, this);
         controllerListener.addPropertyChangeListener(controller);
     }
 
@@ -58,8 +58,13 @@ public class GameHandler {
         game.createListeners(server.getClientByID(server.getIDByNickname(nickName)));
         game.fireInitalState();
         if(game.numActivePlayers()==1){
-            game.reEnterWaitingPlayers();
+            reEnterWaitingPlayers();
         }
+    }
+
+    public void reEnterWaitingPlayers(){
+        game.getWaitingPlayersReconnected().forEach(p -> sendAll(new CustomMessage(p + " is back in the play")));
+        game.reEnterWaitingPlayers();
     }
 
     public void sendAll(Answer message) {
@@ -119,6 +124,7 @@ public class GameHandler {
     public synchronized void unregisterPlayer(int id) {
         game.removeListeners(server.getClientByID(id));
         game.setPlayerConnected(id, false);
+        controller.handleNewRoundOwnerOnDisconnect(server.getNicknameByID(id));
     }
 
 //    public void magicianSetup() {

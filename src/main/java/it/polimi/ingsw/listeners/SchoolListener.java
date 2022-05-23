@@ -21,8 +21,8 @@ public class SchoolListener extends AbsListener {
      *
      * @param client of type VirtualClient - the virtual client on the Server.
      */
-    public SchoolListener(VirtualClient client) {
-        super(client);
+    public SchoolListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

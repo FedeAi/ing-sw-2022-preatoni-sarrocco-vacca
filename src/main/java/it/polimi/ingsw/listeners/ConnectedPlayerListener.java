@@ -20,8 +20,8 @@ public class ConnectedPlayerListener extends AbsListener {
      *
      * @param client of type VirtualClient - the virtual client's view on Server.
      */
-    public ConnectedPlayerListener(VirtualClient client) {
-        super(client);
+    public ConnectedPlayerListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**
@@ -33,6 +33,6 @@ public class ConnectedPlayerListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ConnectedPlayersMessage message = new ConnectedPlayersMessage((List<String>) evt.getNewValue());
-//        virtualClient.send(message);
+        virtualClient.send(message);
     }
 }

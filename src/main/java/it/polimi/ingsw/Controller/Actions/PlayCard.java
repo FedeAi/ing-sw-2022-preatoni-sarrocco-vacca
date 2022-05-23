@@ -52,7 +52,7 @@ public class PlayCard extends Performable {
     @Override
     public GameState nextState(Game game, Rules rules){
         int playerIndex = game.getOrderedPlanningPlayers().indexOf(getPlayer(game));
-        if (playerIndex == game.getPlayers().size() - 1) {
+        if (playerIndex == game.getOrderedPlanningPlayers().size() - 1 || nextPlayer(game, rules) == null) {
             return GameState.ACTION_MOVE_STUDENTS;
         }
         return game.getGameState();
@@ -69,8 +69,9 @@ public class PlayCard extends Performable {
 
         Player nextPlayer;
         do{
-            if (playerIndex != game.getPlayers().size() - 1) {
+            if (playerIndex != game.getOrderedPlanningPlayers().size() - 1) {
                 nextPlayer = game.getOrderedPlanningPlayers().get(playerIndex + 1);
+                playerIndex++;
             }
             else{
                 nextPlayer = null;

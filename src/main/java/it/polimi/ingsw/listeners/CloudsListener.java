@@ -22,8 +22,8 @@ public class CloudsListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public CloudsListener(VirtualClient client) {
-        super(client);
+    public CloudsListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

@@ -22,8 +22,8 @@ public class ProfsListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public ProfsListener(VirtualClient client) {
-        super(client);
+    public ProfsListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

@@ -12,13 +12,21 @@ import java.beans.PropertyChangeListener;
 public abstract class AbsListener implements PropertyChangeListener {
 
   final VirtualClient virtualClient;
+  final String propertyName;
+
 
   /**
    * Constructor AbsListener creates a new AbsListener instance.
    *
-   * @param client of type VirtualClient - the virtual client on Server.
+   * @param client       of type VirtualClient - the virtual client on Server.
+   * @param propertyName
    */
-  public AbsListener(VirtualClient client) {
+  public AbsListener(VirtualClient client, String propertyName) {
     virtualClient = client;
+    this.propertyName = propertyName;
+  }
+
+  public String getPropertyName(){
+    return propertyName;
   }
 }

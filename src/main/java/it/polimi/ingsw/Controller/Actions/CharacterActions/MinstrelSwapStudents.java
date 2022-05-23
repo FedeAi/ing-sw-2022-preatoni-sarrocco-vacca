@@ -61,7 +61,7 @@ public class MinstrelSwapStudents extends Performable {
         }
 
         Player p = getPlayer(game);
-        if (p.getSchool().getStudentsHall().get(studentFromEntry) >= Constants.SCHOOL_LANE_SIZE) {
+        if (p.getSchool().getStudentsHall().getOrDefault(studentFromEntry, 0) >= Constants.SCHOOL_LANE_SIZE) {
             throw new GameException("You already have the maximum amount (" + Constants.SCHOOL_LANE_SIZE + ") of " + studentFromEntry + " students in your school's hall!");
         }
     }

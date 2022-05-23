@@ -27,25 +27,31 @@ public class GameManager implements PropertyChangeListener {
     public static final String ROUND_CONTROLLER = "roundController";
     private final Game game;
     private final Rules rules;
+    private final GameHandler gameHandler;
     private RoundManager roundManager;
     private boolean isHard_temp = false;
     private final PropertyChangeSupport controllerListeners = new PropertyChangeSupport(this);
 
 
-    public GameManager(Game game) {
+    public GameManager(Game game, GameHandler gameHandler) {
 
         this.game = game;   //new Game(new Bag(Constants.INITIAL_BAG_SIZE))
         rules = new Rules();
         this.roundManager = new RoundManager(this);
         this.roundManager.addListener(this);
+        this.gameHandler = gameHandler;
     }
 
-    public void createListener(VirtualClient client){
-        controllerListeners.addPropertyChangeListener(new NextRoundListener(client));
-    }
+//    public void createListener(VirtualClient client){
+//        controllerListeners.addPropertyChangeListener(new NextRoundListener(client));
+//    }
 
     public Game getGame() {
         return game;
+    }
+
+    protected GameHandler getGameHandler() {
+        return gameHandler;
     }
 
     public Rules getRules() {
@@ -165,6 +171,10 @@ public class GameManager implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         controllerListeners.firePropertyChange(evt);
+    }
+
+    public void handleNewRoundOwnerOnDisconnect(String nickname) {
+        roundManager.handleNewRoundOwnerOnDisconnect(nickname);
     }
 }
 

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Server.Answer.NextRoundMessage;
-import it.polimi.ingsw.Server.Answer.modelUpdate.BalanceMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
@@ -21,8 +20,8 @@ public class NextRoundListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public NextRoundListener(VirtualClient client) {
-        super(client);
+    public NextRoundListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

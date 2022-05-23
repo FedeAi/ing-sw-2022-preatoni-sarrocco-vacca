@@ -19,8 +19,8 @@ public class MoveMotherListener extends AbsListener {
      *
      * @param client of type VirtualClient - the virtual client on the Server.
      */
-    public MoveMotherListener(VirtualClient client) {
-        super(client);
+    public MoveMotherListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

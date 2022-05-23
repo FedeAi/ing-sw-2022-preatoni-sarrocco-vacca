@@ -20,8 +20,8 @@ public class BalanceListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public BalanceListener(VirtualClient client) {
-        super(client);
+    public BalanceListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

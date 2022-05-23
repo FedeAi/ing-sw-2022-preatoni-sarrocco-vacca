@@ -45,7 +45,7 @@ public class PrincessMoveToEntry extends Performable {
         }
 
         Player p = getPlayer(game);
-        if (p.getSchool().getStudentsHall().get(student) >= Constants.SCHOOL_LANE_SIZE) {
+        if (p.getSchool().getStudentsHall().getOrDefault(student, 0) >= Constants.SCHOOL_LANE_SIZE) {
             throw new GameException("You already have the maximum amount (" + Constants.SCHOOL_LANE_SIZE + ") of " + student + " students in your school's hall!");
         }
     }

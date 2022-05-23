@@ -20,8 +20,8 @@ public class IslandsListener extends AbsListener {
      *
      * @param client of type VirtualClient - the virtual client on Server.
      */
-    public IslandsListener(VirtualClient client) {
-        super(client);
+    public IslandsListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

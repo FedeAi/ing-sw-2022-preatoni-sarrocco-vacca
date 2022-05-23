@@ -10,6 +10,8 @@ import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.SuperIsland;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +43,7 @@ class MoveMotherNatureTest {
      */
     @BeforeEach
     void init() {
-        gameManager = new GameManager(new Game());
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
         p1 = new Player("Ale");
         p2 = new Player("Davide");
         p3 = new Player("Fede");

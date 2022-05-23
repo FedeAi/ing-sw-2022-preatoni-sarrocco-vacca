@@ -1,8 +1,6 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Constants.Magician;
-import it.polimi.ingsw.Model.Cloud;
-import it.polimi.ingsw.Server.Answer.modelUpdate.CloudsMessage;
 import it.polimi.ingsw.Server.Answer.modelUpdate.MagicianMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
@@ -24,8 +22,8 @@ public class MagicianListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public MagicianListener(VirtualClient client) {
-        super(client);
+    public MagicianListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Server.Answer.modelUpdate.BalanceMessage;
 import it.polimi.ingsw.Server.Answer.modelUpdate.GameStateMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
@@ -22,8 +21,8 @@ public class GameStateListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on Server.
      */
-    public GameStateListener(VirtualClient client) {
-        super(client);
+    public GameStateListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

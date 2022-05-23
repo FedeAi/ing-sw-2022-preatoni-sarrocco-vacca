@@ -13,8 +13,8 @@ public class PlayedCardListener extends AbsListener {
      *
      * @param client of type VirtualView - the virtual client's view on the Server.
      */
-    public PlayedCardListener(VirtualClient client) {
-        super(client);
+    public PlayedCardListener(VirtualClient client, String propertyName) {
+        super(client, propertyName);
     }
 
     /**

@@ -52,9 +52,11 @@ public class VirtualClient implements PropertyChangeListener {
      * @param serverAnswer of type Answer - the answer to be sent to the user.
      */
     public void send(Answer serverAnswer) {
-        SerializedAnswer message = new SerializedAnswer();
-        message.setServerAnswer(serverAnswer);
-        socketClientConnection.sendSocketMessage(message);
+        if(socketClientConnection.isActive()) {
+            SerializedAnswer message = new SerializedAnswer();
+            message.setServerAnswer(serverAnswer);
+            socketClientConnection.sendSocketMessage(message);
+        }
     }
 
     /**

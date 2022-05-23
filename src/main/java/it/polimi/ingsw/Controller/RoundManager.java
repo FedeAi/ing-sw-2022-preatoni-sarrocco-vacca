@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Controller.Actions.ChooseCloud;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Actions.PlayCard;
 import it.polimi.ingsw.Controller.Rules.WinController;
@@ -41,7 +42,13 @@ public class RoundManager {
     public void performAction(Performable action) throws InvalidPlayerException, RoundOwnerException, GameException {
         action.performMove(gameInstance, gameManager.getRules());
         /* this line is reached only if the action is performable  */
+        updateRoundOwnerAndGameState(action);
 
+        WinController.check(gameInstance);
+
+    }
+
+    private void updateRoundOwnerAndGameState(Performable action){
         GameState nextState = action.nextState(gameInstance, gameManager.getRules());
         Player nextPlayer = action.nextPlayer(gameInstance, gameManager.getRules());
 
@@ -55,7 +62,7 @@ public class RoundManager {
         }
         if(nextPlayer == null && nextState == GameState.PLANNING_CHOOSE_CARD){
             // handle the disconnected players now re-connected
-            gameInstance.reEnterWaitingPlayers();
+            gameManager.getGameHandler().reEnterWaitingPlayers();
             nextPlayer = gameInstance.setPlanningOrder();
         }
 
@@ -67,28 +74,16 @@ public class RoundManager {
 
         gameInstance.setRoundOwner(nextPlayer);
         gameInstance.setGameState(nextState);
-
-        WinController.check(gameInstance);
-
     }
 
-//
-//
-//    public nextPlayer handleNextPlayer(Performable action){
-//        Player nextPlayer = action.nextPlayer(gameInstance, gameManager.getRules());
-//        ret
-//        if(nextPlayer==null){
-//            // planning -> action : ordering players
-//            if(action.nextState(gameInstance, gameManager.getRules()) == GameState.ACTION_MOVE_STUDENTS){
-//                nextPlayer = setActionOrder(gameInstance);
-//            }
-//        }
-//        gameInstance.setRoundOwner(nextPlayer);
-//    }
-
-    /**
-     * choose Player orders for action phase
-     */
+    public void handleNewRoundOwnerOnDisconnect(String nickname) {
+        if(nickname.equals(gameInstance.getRoundOwner().getNickname())){
+            switch (gameInstance.getGameState()){
+                case PLANNING_CHOOSE_CARD -> updateRoundOwnerAndGameState(new PlayCard(nickname, -1));
+                default -> updateRoundOwnerAndGameState(new ChooseCloud(nickname, -1));
+            }
+        }
+    }
 
 
 
