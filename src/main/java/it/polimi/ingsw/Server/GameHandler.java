@@ -151,14 +151,18 @@ public class GameHandler {
         }
 
     }
+    public void sendVictory(String player){
+        sendAll(new WinMessage(player));
+        endGame();
+    }
 
     private void startWinningTimer() {
         if(game.numActivePlayers()== 1 && !isEnded()){
             TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    sendAll( new CustomMessage("You WON, you are the only player and are passed "+ Constants.DELAY_WINNING_TIMER + " seconds")); // TODO WIN MESSAGE
-                    sendAll( new WinMessage(game.getPlayers().stream().filter(Player::isConnected).findFirst().get().getNickname())); // TODO WIN MESSAGE
+                    sendAll( new CustomMessage("You WON, you are the only player and are passed "+ Constants.DELAY_WINNING_TIMER + " seconds"));
+                    sendAll( new WinMessage(game.getPlayers().stream().filter(Player::isConnected).findFirst().get().getNickname()));
                     endGame();
                 }
             };
