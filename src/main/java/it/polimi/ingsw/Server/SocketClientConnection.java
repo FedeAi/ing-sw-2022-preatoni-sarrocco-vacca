@@ -92,7 +92,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        server.unregisterClient(this.getClientID());
+        server.unregisterClient(this.getClientID(), server.getGameByID(clientID).isEnded() || !server.getGameByID(clientID).isStarted() ||server.getGameByID(clientID).isSetupPhase());
     }
 
     /**

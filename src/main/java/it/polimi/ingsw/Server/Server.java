@@ -193,16 +193,20 @@ public class Server {
      *
      * @param clientID of type int - the ID of the virtual client to be removed.
      */
-    public synchronized void unregisterClient(int clientID) {
-        getGameByID(clientID).unregisterPlayer(clientID);
+    public synchronized void unregisterClient(int clientID, boolean isGameEnded) {
+        getGameByID(clientID).unregisterPlayer(clientID, isGameEnded);
         VirtualClient client = idMapClient.get(clientID);
         System.out.println(
                 Constants.getInfo() + "Unregistering client " + client.getNickname() + "...");
-//        idMapClient.remove(clientID);
-//        nameMapId.remove(client.getNickname());
         waiting.remove(clientToConnection.get(client));
-//        idMapName.remove(client.getClientID());
-//        clientToConnection.remove(client);
+
+        if(isGameEnded){
+            idMapClient.remove(clientID);
+            nameMapId.remove(client.getNickname());
+            idMapName.remove(client.getClientID());
+            clientToConnection.remove(client);
+        }
+
         System.out.println(Constants.getInfo() + "Client has been successfully unregistered.");
     }
 

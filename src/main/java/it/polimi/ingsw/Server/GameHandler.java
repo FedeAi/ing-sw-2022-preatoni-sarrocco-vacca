@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Constants.Constants;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.*;
@@ -101,6 +102,10 @@ public class GameHandler {
         return isEnded;
     }
 
+    public boolean isSetupPhase() {
+        return GameState.SETUP_CHOOSE_MAGICIAN.equals(game.getGameState());
+    }
+
     public synchronized void setEnded() {
         isEnded = true;
     }
@@ -134,11 +139,16 @@ public class GameHandler {
         }
     }
 
-    public synchronized void unregisterPlayer(int id) {
+    public synchronized void unregisterPlayer(int id, boolean isGameEnded) {
         game.removeListeners(server.getClientByID(id));
         game.setPlayerConnected(id, false);
-        controller.handleNewRoundOwnerOnDisconnect(server.getNicknameByID(id));
-        startWinningTimer();
+        if(game.getGameState()==GameState.SETUP_CHOOSE_MAGICIAN || isGameEnded) {
+            endGame(server.getNicknameByID(id));
+        }else{
+            controller.handleNewRoundOwnerOnDisconnect(server.getNicknameByID(id));
+            startWinningTimer();
+        }
+
     }
 
     private void startWinningTimer() {
