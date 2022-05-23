@@ -122,6 +122,7 @@ public class GameHandler {
         }
         sendAll(new CustomMessage("The match has started!"));
         controller.initGame();
+        isStarted = true;
     }
 
     public void endGame() {
