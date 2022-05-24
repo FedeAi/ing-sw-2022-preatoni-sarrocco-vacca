@@ -37,10 +37,10 @@ public class BaseRules implements DynamicRules {
                     outProfessorsInfluence.put(prof, tempOwner.get().getNickname());
                 } else {
                     School currentOwnerSchool = game.getPlayerByNickname(currentOwner).get().getSchool();
-                    if (influenceComparator(currentOwnerSchool.getStudentsHall().getOrDefault(prof, 0), tempOwner.get().getSchool().getStudentsHall().getOrDefault(prof, 0))) {
-                        outProfessorsInfluence.put(prof, currentOwner);
-                    } else {
+                    if (influenceComparator(tempOwner.get().getSchool().getStudentsHall().getOrDefault(prof, 0), currentOwnerSchool.getStudentsHall().getOrDefault(prof, 0))) {
                         outProfessorsInfluence.put(prof, tempOwner.get().getNickname());
+                    } else {
+                        outProfessorsInfluence.put(prof, currentOwner);
                     }
 
                 }
