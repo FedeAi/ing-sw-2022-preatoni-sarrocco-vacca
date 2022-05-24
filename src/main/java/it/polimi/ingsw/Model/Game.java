@@ -487,12 +487,12 @@ public class Game {
     }
 
     public void setIslandOwner(int island, String owner){
-        islandContainer.get(island).setOwner(owner);
+        islandContainer.setOwner(island, owner);
         listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
     }
 
     public void setIslandBlock(int island, boolean isBlocked){
-        islandContainer.get(island).setBlocked(isBlocked);
+        islandContainer.setIslandBlocked(island, isBlocked);
         listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
     }
 

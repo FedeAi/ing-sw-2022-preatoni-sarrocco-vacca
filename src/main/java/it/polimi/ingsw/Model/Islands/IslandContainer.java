@@ -78,6 +78,15 @@ public class IslandContainer implements Serializable {
         return islands.size();
     }
 
+    public void setOwner(int island, String owner){
+        islands.get(island).setOwner(owner);
+    }
+
+    public void setIslandBlocked(int island, Boolean isBlocked){
+        islands.get(island).setBlocked(isBlocked);
+    }
+
+
     public Island get(int index) {
         if (islands.get(index) instanceof BaseIsland){
             return new BaseIsland((BaseIsland)islands.get(index));

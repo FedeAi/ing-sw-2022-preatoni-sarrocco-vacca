@@ -44,9 +44,9 @@ class MoveMotherNatureTest {
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
-        p1 = new Player("Ale");
-        p2 = new Player("Davide");
-        p3 = new Player("Fede");
+        p1 = new Player(0,"Ale");
+        p2 = new Player(1,"Davide");
+        p3 = new Player(2,"Fede");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
@@ -144,7 +144,7 @@ class MoveMotherNatureTest {
         // Next we will be adding some students to the island we're going to go to
         int nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
         // Then, we play a valid card: 3 movement, we need to play a 5+ value card
         final int cardValue = 5;
@@ -180,7 +180,7 @@ class MoveMotherNatureTest {
         // Next we will be adding some students to the island we're going to go to
         int nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
         // Then, we play a valid card: 3 movement, we need to play a 5+ value card
         final int cardValue = 5;
@@ -205,11 +205,11 @@ class MoveMotherNatureTest {
         movement = 1;
         nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
         int oldIslands = game.getIslandContainer().size();
         int next = game.getIslandContainer().correctIndex(2, game.getMotherNature().getPosition());
-        game.getIslandContainer().get(next).setOwner(p3.getNickname());
+        game.setIslandOwner(next, p3.getNickname());
         moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
         try {
             moveMotherNature.performMove(game, gameManager.getRules());
@@ -236,7 +236,7 @@ class MoveMotherNatureTest {
         // Next we will be adding some students to the island we're going to go to
         int nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
         // Then, we play a valid card: 3 movement, we need to play a 5+ value card
         final int cardValue = 10;
@@ -260,7 +260,7 @@ class MoveMotherNatureTest {
         nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
 
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
 
         int oldIslands = game.getIslandContainer().size();
