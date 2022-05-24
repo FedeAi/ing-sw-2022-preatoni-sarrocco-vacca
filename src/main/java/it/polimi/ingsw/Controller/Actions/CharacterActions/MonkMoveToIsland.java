@@ -38,15 +38,15 @@ public class MonkMoveToIsland extends Performable {
             throw new InvalidIndexException("island", 0, game.getIslandContainer().size(), islandIndex);
         }
 
-        // Simple check to see if we have an active card
-        Optional<CharacterCard> card = game.getActiveCharacter(MonkCharacter.class);
-        if (card.isEmpty()) {
-            throw new GameException("There isn't any active card present.");
-        }
-
         // We check if any of the cards on the table are of the MONK type
         if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof MonkCharacter)) {
             throw new GameException("There isn't any character card of the type monk on the table.");
+        }
+
+        // Simple check to see if we have an active card
+        Optional<CharacterCard> card = game.getActiveCharacter(MonkCharacter.class);
+        if (card.isEmpty()) {
+            throw new GameException("The monk character isn't active.");
         }
 
         // Checking if the activated card is of the MONK type

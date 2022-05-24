@@ -9,7 +9,6 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 public class ChooseCloud extends Performable {
     private final int choice;
@@ -42,16 +41,10 @@ public class ChooseCloud extends Performable {
 
         player.getSchool().addStudentsEntry(game.pickCloud(choice));
 
-
         if (nextPlayer(game, rules) == null) { //if end Turn
             game.refillClouds(); //refill of clouds
         }
 
-    }
-
-    @Override
-    public String getNickNamePlayer() {
-        return myNickName;
     }
 
     @Override
@@ -64,7 +57,6 @@ public class ChooseCloud extends Performable {
     }
 
     /**
-     *
      * @param game
      * @param rules
      * @return null if there is no next player for the action phase (end of round)
@@ -75,10 +67,9 @@ public class ChooseCloud extends Performable {
         Player nextPlayer;
         int i = 1;
 
-        while(nextActionPlayer.isPresent() && !game.getPlayerByNickname(nextActionPlayer.get()).get().isConnected()){
+        while (nextActionPlayer.isPresent() && !game.getPlayerByNickname(nextActionPlayer.get()).get().isConnected()) {
             i++;
             nextActionPlayer = game.getNextPlayerActionPhasePlus(i);
-
         }
 
         if (nextActionPlayer.isEmpty()) { //if end Turn

@@ -38,7 +38,7 @@ public abstract class Performable {
             if(game.getRoundOwner() != null)
                 throw new RoundOwnerException(game.getRoundOwner().getNickname());
             else
-                throw new RoundOwnerException("NULLLLL !!!");
+                throw new RoundOwnerException("nobody (internal server error)");
         }
 
         // Checks the number of active players, if I'm the only one solitario is a better game for me

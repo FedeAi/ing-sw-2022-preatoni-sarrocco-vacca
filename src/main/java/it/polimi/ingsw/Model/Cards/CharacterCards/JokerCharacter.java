@@ -36,14 +36,12 @@ public class JokerCharacter extends CharacterCard {
         }
     }
 
-
     @Override
     public void activate(Rules rules, Game game) {
         super.activate(rules, game);
         previousState = game.getGameState();
         game.setGameState(GameState.JOKER_SWAP_STUDENTS);
         swappedStudents = 0;
-
     }
 
     @Override
@@ -57,13 +55,9 @@ public class JokerCharacter extends CharacterCard {
      * @param studentToPut  the student you put on the card
      */
     public void swapStudents(Color studentToPick, Color studentToPut) throws IllegalArgumentException {
-        if (students.getOrDefault(studentToPick, 0) <= 0) {
-            throw new IllegalArgumentException("the student you choose to pick is not in there");
-        } else {
-            students.put(studentToPut, students.getOrDefault(studentToPut, 0) + 1);
-            students.put(studentToPut, students.get(studentToPick) - 1);
-            swappedStudents++;
-        }
+        students.put(studentToPut, students.getOrDefault(studentToPut, 0) + 1);
+        students.put(studentToPut, students.get(studentToPick) - 1);
+        swappedStudents++;
     }
 
     public int getSwappedStudents() {

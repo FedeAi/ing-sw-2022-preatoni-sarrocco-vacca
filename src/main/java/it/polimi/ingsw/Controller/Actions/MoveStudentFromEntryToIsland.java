@@ -20,6 +20,14 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
     }
 
     @Override
+    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        super.canPerform(game, rules);
+        if (islandIndex < 0 || islandIndex >= game.getIslandContainer().size()) {
+            throw new InvalidIndexException("island", 0, game.getIslandContainer().size() - 1, islandIndex);
+        }
+    }
+
+    @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         Player player = getPlayer(game);
@@ -27,13 +35,5 @@ public class MoveStudentFromEntryToIsland extends MoveStudentFromEntry {
         player.getSchool().removeStudentFromEntry(color);
         // Method that adds the specified student to the player's selected island
         game.addIslandStudent(islandIndex, color);
-    }
-
-    @Override
-    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
-        super.canPerform(game, rules);
-        if (islandIndex < 0 || islandIndex >= game.getIslandContainer().size()) {
-            throw new InvalidIndexException("island", 0, game.getIslandContainer().size() - 1, islandIndex);
-        }
     }
 }

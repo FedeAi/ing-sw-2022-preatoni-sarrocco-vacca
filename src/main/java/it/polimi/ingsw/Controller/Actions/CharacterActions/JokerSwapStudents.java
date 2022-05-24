@@ -70,19 +70,16 @@ public class JokerSwapStudents extends Performable {
         Player player = getPlayer(game);
 
         // to check instance of and make cast
-        if (game.getActiveCharacter(JokerCharacter.class).isPresent()) {
-            JokerCharacter joker = (JokerCharacter) game.getActiveCharacter(JokerCharacter.class).get();
-            joker.swapStudents(studentToPick, studentToPut);
-            player.getSchool().addStudentEntry(studentToPick);
-            player.getSchool().removeStudentFromEntry(studentToPut);
+        JokerCharacter joker = (JokerCharacter) game.getActiveCharacter(JokerCharacter.class).get();
+        joker.swapStudents(studentToPick, studentToPut);
+        player.getSchool().addStudentEntry(studentToPick);
+        player.getSchool().removeStudentFromEntry(studentToPut);
 
-            // card deactivate
-            if (joker.getSwappedStudents() >= JokerCharacter.maxSwaps) {
-                game.deactivateCharacterCard(game.getCharacterCards().indexOf(joker), rules);
-            }
+        // card deactivate
+        if (joker.getSwappedStudents() >= JokerCharacter.maxSwaps) {
+            game.deactivateCharacterCard(game.getCharacterCards().indexOf(joker), rules);
         }
     }
-
 }
 
 

@@ -7,9 +7,6 @@ import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
-import java.util.Comparator;
-import java.util.List;
-
 public class PlayCard extends Performable {
 
     private final int choice;
@@ -35,10 +32,9 @@ public class PlayCard extends Performable {
         if (!game.getPlayedCards().stream().anyMatch(c -> c.getValue() == choice) || game.getPlayedCards().containsAll(player.getCards())) {
             return;
         } else {
-            throw new GameException("You cannot play a card that has already been played by an other player.");
+            throw new GameException("You cannot play a card that has already been played by another player.");
         }
     }
-
 
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
@@ -46,11 +42,10 @@ public class PlayCard extends Performable {
         Player player = getPlayer(game);
         AssistantCard playedCard = player.getCards().stream().filter(c -> c.getValue() == choice).findFirst().get();
         game.playCard(player, playedCard);
-
     }
 
     @Override
-    public GameState nextState(Game game, Rules rules){
+    public GameState nextState(Game game, Rules rules) {
         int playerIndex = game.getOrderedPlanningPlayers().indexOf(getPlayer(game));
         if (playerIndex == game.getOrderedPlanningPlayers().size() - 1 || nextPlayer(game, rules) == null) {
             return GameState.ACTION_MOVE_STUDENTS;
@@ -64,20 +59,18 @@ public class PlayCard extends Performable {
      * @return null if im the last player in planning phase
      */
     @Override
-    public Player nextPlayer(Game game, Rules rules){
+    public Player nextPlayer(Game game, Rules rules) {
         int playerIndex = game.getOrderedPlanningPlayers().indexOf(getPlayer(game));
 
         Player nextPlayer;
-        do{
+        do {
             if (playerIndex != game.getOrderedPlanningPlayers().size() - 1) {
                 nextPlayer = game.getOrderedPlanningPlayers().get(playerIndex + 1);
                 playerIndex++;
-            }
-            else{
+            } else {
                 nextPlayer = null;
             }
-        } while ( nextPlayer!=null && !nextPlayer.isConnected());
+        } while (nextPlayer != null && !nextPlayer.isConnected());
         return nextPlayer;
     }
-
 }

@@ -45,7 +45,7 @@ public class ActivateCard extends Performable {
         if (chosenCard.isActive()) {
             throw new GameException("The selected card is already active.");
         }
-        if (chosenCard.getActivatingPlayer().equals(myNickName)){
+        if (chosenCard.getActivatingPlayer().equals(myNickName)) {
             throw new GameException("You can activate a card once per turn.");
         }
     }

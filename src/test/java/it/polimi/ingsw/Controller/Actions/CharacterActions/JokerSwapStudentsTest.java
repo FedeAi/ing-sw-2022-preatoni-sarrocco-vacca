@@ -2,6 +2,8 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.GameManager;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.JokerCharacter;
 import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
@@ -9,6 +11,10 @@ import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
@@ -18,20 +24,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JokerSwapStudentsTest {
 
-    private Performable action;
-    private Game game;
-    private GameManager gameManager;
-    private Player p1, p2, p3;
-    Color studentToPick, studentToPut;
-    private int selectionValue;
-    private JokerCharacter card;
-    private LinkedList<CharacterCard> cardList;
+    Performable action;
+    Game game;
+    GameManager gameManager;
+    Player p1, p2, p3;
+    Color studentCard, studentEntry;
+    int selectionValue;
+    JokerCharacter card;
+    LinkedList<CharacterCard> cardList;
 
-    private void init() {
-        gameManager = new GameManager(new Game());
-        p1 = new Player("Ale");
-        p2 = new Player("Fede");
-        p3 = new Player("Davide");
+    @BeforeEach
+    void init() {
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
+        p1 = new Player(0, "Ale");
+        p2 = new Player(1, "Fede");
+        p3 = new Player(2, "Davide");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
@@ -42,69 +49,96 @@ class JokerSwapStudentsTest {
         card = new JokerCharacter("", game.getBag());
         card.init();
         cardList = new LinkedList<>();
-        studentToPick = Color.BLUE;
+        studentCard = Color.BLUE;
         for (Color c : Color.values()) {
             selectionValue = card.getStudents().getOrDefault(c, 0);
             if (selectionValue > 0) {
-                studentToPick = c;
+                studentCard = c;
                 break;
             }
         }
-        studentToPut = Color.BLUE;
+        studentEntry = Color.BLUE;
         for (Color c : Color.values()) {
             selectionValue = p1.getSchool().getStudentsEntry().getOrDefault(c, 0);
             if (selectionValue > 0) {
-                studentToPut = c;
+                studentEntry = c;
                 break;
             }
         }
-
+        action = new JokerSwapStudents(p1.getNickname(), studentCard, studentEntry);
     }
 
+    @DisplayName("Wrong state test")
     @Test
-    void canPerformExt() {
-        init();
-        // First we try to call the underlying Performable abstract
-        String wrongNickname = "Suino";
-        action = new JokerSwapStudents(wrongNickname, studentToPick, studentToPut);
-        assertFalse(action.canPerform(game, gameManager.getRules()));
-        // Now we try to perform the action with the wrong gameState set (set before)
-        action = new JokerSwapStudents(p1.getNickname(), studentToPick, studentToPut);
-        assertFalse(action.canPerform(game, gameManager.getRules()));
+    void wrongState() {
+        game.setGameState(GameState.ACTION_MOVE_MOTHER);
+        assertThrows(WrongStateException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
+    }
+
+    @DisplayName("No active cards test")
+    @Test
+    void noActives() {
         // No cards present check
         card.activate(gameManager.getRules(), game);
-        assertFalse(action.canPerform(game, gameManager.getRules()));
+        assertThrows(GameException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
+    }
+
+    @DisplayName("No active jokers test")
+    @Test
+    void noJokers() {
         // We now have a card present, but not the JOKER
         // It's important also to not have a card that changes the game state
+        card.activate(gameManager.getRules(), game);
         CharacterCard tempCard = new KnightCharacter("");
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);
-        assertFalse(action.canPerform(game, gameManager.getRules()));
-        tempCard.deactivate(gameManager.getRules(), game);
-        // Now we correctly pass the JOKER
-        card.activate(gameManager.getRules(), game);
-        cardList.add(card);
-        assertTrue(action.canPerform(game, gameManager.getRules()));
-        action.performMove(game, gameManager.getRules());
-        action.performMove(game, gameManager.getRules());
-        action.performMove(game, gameManager.getRules());
-        assertFalse(action.canPerform(game, gameManager.getRules()));
-        // Many branches in the underlying action are quite difficult to take
+        assertThrows(GameException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
+    // FIXME IS THIS AN IMPOSSIBLE CASE ? this is the same for a lot of stuff
+    @DisplayName("Max swaps test")
     @Test
-    void performMove() {
-        init();
-        card.activate(gameManager.getRules(), game);
+    void maxSwaps() {
         cardList.add(card);
         game.initCharacterCards(cardList);
-        action = new JokerSwapStudents(p1.getNickname(), studentToPick, studentToPut);
+        card.activate(gameManager.getRules(), game);
+        for (int i = 0; i < 3; i++) {
+            p1.getSchool().addStudentEntry(studentEntry);
+            try {
+                action.performMove(game, gameManager.getRules());
+            } catch (Exception e) {
+                fail(e.getMessage());
+            }
+        }
+        game.setGameState(GameState.JOKER_SWAP_STUDENTS);
+        assertThrows(GameException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
+    }
+
+    @DisplayName("Monk swap students test")
+    @Test
+    void jokerCard() {
         Map<Color, Integer> entry = p1.getSchool().getStudentsEntry();
-        int initialStudents = entry.getOrDefault(studentToPick, 0);
-        action.performMove(game, gameManager.getRules());
-        int finalStudents = entry.get(studentToPick);
-        if (studentToPick.equals(studentToPut)) {
+        int initialStudents = entry.getOrDefault(studentCard, 0);
+
+        cardList.add(card);
+        game.initCharacterCards(cardList);
+        card.activate(gameManager.getRules(), game);
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+        int finalStudents = p1.getSchool().getStudentsEntry().get(studentCard);
+        if (studentCard.equals(studentEntry)) {
             assertEquals(initialStudents, finalStudents);
         } else {
             assertEquals(initialStudents + 1, finalStudents);

@@ -28,7 +28,7 @@ public class DeactivateCard extends Performable {
             throw new GameException("The selected card's index is not valid, [0," + game.getCharacterCards().size() +"]");
         }
         if(!game.getCharacterCards().get(cardIndex).isActive()){
-            throw new GameException(game.getCharacterCards().get(cardIndex).getClass().getSimpleName() + " is already not active");
+            throw new GameException(game.getCharacterCards().get(cardIndex).getClass().getSimpleName() + " is not active");
         }
         if(!game.getCharacterCards().get(cardIndex).getActivatingPlayer().equals(game.getRoundOwner().getNickname())){
             throw new GameException("Only the player who activated the card may deactivate it");

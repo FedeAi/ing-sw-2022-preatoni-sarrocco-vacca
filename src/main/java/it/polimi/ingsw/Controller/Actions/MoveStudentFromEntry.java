@@ -42,14 +42,12 @@ public abstract class MoveStudentFromEntry extends Performable {
     }
 
     @Override
-    public GameState nextState(Game game, Rules rules){
-
+    public GameState nextState(Game game, Rules rules) {
         // if all students are moved from entry
         if (Rules.getEntrySize(game.numPlayers()) - getPlayer(game).getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())) {
             return GameState.ACTION_MOVE_MOTHER;
-        }else {
+        } else {
             return game.getGameState();
         }
     }
-
 }

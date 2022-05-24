@@ -79,7 +79,4 @@ public class HeraldChooseIsland extends Performable {
             islandContainer.joinNextIsland(islandIndex);
         }
     }
-
-
-
 }
