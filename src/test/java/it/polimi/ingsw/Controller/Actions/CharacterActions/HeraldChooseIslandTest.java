@@ -120,6 +120,7 @@ class HeraldChooseIslandTest {
         for (int i = 0; i < 5; i++) {
             game.getIslandContainer().get(index).addStudent(profColor);
         }
+        // FIXME THIS DOESNt WORK!
         // Card trigger, and the current islandIndex will be joined with the previous one
         try {
             action.performMove(game, gameManager.getRules());
