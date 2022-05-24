@@ -1,10 +1,11 @@
 package it.polimi.ingsw.Controller.Rules.DynamicRules;
 
-import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Model.School;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -22,25 +23,33 @@ public class BaseRules implements DynamicRules {
         Island motherNatureIsland = game.getIslandContainer().get(game.getMotherNature().getPosition());
         Map<Color, Integer> studentsOnIsland = motherNatureIsland.getStudents();
 
-        EnumMap<Color, String> professorsInfluence = new EnumMap<Color, String>(Color.class);
+        EnumMap<Color, String> outProfessorsInfluence = new EnumMap<Color, String>(Color.class);
+        EnumMap<Color, String> initialProfessorInfluence = game.getProfessors();
 
         for (Color prof : Color.values()) {
             // find who has the most students in the hall of that color
             Stream<Player> playersWithStudentsInHall = game.getPlayers().stream().filter(player -> player.getSchool().getStudentsHall().get(prof) != null);
             Optional<Player> tempOwner = playersWithStudentsInHall.max((p1, p2) -> Integer.compare(p1.getSchool().getStudentsHall().getOrDefault(prof, 0), p2.getSchool().getStudentsHall().getOrDefault(prof, 0)));
             if (tempOwner.isPresent()) {
-                //compare against the influence comparator for turn owner
-                if (influenceComparator(roundOwner.getSchool().getStudentsHall().getOrDefault(prof, 0), tempOwner.get().getSchool().getStudentsHall().getOrDefault(prof, 0))) {
-                    professorsInfluence.put(prof, roundOwnerNickname);
+                //compare against the influence comparator for current owner
+                String currentOwner = initialProfessorInfluence.get(prof);
+                if (currentOwner == null) {
+                    outProfessorsInfluence.put(prof, tempOwner.get().getNickname());
                 } else {
-                    professorsInfluence.put(prof, tempOwner.get().getNickname());
+                    School currentOwnerSchool = game.getPlayerByNickname(currentOwner).get().getSchool();
+                    if (influenceComparator(currentOwnerSchool.getStudentsHall().getOrDefault(prof, 0), tempOwner.get().getSchool().getStudentsHall().getOrDefault(prof, 0))) {
+                        outProfessorsInfluence.put(prof, currentOwner);
+                    } else {
+                        outProfessorsInfluence.put(prof, tempOwner.get().getNickname());
+                    }
+
                 }
 
             } else {
-                professorsInfluence.put(prof, null);
+                outProfessorsInfluence.put(prof, null);
             }
         }
-        return professorsInfluence;
+        return outProfessorsInfluence;
     }
 
     @Override
