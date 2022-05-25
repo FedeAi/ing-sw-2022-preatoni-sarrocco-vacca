@@ -123,7 +123,7 @@ class JokerSwapStudentsTest {
         });
     }
 
-    @DisplayName("Monk swap students test")
+    @DisplayName("Joker swap students test")
     @Test
     void jokerCard() {
         Map<Color, Integer> entry = p1.getSchool().getStudentsEntry();

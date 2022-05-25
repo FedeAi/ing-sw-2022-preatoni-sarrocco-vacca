@@ -56,12 +56,11 @@ public class PrincessMoveToEntry extends Performable {
         canPerform(game, rules);
         Player player = getPlayer(game);
         // to check instance of and make cast
-        if (game.getActiveCharacter(PrincessCharacter.class).isPresent()) {
-            PrincessCharacter princessCharacter = (PrincessCharacter) game.getActiveCharacter(PrincessCharacter.class).get();
-            princessCharacter.moveStudent(student);
-            player.getSchool().addStudentHall(student);
-            game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors
-        }
+        PrincessCharacter princessCharacter = (PrincessCharacter) game.getActiveCharacter(PrincessCharacter.class).get();
+        princessCharacter.moveStudent(student);
+        player.getSchool().addStudentHall(student);
+        // Update the professor owner list
+        game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game));
     }
 }
 

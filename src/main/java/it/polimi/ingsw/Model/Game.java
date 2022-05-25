@@ -369,6 +369,8 @@ public class Game {
     }
 
     /**
+     *
+     * @deprecated
      * it computes the next player in planning phase, if it's end of turn it returns an Empty Optional
      * Warning this method works only if the game is in planning phase
      *

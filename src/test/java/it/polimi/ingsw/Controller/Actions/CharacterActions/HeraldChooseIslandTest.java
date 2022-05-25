@@ -9,7 +9,6 @@ import it.polimi.ingsw.Model.Cards.CharacterCards.HeraldCharacter;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 

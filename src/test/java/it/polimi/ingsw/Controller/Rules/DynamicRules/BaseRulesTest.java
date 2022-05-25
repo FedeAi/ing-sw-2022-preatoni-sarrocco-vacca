@@ -7,6 +7,9 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.BaseIsland;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
@@ -17,15 +20,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class BaseRulesTest {
-    private Player p1, p2;
-    private Game game;
-    private GameManager gameManager;
-    private BaseRules baseRules;
+    Player p1, p2;
+    Game game;
+    GameManager gameManager;
+    BaseRules baseRules;
 
-    private void initGame() {
-        gameManager = new GameManager(new Game());
-        p1 = new Player("player1");
-        p2 = new Player("player2");
+    @BeforeEach
+    void init() {
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
+        p1 = new Player(0, "Ale");
+        p2 = new Player(1, "Fede");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
@@ -38,7 +42,6 @@ class BaseRulesTest {
 
     @Test
     void getProfessorInfluenceBaseCase() {
-        initGame();
         // FIXME this test should be made in game
         for (String owner : game.getProfessors().values()) {
             assertNull(owner, "init of professors, all profs must not have an owner");
@@ -47,14 +50,10 @@ class BaseRulesTest {
         for (String owner : baseRules.getProfessorInfluence(game).values()) {
             assertNull(owner, "any player has a student in the all -> all professors must not have an owner");
         }
-
-
     }
 
     @Test
     void getProfessorInfluenceNormalUsage() {
-        initGame();
-
         // add students to players
         p1.getSchool().addStudentsHall(Map.of(Color.BLUE, 4, Color.YELLOW, 2));
         p2.getSchool().addStudentsHall(Map.of(Color.BLUE, 3, Color.YELLOW, 1));
@@ -71,16 +70,12 @@ class BaseRulesTest {
 
     @Test
     void computeMotherMaxMoves() {
-        initGame();
-
         AssistantCard card = new AssistantCard("sss", 8);
         assertEquals(baseRules.computeMotherMaxMoves(card), card.getMaxMoves());
     }
 
     @Test
     void computeIslandInfluenceNormalUsage() {
-        initGame();
-
         Island island = new BaseIsland();
         Optional<String> player = baseRules.computeIslandInfluence(game, island);
         assertTrue(player.isEmpty(), "no students on that island -> no owners");

@@ -79,7 +79,7 @@ public class BaseRules implements DynamicRules {
         turnOwnerInfluenceModifier(playerInfluence, game.getRoundOwner().getNickname());
         // let's find the player who has the bigger influence
         Optional<Integer> maxInfluenceValue = playerInfluence.entrySet().stream().max((entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue())).map(Map.Entry::getValue);
-        if (maxInfluenceValue.isPresent()) {
+        if (maxInfluenceValue.isPresent() && maxInfluenceValue.get() > 0) {
             List<String> maxPlayers = playerInfluence.entrySet().stream().filter(stringIntegerEntry -> stringIntegerEntry.getValue() == maxInfluenceValue.get()).map(Map.Entry::getKey).toList();
             if (maxPlayers.size() == 1) {
                 return Optional.of(maxPlayers.get(0));

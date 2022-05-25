@@ -7,14 +7,14 @@ import it.polimi.ingsw.Model.Game;
 
 import java.util.Optional;
 
-public class MushRoomRules extends BaseRules {
+public class MushroomRules extends BaseRules {
 
     @Override
     protected int influenceModifier(Game game, Color student, int influence) {
         Optional<CharacterCard> mushCard = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof MushroomCharacter).findFirst();
         if (mushCard.isPresent()) {
-            Color noinfluenceStudent = ((MushroomCharacter) mushCard.get()).getStudent();
-            if (noinfluenceStudent != null && noinfluenceStudent.equals(student)) {
+            Color excludedColor = ((MushroomCharacter) mushCard.get()).getStudent();
+            if (excludedColor != null && excludedColor.equals(student)) {
                 return 0;
             } else {
                 return influence;

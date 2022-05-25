@@ -30,7 +30,6 @@ public class MinstrelSwapStudents extends Performable {
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
         super.canPerform(game, rules);
-
         Player player = getPlayer(game);
 
         if (!game.getGameState().equals(GameState.MINSTREL_SWAP_STUDENTS)) {
@@ -82,7 +81,6 @@ public class MinstrelSwapStudents extends Performable {
         int hallPosition = player.getSchool().getStudentsHall().getOrDefault(studentFromEntry, 0);
         if (Rules.checkCoin(hallPosition)) {
             game.incrementPlayerBalance(player.getNickname());
-
         }
     }
 }

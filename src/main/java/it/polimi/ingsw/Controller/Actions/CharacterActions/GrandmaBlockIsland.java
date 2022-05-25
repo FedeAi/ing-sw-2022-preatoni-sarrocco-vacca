@@ -7,7 +7,6 @@ import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.GrandmaCharacter;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
@@ -40,15 +39,15 @@ public class GrandmaBlockIsland extends Performable {
             throw new GameException("The island has already been blocked. Please select another one.");
         }
 
+        // We check if any of the cards on the table are of the GRANDMA type
+        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof GrandmaCharacter)) {
+            throw new GameException("There isn't any character card of the type grandma on the table.");
+        }
+
         // Simple check to see if we have an active card
         Optional<CharacterCard> card = game.getActiveCharacter(CharacterCard.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active CharacterCard present.");
-        }
-
-        // We check if any of the cards on the table are of the GRANDMA type
-        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof GrandmaCharacter)) {
-            throw new GameException("There isn't any character card of the type grandma on the table.");
         }
 
         // Checking if the activated card is of the GRANDMA type
@@ -76,5 +75,4 @@ public class GrandmaBlockIsland extends Performable {
             game.deactivateCharacterCard(game.getCharacterCards().indexOf(grandma), rules);
         }
     }
-
 }

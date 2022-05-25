@@ -4,6 +4,9 @@ import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.PostmanRules;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -15,12 +18,13 @@ class PostmanCharacterTest {
     private GameManager gameManager;
     private Player p1, p2;
 
-    private void init() {
+    @BeforeEach
+    void init() {
         card = new PostmanCharacter("");
 
-        gameManager = new GameManager(new Game());
-        p1 = new Player("DraghettoMagico");
-        p2 = new Player("FatinaBullone");
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
+        p1 = new Player(0, "Ale");
+        p2 = new Player(1, "Fede");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
@@ -29,7 +33,6 @@ class PostmanCharacterTest {
 
     @Test
     void activate() {
-        init();
         card.activate(gameManager.getRules(), game);
         assertTrue(gameManager.getRules().getDynamicRules() instanceof PostmanRules, " check rules have been updated");
     }

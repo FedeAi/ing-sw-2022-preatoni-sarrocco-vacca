@@ -88,5 +88,4 @@ public class MoveMotherNature extends Performable {
     public GameState nextState(Game game, Rules rules){
         return GameState.ACTION_CHOOSE_CLOUD;
     }
-
 }
