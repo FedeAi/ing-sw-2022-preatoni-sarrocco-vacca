@@ -18,7 +18,7 @@ public class GUI extends Application implements UI {
 
     public static final String END_OF_THE_GAME = "End of the game";
     private static final String MAIN_GUI = "mainScene.fxml";
-    private static final String MENU = "MainMenu.fxml";
+    private static final String MENU = "menu.fxml";
     private static final String LOADER = "loading.fxml";
     private static final String MAGICIANS = "magiciansMenu.fxml";
     private static final String SETUP = "setup.fxml";
@@ -52,7 +52,7 @@ public class GUI extends Application implements UI {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         setup();
         this.stage = stage;
         //CHOOSE FONT
@@ -62,8 +62,15 @@ public class GUI extends Application implements UI {
         run();
     }
 
-    public void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(MAIN_GUI, MAGICIANS, MENU, LOADER, SETUP));
+    // NOT NEEDED AS OF NOW
+    public void setup() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.show();
+
+        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, SETUP));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -95,6 +102,11 @@ public class GUI extends Application implements UI {
 //            player.seek(Duration.ZERO);
 //            player.play();
 //        });
+    }
+    
+    public void changeScene(String newScene){
+        stage.setScene(nameMapScene.get(newScene));
+        stage.show();
     }
 
 

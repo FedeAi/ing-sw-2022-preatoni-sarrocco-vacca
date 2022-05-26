@@ -1,0 +1,4 @@
+.mainMenu {
+    -fx-background-image: url("../graphics/background.jpg");
+    -fx-background-size: stretch;
+}
