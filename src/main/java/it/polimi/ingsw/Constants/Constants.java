@@ -2,6 +2,9 @@ package it.polimi.ingsw.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Constants {
 
@@ -20,7 +23,7 @@ public class Constants {
     public static int port = 8080;
     public static String address;
 
-    public static final String ERIANTYS  = "\n" +
+    public static final String ERIANTYS = "\n" +
             "   ▄████████    ▄████████  ▄█     ▄████████ ███▄▄▄▄       ███     ▄██   ▄      ▄████████ \n" +
             "  ███    ███   ███    ███ ███    ███    ███ ███▀▀▀██▄ ▀█████████▄ ███   ██▄   ███    ███ \n" +
             "  ███    █▀    ███    ███ ███▌   ███    ███ ███   ███    ▀███▀▀██ ███▄▄▄███   ███    █▀  \n" +
@@ -48,7 +51,6 @@ public class Constants {
      * Method getErr returns the err of this Constants object.
      *
      * @return the err (type String) of this Constants object.
-     *
      */
     public static String getErr() {
         return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " ERR: ");
@@ -78,4 +80,54 @@ public class Constants {
     public static String getAddress() {
         return address;
     }
+
+    /**
+     * input validation method: true if the string has matched with the pattern of Regex
+     */
+    public static boolean validateIp(String ip) {
+
+        boolean validate = false;
+        ip = ip.toLowerCase();
+        Pattern p = Pattern.compile("\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){3}\\b"); //pattern for validate the ip address
+        Matcher m = p.matcher(ip);
+        if (m.matches() || ip.equals("localhost")) {
+            validate = true;
+        }
+        return validate;
+
+    }
+
+    /**
+     * input validation method: true if the string has matched with the pattern of Regex
+     *
+     * @return integer because we passed a string (the pattern of regex required a string) and after we cast the port
+     */
+    public static int validatePort(String Port) {
+
+        Pattern p = Pattern.compile("^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"); //pattern tto validate port
+        Matcher m = p.matcher(Port);
+        try {
+            int port = Integer.parseInt(Port);
+        } catch(Exception e) {
+            return -1;
+        }
+        if (!(port > 1023 && m.matches())) { // below 1023 the are ports reserved for OS
+            return -1;
+        }
+        return port;
+    }
+
+    /**
+     * input validation method: true if the string has matched with the pattern of Regex
+     */
+    public static boolean validateNickname(String user) {
+        boolean validate = false;
+        Pattern p = Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$");
+        Matcher m = p.matcher(user);
+        if (m.matches()) {
+            validate = true;
+        }
+        return validate;
+    }
+
 }

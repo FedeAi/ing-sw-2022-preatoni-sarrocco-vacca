@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="mainMenu" alignment="CENTER" prefHeight="395.0" prefWidth="447.0" spacing="20.0" styleClass="mainMenu" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.HelloController">
+<VBox id="mainMenu" alignment="CENTER" prefHeight="395.0" prefWidth="447.0" spacing="20.0" styleClass="mainMenu" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -18,6 +18,6 @@
    </Label>
 
     <Label fx:id="welcomeText" />
-    <Button onAction="#onHelloButtonClick" text="JOIN" />
-   <Button onAction="#onExitButtonClick" text="EXIT" />
+    <Button onAction="#play" text="PLAY" />
+   <Button onAction="#quit" text="EXIT" />
 </VBox>

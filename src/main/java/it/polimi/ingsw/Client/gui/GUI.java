@@ -64,12 +64,6 @@ public class GUI extends Application implements UI {
 
     // NOT NEEDED AS OF NOW
     public void setup() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
-
         List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, SETUP));
         try {
             for (String path : fxmList) {

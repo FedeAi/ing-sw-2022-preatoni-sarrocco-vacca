@@ -15,6 +15,7 @@ import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
 import it.polimi.ingsw.Server.Answer.WinMessage;
 import it.polimi.ingsw.Server.Answer.modelUpdate.PlayedCardMessage;
 
+import java.awt.desktop.ScreenSleepEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
@@ -28,6 +29,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
+
+import static it.polimi.ingsw.Constants.Constants.validateNickname;
 
 /**
  * CLI is the main class for everything regarding the CLI client.
@@ -67,21 +70,25 @@ public class CLI implements UI {
      */
     public static void main(String[] args) {
 
-//       do {
-            clearScreen(); //cleaning terminal
-        System.out.println(Constants.ERIANTYS);
+
+        String ip;
+        String port;
+
+        do {
+            clearScreen(); //cleaning terminale
+            System.out.println(Constants.ERIANTYS);
             System.out.println(Constants.AUTHORS);
             Scanner scanner = new Scanner(System.in);
-        System.out.println(">Insert the server IP address");
-        System.out.print(">");
-        String ip = scanner.nextLine();
-//        validateIp(ip);
-        System.out.println(">Insert the server port");
-        System.out.print(">");
-        String port = scanner.nextLine();
-//        validatePort(port);
-//
-//       }while(validatePort(port) == -1 || validateIp(ip) = false);
+            System.out.println(">Insert the server IP address");
+            System.out.print(">");
+            ip = scanner.nextLine();
+
+            System.out.println(">Insert the server port");
+            System.out.print(">");
+            port = scanner.nextLine();
+
+        } while (Constants.validatePort(port) == -1 || Constants.validateIp(ip));
+
         Constants.setAddress(ip);
         Constants.setPort(Integer.parseInt(port));
         CLI cli = new CLI();
@@ -411,52 +418,6 @@ public class CLI implements UI {
      */
     private void showClouds() {
         Printable.printClouds(modelView.getClouds());
-    }
-
-    /**
-     * input validation method: true if the string has matched with the pattern of Regex
-     */
-    private boolean validateIp(String ip) {
-
-        boolean validate = false;
-        ip = ip.toLowerCase();
-        Pattern p = Pattern.compile("\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){4}\\b"); //pattern for validate the ip address
-        Matcher m = p.matcher(ip);
-        if (m.matches() || ip.equals("localhost")) {
-            validate = true;
-        }
-        return validate;
-
-    }
-
-    /**
-     * input validation method: true if the string has matched with the pattern of Regex
-     *
-     * @return integer because we passed a string (the pattern of regex required a string) and after we cast the port
-     */
-    private int validatePort(String Port) {
-
-        Pattern p = Pattern.compile("^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"); //pattern tto validate port
-        Matcher m = p.matcher(Port);
-        int port = Integer.parseInt(Port);
-
-        if (!(port > 1023 && m.matches())) { // below 1023 the are ports reserved for OS
-            return -1;
-        }
-        return port;
-    }
-
-    /**
-     * input validation method: true if the string has matched with the pattern of Regex
-     */
-    private boolean validateNickname(String user){
-        boolean validate = false;
-        Pattern p = Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$");
-        Matcher m = p.matcher(user);
-        if (m.matches()) {
-            validate = true;
-        }
-        return validate;
     }
 
 
