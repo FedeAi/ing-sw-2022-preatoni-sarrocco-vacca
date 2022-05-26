@@ -1,12 +1,16 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
+import it.polimi.ingsw.Client.ConnectionSocket;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Client.gui.GUIController;
 import it.polimi.ingsw.Constants.Constants;
+import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
+import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
 import javafx.fxml.FXML;
 
 import java.awt.*;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 
@@ -61,7 +65,39 @@ public class SetupController implements GUIController {
         }
         if (!errorMsg.equals("")) {
             error.setText("Invalid fields: " + errorMsg);
+        }else{
+            try {
+                Constants.setAddress(ip.getText());
+                Constants.setPort(Integer.parseInt(port.getText()));
+            } catch (NumberFormatException e) {
+                error.setText(e.getMessage());
+                return;
+            }
+            gui.getModelView().setPlayerName(username.getText());
+
+            try {
+                ConnectionSocket connectionSocket = new ConnectionSocket();
+                if (!connectionSocket.setup(
+                        username.getText(), gui.getModelView(), gui.getServerMessageHandler())) {
+
+                    error.setText("Server not reachable, try another IP");
+                    return;
+                }
+                // TODo NEW SCENE
+                gui.setConnectionSocket(connectionSocket);
+                error.setText("SOCKET CONNECTION \nSETUP COMPLETED!");
+//                loaderController.setText("WAITING FOR PLAYERS");
+//                gui.getListeners()
+//                        .addPropertyChangeListener(
+//                                "action", new ActionParser(connectionSocket, gui.getModelView()));
+
+            } catch (DuplicateNicknameException e) {
+                error.setText("This nickname is already in use! Please choose another one.");
+            } catch (InvalidNicknameException e) {
+                error.setText("Server ERROR: Invalid character nickname");
+            }
         }
+
     }
 
     @FXML

@@ -103,6 +103,17 @@ public class GUI extends Application implements UI {
         stage.show();
     }
 
+    public void setConnectionSocket(ConnectionSocket connectionSocket) {
+        this.connectionSocket = connectionSocket;
+    }
+
+    public ModelView getModelView(){
+        return modelView;
+    }
+
+    public ServerMessageHandler getServerMessageHandler(){
+        return serverMessageHandler;
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
