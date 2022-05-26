@@ -1,16 +1,22 @@
 package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.MoveMotherNature;
+import it.polimi.ingsw.Controller.Actions.MoveStudentFromEntryToHall;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.GameManager;
+import it.polimi.ingsw.Exceptions.*;
+import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.GrandmaCharacter;
 import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,112 +51,100 @@ class GrandmaBlockIslandTest {
      */
     @BeforeEach
     void init() {
-        gameManager = new GameManager();
-        p1 = new Player("Ale");
-        p2 = new Player("Davide");
-        p3 = new Player("Fede");
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
+        p1 = new Player(0, "Ale");
+        p2 = new Player(1, "Fede");
+        p3 = new Player(2, "Davide");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         game.setRoundOwner(p1);
-        selectedIsland = 0;
+        selectedIsland = game.getIslandContainer().correctIndex(1, game.getMotherNature().getPosition());
         grandma = new GrandmaCharacter("");
         cardList = new ArrayList<>();
         cardList.add(grandma);
         game.initCharacterCards(cardList);
+        grandma.activate(gameManager.getRules(), game);
+        action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
     }
 
     @Test
-    @DisplayName("Wrong nickname")
-    void superTest() {
-        String wrongNickname = "Beppe";
-        action = new GrandmaBlockIsland(wrongNickname, selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
-    }
-
-    @Test
-    @DisplayName("Wrong state")
+    @DisplayName("Wrong state test")
     void wrongState() {
         // We aren't set to the correct state
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertThrows(WrongStateException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
     @DisplayName("Wrong islandIndex")
     void wrongIndex() {
         // Negative selectedIsland test
-        grandma.activate(gameManager.getRules(), game);
         selectedIsland = -1;
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
-        // selectedIsland > islands.size() test
-        selectedIsland = 12;
+        assertThrows(InvalidIndexException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
+        // selectedIsland >= islands.size() test
+        selectedIsland = game.getIslandContainer().size();
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertThrows(InvalidIndexException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
     @DisplayName("Already blocked island")
     void alreadyBlocked() {
         // We set the selectedIsland to blocked, we then try to block it
-        grandma.activate(gameManager.getRules(), game);
-        game.getIslandContainer().get(selectedIsland).setBlocked(true);
-        action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
-    }
-
-    @Test
-    @DisplayName("Zero cards are active")
-    void zeroActives() {
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         game.setGameState(GameState.GRANDMA_BLOCK_ISLAND);
-        action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        // I cannot block the same island 2 times!
+        assertThrows(GameException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
-    @DisplayName("No grandmas present")
+    @DisplayName("No grandmas in the game test")
     void noGrandmas() {
-        cardList = new ArrayList<>();
-        KnightCharacter tempCard = new KnightCharacter("");
-        tempCard.activate(gameManager.getRules(), game);
-        cardList.add(tempCard);
-        cardList.add(new KnightCharacter(""));
-        cardList.add(new KnightCharacter(""));
-        game.initCharacterCards(cardList);
-        game.setGameState(GameState.GRANDMA_BLOCK_ISLAND);
+        game.initCharacterCards(new ArrayList<>());
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertThrows(GameException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
-    @DisplayName("Grandma not active")
+    @DisplayName("No active grandmas test")
     void grandmaInactive() {
-        cardList = new ArrayList<>();
-        KnightCharacter tempCard = new KnightCharacter("");
-        tempCard.activate(gameManager.getRules(), game);
-        cardList.add(tempCard);
-        cardList.add(grandma);
-        game.initCharacterCards(cardList);
+        grandma.deactivate(gameManager.getRules(), game);
         game.setGameState(GameState.GRANDMA_BLOCK_ISLAND);
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertThrows(GameException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
     @DisplayName("No blockingCards left")
     void blockingUnavailable() {
-        grandma.activate(gameManager.getRules(), game);
         // We now empty the grandma card
         while (grandma.getBlockingCards() != 0) {
             grandma.moveBlockingCard();
         }
-        action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertFalse(action.canPerformExt(game, gameManager.getRules()));
+        assertThrows(GameException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -158,27 +152,46 @@ class GrandmaBlockIslandTest {
     void grandmaSelection() {
         grandma.activate(gameManager.getRules(), game);
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        assertTrue(action.canPerformExt(game, gameManager.getRules()));
-        action.performMove(game, gameManager.getRules());
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         assertTrue(game.getIslandContainer().get(selectedIsland).isBlocked());
     }
 
+    @Ignore
     @Test
     @DisplayName("Checks if the island is blocked")
     void influenceBlocked() {
         // We activate the card, block the island, and then see if the ownership doesn't get updated
-        grandma.activate(gameManager.getRules(), game);
-        action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
-        action.performMove(game, gameManager.getRules());
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         Color student = Color.PINK;
-        game.setProfessor(student, p1.getNickname());
+        // P1 will conquer the PINK professor
+        game.setGameState(GameState.ACTION_MOVE_STUDENTS);
+        p1.getSchool().addStudentEntry(student);
+        action = new MoveStudentFromEntryToHall(p1.getNickname(), student);
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         for (int i = 0; i < 6; i++) {
-            game.getIslandContainer().get(selectedIsland).addStudent(student);
+            game.getIslandContainer().addIslandStudent(selectedIsland, student);
         }
         game.setGameState(GameState.ACTION_MOVE_MOTHER);
-        int movement = game.getIslandContainer().size() - game.getMotherNature().getPosition();
+        int movement = 1;
+        p1.setAndRemovePlayedCard(new AssistantCard("", 10));
         action = new MoveMotherNature(p1.getNickname(), movement);
-        action.performMove(game, gameManager.getRules());
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         Island island = game.getIslandContainer().get(selectedIsland);
         assertFalse(island.isBlocked());
         assertNotEquals(p1.getNickname(), island.getOwner());

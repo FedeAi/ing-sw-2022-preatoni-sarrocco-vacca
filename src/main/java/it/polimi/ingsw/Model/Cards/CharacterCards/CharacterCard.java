@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.Card;
-import it.polimi.ingsw.Model.Enumerations.Character;
+import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Model.Game;
 
 public abstract class CharacterCard extends Card {
@@ -11,11 +11,13 @@ public abstract class CharacterCard extends Card {
     protected boolean activated;
     protected boolean isActive;
     private Character character;
+    private String activatingPlayer;
 
     public CharacterCard(String imagePath) {
         super(imagePath);
         activated = false;
         isActive = false;
+        activatingPlayer="";
     }
 
     /**
@@ -28,10 +30,12 @@ public abstract class CharacterCard extends Card {
     public void activate(Rules rules, Game game) {
         activated = true;
         isActive = true;
+        activatingPlayer = game.getRoundOwner().getNickname();
     }
 
     public void deactivate(Rules rules, Game game) {
         isActive = false;
+        activatingPlayer = "";
     }
 
     public boolean isActive() {
@@ -53,4 +57,7 @@ public abstract class CharacterCard extends Card {
         return character;
     }
 
+    public String getActivatingPlayer() {
+        return activatingPlayer;
+    }
 }

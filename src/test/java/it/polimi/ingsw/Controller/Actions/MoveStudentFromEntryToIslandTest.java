@@ -1,143 +1,96 @@
 package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Exceptions.InvalidIndexException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoveStudentFromEntryToIslandTest {
 
-    @Test
-    void performMove() {
-        GameManager gameManager = new GameManager();
-        Player p1 = new Player("Ale");
-        Player p2 = new Player("Davide");
-        Player p3 = new Player("Fede");
+    GameManager gameManager;
+    Game game;
+    Player p1;
+    Player p2;
+    Performable action;
+    Random r;
+    Color student;
+    int index;
 
+    @BeforeEach
+    void init() {
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
+        p1 = new Player(0, "Ale");
+        p2 = new Player(1, "Fede");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
-        gameManager.addPlayer(p3);
         gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
-        gameInstance.setRoundOwner(p1);
-        Performable moveStudent;
-        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
+        game = gameManager.getGame();
+        game.setGameState(GameState.ACTION_MOVE_STUDENTS);
+        game.setRoundOwner(p2);
+        r = new Random();
+        student = getStudentFromEntry(p2);
+        index = r.nextInt(0, 12);
+        action = new MoveStudentFromEntryToIsland(p2.getNickname(), student, index);
+    }
 
-        Color student = getStudentFromEntry(p1);
-        int islandIndex = 2;
-        moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), student, islandIndex);
-        assertTrue(moveStudent.canPerformExt(gameInstance, gameManager.getRules()));
+    @DisplayName("Wrong island index test")
+    @Test
+    void wrongIndex() {
+        index = -1;
+        action = new MoveStudentFromEntryToIsland(p2.getNickname(), student, index);
+        assertThrows(InvalidIndexException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
+        index = game.getIslandContainer().size();
+        action = new MoveStudentFromEntryToIsland(p2.getNickname(), student, index);
+        assertThrows(InvalidIndexException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
+    }
 
-        Map<Color, Integer> prevEntry = new EnumMap<Color, Integer>(p1.getSchool().getStudentsEntry());
-        Map<Color, Integer> prevIsland = new EnumMap<Color, Integer>(p1.getSchool().getStudentsEntry());
-
-        moveStudent.performMove(gameInstance, gameManager.getRules());
-
+    @DisplayName("Move student to island test")
+    @Test
+    void moveToIsland() {
+        Map<Color, Integer> prevEntry = new EnumMap<>(p2.getSchool().getStudentsEntry());
+        Map<Color, Integer> prevIsland = new EnumMap<>(game.getIslandContainer().get(index).getStudents());
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         // Checks if the number of students in the entry has correctly been modified
         int colorValue;
         for (Map.Entry<Color, Integer> entry : prevEntry.entrySet()) {
-            colorValue = p1.getSchool().getStudentsEntry().get(entry.getKey());
+            colorValue = p2.getSchool().getStudentsEntry().get(entry.getKey());
             if (entry.getKey() != student) {
                 assertEquals(entry.getValue(), colorValue);
             } else {
-                assertEquals(entry.getValue(), colorValue + 1);
+                assertEquals(entry.getValue() - 1, colorValue);
             }
         }
-
         // Checks if the number of students on the island has correctly been modified
-        for (Map.Entry<Color, Integer> islandStudents : prevIsland.entrySet()) {
-            colorValue = p1.getSchool().getStudentsEntry().get(islandStudents.getKey());
+        for (Map.Entry<Color, Integer> islandStudents : game.getIslandContainer().get(index).getStudents().entrySet()) {
             if (islandStudents.getKey() != student) {
-                assertEquals(islandStudents.getValue(), colorValue);
+                assertEquals(prevIsland.getOrDefault(islandStudents.getKey(), 0), islandStudents.getValue());
             } else {
-                assertEquals(islandStudents.getValue(), colorValue + 1);
+                assertEquals(prevIsland.getOrDefault(islandStudents.getKey(), 0) + 1, islandStudents.getValue());
             }
         }
     }
 
-    @Test
-    void canPerformExt() {
-        GameManager gameManager = new GameManager();
-        Player p1 = new Player("Ale");
-        Player p2 = new Player("Davide");
-        Player p3 = new Player("Fede");
-
-        gameManager.addPlayer(p1);
-        gameManager.addPlayer(p2);
-        gameManager.addPlayer(p3);
-        gameManager.initGame();
-        Game gameInstance = gameManager.getGameInstance();
-        gameInstance.setRoundOwner(p1);
-        Performable moveStudent;
-        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-
-        // Get a student from the player's entry
-        Color student = getStudentFromEntry(p1);
-        int islandIndex = 2;
-
-        // An illegal player tries to play
-        String missingPlayer = "Marco";
-        moveStudent = new MoveStudentFromEntryToIsland(missingPlayer, student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance, gameManager.getRules()));
-
-        // It's not the player's turn, roundOwner = p1, we're going to pass p2
-        moveStudent = new MoveStudentFromEntryToIsland(p2.getNickname(), student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance, gameManager.getRules()));
-
-        // We want to see if the action is performable, but we are in the wrong state
-        gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
-        moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance, gameManager.getRules()));
-        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-
-        // Simple check for the islandIndex
-        islandIndex = -1;
-        moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance, gameManager.getRules()));
-        islandIndex = 40;
-        moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), student, islandIndex);
-        assertFalse(moveStudent.canPerformExt(gameInstance, gameManager.getRules()));
-        islandIndex = 2;
-
-        // Base case
-        moveStudent = new MoveStudentFromEntryToHall(p1.getNickname(), student);
-        assertTrue(moveStudent.canPerformExt(gameInstance, gameManager.getRules()));
-        // We move all the allowed students
-        for (int i = 0; i < Rules.getStudentsPerTurn(gameInstance.numPlayers()); i++) {
-            Color pickedStudent = getStudentFromEntry(p1);
-            moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), pickedStudent, islandIndex);
-            assertTrue(moveStudent.canPerformExt(gameInstance, gameManager.getRules()));
-
-            p1.getSchool().moveStudentFromEntryToHall(pickedStudent);
-        }
-        assertFalse(moveStudent.canPerformExt(gameInstance, gameManager.getRules()));
-    }
-
-    @Test
-    public void getNickNamePlayerTest() {
-        GameManager gameManager = new GameManager();
-        Player p1 = new Player("Ale");
-        Player p2 = new Player("Fede");
-        gameManager.addPlayer(p1);
-        gameManager.addPlayer(p2);
-        gameManager.initGame();
-
-        Color color = getStudentFromEntry(p1);
-        int islandIndex = 1;
-
-        Performable moveStudent = new MoveStudentFromEntryToIsland(p1.getNickname(), color, islandIndex);
-        assertEquals(p1.getNickname(), moveStudent.getNickNamePlayer());
-    }
-
-    // TODO MOVE THIS TO THE ABSTRACT (?)
     private Color getStudentFromEntry(Player p) {
         return p.getSchool().getStudentsEntry().entrySet().stream().filter((s) -> s.getValue() > 0).findFirst().get().getKey();
     }

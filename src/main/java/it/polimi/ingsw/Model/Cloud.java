@@ -1,11 +1,12 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Constants.Color;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class Cloud {
+public class Cloud implements Serializable {
     private Map<Color, Integer> students;
 
     public Cloud() {
@@ -32,4 +33,7 @@ public class Cloud {
         }
     }
 
+    public Map<Color, Integer> getStudents() {
+        return new EnumMap<>(students);
+    }
 }

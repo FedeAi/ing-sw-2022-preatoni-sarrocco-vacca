@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.Islands;
 
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Constants.Color;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class SuperIsland extends Island {
-    private String owner;
     List<BaseIsland> islands;
 
     public SuperIsland(List<Island> islands) {
+        super();
         this.islands = new ArrayList<>();
         for (Island island : islands) {
             if (island instanceof SuperIsland) {
@@ -24,7 +24,14 @@ public class SuperIsland extends Island {
 
     }
 
-    List<BaseIsland> getBaseIslands() {
+    public SuperIsland(SuperIsland island) {
+        super();
+        islands = island.islands;
+        owner = island.owner;
+        isBlocked = island.isBlocked;
+    }
+
+    public List<BaseIsland> getBaseIslands() {
         return islands;
     }
 
@@ -40,11 +47,6 @@ public class SuperIsland extends Island {
     }
 
     @Override
-    public String getOwner() {
-        return owner;
-    }
-
-    @Override
     public int getNumTower() {
         return islands.stream().reduce(0, (numTowers, island) -> numTowers + island.getNumTower(), Integer::sum);
     }
@@ -52,7 +54,7 @@ public class SuperIsland extends Island {
     @Override
     public void setOwner(String owner) {
         this.owner = owner;
-        for (Island island : islands) {
+        for (BaseIsland island : islands) {
             island.setOwner(owner);
         }
     }
@@ -61,5 +63,10 @@ public class SuperIsland extends Island {
     public void addStudent(Color student) {
         // we decided to add the student to the first island of the super island group
         islands.get(0).addStudent(student);
+    }
+
+    @Override
+    public int size() {
+        return islands.size();
     }
 }

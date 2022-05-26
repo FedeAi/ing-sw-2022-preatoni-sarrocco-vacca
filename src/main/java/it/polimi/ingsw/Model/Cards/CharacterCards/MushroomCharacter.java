@@ -1,10 +1,10 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.MushRoomRules;
+import it.polimi.ingsw.Controller.Rules.DynamicRules.MushroomRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 
 
@@ -22,14 +22,13 @@ public class MushroomCharacter extends CharacterCard {
         super.activate(rules, game);
         previousState = game.getGameState();
         game.setGameState(GameState.MUSHROOM_CHOOSE_COLOR);
-        rules.setDynamicRules(new MushRoomRules());
+        rules.setDynamicRules(new MushroomRules());
     }
 
     @Override
     public void deactivate(Rules rules, Game game) {
         super.deactivate(rules, game);
         rules.setDynamicRules(new BaseRules());
-        game.setGameState(previousState);
         setStudent(null);
     }
 
@@ -41,4 +40,7 @@ public class MushroomCharacter extends CharacterCard {
         this.student = student;
     }
 
+    public GameState getPreviousState() {
+        return previousState;
+    }
 }

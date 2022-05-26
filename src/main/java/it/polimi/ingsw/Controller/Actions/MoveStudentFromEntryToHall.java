@@ -1,25 +1,33 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
-import java.util.Optional;
-
 public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
 
-    MoveStudentFromEntryToHall(String player, Color color) {
+    public MoveStudentFromEntryToHall(String player, Color color) {
         super(player, color);
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return;
-        Player player = player_opt.get();
+    protected void canPerform(Game game, Rules rules) throws GameException, InvalidPlayerException, RoundOwnerException {
+        super.canPerform(game, rules);
+        Player p = getPlayer(game);
+        if (p.getSchool().getStudentsHall().getOrDefault(color, 0) >= Constants.SCHOOL_LANE_SIZE) {
+            throw new GameException("You already have the maximum amount (" + Constants.SCHOOL_LANE_SIZE + ") of " + color + " students in your school's hall!");
+        }
+    }
+
+    @Override
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
+        Player player = getPlayer(game);
 
         player.getSchool().moveStudentFromEntryToHall(color);   // model modification
 
@@ -28,11 +36,7 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
         if (Rules.checkCoin(hallPosition)) {
             game.incrementPlayerBalance(player.getNickname());
         }
-        //compute the new professors
+        // Updates the professors to the new owners (if any)
         game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game));
-
-        if (Rules.getEntrySize(game.numPlayers()) - player.getSchool().getEntryStudentsNum() >= Rules.getStudentsPerTurn(game.numPlayers())) {
-            game.setGameState(GameState.ACTION_MOVE_MOTHER);
-        }
     }
 }

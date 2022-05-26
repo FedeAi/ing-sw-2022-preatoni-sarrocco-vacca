@@ -1,24 +1,36 @@
 package it.polimi.ingsw.Model.Islands;
 
-import it.polimi.ingsw.Model.Enumerations.Color;
+import it.polimi.ingsw.Constants.Color;
 
+import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
-public abstract class Island {
+public abstract class Island implements Serializable {
     /*
         TODO I HAVEN'T SORTED THE SUPERISLAND BLOCKED CASE YET
         If we join an island with an adjacent one which is blocked,
         is the SuperIsland blocked or not?
     */
+
     protected boolean isBlocked;
+    protected String owner;
+
+    protected Island() {
+        isBlocked = false;
+    }
 
     public abstract Map<Color, Integer> getStudents();
 
-    public abstract String getOwner();
+    public String getOwner() {
+        return owner;
+    }
 
     public abstract int getNumTower();
 
-    public abstract void setOwner(String owner);
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 
     public abstract void addStudent(Color student);
 
@@ -35,5 +47,18 @@ public abstract class Island {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public int size() {
+        return 1;
+    }
+
+    // FIXME
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Island island = (Island) o;
+        return getStudents().entrySet().stream().allMatch(e -> Objects.equals(island.getStudents().get(e.getKey()), e.getValue()));
     }
 }

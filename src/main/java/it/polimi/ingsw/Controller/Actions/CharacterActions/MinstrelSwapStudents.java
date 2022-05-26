@@ -1,11 +1,16 @@
 package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
+import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.MinstrelCharacter;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
@@ -22,73 +27,60 @@ public class MinstrelSwapStudents extends Performable {
     }
 
     @Override
-    public boolean canPerformExt(Game game, Rules rules) {
+    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if (!super.canPerformExt(game, rules)) {
-            return false;
-        }
-
+        super.canPerform(game, rules);
         Player player = getPlayer(game);
 
-        if (!game.getGameState().equals(GameState.MINISTREL_SWAP_STUDENTS)) {
-            return false;
+        if (!game.getGameState().equals(GameState.MINSTREL_SWAP_STUDENTS)) {
+            throw new WrongStateException("state you access by activating the minstrel card.");
         }
-
 
         // is action legal check
         // there is no an active card
-
-        Optional<CharacterCard> card = game.getActiveCharacter();
-        if (card.isEmpty())
-            return false;
-
-        // the active card is not the right one
-        if (!(card.get() instanceof MinstrelCharacter)) {
-            return false;
+        Optional<CharacterCard> card = game.getActiveCharacter(MinstrelCharacter.class);
+        if (card.isEmpty()) {
+            throw new GameException("There isn't any active card present of the minstrel type.");
         }
 
         MinstrelCharacter minstrel = (MinstrelCharacter) card.get();
 
         // already done all possible movements
         if (minstrel.getSwappedStudents() >= MinstrelCharacter.maxSwaps) {
-            return false;
+            throw new GameException("You already swapped from the minstrel the maximum amount of students allowed per card activation.");
         }
-        //the entry doesn't have enough students
 
+        // The entry doesn't have enough students
         if (player.getSchool().getStudentsEntry().getOrDefault(studentFromEntry, 0) <= 0) {
-            return false;
+            throw new GameException("There isn't any student of the specified color (" + studentFromEntry.toString() + ") in your school's entry.");
         }
+        // The hall doesn't have enough students
         if (player.getSchool().getStudentsHall().getOrDefault(studentFromHall, 0) <= 0) {
-            return false;
+            throw new GameException("There isn't any student of the specified color (" + studentFromHall.toString() + ") in your school's hall.");
         }
 
-        return true;
+        Player p = getPlayer(game);
+        if (p.getSchool().getStudentsHall().getOrDefault(studentFromEntry, 0) >= Constants.SCHOOL_LANE_SIZE) {
+            throw new GameException("You already have the maximum amount (" + Constants.SCHOOL_LANE_SIZE + ") of " + studentFromEntry + " students in your school's hall!");
+        }
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
 
-        Optional<CharacterCard> card = game.getActiveCharacter();
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
+        Optional<CharacterCard> card = game.getActiveCharacter(MinstrelCharacter.class);
         MinstrelCharacter minstrel = (MinstrelCharacter) card.get();
+        Player player = getPlayer(game);
 
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return;
-        Player player = player_opt.get();
+        player.getSchool().swapStudents(studentFromEntry, studentFromHall);
+        game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors
+        minstrel.incrementSwapped();
 
-        // to check instance of and make cast
-        if (canPerformExt(game, rules)) {
-
-            player.getSchool().swapStudents(studentFromEntry, studentFromHall);
-            game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game)); //find new owners - professors
-            minstrel.incrementSwapped();
-            // coin
-            int hallPosition = player.getSchool().getStudentsHall().getOrDefault(studentFromEntry, 0);
-            if (Rules.checkCoin(hallPosition)) {
-                game.incrementPlayerBalance(player.getNickname());
-
-            }
-
+        // Coin logic
+        int hallPosition = player.getSchool().getStudentsHall().getOrDefault(studentFromEntry, 0);
+        if (Rules.checkCoin(hallPosition)) {
+            game.incrementPlayerBalance(player.getNickname());
         }
     }
 }

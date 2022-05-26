@@ -2,9 +2,10 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.HeraldCharacter;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
@@ -15,49 +16,40 @@ import java.util.Optional;
 public class HeraldChooseIsland extends Performable {
     private int islandIndex;
 
-    HeraldChooseIsland(String player, int islandIndex) {
+    public HeraldChooseIsland(String player, int islandIndex) {
         super(player);
         this.islandIndex = islandIndex;
     }
 
     @Override
-    public boolean canPerformExt(Game game, Rules rules) {
+    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
-        if (!super.canPerformExt(game, rules)) {
-            return false;
-        }
-
-        Player player = getPlayer(game);
+        super.canPerform(game, rules);
 
         if (!game.getGameState().equals(GameState.HERALD_ACTIVE)) {
-            return false;
+            throw new WrongStateException("state you access by activating the herald card.");
         }
 
         // is action legal check
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
-        if (card.isEmpty())
-            return false;
+        Optional<CharacterCard> card = game.getActiveCharacter(HeraldCharacter.class);
+        if (card.isEmpty()) {
+            throw new GameException("There isn't any active card present.");
+        }
 
         // the active card is not the right one
         if (!(card.get() instanceof HeraldCharacter)) {
-            return false;
+            throw new GameException("The card that has been activated in this turn is not of the herald type.");
         }
 
         if (!game.getIslandContainer().isFeasibleIndex(islandIndex)) {
-            return false;
+            throw new InvalidIndexException("island", 0, game.getIslandContainer().size() - 1, islandIndex);
         }
-
-        return true;
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
-        if (player_opt.isEmpty())    // if there is no Player with that nick
-            return;
-        Player player = player_opt.get();
-
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
         Island island = game.getIslandContainer().get(islandIndex);
 
         // set owner ( put the Tower )
@@ -65,7 +57,7 @@ public class HeraldChooseIsland extends Performable {
         if (islandNewOwner_opt.isPresent()) {
             String islandPrevOwner = island.getOwner();
             if (!islandNewOwner_opt.get().equals(islandPrevOwner)) {
-                island.setOwner(islandNewOwner_opt.get());
+                game.setIslandOwner(islandIndex,islandNewOwner_opt.get());
                 // remove tower to the player
                 Optional<Player> islandOwnerPlayer_opt = game.getPlayerByNickname(islandNewOwner_opt.get());
                 islandOwnerPlayer_opt.ifPresent(owner -> owner.getSchool().decreaseTowers());
@@ -87,5 +79,4 @@ public class HeraldChooseIsland extends Performable {
             islandContainer.joinNextIsland(islandIndex);
         }
     }
-
 }

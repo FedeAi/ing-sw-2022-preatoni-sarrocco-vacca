@@ -1,10 +1,6 @@
 package it.polimi.ingsw.Model.Islands;
 
-import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Model.Bag;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Constants.Color;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BaseIslandTest {
 
-    //    private GameManager initGameManager(){
-//        GameManager gameManager = new GameManager();
+    //    private GameManager initGameManager(new Game()){
+//        GameManager gameManager = new GameManager(new Game());
 //        Player p1 = new Player("Marula");
 //        Player p2 = new Player("Albano");
 //        gameManager.addPlayer(p1);

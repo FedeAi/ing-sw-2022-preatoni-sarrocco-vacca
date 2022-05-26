@@ -2,9 +2,11 @@ package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.CentaurRules;
-import it.polimi.ingsw.Controller.Rules.DynamicRules.PostmanRules;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,22 +18,22 @@ class CentaurCharacterTest {
     private GameManager gameManager;
     private Player p1, p2, p3;
 
-    private void init() {
+    @BeforeEach
+    void init() {
         card = new CentaurCharacter("");
-        gameManager = new GameManager();
-        p1 = new Player("Ale");
-        p2 = new Player("Fede");
-        p3 = new Player("Davide");
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
+        p1 = new Player(0, "Ale");
+        p2 = new Player(1, "Fede");
+        p3 = new Player(2, "Davide");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
     }
 
     @Test
     void activate() {
-        init();
         card.activate(gameManager.getRules(), game);
         assertTrue(card.isActive(), "Checks if the active flag has been set to true");
         assertTrue(gameManager.getRules().getDynamicRules() instanceof CentaurRules, "Checks if rules have been updated");

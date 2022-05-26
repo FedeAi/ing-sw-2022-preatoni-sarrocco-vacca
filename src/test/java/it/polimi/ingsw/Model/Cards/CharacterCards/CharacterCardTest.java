@@ -3,6 +3,9 @@ package it.polimi.ingsw.Model.Cards.CharacterCards;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,22 +16,21 @@ class CharacterCardTest {
     private GameManager gameManager;
     private Player p1, p2;
 
-    private void init() {
+    @BeforeEach
+    void init() {
         card = new PostmanCharacter("");
-
-        gameManager = new GameManager();
-        p1 = new Player("DraghettoMagico");
-        p2 = new Player("FatinaBullone");
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
+        p1 = new Player(0, "Ale");
+        p2 = new Player(1, "Fede");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
     }
 
 
     @Test
-    void isActive() {
-        init();
+    void active() {
         assertFalse(card.isActive(), "check that the card is not randomly active");
         card.activate(gameManager.getRules(), game);
         assertTrue(card.isActive(), "check active");
@@ -37,8 +39,7 @@ class CharacterCardTest {
     }
 
     @Test
-    void getPrice() {
-        init();
+    void priceUpdate() {
         assertNotNull(card.getPrice(), "check CardPrice");
         assertTrue(card.getPrice() > 0, "check CardPrice");
         int initialPrice = card.getPrice();

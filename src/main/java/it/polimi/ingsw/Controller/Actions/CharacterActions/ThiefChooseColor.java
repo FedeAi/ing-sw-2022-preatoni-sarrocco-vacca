@@ -2,11 +2,14 @@ package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
+import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidPlayerException;
+import it.polimi.ingsw.Exceptions.RoundOwnerException;
+import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.GrandmaCharacter;
 import it.polimi.ingsw.Model.Cards.CharacterCards.ThiefCharacter;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
@@ -24,47 +27,42 @@ public class ThiefChooseColor extends Performable {
     }
 
     @Override
-    public boolean canPerformExt(Game game, Rules rules) {
+    protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he is the roundOwner
-        if (!super.canPerformExt(game, rules)) {
-            return false;
-        }
-
-        Player player = getPlayer(game);
+        super.canPerform(game, rules);
 
         // Checks if the game is set to the correct state
         if (!game.getGameState().equals(GameState.THIEF_CHOOSE_COLOR)) {
-            return false;
+            throw new WrongStateException("state you access by activating the thief card.");
         }
 
         // Simple check to see if we have an active card
-        Optional<CharacterCard> card = game.getActiveCharacter();
+        Optional<CharacterCard> card = game.getActiveCharacter(ThiefCharacter.class);
         if (card.isEmpty()) {
-            return false;
+            throw new GameException("There isn't any active card present.");
         }
 
         // We check if any of the cards on the table are of the THIEF type
         if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof ThiefCharacter)) {
-            return false;
+            throw new GameException("There isn't any character card of the type thief on the table.");
         }
 
         // Checking if the activated card is of the THIEF type
         if (!(card.get() instanceof ThiefCharacter)) {
-            return false;
+            throw new GameException("The card that has been activated in this turn is not of the thief type.");
         }
 
         // Is this necessary?
         if (chosenColor != Color.BLUE && chosenColor != Color.RED && chosenColor != Color.GREEN && chosenColor != Color.YELLOW && chosenColor != Color.PINK) {
-            return false;
+            throw new GameException("Invalid color selected.");
         }
-        return true;
     }
 
     @Override
-    public void performMove(Game game, Rules rules) {
+    public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
+        canPerform(game, rules);
         // TODO TESTING
-        // Redundant card presence check and general canPerform() check, then we execute the action
-        if (game.getActiveCharacter().isPresent() && canPerformExt(game, rules)) {
+        if (game.getActiveCharacter(ThiefCharacter.class).isPresent()) {
             List<Player> players = game.getPlayers();
             for (Player p : players) {
                 Map<Color, Integer> studentsHall = p.getSchool().getStudentsHall();
@@ -81,8 +79,8 @@ public class ThiefChooseColor extends Performable {
                     studentsHall.put(chosenColor, 0);
                 }
             }
-            ThiefCharacter thief = (ThiefCharacter) game.getActiveCharacter().get();
-            thief.deactivate(rules, game);
+            ThiefCharacter thief = (ThiefCharacter) game.getActiveCharacter(ThiefCharacter.class).get();
+            game.deactivateCharacterCard(game.getCharacterCards().indexOf(thief), rules);
         }
     }
 }

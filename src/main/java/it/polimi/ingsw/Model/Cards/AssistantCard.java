@@ -1,7 +1,8 @@
 package it.polimi.ingsw.Model.Cards;
 
-import it.polimi.ingsw.Model.Enumerations.Animals;
+import it.polimi.ingsw.Constants.Animals;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 public class AssistantCard extends Card {
@@ -43,5 +44,10 @@ public class AssistantCard extends Card {
     @Override
     public int hashCode() {
         return Objects.hash(maxMoves, value, type);
+    }
+
+    @Override
+    public String toString() {
+        return "card " + getValue() + ", max moves: " + getMaxMoves();
     }
 }

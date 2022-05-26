@@ -1,15 +1,20 @@
 package it.polimi.ingsw.Controller.Actions;
 
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Controller.GameManager;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Model.Enumerations.Color;
-import it.polimi.ingsw.Model.Enumerations.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.SuperIsland;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.EnumMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +30,7 @@ class MoveMotherNatureTest {
     GameManager gameManager;
     Player p1, p2, p3;
     Game game;
-    Performable moveMotherNature;
+    Performable action;
     int movement;
     Color profColor;
     AssistantCard card;
@@ -36,20 +41,20 @@ class MoveMotherNatureTest {
      */
     @BeforeEach
     void init() {
-        gameManager = new GameManager();
-        p1 = new Player("Ale");
-        p2 = new Player("Davide");
-        p3 = new Player("Fede");
+        gameManager = new GameManager(new Game(), new GameHandler(new Server()));
+        p1 = new Player(0,"Ale");
+        p2 = new Player(1,"Davide");
+        p3 = new Player(2,"Fede");
         gameManager.addPlayer(p1);
         gameManager.addPlayer(p2);
         gameManager.addPlayer(p3);
         gameManager.initGame();
-        game = gameManager.getGameInstance();
+        game = gameManager.getGame();
         game.setGameState(GameState.ACTION_MOVE_MOTHER);
         movement = 3;
         game.setRoundOwner(p3);
         profColor = Color.BLUE;
-        moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
+        action = new MoveMotherNature(p3.getNickname(), movement);
     }
 
     @Test
@@ -57,8 +62,10 @@ class MoveMotherNatureTest {
     void wrongNicknameTest() {
         // checking if the nickname doesn't belong to the game
         // Nicolò isn't in the game
-        moveMotherNature = new MoveMotherNature("Nicolò", movement);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        action = new MoveMotherNature("Nicolò", movement);
+        assertThrows(InvalidPlayerException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -66,8 +73,10 @@ class MoveMotherNatureTest {
     void wrongRoundOwnerTest() {
         // checking if the player argument is the actual round owner
         // p2 is the actual round owner, while I try to pass p1
-        moveMotherNature = new MoveMotherNature(p1.getNickname(), movement);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        action = new MoveMotherNature(p1.getNickname(), movement);
+        assertThrows(RoundOwnerException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -75,7 +84,9 @@ class MoveMotherNatureTest {
     void wrongStateTest() {
         // checks if the game is set to the correct game state
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        assertThrows(WrongStateException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -85,7 +96,9 @@ class MoveMotherNatureTest {
         final int cardValue = 1;
         card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        assertThrows(GameException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
@@ -96,18 +109,22 @@ class MoveMotherNatureTest {
         final int cardValue = 1;
         card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-        moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
-        assertFalse(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        action = new MoveMotherNature(p3.getNickname(), movement);
+        assertThrows(InvalidIndexException.class, () -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     @Test
     @DisplayName("Basic canPerform test")
-    void canPerformExt() {
+    void moveMN() {
         // Normal use case
         final int newCardValue = 5;
         card = p3.getCards().stream().filter(c -> c.getValue() == newCardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-        assertTrue(moveMotherNature.canPerformExt(game, gameManager.getRules()));
+        assertDoesNotThrow(() -> {
+            action.performMove(game, gameManager.getRules());
+        });
     }
 
     /**
@@ -118,28 +135,30 @@ class MoveMotherNatureTest {
     @DisplayName("Single island conquer")
     void singleIslandConquer() {
         // Simple action test
-        game.setProfessor(profColor, game.getRoundOwner().getNickname());
+        EnumMap<Color, String> profs = new EnumMap<Color, String>(Color.class);
+        profs.put(profColor, game.getRoundOwner().getNickname());
+        game.setProfessors(profs);
         // Now Fede controls the BLUE professor
         // Next we will be adding some students to the island we're going to go to
         int nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
         // Then, we play a valid card: 3 movement, we need to play a 5+ value card
         final int cardValue = 5;
         AssistantCard card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
-
-        moveMotherNature = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
-
+        action = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         // Checking if motherNature has in fact moved
         assertEquals(nextPosition, game.getMotherNature().getPosition());
         // Now, we check if Fede now controls the island
         int motherNaturePosition = game.getMotherNature().getPosition();
         assertEquals(game.getIslandContainer().get(motherNaturePosition).getOwner(), p3.getNickname());
-        // And then we check if the game has correctly changed state
-        assertEquals(game.getGameState(), GameState.ACTION_CHOOSE_CLOUD);
     }
 
 
@@ -157,35 +176,42 @@ class MoveMotherNatureTest {
         // Next we will be adding some students to the island we're going to go to
         int nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
         // Then, we play a valid card: 3 movement, we need to play a 5+ value card
         final int cardValue = 5;
         AssistantCard card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
         // Now we move MN
-        moveMotherNature = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
+        action = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         // Checking if motherNature has in fact moved
         assertEquals(nextPosition, game.getMotherNature().getPosition());
         // Now, we check if Fede now controls the island
         int motherNaturePosition = game.getMotherNature().getPosition();
         assertEquals(game.getIslandContainer().get(motherNaturePosition).getOwner(), p3.getNickname());
         // And then we check if the game has correctly changed state
-        assertEquals(game.getGameState(), GameState.ACTION_CHOOSE_CLOUD);
         game.setGameState(GameState.ACTION_MOVE_MOTHER);
 
         // We repeat this for the following one
         movement = 1;
         nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
         int oldIslands = game.getIslandContainer().size();
         int next = game.getIslandContainer().correctIndex(2, game.getMotherNature().getPosition());
-        game.getIslandContainer().get(next).setOwner(p3.getNickname());
-        moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
+        game.setIslandOwner(next, p3.getNickname());
+        action = new MoveMotherNature(p3.getNickname(), movement);
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         // FIXME THIS SOMETIMES FAILS? MAYBE RELATED TO THE -1 CASE? (MAYBE NOT)
         assertTrue(game.getIslandContainer().get(game.getMotherNature().getPosition()) instanceof SuperIsland);
         assertEquals(game.getIslandContainer().size(), oldIslands - 1);
@@ -206,33 +232,45 @@ class MoveMotherNatureTest {
         // Next we will be adding some students to the island we're going to go to
         int nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
         // Then, we play a valid card: 3 movement, we need to play a 5+ value card
-        final int cardValue = 5;
+        final int cardValue = 10;
         AssistantCard card = p3.getCards().stream().filter(c -> c.getValue() == cardValue).findFirst().get();
         p3.setAndRemovePlayedCard(card);
         // Now we move MN
-        moveMotherNature = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
+        action = new MoveMotherNature(game.getRoundOwner().getNickname(), movement);
+        try {
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         // Checking if motherNature has in fact moved
         assertEquals(nextPosition, game.getMotherNature().getPosition());
         // Now, we check if Fede now controls the island
         int motherNaturePosition = game.getMotherNature().getPosition();
         assertEquals(game.getIslandContainer().get(motherNaturePosition).getOwner(), p3.getNickname());
-        // And then we check if the game has correctly changed state
-        assertEquals(game.getGameState(), GameState.ACTION_CHOOSE_CLOUD);
-        game.setGameState(GameState.ACTION_MOVE_MOTHER);
 
         // We repeat this for the following one
         movement = 11;
         nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
+
         for (int i = 0; i < 5; i++) {
-            game.getIslandContainer().get(nextPosition).addStudent(profColor);
+            game.addIslandStudent(nextPosition, profColor);
         }
+
         int oldIslands = game.getIslandContainer().size();
-        moveMotherNature = new MoveMotherNature(p3.getNickname(), movement);
-        moveMotherNature.performMove(game, gameManager.getRules());
+        action = new MoveMotherNature(p3.getNickname(), movement);
+        try {
+            action = new MoveMotherNature(p3.getNickname(), 2);
+            action.performMove(game, gameManager.getRules());
+            action = new MoveMotherNature(p3.getNickname(), movement/2 - 1);
+            action.performMove(game, gameManager.getRules());
+            action = new MoveMotherNature(p3.getNickname(), movement - movement/2 - 1);
+            action.performMove(game, gameManager.getRules());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
         assertTrue(game.getIslandContainer().get(game.getMotherNature().getPosition()) instanceof SuperIsland);
         assertEquals(game.getIslandContainer().size(), oldIslands - 1);
     }

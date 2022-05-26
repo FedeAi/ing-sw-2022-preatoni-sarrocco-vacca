@@ -1,10 +1,13 @@
 package it.polimi.ingsw.Model.Islands;
 
+import it.polimi.ingsw.Constants.Color;
+
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class IslandContainer {
-    private LinkedList<Island> islands;
+public class IslandContainer implements Serializable {
+    private final LinkedList<Island> islands;
 
     public IslandContainer(LinkedList<Island> islands) {
         this.islands = islands;
@@ -24,6 +27,10 @@ public class IslandContainer {
 
     public int correctIndex(int delta, int currentPosition) {
         return (currentPosition + islands.size() + delta) % islands.size();
+    }
+
+    public void addIslandStudent(int islandIndex, Color student) {
+        islands.get(islandIndex).addStudent(student);
     }
 
     public Island prevIsland(int currIslandIndex) {
@@ -46,11 +53,18 @@ public class IslandContainer {
     }
 
     public void joinNextIsland(int currIslandIndex) {
-        if (currIslandIndex >= 0 && currIslandIndex < islands.size()) {
+        if (currIslandIndex >= 0 && currIslandIndex < islands.size() - 1) {
             Island currIsland = islands.get(currIslandIndex);
             Island nextIsland = nextIsland(currIslandIndex);
             Island superIsland = new SuperIsland(List.of(currIsland, nextIsland));
             islands.add(currIslandIndex, superIsland);
+            islands.remove(currIsland);
+            islands.remove(nextIsland);
+        } else if (currIslandIndex == islands.size() - 1) {
+            Island currIsland = islands.get(currIslandIndex);
+            Island nextIsland = nextIsland(currIslandIndex);
+            Island superIsland = new SuperIsland(List.of(currIsland, nextIsland));
+            islands.add(0, superIsland);
             islands.remove(currIsland);
             islands.remove(nextIsland);
         }
@@ -64,7 +78,23 @@ public class IslandContainer {
         return islands.size();
     }
 
+    public void setOwner(int island, String owner){
+        islands.get(island).setOwner(owner);
+    }
+
+    public void setIslandBlocked(int island, Boolean isBlocked){
+        islands.get(island).setBlocked(isBlocked);
+    }
+
+
     public Island get(int index) {
-        return islands.get(index);
+        if (islands.get(index) instanceof BaseIsland){
+            return new BaseIsland((BaseIsland)islands.get(index));
+        } else if (islands.get(index) instanceof SuperIsland) {
+            return new SuperIsland((SuperIsland) islands.get(index));
+        }
+        else{
+            throw new RuntimeException("The island is neither a BaseIsland nor a SuperIsland");
+        }
     }
 }

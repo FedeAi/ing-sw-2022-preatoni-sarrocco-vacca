@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model.Cards.CharacterCards;
 
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Bag;
-import it.polimi.ingsw.Model.Enumerations.GameState;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 
 public class MinstrelCharacter extends CharacterCard {
@@ -22,7 +22,7 @@ public class MinstrelCharacter extends CharacterCard {
     public void activate(Rules rules, Game game) {
         super.activate(rules, game);
         previousState = game.getGameState();
-        game.setGameState(GameState.MINISTREL_SWAP_STUDENTS);
+        game.setGameState(GameState.MINSTREL_SWAP_STUDENTS);
         swappedStudents = 0;
     }
 
