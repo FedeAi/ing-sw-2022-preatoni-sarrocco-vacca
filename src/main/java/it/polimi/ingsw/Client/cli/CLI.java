@@ -87,7 +87,7 @@ public class CLI implements UI {
             System.out.print(">");
             port = scanner.nextLine();
 
-        } while (Constants.validatePort(port) == -1 || Constants.validateIp(ip));
+        } while (Constants.validatePort(port) == -1 || !Constants.validateIp(ip));
 
         Constants.setAddress(ip);
         Constants.setPort(Integer.parseInt(port));

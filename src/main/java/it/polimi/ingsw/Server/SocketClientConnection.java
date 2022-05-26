@@ -10,16 +10,12 @@ import java.util.logging.Logger;
 
 import it.polimi.ingsw.Client.messages.*;
 import it.polimi.ingsw.Constants.Constants;
-import it.polimi.ingsw.Server.Answer.ErrorType;
+import it.polimi.ingsw.Server.Answer.*;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Controller.Actions.CharacterActions.*;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
-import it.polimi.ingsw.Server.Answer.CustomMessage;
-import it.polimi.ingsw.Server.Answer.GameError;
-import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
-import it.polimi.ingsw.Server.Answer.SerializedAnswer;
 
 /**
  * SocketClientConnection handles a connection between client and server, permitting sending and
@@ -280,7 +276,9 @@ public class SocketClientConnection implements ClientConnection, Runnable {
     public void ping() {
         try {
             outputStream.reset();
-            outputStream.writeObject(0);
+            SerializedAnswer answer = new SerializedAnswer();
+            answer.setServerAnswer(new PingMessage());
+            outputStream.writeObject(answer);
             outputStream.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
