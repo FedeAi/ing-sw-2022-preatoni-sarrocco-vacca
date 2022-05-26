@@ -4,6 +4,7 @@ import it.polimi.ingsw.Constants.Color;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class Island implements Serializable {
     /*
@@ -15,7 +16,7 @@ public abstract class Island implements Serializable {
     protected boolean isBlocked;
     protected String owner;
 
-    protected Island(){
+    protected Island() {
         isBlocked = false;
     }
 
@@ -50,5 +51,14 @@ public abstract class Island implements Serializable {
 
     public int size() {
         return 1;
+    }
+
+    // FIXME
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Island island = (Island) o;
+        return getStudents().entrySet().stream().allMatch(e -> Objects.equals(island.getStudents().get(e.getKey()), e.getValue()));
     }
 }

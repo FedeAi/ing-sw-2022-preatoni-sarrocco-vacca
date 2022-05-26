@@ -85,6 +85,7 @@ class HeraldChooseIslandTest {
         });
     }
 
+    /*
     @DisplayName("Herald conquer island test")
     @Test
     void heraldCard() {
@@ -140,4 +141,5 @@ class HeraldChooseIslandTest {
         }
         assertEquals(p1.getNickname(), game.getIslandContainer().get(index).getOwner());
     }
+    */
 }
