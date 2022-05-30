@@ -12,6 +12,7 @@ import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
@@ -131,7 +132,7 @@ class MoveMotherNatureTest {
      * Method singleIslandConquer test verifies that after you move motherNature to a certain island
      * and provided you have enough influence, you actually conquer the island.
      */
-    @Test
+    @RepeatedTest(300)
     @DisplayName("Single island conquer")
     void singleIslandConquer() {
         // Simple action test
@@ -167,7 +168,7 @@ class MoveMotherNatureTest {
      * then it moves MN by a single position and conquers the island next to the previously conquered one,
      * thus joining the two islands in a superIsland.
      */
-    @Test
+    @RepeatedTest(100)
     @DisplayName("Previous SuperIsland creation")
     void previousSuperIsland() {
         // Simple action test
@@ -214,7 +215,7 @@ class MoveMotherNatureTest {
         }
         // FIXME THIS SOMETIMES FAILS? MAYBE RELATED TO THE -1 CASE? (MAYBE NOT)
         assertTrue(game.getIslandContainer().get(game.getMotherNature().getPosition()) instanceof SuperIsland);
-        assertEquals(game.getIslandContainer().size(), oldIslands - 1);
+        assertEquals(game.getIslandContainer().size(), oldIslands - 2);
     }
 
     /**
@@ -223,7 +224,7 @@ class MoveMotherNatureTest {
      * before the previously conquered one, thus joining the two islands in a superIsland.
      */
 
-    @Test
+    @RepeatedTest(100)
     @DisplayName("Next SuperIsland creation")
     void nextSuperIsland() {
         // Simple action test

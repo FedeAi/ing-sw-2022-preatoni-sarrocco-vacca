@@ -54,18 +54,11 @@ public class IslandContainer implements Serializable {
     }
 
     public void joinNextIsland(int currIslandIndex) {
-        if (currIslandIndex >= 0 && currIslandIndex < islands.size() - 1) {
+        if (currIslandIndex >= 0 && currIslandIndex < islands.size()) {
             Island currIsland = islands.get(currIslandIndex);
             Island nextIsland = nextIsland(currIslandIndex);
             Island superIsland = new SuperIsland(List.of(currIsland, nextIsland));
             islands.add(currIslandIndex, superIsland);
-            islands.remove(currIsland);
-            islands.remove(nextIsland);
-        } else if (currIslandIndex == islands.size() - 1) {
-            Island currIsland = islands.get(currIslandIndex);
-            Island nextIsland = nextIsland(currIslandIndex);
-            Island superIsland = new SuperIsland(List.of(currIsland, nextIsland));
-            islands.add(0, superIsland);
             islands.remove(currIsland);
             islands.remove(nextIsland);
         }

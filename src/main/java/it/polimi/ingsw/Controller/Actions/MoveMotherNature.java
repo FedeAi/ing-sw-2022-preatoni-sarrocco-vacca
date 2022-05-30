@@ -66,11 +66,14 @@ public class MoveMotherNature extends Performable {
                 game.joinPrevIsland(newMotherPosition);
                 game.moveMotherNature(-1);
             }
+
+            // SuperIsland creation
+            newMotherPosition = game.getMotherNature().getPosition();
             Island nextIsland = islandContainer.nextIsland(newMotherPosition);
             if (Island.checkJoin(game.getIslandContainer().get(newMotherPosition), nextIsland)) {
                 game.joinNextIsland(newMotherPosition);
                 if(newMotherPosition == islandContainer.size()){
-                    game.moveMotherNature(0);
+                    game.moveMotherNature(-1);
                 }
             }
         } else {
