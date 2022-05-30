@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model.Islands;
 import it.polimi.ingsw.Constants.Color;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -96,5 +97,8 @@ public class IslandContainer implements Serializable {
         else{
             throw new RuntimeException("The island is neither a BaseIsland nor a SuperIsland");
         }
+    }
+    public List<Island> getIslands(){
+        return new ArrayList<>(islands);
     }
 }

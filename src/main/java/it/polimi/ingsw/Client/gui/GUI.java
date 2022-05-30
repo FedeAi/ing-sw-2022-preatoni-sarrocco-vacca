@@ -1,7 +1,10 @@
 package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Client.*;
+import it.polimi.ingsw.Server.Answer.Answer;
+import it.polimi.ingsw.Server.Answer.modelUpdate.ModelMessage;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -94,7 +97,7 @@ public class GUI extends Application implements UI {
 //        player.setVolume(25);
 //        player.setOnEndOfMedia(() -> {
 //            player.seek(Duration.ZERO);
-//            player.play();
+//            player.pla9y();
 //        });
     }
     
@@ -115,8 +118,19 @@ public class GUI extends Application implements UI {
         return serverMessageHandler;
     }
 
+    private void handleModelChange(){
+        Platform.runLater(() -> {
+            Answer message = modelView.getServerAnswer();
+            if(message instanceof ModelMessage){
+
+            }
+        });
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        switch (evt.getPropertyName()) {
+            case ServerMessageHandler.GENERERIC_MODEL_UPDATE_LISTENER -> handleModelChange();
+        }
     }
 }

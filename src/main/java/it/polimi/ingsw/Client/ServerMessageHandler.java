@@ -22,7 +22,8 @@ public class ServerMessageHandler {
   public static final String REQ_PLAYERS_LISTENER = "reqPlayers";
   public static final String CUSTOM_MESSAGE_LISTER = "customMessage";
   public static final String WIN_MESSAGE_LISTER = "winMessage";
-  public static final String NEXT_ROUNDOWNER_LISTENER = "RoundOwner";
+  public static final String NEXT_ROUNDOWNER_LISTENER = "roundOwner";
+  public static final String GENERERIC_MODEL_UPDATE_LISTENER = "genericModelUpdate";
   public static final String GAME_STATE_LISTENER = "stateChange";
   public static final String PLAYED_CARD_LISTENER = "playedCard";
   public static final String CONNECTED_PLAYERS_LISTENER = "connectedPlayers";
@@ -72,6 +73,7 @@ public class ServerMessageHandler {
     }
     else if(answer instanceof ModelMessage){
       handleGameMessage((ModelMessage) answer);
+      view.firePropertyChange(GENERERIC_MODEL_UPDATE_LISTENER,null, answer);
     }
     else if(answer instanceof GameError){
       view.firePropertyChange(GAME_ERROR_LISTENER,null, answer);
