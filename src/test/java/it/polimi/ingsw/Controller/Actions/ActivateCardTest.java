@@ -10,6 +10,7 @@ import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -150,7 +151,7 @@ class ActivateCardTest {
     }
 
     @DisplayName("Card activation test")
-    @Test
+    @RepeatedTest(300)
     void activateCard() {
         CharacterCard card = game.getCharacterCards().get(selection);
         for (int i = 0; i < card.getPrice() + 1; i++) {

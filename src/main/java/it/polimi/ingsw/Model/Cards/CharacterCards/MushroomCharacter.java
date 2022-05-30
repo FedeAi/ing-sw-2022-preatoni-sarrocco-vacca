@@ -28,6 +28,7 @@ public class MushroomCharacter extends CharacterCard {
     @Override
     public void deactivate(Rules rules, Game game) {
         super.deactivate(rules, game);
+        game.setGameState(previousState);
         rules.setDynamicRules(new BaseRules());
         setStudent(null);
     }
