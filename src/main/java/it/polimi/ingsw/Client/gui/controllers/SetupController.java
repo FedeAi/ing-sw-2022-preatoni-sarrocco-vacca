@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class SetupController implements GUIController {
 
@@ -119,4 +121,8 @@ public class SetupController implements GUIController {
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 }

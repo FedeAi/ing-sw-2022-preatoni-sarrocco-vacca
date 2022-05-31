@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Client.gui;
 
-public interface GUIController {
+import javafx.fxml.Initializable;
+
+public interface GUIController extends Initializable {
     void setGui(GUI gui);
 }

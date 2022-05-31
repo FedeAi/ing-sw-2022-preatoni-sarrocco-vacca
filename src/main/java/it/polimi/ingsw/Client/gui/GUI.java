@@ -43,7 +43,7 @@ public class GUI extends Application implements UI {
     private boolean activeGame;
     private Scene currentScene;
 
-    private Game tempGame;
+
 
     /**
      * Maps each scene name to the effective scene object, in order to easily find it during scene changing operations.
@@ -55,14 +55,6 @@ public class GUI extends Application implements UI {
         modelView = new ModelView(this);
         serverMessageHandler = new ServerMessageHandler(this, modelView);
         activeGame = true;
-
-        GameManager tempGM = new GameManager(new Game(), new GameHandler(new Server()));
-        tempGM.addPlayer(new Player(0,"a"));
-        tempGM.addPlayer(new Player(1,"b"));
-        tempGM.addPlayer(new Player(2,"c"));
-        tempGM.initGame();
-        tempGame = tempGM.getGame();
-
     }
     /**
      * Main class of the GUI, which is called from the Eriantys launcher in case user decides to play with it.
