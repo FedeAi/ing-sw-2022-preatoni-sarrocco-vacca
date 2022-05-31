@@ -1,8 +1,13 @@
 package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Client.*;
+import it.polimi.ingsw.Controller.GameManager;
+import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Server.Answer.Answer;
 import it.polimi.ingsw.Server.Answer.modelUpdate.ModelMessage;
+import it.polimi.ingsw.Server.GameHandler;
+import it.polimi.ingsw.Server.Server;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -17,11 +22,13 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+//--module-path /home/federico/libs/javafx-sdk-18.0.1/lib  --add-modules javafx.controls,javafx.fxml
 public class GUI extends Application implements UI {
 
     public static final String END_OF_THE_GAME = "End of the game";
     private static final String MAIN_GUI = "mainScene.fxml";
     private static final String MENU = "menu.fxml";
+    private static final String BOARD = "board.fxml";
     private static final String LOADER = "loading.fxml";
     private static final String MAGICIANS = "magiciansMenu.fxml";
     private static final String SETUP = "setup.fxml";
@@ -34,6 +41,8 @@ public class GUI extends Application implements UI {
     private boolean activeGame;
     private Scene currentScene;
 
+    private Game tempGame;
+
     /**
      * Maps each scene name to the effective scene object, in order to easily find it during scene changing operations.
      */
@@ -44,6 +53,14 @@ public class GUI extends Application implements UI {
         modelView = new ModelView(this);
         serverMessageHandler = new ServerMessageHandler(this, modelView);
         activeGame = true;
+
+        GameManager tempGM = new GameManager(new Game(), new GameHandler(new Server()));
+        tempGM.addPlayer(new Player(0,"a"));
+        tempGM.addPlayer(new Player(1,"b"));
+        tempGM.addPlayer(new Player(2,"c"));
+        tempGM.initGame();
+        tempGame = tempGM.getGame();
+
     }
     /**
      * Main class of the GUI, which is called from the Eriantys launcher in case user decides to play with it.
@@ -51,6 +68,7 @@ public class GUI extends Application implements UI {
      * @param args of type String[] - parsed arguments.
      */
     public static void main(String[] args) {
+        System.setProperty("prism.allowhidpi", "false");
         launch(args);
     }
 
@@ -58,6 +76,7 @@ public class GUI extends Application implements UI {
     public void start(Stage stage) throws IOException {
         setup();
         this.stage = stage;
+        stage.setMaximized(true);
         //CHOOSE FONT
         //    Font.loadFont(getClass().getResourceAsStream("/fonts/DalekPinpointBold.ttf"), 14);
         //    Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 12);
@@ -67,7 +86,7 @@ public class GUI extends Application implements UI {
 
     // NOT NEEDED AS OF NOW
     public void setup() throws IOException {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, SETUP));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, SETUP, BOARD));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -79,7 +98,7 @@ public class GUI extends Application implements UI {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(MENU);
+        currentScene = nameMapScene.get(BOARD);
     }
     public void run() {
         stage.setTitle("Eriantys");
