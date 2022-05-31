@@ -8,6 +8,7 @@ import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
 import it.polimi.ingsw.Model.Islands.Island;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -34,6 +35,10 @@ public class BoardController implements GUIController {
             Pair<Integer, Integer> position = computeIslandPosition(i);
             grid.add(buildIsland(islands.get(i)), position.getKey(), position.getValue());
         }
+    }
+
+    private Node buildIsland(Island island) {
+        return null;
     }
 
     //TODO BUILD ISLAND
