@@ -1,6 +1,6 @@
 .mainBoard {
     /*-fx-background-image: url("../graphics/background.jpg");*/
-    -fx-background-color: rgba(0,0,0,0.1);
+    -fx-background-color: rgba(98, 177, 213, 0.8);
     -fx-background-size: stretch;
     /*-fx-opacity: 0.6;*/
 }
