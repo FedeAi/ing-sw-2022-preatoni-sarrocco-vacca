@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -9,29 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane id="mainBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainBoard" stylesheets="@../css/board.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <GridPane prefHeight="273.0" prefWidth="392.0" stylesheets="@../css/board.css" BorderPane.alignment="CENTER">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Pane style="-fx-background-image: ../graphics/board/island1.png; -fx-background-size: stretch;" GridPane.columnIndex="1" />
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-image: ../graphics/board/island1.png;" />
-         </children>
-      </GridPane>
-   </center>
+<BorderPane id="mainBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="mainBoard" stylesheets="@../css/board.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <AnchorPane prefHeight="268.0" prefWidth="208.0" BorderPane.alignment="CENTER">
          <children>
@@ -44,4 +25,91 @@
          </children>
       </AnchorPane>
    </left>
+   <right>
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1080.0" stylesheets="@../css/board.css" BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fitHeight="216.0" fitWidth="216.0" translateX="100.0" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../graphics/board/island1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../graphics/board/island2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../graphics/board/island1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" GridPane.columnIndex="3">
+               <image>
+                  <Image url="@../graphics/board/island2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" translateX="-100.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../graphics/board/island3.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" translateX="100.0" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../graphics/board/island2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../graphics/board/island2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../graphics/board/island1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../graphics/board/island3.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" translateX="-100.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../graphics/board/island2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="216.0" fitWidth="216.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../graphics/board/island1.png" />
+               </image>
+            </ImageView>
+            <Pane scaleX="1.5" scaleY="1.5" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fitHeight="216.0" fitWidth="216.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/board/island1.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="CROSSHAIR" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+   </right>
 </BorderPane>
