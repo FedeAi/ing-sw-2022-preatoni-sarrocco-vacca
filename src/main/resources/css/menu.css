@@ -1,4 +1,10 @@
 .mainMenu {
     -fx-background-image: url("../graphics/background.jpg");
-    -fx-background-size: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+
+}
+.logo{
+    -fx-border-style: solid;
+    -fx-border-color: #7ad0a2;
 }
