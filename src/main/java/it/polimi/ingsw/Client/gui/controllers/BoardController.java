@@ -1,17 +1,14 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
-import it.polimi.ingsw.Client.ConnectionSocket;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Client.gui.GUIController;
 import it.polimi.ingsw.Constants.Color;
-import it.polimi.ingsw.Constants.Constants;
-import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
-import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
 import it.polimi.ingsw.Constants.TowerColor;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
 import javafx.fxml.FXML;
@@ -21,12 +18,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.util.Pair;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -41,18 +35,22 @@ public class BoardController implements GUIController {
     @FXML
     Pane island0, island1, island2,island3, island4, island5,island6,island7,island8,island9,island10, island11;
 
+    @FXML
+    Pane entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9;
+
     private Image motherImg;
     private final ArrayList<Image> islandImgs = new ArrayList<>();
     private final HashMap<Color, Image> studentImgs = new HashMap<>();
     private final HashMap<Color, Image> profsImgs = new HashMap<>();
     private final HashMap<TowerColor, Image> towerImgs = new HashMap<>();
-    private final ArrayList<Pane> islandPanes = new ArrayList<>();  //   = new ArrayList<>(List.of(island0, island1, island2,island3,island4,island5,island6,island7,island8,island9,island10, island11));
-
+    private final ArrayList<Pane> islandPanes = new ArrayList<>();
+    private final ArrayList<Pane> studentEntryPanes = new ArrayList<>();
     private Game tempGame;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         islandPanes.addAll(List.of(island0, island1, island2,island3,island4,island5,island6,island7,island8,island9,island10, island11));
+        studentEntryPanes.addAll(List.of(entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9));
 
         loadAssets();
 
@@ -63,7 +61,8 @@ public class BoardController implements GUIController {
         tempGM.initGame();
         tempGame = tempGM.getGame();
 
-        showContainer();
+        showIslands();
+        buildSchool(tempGame.getPlayers().get(0).getSchool());
     }
 
     private void loadAssets(){
@@ -87,7 +86,7 @@ public class BoardController implements GUIController {
         this.gui = gui;
     }
 
-    public void showContainer(){
+    public void showIslands(){
 //        List<Island> islands = gui.getModelView().getIslandContainer().getIslands();
         List<Island> islands = tempGame.getIslandContainer().getIslands();
 
@@ -191,6 +190,24 @@ public class BoardController implements GUIController {
 //        pane.getChildren().add(tower);
 
         return pane;
+    }
+
+    public void buildSchool(School school){
+        // entry students
+        List<Color> entryStuds = school.getStudentsEntryList();
+        assert  entryStuds.size() <= studentEntryPanes.size();
+        for(int i = 0; i < studentEntryPanes.size(); i++){
+            studentEntryPanes.get(i).getChildren().clear(); // first remove previous items
+            if(i < entryStuds.size()){
+                ImageView student = new ImageView(studentImgs.get(entryStuds.get(i)));
+                student.fitWidthProperty().bind(studentEntryPanes.get(i).widthProperty());
+                student.fitHeightProperty().bind(studentEntryPanes.get(i).heightProperty());
+                student.setSmooth(true);
+                student.setCache(true);
+
+                studentEntryPanes.get(i).getChildren().add(student);
+            }
+        }
     }
 
 

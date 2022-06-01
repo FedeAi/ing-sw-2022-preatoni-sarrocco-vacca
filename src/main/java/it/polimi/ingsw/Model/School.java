@@ -5,8 +5,7 @@ import it.polimi.ingsw.Constants.TowerColor;
 
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.*;
 
 public class School implements Serializable {
     private int numTowers;
@@ -50,6 +49,14 @@ public class School implements Serializable {
         return new EnumMap<Color, Integer>(studentsEntry);
     }
 
+    public List<Color> getStudentsEntryList(){
+        ArrayList<Color> out = new ArrayList<>();
+        for(Map.Entry<Color,Integer> entry : studentsEntry.entrySet()){
+            out.addAll(Collections.nCopies(entry.getValue(), entry.getKey()));
+        }
+        return out;
+    }
+
     /**
      * It computes how many students there are in the Entry
      *
@@ -73,6 +80,14 @@ public class School implements Serializable {
 
     public Map<Color, Integer> getStudentsHall() {
         return new EnumMap<Color, Integer>(studentsHall);
+    }
+
+    public List<Color> getStudentsHallList(){
+        ArrayList<Color> out = new ArrayList<>();
+        for(Map.Entry<Color,Integer> entry : studentsHall.entrySet()){
+            out.addAll(Collections.nCopies(entry.getValue(), entry.getKey()));
+        }
+        return out;
     }
 
     public void addStudentHall(Color color) {
