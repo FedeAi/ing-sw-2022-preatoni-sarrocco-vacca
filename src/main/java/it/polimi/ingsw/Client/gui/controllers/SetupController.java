@@ -6,6 +6,7 @@ import it.polimi.ingsw.Client.gui.GUIController;
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
+import it.polimi.ingsw.Constants.TowerColor;
 import javafx.fxml.FXML;
 
 import java.awt.*;
@@ -13,17 +14,22 @@ import java.awt.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class SetupController implements GUIController {
 
     GUI gui;
+    private final HashMap<Color, String> magiciansImg = new HashMap<>();
     private boolean muted;
+    private String magicians = "magicians.fxml";
 
     @FXML
     private TextField username;
@@ -99,6 +105,7 @@ public class SetupController implements GUIController {
                 error.setText("Server ERROR: Invalid character nickname");
             }
         }
+        gui.changeScene(magicians);
 
     }
     @FXML
@@ -114,9 +121,9 @@ public class SetupController implements GUIController {
         gui.changeScene("setup.fxml");
     }
 
-//    public void about() throws URISyntaxException, IOException {
-//        Desktop.getDesktop().browse(new URI("https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca"));
-//    }
+    public void about() throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca"));
+   }
 
     /**
      * Method quit kills the application when the "Quit" button is pressed.

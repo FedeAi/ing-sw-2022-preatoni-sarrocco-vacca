@@ -33,7 +33,6 @@ public class GUI extends Application implements UI {
     private static final String MENU = "menu.fxml";
     private static final String BOARD = "board.fxml";
     private static final String LOADER = "loading.fxml";
-    private static final String MAGICIANS = "magiciansMenu.fxml";
     private static final String SETUP = "setup.fxml";
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final ModelView modelView;
@@ -73,10 +72,7 @@ public class GUI extends Application implements UI {
         this.stage = stage;
         stage.setMaximized(true);
         //CHOOSE FONT
-        Font.loadFont(getClass().getResourceAsStream("/font/Ghoust Outline.otf"), 14);
-        //    Font.loadFont(getClass().getResourceAsStream("/fonts/DalekPinpointBold.ttf"), 14);
-        //    Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 12);
-        //    Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Medium.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/font/GhoustOutline.otf"), 16);
         run();
     }
 
@@ -94,7 +90,7 @@ public class GUI extends Application implements UI {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(BOARD);
+        currentScene = nameMapScene.get(MENU);
     }
     public void run() {
         stage.setTitle("Eriantys");

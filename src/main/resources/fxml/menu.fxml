@@ -12,25 +12,38 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainMenu" prefHeight="590.0" prefWidth="1050.0" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
+<AnchorPane id="mainMenu" onMouseClicked="#about" prefHeight="590.0" prefWidth="1050.0" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
    <children>
-      <ImageView fitHeight="307.0" fitWidth="649.0" layoutX="190.0" layoutY="129.0" preserveRatio="true">
+      <ImageView fitHeight="66.0" fitWidth="167.0" layoutX="447.0" layoutY="391.0" pickOnBounds="true">
+         <image>
+            <Image url="@../graphics/perg2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="61.0" fitWidth="165.0" layoutX="447.0" layoutY="323.0" pickOnBounds="true">
+         <image>
+            <Image url="@../graphics/perg2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="224.0" fitWidth="597.0" layoutX="275.0" layoutY="130.0" preserveRatio="true">
          <image>
             <Image url="@../graphics/eriantys_logo.png" />
          </image>
       </ImageView>
-       <Button id="botton" alignment="CENTER" layoutX="447.0" layoutY="329.0" onAction="#play" prefHeight="35.0" prefWidth="155.0" text="PLAY" textAlignment="CENTER">
+       <Button id="botton" alignment="CENTER" layoutX="430.0" layoutY="318.0" onAction="#play" prefHeight="72.0" prefWidth="195.0" text="PLAY" textAlignment="CENTER">
          <font>
-            <Font name="Arial" size="13.0" />
+            <Font name="Arial" size="24.0" />
          </font>
       </Button>
-      <Button id="button" alignment="CENTER" layoutX="482.0" layoutY="383.0" onAction="#quit" prefHeight="26.0" prefWidth="85.0" text="EXIT" />
-      <ImageView fitHeight="200.0" fitWidth="141.0" layoutX="14.0" layoutY="371.0">
+      <Button id="button" alignment="CENTER" layoutX="486.0" layoutY="393.0" onAction="#quit" prefHeight="26.0" prefWidth="85.0" text="EXIT">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+      <ImageView fitHeight="178.0" fitWidth="123.0" layoutX="914.0" layoutY="420.0">
          <image>
             <Image url="@../graphics/Cranio_logo.png" />
          </image>
       </ImageView>
-      <Label id="nomi" alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="551.0" prefHeight="42.0" prefWidth="657.0" styleClass="nomi" text="Davide Preatoni, Federico Sarrocco, Alessandro Vacca" textAlignment="CENTER">
+      <Label id="nomi" alignment="CENTER" contentDisplay="CENTER" layoutX="-119.0" layoutY="568.0" onMouseClicked="#about" prefHeight="28.0" prefWidth="601.0" styleClass="nomi" text="Davide Preatoni, Federico Sarrocco, Alessandro Vacca" textAlignment="CENTER">
          <font>
             <Font size="1.0" />
          </font>

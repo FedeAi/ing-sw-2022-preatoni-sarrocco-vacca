@@ -1,6 +1,8 @@
 .testo{
-
     -fx-font-size: 20 px;
     -fx-font-weight: 900;
     -fx-font-family: Papyrus;
+}
+.sfondo{
+    -fx-background-image: url("../graphics/background.jpg");
 }
