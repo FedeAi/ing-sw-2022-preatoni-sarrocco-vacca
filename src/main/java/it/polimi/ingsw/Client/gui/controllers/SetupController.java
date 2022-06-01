@@ -101,7 +101,14 @@ public class SetupController implements GUIController {
         }
 
     }
+    @FXML
+    public void clean(){
+        String clean = "";
+        username.setText(clean);
+        ip.setText(clean);
+        port.setText(clean);
 
+    }
     @FXML
     public void play() {
         gui.changeScene("setup.fxml");

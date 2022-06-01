@@ -12,6 +12,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -72,6 +73,7 @@ public class GUI extends Application implements UI {
         this.stage = stage;
         stage.setMaximized(true);
         //CHOOSE FONT
+        Font.loadFont(getClass().getResourceAsStream("/font/Ghoust Outline.otf"), 14);
         //    Font.loadFont(getClass().getResourceAsStream("/fonts/DalekPinpointBold.ttf"), 14);
         //    Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 12);
         //    Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Medium.ttf"), 12);
