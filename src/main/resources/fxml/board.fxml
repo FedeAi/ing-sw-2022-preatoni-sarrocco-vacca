@@ -10,24 +10,16 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 
 <BorderPane id="mainBoard" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1440.0" styleClass="mainBoard" stylesheets="@../css/board.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.BoardController">
    <left>
       <AnchorPane prefHeight="800.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox layoutX="34.0" layoutY="-28.0" prefHeight="400.0" prefWidth="208.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ImageView fitHeight="256.0" fitWidth="640.0" preserveRatio="true">
-                     <image>
-                        <Image url="@../graphics/board/school_compressed.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets left="30.0" top="30.0" />
-                     </VBox.margin>
-                  </ImageView>
-               </children>
-            </VBox>
+            <ImageView fitHeight="800.0" fitWidth="385.0" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/board/school_compressed.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </left>
