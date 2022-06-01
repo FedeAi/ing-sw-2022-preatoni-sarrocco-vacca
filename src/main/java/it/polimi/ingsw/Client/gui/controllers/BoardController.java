@@ -104,22 +104,33 @@ public class BoardController implements GUIController {
     }
 
     private Node buildIsland(Island island, int index) {
-        Pane pane = new Pane();
-        ImageView iv = new ImageView();
-        iv.setImage(islandImgs.get(index%islandImgs.size()));
-        iv.fitWidthProperty().bind(islandPanes.get(index).widthProperty());
-        iv.fitHeightProperty().bind(islandPanes.get(index).heightProperty());
+        ImageView mother;
 
-        pane.getChildren().add(iv);
+        StackPane pane = new StackPane();
+//        pane.setPrefWidth(200);
+//        pane.setPrefHeight(200);
+        pane.setAlignment(Pos.CENTER);
+
+        // island background
+        ImageView background = new ImageView();
+        background.setImage(islandImgs.get(index%islandImgs.size()));
+        background.fitWidthProperty().bind(islandPanes.get(index).widthProperty());
+        background.fitHeightProperty().bind(islandPanes.get(index).heightProperty());
+        background.setSmooth(true);
+        background.setCache(true);
+
+
+        HBox hContainer = new HBox();
+        hContainer.setAlignment( Pos.CENTER );
 
         // build students
         VBox students = new VBox();
-        students.setLayoutX(45);    // todo is there a better option?
-        students.setLayoutY(30);
-        students.setAlignment(Pos.BASELINE_RIGHT);
+        students.setAlignment( Pos.CENTER );
+
         for(Map.Entry<Color,Image> entry : studentImgs.entrySet()){
             if(island.getStudents().getOrDefault(entry.getKey(), 0) != 0 || true) {
                 HBox hBox = new HBox();
+                hBox.setAlignment( Pos.CENTER );
                 // student image
                 ImageView studImg = new ImageView(entry.getValue());
                 studImg.setFitWidth(15);
@@ -139,8 +150,6 @@ public class BoardController implements GUIController {
         // tower
         HBox tower = new HBox();
         tower.setAlignment(Pos.CENTER);
-        tower.setLayoutX(75);    // todo is there a better option?
-        tower.setLayoutY(70);
 
         ImageView towerImg = new ImageView(towerImgs.get(TowerColor.BLACK));
         towerImg.setFitWidth(30);
@@ -154,8 +163,8 @@ public class BoardController implements GUIController {
 
 
         if(index == 5){
-            iv.setScaleX(1.5);
-            iv.setScaleY(1.5);
+            background.setScaleX(1.5);
+            background.setScaleY(1.5);
         }
         if(index == 6){
             return null;
@@ -163,23 +172,23 @@ public class BoardController implements GUIController {
 
         // mother nature
         if(index == 8 || true){
-            ImageView mother = new ImageView(motherImg);
+            mother = new ImageView(motherImg);
             mother.setFitWidth(45);
             mother.setPreserveRatio(true);
-            mother.setLayoutX(70);    // todo is there a better option?
-            mother.setLayoutY(25);
-            pane.getChildren().add(mother);
         }
 
+        VBox secondColumn = new VBox();
+        secondColumn.setAlignment( Pos.CENTER );
+        secondColumn.getChildren().add(tower);
+        secondColumn.getChildren().add(mother);
 
-//        iv.setFitWidth(216);
-//        iv.setFitHeight(216);
-        iv.setSmooth(true);
-        iv.setCache(true);
+        hContainer.getChildren().add(students);
+        hContainer.getChildren().add(secondColumn);
 
-
-        pane.getChildren().add(students);
-        pane.getChildren().add(tower);
+        // add elements to the pane
+        pane.getChildren().add(background);
+        pane.getChildren().add(hContainer);
+//        pane.getChildren().add(tower);
 
         return pane;
     }
