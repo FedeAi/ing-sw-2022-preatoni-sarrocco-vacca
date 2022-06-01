@@ -1,8 +1,11 @@
 .testo{
     -fx-font-size: 20 px;
-    -fx-font-weight: 900;
+    -fx-font-weight: bold;
     -fx-font-family: Papyrus;
 }
-.sfondo{
-    -fx-background-image: url("../graphics/background.jpg");
+#pane{
+    -fx-background-image: url("../graphics/sfondoSetup.png");
+    -fx-background-position: center;
+    -fx-opacity: 60%;
 }
+

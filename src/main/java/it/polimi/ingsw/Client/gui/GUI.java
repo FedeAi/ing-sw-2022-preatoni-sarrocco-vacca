@@ -90,7 +90,7 @@ public class GUI extends Application implements UI {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(MENU);
+        currentScene = nameMapScene.get(SETUP);
     }
     public void run() {
         stage.setTitle("Eriantys");
