@@ -29,7 +29,7 @@ public class SetupController implements GUIController {
     GUI gui;
     private final HashMap<Color, String> magiciansImg = new HashMap<>();
     private boolean muted;
-    private String magicians = "magicians.fxml";
+    private String magicians = "magiciansMenu.fxml";
 
     @FXML
     private TextField username;
@@ -104,7 +104,7 @@ public class SetupController implements GUIController {
             } catch (InvalidNicknameException e) {
                 error.setText("Server ERROR: Invalid character nickname");
             }
-        }
+        }s
         gui.changeScene(magicians);
 
     }

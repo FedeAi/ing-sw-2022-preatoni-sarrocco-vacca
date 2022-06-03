@@ -29,7 +29,7 @@
             <Image url="@../graphics/eriantys_logo.png" />
          </image>
       </ImageView>
-       <Button id="botton" alignment="CENTER" layoutX="430.0" layoutY="318.0" onAction="#play" prefHeight="72.0" prefWidth="195.0" text="PLAY" textAlignment="CENTER">
+       <Button id="botton" alignment="CENTER" layoutX="430.0" layoutY="318.0" onAction="#play" prefHeight="72.0" prefWidth="195.0" stylesheets="@../css/menu.css" text="PLAY" textAlignment="CENTER">
          <font>
             <Font name="Arial" size="24.0" />
          </font>

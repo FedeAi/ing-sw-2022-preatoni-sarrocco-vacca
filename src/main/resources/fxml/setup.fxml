@@ -8,26 +8,26 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/setup.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
+<Pane id="pane" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="pane" stylesheets="@../css/setup.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
    <children>
-      <ImageView fitHeight="51.0" fitWidth="159.0" layoutX="220.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="42.0" fitWidth="153.0" layoutX="227.0" layoutY="252.0" pickOnBounds="true">
          <image>
             <Image url="@../graphics/perg2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="51.0" fitWidth="159.0" layoutX="221.0" layoutY="255.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="42.0" fitWidth="153.0" layoutX="229.0" layoutY="309.0" pickOnBounds="true">
          <image>
             <Image url="@../graphics/perg2.png" />
          </image>
       </ImageView>
-      <Button fx:id="submit" layoutX="234.0" layoutY="246.0" mnemonicParsing="false" onAction="#join" prefHeight="26.0" prefWidth="132.0" styleClass="testo" stylesheets="@../css/menu.css" text="Connection" />
+      <Button fx:id="submit" layoutX="233.0" layoutY="241.0" mnemonicParsing="false" onAction="#join" prefHeight="39.0" prefWidth="132.0" styleClass="testo" stylesheets="@../css/menu.css" text="Connect" />
       <Label id="testo" layoutX="60.0" layoutY="87.0" prefHeight="38.0" prefWidth="94.0" styleClass="testo" stylesheets="@../css/setup.css" text="Username:" textAlignment="JUSTIFY" />
       <Label id="testo" layoutX="60.0" layoutY="131.0" prefHeight="17.0" prefWidth="121.0" styleClass="testo" stylesheets="@../css/setup.css" text="IP address:" />
       <Label id="testo" layoutX="60.0" layoutY="175.0" prefHeight="17.0" prefWidth="67.0" styleClass="testo" stylesheets="@../css/setup.css" text="Port:" />
       <TextField fx:id="username" layoutX="227.0" layoutY="93.0" />
       <TextField fx:id="ip" layoutX="227.0" layoutY="137.0" />
       <TextField fx:id="port" layoutX="227.0" layoutY="181.0" />
-      <Button id="buttom" fx:id="clean" layoutX="233.0" layoutY="296.0" mnemonicParsing="false" onAction="#clean" prefHeight="51.0" prefWidth="132.0" styleClass="testo" text="Clean">
+      <Button id="button" fx:id="clean" layoutX="240.0" layoutY="299.0" mnemonicParsing="false" onAction="#clean" prefHeight="52.0" prefWidth="118.0" styleClass="testo" text="Clean">
          <stylesheets>
             <URL value="@../css/setup.css" />
             <URL value="@../css/menu.css" />
