@@ -1,1 +1,16 @@
- 
+#background{
+  /*  -fx-background-image: url("../graphics/sfondoMagicians.png");*/
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+.image{
+    -fx-max-height: auto;
+    -fx-min-height: auto;
+    -fx-border-color: red;
+   /* -fx-border-width: 200px;*/
+}
+.title{
+    -fx-font-size: 30 px;
+    -fx-font-family: Papyrus;
+}

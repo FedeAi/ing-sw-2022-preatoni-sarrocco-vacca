@@ -104,7 +104,7 @@ public class SetupController implements GUIController {
             } catch (InvalidNicknameException e) {
                 error.setText("Server ERROR: Invalid character nickname");
             }
-        }s
+        }
         gui.changeScene(magicians);
 
     }

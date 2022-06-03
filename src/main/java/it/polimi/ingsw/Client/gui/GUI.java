@@ -70,7 +70,6 @@ public class GUI extends Application implements UI {
     public void start(Stage stage) throws IOException {
         setup();
         this.stage = stage;
-        stage.setMaximized(true);
         //CHOOSE FONT
         Font.loadFont(getClass().getResourceAsStream("/font/GhoustOutline.otf"), 16);
         run();
@@ -90,7 +89,7 @@ public class GUI extends Application implements UI {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(SETUP);
+        currentScene = nameMapScene.get(MENU);
     }
     public void run() {
         stage.setTitle("Eriantys");

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../css/magicians.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView id="image" fitHeight="150.0" fitWidth="200.0" layoutX="32.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
+         <image>
+            <Image url="@../graphics/magicians/MAGO1.jpg" />
+         </image>
+      </ImageView>
+      <ImageView id="image" fitHeight="150.0" fitWidth="200.0" layoutX="167.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
+         <image>
+            <Image url="@../graphics/magicians/MAGO2.jpg" />
+         </image>
+      </ImageView>
+      <ImageView id="image" fitHeight="150.0" fitWidth="200.0" layoutX="313.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
+         <image>
+            <Image url="@../graphics/magicians/MAGO3.jpg" />
+         </image>
+      </ImageView>
+      <ImageView id="image" fitHeight="150.0" fitWidth="200.0" layoutX="445.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
+         <image>
+            <Image url="@../graphics/magicians/MAGO4.jpg" />
+         </image>
+      </ImageView>
+      <Label id="title" layoutX="195.0" layoutY="43.0" prefHeight="56.0" prefWidth="229.0" styleClass="title" stylesheets="@../css/magicians.css" text="Choose your magician">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

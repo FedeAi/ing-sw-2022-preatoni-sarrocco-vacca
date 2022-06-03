@@ -9,15 +9,16 @@
     -fx-border-color: #7ad0a2;
 }
 .nomi{
+
     -fx-font-size: 20 px;
     -fx-font-weight: 900;
     -fx-font-family: Papyrus;
 
-
 }
 .button{
+
+    -fx-font-size: 24 px;
     -fx-background-color: trasparent;
     -fx-font-family: Papyrus;
-
 
 }
