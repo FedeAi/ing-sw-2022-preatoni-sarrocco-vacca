@@ -81,6 +81,11 @@
                   <Pane fx:id="hallB9" layoutX="269.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
                   <Pane fx:id="hallB10" layoutX="269.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
                   <Pane fx:id="hallB6" layoutX="269.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
+                  <Pane fx:id="playerProf1" layoutX="39.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                  <Pane fx:id="playerProf2" layoutX="94.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                  <Pane fx:id="playerProf3" layoutX="151.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                  <Pane fx:id="playerProf4" layoutX="210.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                  <Pane fx:id="playerProf5" layoutX="266.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
                </children>
             </Pane>
             <Pane fx:id="otherPlayer1Pane" layoutX="383.0" layoutY="28.0" prefHeight="48.0" prefWidth="140.0" />

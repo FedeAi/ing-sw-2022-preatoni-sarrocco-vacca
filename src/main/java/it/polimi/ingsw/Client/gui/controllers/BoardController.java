@@ -11,7 +11,6 @@ import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,7 +19,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -28,7 +26,6 @@ import javafx.scene.text.Font;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BoardController implements GUIController {
 
@@ -52,6 +49,10 @@ public class BoardController implements GUIController {
     hallP1, hallP2, hallP3, hallP4, hallP5, hallP6, hallP7, hallP8, hallP9, hallP10,
     hallB1, hallB2, hallB3, hallB4, hallB5, hallB6, hallB7, hallB8, hallB9, hallB10;
 
+    // player profs
+    @FXML
+    Pane playerProf1, playerProf2, playerProf3, playerProf4, playerProf5;
+
     // swap school buttons
     @FXML
     Pane otherPlayer1Pane, otherPlayer2Pane;
@@ -64,7 +65,8 @@ public class BoardController implements GUIController {
     private final ArrayList<Pane> islandPanes = new ArrayList<>();
     private final ArrayList<Pane> studentEntryPanes = new ArrayList<>();
     private final EnumMap<Color, List<Pane>> colorToHallStudents = new EnumMap<Color, List<Pane>>(Color.class);
-    private final List<Pane> playerPanes = new ArrayList<>(); // list of buttons to change school
+    private final EnumMap<Color, Pane> colorToPlayerProfs = new EnumMap<Color, Pane>(Color.class);
+    private final List<Pane> switchPlayerPanes = new ArrayList<>(); // list of buttons to change school
     private Game tempGame;
 
     @Override
@@ -78,7 +80,14 @@ public class BoardController implements GUIController {
         colorToHallStudents.put(Color.PINK, List.of(hallP1, hallP2, hallP3, hallP4, hallP5, hallP6, hallP7, hallP8, hallP9, hallP10));
         colorToHallStudents.put(Color.BLUE, List.of(hallB1, hallB2, hallB3, hallB4, hallB5, hallB6, hallB7, hallB8, hallB9, hallB10));
 
-        playerPanes.addAll(List.of(otherPlayer1Pane, otherPlayer2Pane));
+        colorToPlayerProfs.put(Color.GREEN, playerProf1);
+        colorToPlayerProfs.put(Color.RED, playerProf2);
+        colorToPlayerProfs.put(Color.YELLOW, playerProf3);
+        colorToPlayerProfs.put(Color.PINK, playerProf4);
+        colorToPlayerProfs.put(Color.BLUE, playerProf5);
+
+
+        switchPlayerPanes.addAll(List.of(otherPlayer1Pane, otherPlayer2Pane));
 
         loadAssets();
 
@@ -92,11 +101,22 @@ public class BoardController implements GUIController {
         for(int i = 0; i< 10; i++){
             tempGame.getPlayers().get(0).getSchool().addStudentHall(Color.randomColor());
         }
+        // set some profs just to test
+        EnumMap<Color, String> profs = new EnumMap<>(Color.class);
+        profs.put(Color.RED, tempGame.getPlayers().get(0).getNickname());
+        profs.put(Color.BLUE, tempGame.getPlayers().get(0).getNickname());
+        profs.put(Color.YELLOW, tempGame.getPlayers().get(1).getNickname());
+        tempGame.setProfessors(profs);
+
 
 
         showChangeSchoolButtons();
         showIslands();
-        buildSchool(tempGame.getPlayers().get(0).getSchool());
+        Player player = tempGame.getPlayers().get(0);
+        buildSchool(player.getSchool(),
+                getProfsFromNickname(tempGame.getProfessors(), player.getNickname())
+                 // temp function ( to be replaced when modelView is in use
+        );
     }
 
     private void loadAssets(){
@@ -146,10 +166,10 @@ public class BoardController implements GUIController {
                             return btn;
                         }
                 ).toList();
-        assert buttons.size() <= playerPanes.size();
+        assert buttons.size() <= switchPlayerPanes.size();
         for(int i = 0; i< buttons.size(); i ++){
-            playerPanes.get(i).getChildren().clear();
-            playerPanes.get(i).getChildren().add(buttons.get(i));
+            switchPlayerPanes.get(i).getChildren().clear();
+            switchPlayerPanes.get(i).getChildren().add(buttons.get(i));
 
         }
     }
@@ -244,7 +264,7 @@ public class BoardController implements GUIController {
         return pane;
     }
 
-    public void buildSchool(School school){
+    public void buildSchool(School school, List<Color> profs){
         // entry students
         List<Color> entryStuds = school.getStudentsEntryList();
         assert  entryStuds.size() <= studentEntryPanes.size();
@@ -286,8 +306,25 @@ public class BoardController implements GUIController {
 
             }
         }
+
+        // PROFESSORS
+        // first remove all students in the lane
+        colorToPlayerProfs.forEach((key, value) -> value.getChildren().clear());
+
+        for( Color p : profs){
+            ImageView prof = new ImageView(profsImgs.get(p));
+            prof.fitWidthProperty().bind(colorToPlayerProfs.get(p).widthProperty());
+            prof.fitHeightProperty().bind(colorToPlayerProfs.get(p).heightProperty());
+            prof.setSmooth(true);
+            prof.setCache(true);
+            colorToPlayerProfs.get(p).getChildren().add(prof);
+        }
+
     }
 
+    private List<Color> getProfsFromNickname(EnumMap<Color, String> profs, String player){
+        return profs.entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), player)).map(Map.Entry::getKey).toList();
+    }
     // CONTROLLER METHODS ( methods called directly from the fxml )
 
     public void changeSchool(MouseEvent event){
@@ -297,12 +334,12 @@ public class BoardController implements GUIController {
         if(event.getEventType() == MouseEvent.MOUSE_EXITED){
             // restore player school
             School school = tempGame.getPlayers().get(0).getSchool();
-            buildSchool(school);
+            buildSchool(school, getProfsFromNickname(tempGame.getProfessors(), tempGame.getPlayers().get(0).getNickname()));
         }
         else{
             // show other players school
             School school = tempGame.getPlayerByNickname(id).get().getSchool();
-            buildSchool(school);
+            buildSchool(school,  getProfsFromNickname(tempGame.getProfessors(), id));
         }
     }
     /**
