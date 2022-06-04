@@ -12,10 +12,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class MenuController implements GUIController {
 
+    private static final String QUIT = "quit.fxml";
+    private  static final String SETUP = "setup.fxml";
     GUI gui;
+
     @FXML
     private Button button;
     @FXML
@@ -23,7 +27,7 @@ public class MenuController implements GUIController {
 
     @FXML
     public void play() {
-        gui.changeScene("setup.fxml");
+        gui.changeScene(SETUP);
     }
     public void about() throws URISyntaxException, IOException {
         Desktop.getDesktop().browse(new URI("https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca"));
@@ -32,9 +36,9 @@ public class MenuController implements GUIController {
      * Method quit kills the application when the "Quit" button is pressed.
      */
     @FXML
-    public void quit() {
-        gui.changeScene("quit.fxml");
-        System.exit(0);
+    public void quit() throws InterruptedException {
+        gui.changeScene(QUIT);
+        TimeUnit.SECONDS.sleep(5);
     }
 
 

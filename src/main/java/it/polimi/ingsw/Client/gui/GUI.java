@@ -96,8 +96,6 @@ public class GUI extends Application implements UI{
     public void run() {
         stage.setTitle("Eriantys");
         stage.setScene(currentScene);
-//        stage.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/..")));
-
         stage.show();
 //        ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
 //        currentScene.widthProperty().addListener(resize.getWidthListener());
