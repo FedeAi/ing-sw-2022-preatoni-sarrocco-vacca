@@ -7,14 +7,18 @@ import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
 import it.polimi.ingsw.Constants.TowerColor;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import java.awt.*;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URI;
@@ -24,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class SetupController implements GUIController {
+public class SetupController implements GUIController{
 
     GUI gui;
     private final HashMap<Color, String> magiciansImg = new HashMap<>();
@@ -39,6 +43,7 @@ public class SetupController implements GUIController {
     private TextField port;
     @FXML
     private Label error;
+
     //@FXML private ImageView music; TODO
 
     @Override
@@ -116,27 +121,10 @@ public class SetupController implements GUIController {
         port.setText(clean);
 
     }
-    @FXML
-    public void play() {
-        gui.changeScene("setup.fxml");
-    }
-
-    public void about() throws URISyntaxException, IOException {
-        Desktop.getDesktop().browse(new URI("https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca"));
-   }
-
-    /**
-     * Method quit kills the application when the "Quit" button is pressed.
-     */
-    @FXML
-    public void quit() {
-        System.out.println("Thanks for playing! See you next time!");
-        System.exit(0);
-    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
+
 }

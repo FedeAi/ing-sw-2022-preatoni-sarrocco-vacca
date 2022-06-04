@@ -10,6 +10,8 @@ import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
@@ -26,7 +28,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 //--module-path /home/federico/libs/javafx-sdk-18.0.1/lib  --add-modules javafx.controls,javafx.fxml
-public class GUI extends Application implements UI {
+public class GUI extends Application implements UI{
 
     public static final String END_OF_THE_GAME = "End of the game";
     private static final String MAIN_GUI = "mainScene.fxml";
@@ -95,6 +97,7 @@ public class GUI extends Application implements UI {
         stage.setTitle("Eriantys");
         stage.setScene(currentScene);
 //        stage.getIcons().add(new Image(getClass().getResourceAsStream("/graphics/..")));
+
         stage.show();
 //        ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
 //        currentScene.widthProperty().addListener(resize.getWidthListener());
@@ -143,4 +146,5 @@ public class GUI extends Application implements UI {
             case ServerMessageHandler.GENERERIC_MODEL_UPDATE_LISTENER -> handleModelChange();
         }
     }
+
 }

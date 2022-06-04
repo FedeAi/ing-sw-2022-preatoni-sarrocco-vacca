@@ -1,17 +1,17 @@
-.mainMenu {
-    -fx-background-image: url("../graphics/background.jpg");
+.background{
+    -fx-background-image: url("../graphics/cloud.png");
     -fx-background-size: cover;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
+
 }
-.nomi{
-    -fx-font-size: 20 px;
-    -fx-font-weight: bold;
+.title{
+    -fx-font-size: 40 px;
+    -fx-background-color: trasparent;
     -fx-font-family: Papyrus;
 }
-.button{
+.label{
     -fx-font-size: 24 px;
     -fx-background-color: trasparent;
     -fx-font-family: Papyrus;
 }
-
