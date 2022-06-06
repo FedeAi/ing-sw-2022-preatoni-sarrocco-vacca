@@ -36,15 +36,11 @@ public class SetupController implements GUIController{
     private String magicians = "magiciansMenu.fxml";
 
     @FXML
-    private TextField username;
-    @FXML
-    private TextField ip;
-    @FXML
-    private TextField port;
+    private TextField username, ip , port;
     @FXML
     private Label error;
 
-    //@FXML private ImageView music; TODO
+    //@FXML private ImageView music; TODOs
 
     @Override
     public void setGui(GUI gui) {

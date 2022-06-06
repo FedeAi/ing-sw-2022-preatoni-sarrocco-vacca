@@ -27,14 +27,12 @@ import java.util.concurrent.TimeUnit;
 public class MenuController implements GUIController {
     GUI gui;
 
-    private static final String QUIT = "quit.fxml";
     private  static final String SETUP = "setup.fxml";
     private final List<Pane> buttonEffectPanes = new ArrayList<>(); //button effect
-    private final ArrayList<Image> buttonImages = new ArrayList<>(); //image of button
     private Image pergOriginal, pergLoading;
 
     @FXML
-    Pane play, exit;
+    Pane play, exit, nomi;
 
     /**
      * Method play run the setup.fxml (change of the scene) when the "Play" button is clicked.
@@ -54,9 +52,9 @@ public class MenuController implements GUIController {
      * Method quit kills the application when the "Quit" button is clicked.
      */
     @FXML
-    public void quit() throws InterruptedException {
-        gui.changeScene(QUIT);
-        TimeUnit.SECONDS.sleep(5);
+    public void quit() {
+        gui.changeScene("quit.fxml");
+
     }
 
     @Override
@@ -66,36 +64,14 @@ public class MenuController implements GUIController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
         buttonEffectPanes.addAll(List.of(play, exit));
         pergOriginal= new Image(getClass().getResourceAsStream("/graphics/perg2.png"));
         pergLoading= new Image(getClass().getResourceAsStream("/graphics/perg_clicked.png"));
 
-        //showButtonsEffect();
     }
 
-//    private void showButtonsEffect(){
-//
-//        List<Button> buttons = new ArrayList<>();
-//
-//        Button btnPlay = new Button();
-//        btnPlay.setId("play");
-//        btnPlay.setOnMouseEntered(this::changeButton);
-//        btnPlay.setOnMouseExited(this::changeButton);
-//
-//        buttons.add(btnPlay);
-//
-//        Button btnExit = new Button();
-//        btnExit.setId("exit");
-//        btnExit.setOnMouseEntered(this::changeButton);
-//        btnExit.setOnMouseExited(this::changeButton);
-//
-//        buttons.add(btnExit);
-//
-//        for(int i = 0; i< buttons.size(); i ++){
-//            //buttonEffectPanes.get(i).getChildren().clear();
-//            buttonEffectPanes.get(i).getChildren().add(buttons.get(i));
-//        }
-//    }
     public void changeButton(MouseEvent mouseEvent){
         Pane btn = (Pane) mouseEvent.getSource();
         String id = btn.getId();
@@ -111,6 +87,15 @@ public class MenuController implements GUIController {
                 perg.setCache(true);
                 play.getChildren().add(perg);
             }
+             else {
+                exit.getChildren().clear();
+                ImageView perg = new ImageView(pergOriginal);
+                perg.fitWidthProperty().bind(exit.widthProperty());
+                perg.fitHeightProperty().bind(exit.heightProperty());
+                perg.setSmooth(true);
+                perg.setCache(true);
+                exit.getChildren().add(perg);
+            }
         }
         else{
             // load the new button
@@ -123,8 +108,34 @@ public class MenuController implements GUIController {
                 perg.setCache(true);
                 play.getChildren().add(perg);
             }
+            else{
+                exit.getChildren().clear();
+                ImageView perg = new ImageView(pergLoading);
+                perg.fitWidthProperty().bind(exit.widthProperty());
+                perg.fitHeightProperty().bind(exit.heightProperty());
+                perg.setSmooth(true);
+                perg.setCache(true);
+                exit.getChildren().add(perg);
+            }
 
         }
+    }
+    public void changeLabel(MouseEvent mouseEvent){
+
+//        if(mouseEvent.getEventType() == MouseEvent.MOUSE_EXITED){
+//            nomi.getChildren().clear();
+//            Label credits = new Label();
+//            credits.setStyle("-fx-font-family: Papyrus; -fx-font-size: 20px; -fx-font-weight: bold;");
+//            credits.setCache(true);
+//            nomi.getChildren().add(credits);
+//        }
+//        else{
+//            nomi.getChildren().clear();
+//            Label credits = new Label();
+//            credits.setStyle("-fx-font-family: Papyrus; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text:");
+//            credits.setCache(true);
+//            nomi.getChildren().add(credits);
+//        }
     }
 
 }

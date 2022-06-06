@@ -9,9 +9,19 @@
     -fx-font-weight: bold;
     -fx-font-family: Papyrus;
 }
+.nomi:hover{
+    -fx-font-size: 21 px;
+    -fx-font-weight: bold;
+    -fx-font-family: Papyrus;
+
+}
 .button{
     -fx-font-size: 24 px;
     -fx-background-color: trasparent;
+    -fx-font-family: Papyrus;
+}
+.exit{
+    -fx-font-size: 24 px;
     -fx-font-family: Papyrus;
 }
 
