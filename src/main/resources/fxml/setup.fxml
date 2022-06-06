@@ -4,34 +4,31 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<Pane id="pane" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="pane" stylesheets="@../css/setup.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
+<Pane id="backgroundSetup" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="backgroundSetup" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
    <children>
-      <ImageView fitHeight="42.0" fitWidth="153.0" layoutX="227.0" layoutY="252.0" pickOnBounds="true">
-         <image>
-            <Image url="@../graphics/perg2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="153.0" layoutX="229.0" layoutY="309.0" pickOnBounds="true">
-         <image>
-            <Image url="@../graphics/perg2.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="submit" layoutX="233.0" layoutY="241.0" mnemonicParsing="false" onAction="#join" prefHeight="39.0" prefWidth="132.0" styleClass="testo" stylesheets="@../css/menu.css" text="Connect" />
       <Label id="testo" layoutX="60.0" layoutY="87.0" prefHeight="38.0" prefWidth="94.0" styleClass="testo" stylesheets="@../css/setup.css" text="Username:" textAlignment="JUSTIFY" />
       <Label id="testo" layoutX="60.0" layoutY="131.0" prefHeight="17.0" prefWidth="121.0" styleClass="testo" stylesheets="@../css/setup.css" text="IP address:" />
       <Label id="testo" layoutX="60.0" layoutY="175.0" prefHeight="17.0" prefWidth="67.0" styleClass="testo" stylesheets="@../css/setup.css" text="Port:" />
       <TextField fx:id="username" layoutX="227.0" layoutY="93.0" />
       <TextField fx:id="ip" layoutX="227.0" layoutY="137.0" />
       <TextField fx:id="port" layoutX="227.0" layoutY="181.0" />
-      <Button id="button" fx:id="clean" layoutX="240.0" layoutY="299.0" mnemonicParsing="false" onAction="#clean" prefHeight="52.0" prefWidth="118.0" styleClass="testo" text="Clean">
-         <stylesheets>
-            <URL value="@../css/setup.css" />
-            <URL value="@../css/menu.css" />
-         </stylesheets>
-      </Button>
+      <VBox layoutX="227.0" layoutY="245.0">
+         <children>
+            <Button fx:id="connect" mnemonicParsing="false" onAction="#join" prefHeight="62.0" prefWidth="157.0" stylesheets="@../css/menu.css" text="Connect" />
+            <Button id="button" fx:id="clean" mnemonicParsing="false" onAction="#clean" prefHeight="62.0" prefWidth="159.0" text="Clean">
+               <stylesheets>
+                  <URL value="@../css/setup.css" />
+                  <URL value="@../css/menu.css" />
+               </stylesheets>
+            </Button>
+         </children>
+      </VBox>
    </children>
+   <stylesheets>
+      <URL value="@../css/setup.css" />
+      <URL value="@../css/menu.css" />
+   </stylesheets>
 </Pane>

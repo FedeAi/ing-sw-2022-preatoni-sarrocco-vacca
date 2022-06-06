@@ -24,15 +24,14 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.System.exit;
+
 public class MenuController implements GUIController {
+
     GUI gui;
-
     private  static final String SETUP = "setup.fxml";
-    private final List<Pane> buttonEffectPanes = new ArrayList<>(); //button effect
-    private Image pergOriginal, pergLoading;
+    private  static final String QUIT = "Quit.fxml";
 
-    @FXML
-    Pane play, exit, nomi;
 
     /**
      * Method play run the setup.fxml (change of the scene) when the "Play" button is clicked.
@@ -53,8 +52,8 @@ public class MenuController implements GUIController {
      */
     @FXML
     public void quit() {
-        gui.changeScene("quit.fxml");
-
+        gui.changeScene(QUIT);
+        exit(1);
     }
 
     @Override
@@ -65,77 +64,5 @@ public class MenuController implements GUIController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
-        buttonEffectPanes.addAll(List.of(play, exit));
-        pergOriginal= new Image(getClass().getResourceAsStream("/graphics/perg2.png"));
-        pergLoading= new Image(getClass().getResourceAsStream("/graphics/perg_clicked.png"));
-
     }
-
-    public void changeButton(MouseEvent mouseEvent){
-        Pane btn = (Pane) mouseEvent.getSource();
-        String id = btn.getId();
-
-        if(mouseEvent.getEventType() == MouseEvent.MOUSE_EXITED){
-            // restore normal button
-            if(id.equals("play")){
-                play.getChildren().clear();
-                ImageView perg = new ImageView(pergOriginal);
-                perg.fitWidthProperty().bind(play.widthProperty());
-                perg.fitHeightProperty().bind(play.heightProperty());
-                perg.setSmooth(true);
-                perg.setCache(true);
-                play.getChildren().add(perg);
-            }
-             else {
-                exit.getChildren().clear();
-                ImageView perg = new ImageView(pergOriginal);
-                perg.fitWidthProperty().bind(exit.widthProperty());
-                perg.fitHeightProperty().bind(exit.heightProperty());
-                perg.setSmooth(true);
-                perg.setCache(true);
-                exit.getChildren().add(perg);
-            }
-        }
-        else{
-            // load the new button
-            if(id.equals("play")){
-                play.getChildren().clear();
-                ImageView perg = new ImageView(pergLoading);
-                perg.fitWidthProperty().bind(play.widthProperty());
-                perg.fitHeightProperty().bind(play.heightProperty());
-                perg.setSmooth(true);
-                perg.setCache(true);
-                play.getChildren().add(perg);
-            }
-            else{
-                exit.getChildren().clear();
-                ImageView perg = new ImageView(pergLoading);
-                perg.fitWidthProperty().bind(exit.widthProperty());
-                perg.fitHeightProperty().bind(exit.heightProperty());
-                perg.setSmooth(true);
-                perg.setCache(true);
-                exit.getChildren().add(perg);
-            }
-
-        }
-    }
-    public void changeLabel(MouseEvent mouseEvent){
-
-//        if(mouseEvent.getEventType() == MouseEvent.MOUSE_EXITED){
-//            nomi.getChildren().clear();
-//            Label credits = new Label();
-//            credits.setStyle("-fx-font-family: Papyrus; -fx-font-size: 20px; -fx-font-weight: bold;");
-//            credits.setCache(true);
-//            nomi.getChildren().add(credits);
-//        }
-//        else{
-//            nomi.getChildren().clear();
-//            Label credits = new Label();
-//            credits.setStyle("-fx-font-family: Papyrus; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text:");
-//            credits.setCache(true);
-//            nomi.getChildren().add(credits);
-//        }
-    }
-
 }

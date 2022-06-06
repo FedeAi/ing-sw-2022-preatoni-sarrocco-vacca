@@ -33,6 +33,7 @@ public class GUI extends Application implements UI{
     public static final String END_OF_THE_GAME = "End of the game";
     private static final String MAIN_GUI = "mainScene.fxml";
     private static final String MENU = "menu.fxml";
+    private static final String QUIT = "Quit.fxml"; //FIXME
     private static final String BOARD = "board.fxml";
     private static final String LOADER = "loading.fxml";
     private static final String SETUP = "setup.fxml";
@@ -91,7 +92,7 @@ public class GUI extends Application implements UI{
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(MENU);
+        currentScene = nameMapScene.get(LOADER);
     }
     public void run() {
         stage.setTitle("Eriantys");

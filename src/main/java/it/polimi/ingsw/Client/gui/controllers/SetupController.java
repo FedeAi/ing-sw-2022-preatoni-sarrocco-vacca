@@ -52,6 +52,7 @@ public class SetupController implements GUIController{
      */
     @FXML
     public void join() {
+
         String errorMsg = "";
 
         if (!Constants.validateIp(ip.getText())) {
@@ -111,6 +112,7 @@ public class SetupController implements GUIController{
     }
     @FXML
     public void clean(){
+
         String clean = "";
         username.setText(clean);
         ip.setText(clean);

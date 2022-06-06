@@ -1,11 +1,11 @@
-.backgroundSetup{
-    -fx-background-image: url("../graphics/backgrounds/setup.png");
+.backgroundLoading{
+    -fx-background-image: url("../graphics/backgrounds/loading.png");
     -fx-background-size: cover;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
-.testo{
-    -fx-font-size: 24 px;
+.loading{
+    -fx-font-size: 40 px;
     -fx-font-weight: bold;
     -fx-font-family: Papyrus;
 }
