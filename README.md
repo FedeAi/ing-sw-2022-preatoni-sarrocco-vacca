@@ -1,5 +1,5 @@
 # Final Project of Software Engineering
-![picture](src/main/resources/graphics/background.jpg)
+![picture](src/main/resources/graphics/backgrounds/menu.jpg)
  
 ## Getting Started
 Java implementation of the table game Eriantys by the italian company Cranio Creations as part of the Bachelor of Science thesis. This is formally part of the Software Engineering course at Politecnico di Milano (A.Y. 2021 / 2022).
