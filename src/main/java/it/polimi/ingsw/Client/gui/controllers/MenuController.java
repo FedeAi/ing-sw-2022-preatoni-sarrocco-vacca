@@ -33,6 +33,7 @@ public class MenuController implements GUIController {
     private  static final String QUIT = "Quit.fxml";
 
 
+
     /**
      * Method play run the setup.fxml (change of the scene) when the "Play" button is clicked.
      */
@@ -55,6 +56,7 @@ public class MenuController implements GUIController {
         gui.changeScene(QUIT);
         exit(1);
     }
+
 
     @Override
     public void setGui(GUI gui) {

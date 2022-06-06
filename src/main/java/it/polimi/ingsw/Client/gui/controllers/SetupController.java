@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URI;
@@ -48,34 +49,22 @@ public class SetupController implements GUIController{
     }
 
     /**
-     * Method play changes the stage scene to the setup one when the button "Play" is pressed.
+     * Method join changes the stage scene into loading.fxml when the button "Play" is pressed.
      */
     @FXML
     public void join() {
 
-        String errorMsg = "";
+        if (username.getText().equals("")
+                || ip.getText().equals("")
+                || port.getText().equals("")) {
+            error.setText("Error: missing all parameters!");
 
-        if (!Constants.validateIp(ip.getText())) {
-            errorMsg = errorMsg + "IP address";
+        } else if (username.getText().length() > 15) {
+            error.setText("Error: the maximum length of nickname is 15 characters!");
+        } else if (ip.getText().contains(" ")) {
+            error.setText("Error: address must not contain spaces!");
+        } else {
 
-        }
-        if (Constants.validatePort(port.getText()) == -1) {
-            if (errorMsg.length() > 0) {
-                errorMsg = errorMsg + ",  port";
-            } else {
-                errorMsg = "Port";
-            }
-        }
-        if (!Constants.validateNickname(username.getText())) {
-            if (errorMsg.length() > 0) {
-                errorMsg = errorMsg + ",  username";
-            } else {
-                errorMsg = "Username";
-            }
-        }
-        if (!errorMsg.equals("")) {
-            error.setText("Invalid fields: " + errorMsg);
-        }else{
             try {
                 Constants.setAddress(ip.getText());
                 Constants.setPort(Integer.parseInt(port.getText()));
@@ -84,16 +73,17 @@ public class SetupController implements GUIController{
                 return;
             }
             gui.getModelView().setPlayerName(username.getText());
+            LoaderController loaderController;
 
             try {
+                gui.changeScene("loading.fxml");
                 ConnectionSocket connectionSocket = new ConnectionSocket();
-                if (!connectionSocket.setup(
-                        username.getText(), gui.getModelView(), gui.getServerMessageHandler())) {
-
+                if (!connectionSocket.setup(username.getText(), gui.getModelView(), gui.getServerMessageHandler())) {
                     error.setText("Server not reachable, try another IP");
+                    gui.changeScene("m");
                     return;
                 }
-                // TODo NEW SCENE
+
                 gui.setConnectionSocket(connectionSocket);
                 error.setText("SOCKET CONNECTION \nSETUP COMPLETED!");
 //                loaderController.setText("WAITING FOR PLAYERS");
@@ -123,6 +113,7 @@ public class SetupController implements GUIController{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 
 }

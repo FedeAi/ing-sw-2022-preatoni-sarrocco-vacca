@@ -9,6 +9,7 @@
 
 <Pane id="backgroundSetup" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="backgroundSetup" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
    <children>
+      <Label fx:id="error" layoutX="277.0" layoutY="28.0" textFill="#8d1919" />
       <Label id="testo" layoutX="60.0" layoutY="87.0" prefHeight="38.0" prefWidth="94.0" styleClass="testo" stylesheets="@../css/setup.css" text="Username:" textAlignment="JUSTIFY" />
       <Label id="testo" layoutX="60.0" layoutY="131.0" prefHeight="17.0" prefWidth="121.0" styleClass="testo" stylesheets="@../css/setup.css" text="IP address:" />
       <Label id="testo" layoutX="60.0" layoutY="175.0" prefHeight="17.0" prefWidth="67.0" styleClass="testo" stylesheets="@../css/setup.css" text="Port:" />

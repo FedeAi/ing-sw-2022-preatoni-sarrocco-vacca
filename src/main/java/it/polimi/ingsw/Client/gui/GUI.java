@@ -92,11 +92,12 @@ public class GUI extends Application implements UI{
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(LOADER);
+        currentScene = nameMapScene.get(MENU);
     }
     public void run() {
         stage.setTitle("Eriantys");
         stage.setScene(currentScene);
+        stage.centerOnScreen();
         stage.show();
 //        ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
 //        currentScene.widthProperty().addListener(resize.getWidthListener());
@@ -115,6 +116,7 @@ public class GUI extends Application implements UI{
     
     public void changeScene(String newScene){
         stage.setScene(nameMapScene.get(newScene));
+        stage.centerOnScreen();
         stage.show();
     }
 
