@@ -5,8 +5,13 @@ import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.CLIColors;
 
 
-
+/**
+ * MessageBuilder class is useful to build the action (or the message) that client  want to do
+ *
+ * @author Davide Preatoni, Federico Sarrocco
+ */
 public class MessageBuilder {
+
     private ModelView modelView;
 
     private final String PLAY_CARD_ERROR = "syntax playcard #card (ex: playcard 5) ";
@@ -20,8 +25,8 @@ public class MessageBuilder {
     private final String GRANDMA_ERROR = "syntax grandma error: grandma #island (ex: grandma 2)";
     private final String HERALD_ERROR = "syntax herlad error: herald #island (ex: herald 3)";
     private final String JOKER_ERROR = "syntax joker error: joker color color (ex: joker blue red) ";
-    private final String MINSTREL_ERROR = "syntax minstrel error: mintrel color color (ex: minstrel blue red) ";
-    private final String MONK_ERROR = "syntax minstrel error: mintrel color color (ex: minstrel blue red) "; // fixme description
+    private final String MINSTREL_ERROR = "syntax minstrel error: minstrel color color (ex: minstrel blue red) ";
+    private final String MONK_ERROR = "syntax monk error: monk color color (ex: monk blue red) ";
     private final String MUSHROOM_ERROR = "syntax mushroom error: mushroom color (ex: mushroom blue) ";
     private final String PRINCESS_ERROR = "syntax princess error: princess color (ex: princess yellow) ";
     private final String THIEF_ERROR = "syntax thief error: thief color (ex: thief green) ";
@@ -30,6 +35,11 @@ public class MessageBuilder {
     public MessageBuilder(ModelView modelView){
         this.modelView = modelView;
     }
+
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action playCard(String[] in){
         try{
             return new Action(ActionType.PLAY_CARD, Integer.parseInt(in[1]));
@@ -38,6 +48,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action chooseMagician(String[] in){
         try{
             Action actionToSend;
@@ -51,6 +65,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action moveMother(String[] in){
         try {
             return new Action(ActionType.MOVE_MOTHER_NATURE, Integer.parseInt(in[1]));
@@ -60,6 +78,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action chooseCloud(String[] in){
         try {
             return new Action(ActionType.CHOOSE_CLOUD, Integer.parseInt(in[1]));
@@ -69,6 +91,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action moveStudentIsland(String[] in){
         try {
             return new Action(ActionType.MOVE_STUDENT_ISLAND, Color.parseColor(in[1]) , Integer.parseInt(in[2]));
@@ -78,6 +104,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action moveStudentHall(String[] in){
         try {
             return new Action(ActionType.MOVE_STUDENT_HALL,  Color.parseColor(in[1]));
@@ -87,6 +117,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action activateCard(String[] in){
         try {
             Action actionToSend;
@@ -98,6 +132,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action deactivateCard(String[] in){
         try {
             return new Action(ActionType.DEACTIVATE_CARD, Integer.parseInt(in[1]));
@@ -107,6 +145,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Message setupMessage(String[] in) {
         try {
             Message messageToSend;
@@ -119,6 +161,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action grandmaBlock(String[] in){
         try {
             return new Action(ActionType.GRANDMA_BLOCK,  Integer.parseInt(in[1]));
@@ -128,6 +174,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action heraldChoose(String[] in){
         try {
             return new Action(ActionType.HERALD_CHOOSE,  Integer.parseInt(in[1]));
@@ -137,7 +187,11 @@ public class MessageBuilder {
             return null;
         }
     }
-    public Action jokerSwap(String[] in){ //FIXME
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
+    public Action jokerSwap(String[] in){ //FIXME ??
         try {
             return new Action(ActionType.JOKER_SWAP,  Color.parseColor(in[1]), Color.parseColor(in[2]));
         }
@@ -146,6 +200,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action minstrelSwap(String[] in){
         try {
             return new Action(ActionType.MINSTREL_SWAP,  Color.parseColor(in[1]), Color.parseColor(in[2]));
@@ -155,6 +213,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action monkMove(String[] in){
         try {
             return new Action(ActionType.MONK_MOVE,  Color.parseColor(in[1]), Integer.parseInt(in[2]));
@@ -164,6 +226,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action mushroomChoose(String[] in){
         try {
             return new Action(ActionType.MUSHROOM_CHOOSE,  Color.parseColor(in[1]));
@@ -173,6 +239,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action princessMove(String[] in){
         try {
             return new Action(ActionType.PRINCESS_MOVE,  Color.parseColor(in[1]));
@@ -182,6 +252,10 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * @param in is the command write by CLI from the user.
+     * @return the  appropriate action built
+     */
     public Action thiefChoose(String[] in){
         try {
             return new Action(ActionType.THIEF_CHOOSE,  Color.parseColor(in[1]));
@@ -191,6 +265,9 @@ public class MessageBuilder {
             return null;
         }
     }
+    /**
+     * 'quit' is used to close the connection
+     */
     public Message quit() {
         System.err.println("Disconnected from the server.");
         return new Disconnect();

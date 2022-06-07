@@ -41,8 +41,6 @@ public class SetupController implements GUIController{
     @FXML
     private Label error;
 
-    //@FXML private ImageView music; TODOs
-
     @Override
     public void setGui(GUI gui) {
         this.gui = gui;
@@ -54,16 +52,23 @@ public class SetupController implements GUIController{
     @FXML
     public void join() {
 
-        if (username.getText().equals("")
-                || ip.getText().equals("")
-                || port.getText().equals("")) {
+        if (username.getText().equals("") || ip.getText().equals("") || port.getText().equals("")) {
             error.setText("Error: missing all parameters!");
+            clean();
+            return;
+        } else if (!Constants.validateNickname(username.getText())) {
+            error.setText("Error: username[2-18] e no special character");
+            clean();
+            return;
+        } else if (!Constants.validateIp(ip.getText())) {
+            error.setText("Error: address should be a port >1023 and 65355 or localhost");
+            clean();
+            return;
+        }
+      /*  }else if(Constants.validatePort(port.getText(port.getText()))){
 
-        } else if (username.getText().length() > 15) {
-            error.setText("Error: the maximum length of nickname is 15 characters!");
-        } else if (ip.getText().contains(" ")) {
-            error.setText("Error: address must not contain spaces!");
-        } else {
+        }*/
+        else {
 
             try {
                 Constants.setAddress(ip.getText());

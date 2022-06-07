@@ -70,11 +70,11 @@ public class CLI implements UI {
      */
     public static void main(String[] args) {
 
-
         String ip;
         String port;
 
         do {
+
             clearScreen(); //cleaning terminale
             System.out.println(Constants.ERIANTYS);
             System.out.println(Constants.AUTHORS);
@@ -93,6 +93,7 @@ public class CLI implements UI {
         Constants.setPort(Integer.parseInt(port));
         CLI cli = new CLI();
         cli.run();
+
     }
 
     /**
@@ -144,8 +145,7 @@ public class CLI implements UI {
         modelView.setPlayerName(nickname);
         try {
             if (!connectionSocket.setup(nickname, modelView, serverMessageHandler)) {
-                System.err.println("The entered IP/port doesn't match any active server or the server is not " +
-                        "running. Please try again!");
+                System.err.println("The entered IP/port doesn't match any active server or the server is not " + "running. Please try again!");
                 CLI.main(null);
             }
             System.out.println(CLIColors.ANSI_GREEN + "Socket Connection setup completed!" + CLIColors.RESET);
@@ -216,13 +216,19 @@ public class CLI implements UI {
         String player = modelView.getPlayerName();
 
         if (player.equals(owner)) {
-//            if(oldState != newState){
-            System.out.println(CLIColors.ANSI_GREEN + "You are in " + newState + " state, make your choice" + CLIColors.RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
-//            }
+            if(oldState != newState){
+                System.out.println(CLIColors.ANSI_GREEN + "You are in " + newState + " state, make your choice" + CLIColors.RESET);
+            }
+            else{
+                System.out.println(CLIColors.ANSI_GREEN + "Is still your turn, check the possibile moves with 'help' command" + CLIColors.RESET);
+            }
         } else {
-//            if(oldState != newState){
-            System.out.println(CLIColors.ANSI_CYAN + "Player " + owner + " is in " + newState + CLIColors.RESET); // TODO differenziare la frase tramite funzione a seconda dello stato custom
-//            }
+            if(oldState != newState){
+                System.out.println(CLIColors.ANSI_CYAN + "Player " + owner + " is in " + newState + CLIColors.RESET);
+            }
+            else{
+                System.out.println(CLIColors.ANSI_CYAN + "Player " + owner + " is still the owner, wait your turn"+ CLIColors.RESET);
+            }
         }
     }
 
@@ -234,9 +240,9 @@ public class CLI implements UI {
     public void roundPrinter(String oldRoundOwner, String newRoundOwner) {
         String player = modelView.getPlayerName();
         if (!newRoundOwner.equals(oldRoundOwner)) {
-            //clearScreen();  // FIXME Seams not to work
+            clearScreen();
             if (player.equals(newRoundOwner)) {
-                System.out.println(CLIColors.ANSI_BACKGROUND_BLACK.getEscape() + CLIColors.ANSI_WHITE + "You are the new round owner" + CLIColors.RESET);
+                System.out.println(CLIColors.ANSI_PINK.getEscape() + CLIColors.ANSI_WHITE + "You are the new round owner" + CLIColors.RESET);
             } else {
                 System.out.println(CLIColors.ANSI_CYAN + newRoundOwner + " is the new round owner" + CLIColors.RESET);
             }
@@ -254,6 +260,7 @@ public class CLI implements UI {
      * Clean the CLI of the user
      */
     public static void clearScreen() {
+
         try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -265,6 +272,7 @@ public class CLI implements UI {
         }
         System.out.print("\033[H\033[2J");
         System.out.flush();
+
     }
 
     /**

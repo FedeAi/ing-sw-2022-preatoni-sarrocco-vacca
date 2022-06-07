@@ -48,7 +48,8 @@ public class ModelView {
      * Constructor ModelView creates a new ModelView instance.
      *
      * @param cli of type GUI - GUI reference.
-     */
+     *
+     **/
 
     public ModelView(CLI cli) {
         this.cli = cli;
