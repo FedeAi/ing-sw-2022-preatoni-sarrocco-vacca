@@ -57,7 +57,6 @@ public class MenuController implements GUIController {
         exit(1);
     }
 
-
     @Override
     public void setGui(GUI gui) {
         this.gui = gui;

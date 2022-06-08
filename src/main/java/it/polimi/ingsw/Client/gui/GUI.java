@@ -35,6 +35,7 @@ public class GUI extends Application implements UI{
     private static final String BOARD = "board.fxml";
     private static final String LOADER = "loading.fxml";
     private static final String SETUP = "setup.fxml";
+    private static final String MAGIs = "magicians.fxml";
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final ModelView modelView;
     private final ServerMessageHandler serverMessageHandler;
@@ -90,26 +91,15 @@ public class GUI extends Application implements UI{
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get("magicians.fxml");
+        //currentScene = nameMapScene.get("fxml/magicians.fxml");
+        currentScene = nameMapScene.get(MAGIs);
     }
     public void run() {
         stage.setTitle("Eriantys");
         stage.setScene(currentScene);
         stage.centerOnScreen();
         stage.show();
-//        ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
-//        currentScene.widthProperty().addListener(resize.getWidthListener());
-//        currentScene.heightProperty().addListener(resize.getHeightListener());
-//        Media pick = new Media(Objects.requireNonNull(getClass().getClassLoader()
-//                .getResource("media/Epic_Battle_Speech.mp3")).toExternalForm());
-//        player = new MediaPlayer(pick);
-//        player.setAutoPlay(true);
-//        player.setCycleCount(MediaPlayer.INDEFINITE);
-//        player.setVolume(25);
-//        player.setOnEndOfMedia(() -> {
-//            player.seek(Duration.ZERO);
-//            player.pla9y();
-//        });
+
     }
     
     public void changeScene(String newScene){

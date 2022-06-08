@@ -92,9 +92,9 @@ public class BoardController implements GUIController {
         loadAssets();
 
         GameManager tempGM = new GameManager(new Game(), new GameHandler(new Server()));
-        tempGM.addPlayer(new Player(0,"a"));
-        tempGM.addPlayer(new Player(1,"b"));
-        tempGM.addPlayer(new Player(2,"c"));
+        tempGM.addPlayer(new Player(0,"Davide"));
+        tempGM.addPlayer(new Player(1,"sono un figo"));
+        tempGM.addPlayer(new Player(2,"senza senso"));
         tempGM.initGame();
         tempGame = tempGM.getGame();
         // move some students to the hall just to see
@@ -120,9 +120,12 @@ public class BoardController implements GUIController {
     }
 
     private void loadAssets(){
+
         islandImgs.add( new Image(getClass().getResourceAsStream("/graphics/board/island1.png")));
         islandImgs.add( new Image(getClass().getResourceAsStream("/graphics/board/island2.png")));
         islandImgs.add( new Image(getClass().getResourceAsStream("/graphics/board/island3.png")));
+
+
 
         for(Color color : Color.values()){
             studentImgs.put(color, new Image(getClass().getResourceAsStream("/graphics/board/"+ color.name().toLowerCase()+"Student3D.png")));
@@ -157,16 +160,22 @@ public class BoardController implements GUIController {
     }
 
     private void showChangeSchoolButtons(){
+
         List<Button> buttons = tempGame.getPlayers().stream().map(Player::getNickname).filter(player -> !Objects.equals(player, tempGame.getPlayers().get(0).getNickname()))
                 .map(p -> {
+
                             Button btn = new Button(p);
+                          //  btn.setFont();
                             btn.setId(p);
+
+                            btn.setStyle(" -fx-background-color: transparent; -fx-background-image: url('/graphics/perg2.png'); -fx-background-size: stretch; -fx-font-size: 24px;");
                             btn.setOnMouseEntered(this::changeSchool);
                             btn.setOnMouseExited(this::changeSchool);
                             return btn;
                         }
                 ).toList();
         assert buttons.size() <= switchPlayerPanes.size();
+
         for(int i = 0; i< buttons.size(); i ++){
             switchPlayerPanes.get(i).getChildren().clear();
             switchPlayerPanes.get(i).getChildren().add(buttons.get(i));
@@ -333,14 +342,17 @@ public class BoardController implements GUIController {
 
         if(event.getEventType() == MouseEvent.MOUSE_EXITED){
             // restore player school
+
+            btn.setStyle(" -fx-background-color: transparent; -fx-background-image: url('/graphics/perg2.png'); -fx-background-size: stretch; -fx-font-size: 24px;");
             School school = tempGame.getPlayers().get(0).getSchool();
             buildSchool(school, getProfsFromNickname(tempGame.getProfessors(), tempGame.getPlayers().get(0).getNickname()));
         }
         else{
-            // show other players school
+            btn.setStyle(" -fx-background-color: transparent; -fx-background-image: url('/graphics/perg_clicked.png'); -fx-background-size: stretch; -fx-font-size: 24px;");
             School school = tempGame.getPlayerByNickname(id).get().getSchool();
             buildSchool(school,  getProfsFromNickname(tempGame.getProfessors(), id));
         }
+
     }
     /**
      * Method quit kills the application when the "Quit" button is pressed.
@@ -350,5 +362,7 @@ public class BoardController implements GUIController {
         System.out.println("Thanks for playing! See you next time!");
         System.exit(0);
     }
+
+
 
 }

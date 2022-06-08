@@ -15,6 +15,7 @@ import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.ReducedCharacterCard;
 import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
+import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.Answer;
 
@@ -227,9 +228,13 @@ public class ModelView {
         return expert;
     }
 
+
+
     public List<String> getPlayers() {
         List<String> players = new ArrayList<>();
         players.addAll(playerMapSchool.keySet());
         return players;
     }
+
+
 }

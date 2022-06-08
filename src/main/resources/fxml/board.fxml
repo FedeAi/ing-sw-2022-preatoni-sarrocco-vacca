@@ -86,10 +86,11 @@
                   <Pane fx:id="playerProf3" layoutX="151.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
                   <Pane fx:id="playerProf4" layoutX="210.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
                   <Pane fx:id="playerProf5" layoutX="266.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+
                </children>
             </Pane>
-            <Pane fx:id="otherPlayer1Pane" layoutX="383.0" layoutY="28.0" prefHeight="48.0" prefWidth="140.0" />
-            <Pane fx:id="otherPlayer2Pane" layoutX="383.0" layoutY="114.0" prefHeight="48.0" prefWidth="140.0" />
+            <Pane fx:id="otherPlayer1Pane" layoutX="383.0" layoutY="28.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="241.0" />
+            <Pane fx:id="otherPlayer2Pane" layoutX="383.0" layoutY="114.0" prefHeight="74.0" prefWidth="241.0" />
          </children>
       </AnchorPane>
    </left>
