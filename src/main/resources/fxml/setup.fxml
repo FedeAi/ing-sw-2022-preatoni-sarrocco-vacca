@@ -5,28 +5,35 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <Pane id="backgroundSetup" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="backgroundSetup" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
    <children>
-      <Label fx:id="error" layoutX="149.0" layoutY="38.0" prefHeight="26.0" prefWidth="315.0" textFill="#8d1919" />
-      <Label id="testo" layoutX="60.0" layoutY="87.0" prefHeight="38.0" prefWidth="94.0" styleClass="testo" stylesheets="@../css/setup.css" text="Username:" textAlignment="JUSTIFY" />
-      <Label id="testo" layoutX="60.0" layoutY="131.0" prefHeight="17.0" prefWidth="121.0" styleClass="testo" stylesheets="@../css/setup.css" text="IP address:" />
-      <Label id="testo" layoutX="60.0" layoutY="175.0" prefHeight="17.0" prefWidth="67.0" styleClass="testo" stylesheets="@../css/setup.css" text="Port:" />
-      <TextField fx:id="username" layoutX="227.0" layoutY="93.0" />
-      <TextField fx:id="ip" layoutX="227.0" layoutY="137.0" />
-      <TextField fx:id="port" layoutX="227.0" layoutY="181.0" />
-      <VBox layoutX="227.0" layoutY="245.0">
-         <children>
-            <Button fx:id="connect" mnemonicParsing="false" onAction="#join" prefHeight="62.0" prefWidth="157.0" stylesheets="@../css/menu.css" text="Connect" />
-            <Button id="button" fx:id="clean" mnemonicParsing="false" onAction="#clean" prefHeight="62.0" prefWidth="159.0" text="Clean">
-               <stylesheets>
-                  <URL value="@../css/setup.css" />
-                  <URL value="@../css/menu.css" />
-               </stylesheets>
-            </Button>
-         </children>
-      </VBox>
+      <Label fx:id="error" layoutX="58.0" layoutY="35.0" prefHeight="26.0" prefWidth="452.0" textAlignment="CENTER" textFill="#8d1919" />
+      <Label id="testo" layoutX="60.0" layoutY="72.0" styleClass="testo" stylesheets="@../css/setup.css" text="Username:" textAlignment="JUSTIFY" />
+      <Label id="testo" layoutX="60.0" layoutY="141.0" styleClass="testo" stylesheets="@../css/setup.css" text="IP address:" />
+      <Label id="testo" layoutX="60.0" layoutY="222.0" styleClass="testo" stylesheets="@../css/setup.css" text="Port:" />
+      <TextField fx:id="username" layoutX="238.0" layoutY="72.0">
+         <font>
+            <Font name="Papyrus Condensed" size="18.0" />
+         </font></TextField>
+      <TextField fx:id="port" layoutX="238.0" layoutY="222.0">
+         <font>
+            <Font name="Papyrus Condensed" size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ip" layoutX="238.0" layoutY="141.0">
+         <font>
+            <Font name="Papyrus Condensed" size="18.0" />
+         </font>
+      </TextField>
+      <Button fx:id="connect" layoutX="336.0" layoutY="312.0" mnemonicParsing="false" onAction="#join" prefHeight="62.0" prefWidth="157.0" stylesheets="@../css/menu.css" text="Connect" />
+      <Button id="button" fx:id="clean" layoutX="148.0" layoutY="312.0" mnemonicParsing="false" onAction="#clean" prefHeight="62.0" prefWidth="159.0" text="Clean">
+         <stylesheets>
+            <URL value="@../css/setup.css" />
+            <URL value="@../css/menu.css" />
+         </stylesheets>
+      </Button>
    </children>
    <stylesheets>
       <URL value="@../css/setup.css" />

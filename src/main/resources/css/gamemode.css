@@ -1,0 +1,21 @@
+.background{
+    -fx-background-color: rgba(164,107,75,0.49);
+}
+.button{
+    -fx-background-image: url("../graphics/perg2.png");
+    -fx-background-size: stretch;
+    -fx-background-color: transparent;
+    -fx-font-family: Papyrus;
+
+}
+
+.button:hover{
+    -fx-opacity: 0.8;
+}
+.button:pressed{
+    -fx-background-image: url("../graphics/perg_clicked.png");
+    -fx-background-size: stretch;
+    -fx-background-color: transparent;
+    -fx-font-family: Papyrus;
+
+}

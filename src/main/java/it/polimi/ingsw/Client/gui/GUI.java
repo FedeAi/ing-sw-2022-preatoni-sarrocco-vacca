@@ -1,24 +1,18 @@
 package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Client.*;
-import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Client.gui.controllers.GUIController;
 import it.polimi.ingsw.Server.Answer.Answer;
 import it.polimi.ingsw.Server.Answer.modelUpdate.ModelMessage;
-import it.polimi.ingsw.Server.GameHandler;
-import it.polimi.ingsw.Server.Server;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,9 +30,13 @@ public class GUI extends Application implements UI{
     private static final String LOADER = "loading.fxml";
     private static final String SETUP = "setup.fxml";
     private static final String MAGIs = "magicians.fxml";
+    private static final String MODE = "gameMode.fxml";
+
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final ModelView modelView;
     private final ServerMessageHandler serverMessageHandler;
+    private final PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+
 
     private Stage stage;
     private ConnectionSocket connectionSocket = null;
@@ -72,14 +70,14 @@ public class GUI extends Application implements UI{
     public void start(Stage stage) throws IOException {
         setup();
         this.stage = stage;
-        //CHOOSE FONT
-        Font.loadFont(getClass().getResourceAsStream("/font/GhoustOutline.otf"), 16);
         run();
     }
 
     // NOT NEEDED AS OF NOW
     public void setup() throws IOException {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, SETUP, BOARD));
+
+
+        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, SETUP, BOARD, MAGIs, LOADER, MODE));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -91,8 +89,8 @@ public class GUI extends Application implements UI{
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        //currentScene = nameMapScene.get("fxml/magicians.fxml");
-        currentScene = nameMapScene.get(MAGIs);
+        currentScene = nameMapScene.get(MODE);
+        //currentScene = nameMapScene.get(LOADER);
     }
     public void run() {
         stage.setTitle("Eriantys");
@@ -120,6 +118,10 @@ public class GUI extends Application implements UI{
         return serverMessageHandler;
     }
 
+    public GUIController getControllerFromName(String name) {
+        return nameMapController.get(name);
+    }
+
     private void handleModelChange(){
         Platform.runLater(() -> {
             Answer message = modelView.getServerAnswer();
@@ -127,6 +129,9 @@ public class GUI extends Application implements UI{
 
             }
         });
+    }
+    public PropertyChangeSupport getListeners() {
+        return listeners;
     }
 
     @Override

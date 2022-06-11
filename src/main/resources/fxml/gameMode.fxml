@@ -1,17 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="setupMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane id="background" styleClass="background" stylesheets="@../css/gamemode.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.GameModeController">
    <children>
-      <Button layoutX="78.0" layoutY="110.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="48.0" text="2" />
-      <Button layoutX="199.0" layoutY="110.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="48.0" text="3" />
-      <Label layoutX="14.0" layoutY="26.0" text="Please select your game mode and number of players:" />
-      <RadioButton fx:id="normalModeButton" layoutX="54.0" layoutY="66.0" mnemonicParsing="false" selected="true" text="Normal mode" />
-      <RadioButton layoutX="169.0" layoutY="66.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Expert mode" />
+      <VBox alignment="CENTER" stylesheets="@../css/gamemode.css">
+         <children>
+            <Label fx:id="error" textFill="#8d1919" />
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" text="Please select your game mode and number of players:">
+               <font>
+                  <Font name="Papyrus Condensed" size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" spacing="100.0">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Normal">
+                                 <font>
+                                    <Font name="Papyrus Condensed" size="19.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets right="5.0" />
+                                 </padding>
+                              </Label>
+                              <RadioButton fx:id="NormalGame" mnemonicParsing="false">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="gameModeToggle" />
+                                 </toggleGroup>
+                              </RadioButton>
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" />
+                           </padding>
+                        </HBox>
+                        <Button id="button" fx:id="btn2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#check" prefHeight="34.0" prefWidth="117.0" stylesheets="@../css/gamemode.css">
+                           <graphic>
+                              <Label text="2">
+                                 <font>
+                                    <Font name="Papyrus Condensed" size="24.0" />
+                                 </font>
+                              </Label>
+                           </graphic>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Expert">
+                                 <font>
+                                    <Font name="Papyrus Condensed" size="19.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets right="5.0" />
+                                 </padding>
+                              </Label>
+                              <RadioButton fx:id="ExpertGame" mnemonicParsing="false" toggleGroup="$gameModeToggle" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" />
+                           </padding>
+                        </HBox>
+                        <Button id="button" fx:id="btn3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#check" prefHeight="34.0" prefWidth="117.0" stylesheets="@../css/gamemode.css">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <graphic>
+                              <Label text="3">
+                                 <font>
+                                    <Font name="Papyrus Condensed" size="24.0" />
+                                 </font>
+                              </Label>
+                           </graphic>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
    </children>
-</AnchorPane>
+</StackPane>

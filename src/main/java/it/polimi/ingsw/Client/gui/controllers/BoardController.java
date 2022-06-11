@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
 import it.polimi.ingsw.Client.gui.GUI;
-import it.polimi.ingsw.Client.gui.GUIController;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.TowerColor;
 import it.polimi.ingsw.Controller.GameManager;
@@ -27,7 +26,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.List;
 
-public class BoardController implements GUIController {
+public class BoardController extends GUIController {
 
     GUI gui;
 
@@ -93,8 +92,8 @@ public class BoardController implements GUIController {
 
         GameManager tempGM = new GameManager(new Game(), new GameHandler(new Server()));
         tempGM.addPlayer(new Player(0,"Davide"));
-        tempGM.addPlayer(new Player(1,"sono un figo"));
-        tempGM.addPlayer(new Player(2,"senza senso"));
+        tempGM.addPlayer(new Player(1,"asdfghjhgfdsasdfghj"));
+        tempGM.addPlayer(new Player(2,"hamilton"));
         tempGM.initGame();
         tempGame = tempGM.getGame();
         // move some students to the hall just to see

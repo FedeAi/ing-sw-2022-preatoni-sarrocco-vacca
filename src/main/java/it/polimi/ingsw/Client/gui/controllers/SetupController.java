@@ -1,8 +1,9 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
 import it.polimi.ingsw.Client.ConnectionSocket;
+import it.polimi.ingsw.Client.InputToMessage;
 import it.polimi.ingsw.Client.gui.GUI;
-import it.polimi.ingsw.Client.gui.GUIController;
+import it.polimi.ingsw.Client.messages.MessageBuilder;
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
@@ -12,18 +13,22 @@ import java.awt.*;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class SetupController implements GUIController{
+public class SetupController extends GUIController{
 
     GUI gui;
     private final HashMap<Color, String> magiciansImg = new HashMap<>();
-    private boolean muted;
-    private String MAGICIANS = "/fxml/magicians.fxml";
-    private String LOADING = "/fxml/setup.fxml";
+    private String MAGICIANS = "magicians.fxml";
+    private String LOADING = "loading.fxml";
+    private String MENU = "menu.fxml";
+    private  String MODE = "gameMode.fxml";
+    private String BOARD = "board.fxml";
+
 
     @FXML
     private TextField username, ip , port;
@@ -42,65 +47,70 @@ public class SetupController implements GUIController{
     public void join() {
 
         if (username.getText().equals("") || ip.getText().equals("") || port.getText().equals("")) {
-            error.setText("Error: missing all parameters!");
-            clean();
-            return;
+            error.setText("Error: missing parameters!");
+            sleepAndExec(()->error.setText(""));
+
         } else if (!Constants.validateNickname(username.getText())) {
-            error.setText("Error: username[2-18] e no special character");
-            clean();
-            return;
-        } else if (!Constants.validateIp(ip.getText())) {
-            error.setText("Error: address should be a port >1023 and 65355 or localhost");
-            clean();
-            return;
+            error.setText("Error: username(2-18) e no special character");
+            sleepAndExec(()->username.setText(""));
+            sleepAndExec(()->error.setText(""));
+        } else if (!(Constants.validatePort(port.getText()) > 1023 || Constants.validatePort(port.getText()) < 65355)) {
+            error.setText("Error: port should be  >1023 and  < 65355");
+            sleepAndExec(()->port.setText(""));
+            sleepAndExec(()->error.setText(""));
         }
-      /*  }else if(Constants.validatePort(port.getText(port.getText()))){
-
-        }*/
         else {
-
+            gui.getModelView().setPlayerName(username.getText());
+            LoaderController loaderController;
             try {
                 Constants.setAddress(ip.getText());
                 Constants.setPort(Integer.parseInt(port.getText()));
             } catch (NumberFormatException e) {
                 error.setText(e.getMessage());
+                sleepAndExec(()->error.setText(""));
                 return;
             }
-            gui.getModelView().setPlayerName(username.getText());
-            LoaderController loaderController;
-
             try {
-                gui.changeScene(LOADING);
+                gui.changeScene(BOARD);
                 ConnectionSocket connectionSocket = new ConnectionSocket();
                 if (!connectionSocket.setup(username.getText(), gui.getModelView(), gui.getServerMessageHandler())) {
                     error.setText("Server not reachable, try another IP");
-                    gui.changeScene("m");
+                    sleepAndExec(()->ip.setText(""));
+                    sleepAndExec(()->error.setText(""));
                     return;
                 }
 
                 gui.setConnectionSocket(connectionSocket);
                 error.setText("SOCKET CONNECTION \nSETUP COMPLETED!");
-//                loaderController.setText("WAITING FOR PLAYERS");
-//                gui.getListeners()
-//                        .addPropertyChangeListener(
-//                                "action", new ActionParser(connectionSocket, gui.getModelView()));
+                sleepAndExec(()->error.setText(""));
+                gui.getListeners().addPropertyChangeListener("action", new InputToMessage(gui.getModelView(),connectionSocket ));
 
             } catch (DuplicateNicknameException e) {
                 error.setText("This nickname is already in use! Please choose another one.");
+                sleepAndExec(()->error.setText(""));
+
             } catch (InvalidNicknameException e) {
                 error.setText("Server ERROR: Invalid character nickname");
+                sleepAndExec(()->error.setText(""));
+
             }
+           /* if(gui.getModelView().getPlayers().get(0).equals(username.getText())){
+                gui.changeScene(MODE);
+            }else{
+                gui.changeScene(LOADING);
+            }*/
+            gui.changeScene(BOARD);
+
         }
-        gui.changeScene(MAGICIANS);
 
     }
     @FXML
     public void clean(){
 
-        String clean = "";
-        username.setText(clean);
-        ip.setText(clean);
-        port.setText(clean);
+            String clean = "";
+            username.setText(clean);
+            ip.setText(clean);
+            port.setText(clean);
 
     }
 
