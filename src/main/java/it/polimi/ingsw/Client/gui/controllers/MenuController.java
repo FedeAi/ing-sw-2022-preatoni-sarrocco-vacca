@@ -32,7 +32,7 @@ public class MenuController extends GUIController {
         Desktop.getDesktop().browse(new URI("https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca"));
     }
     /**
-     * Method quit kills the application when the "Quit" button is clicked.
+     * Method quit kills the application when the "Exit" button is clicked.
      */
     @FXML
     public void quit() {

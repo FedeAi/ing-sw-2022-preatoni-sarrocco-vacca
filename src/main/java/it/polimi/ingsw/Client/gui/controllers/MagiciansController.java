@@ -9,34 +9,38 @@ import it.polimi.ingsw.Server.Server;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class MagiciansController extends GUIController {
 
 
     GUI gui;
     private Game tempGame;
-    private List<Pane> availableMagicians = new ArrayList<>();
+    private final ArrayList<Image> magiciansImage = new ArrayList<>();
+    private final ArrayList<Pane> magiciansPane = new ArrayList<>();
 
     @FXML
     Label WD,K,WH,S; //wizard, king, witch and sage label
 
     @FXML
-    Pane mago1,mago2,mago3,mago4;
+    Pane Wizard,King,Witch,Sage;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        availableMagicians.addAll(List.of(mago1,mago2,mago3,mago4));
-//        GameManager tempGM = new GameManager(new Game(), new GameHandler(new Server()));
-//        tempGM.addPlayer(new Player(0,"Davide"));
-//        tempGM.addPlayer(new Player(1,"ale"));
-//        tempGM.addPlayer(new Player(2,"fede"));
-//        tempGM.initGame();
-//        tempGame = tempGM.getGame();
+        magiciansImage.add(new Image(getClass().getResourceAsStream("graphics/magicians/mago1.png")));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("graphics/magicians/mago2.png")));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("graphics/magicians/mago3.png")));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("graphics/magicians/mago4.png")));
+        magiciansPane.addAll(List.of(Wizard,King,Witch,Sage));
         showMagicians();
 
     }
@@ -45,36 +49,31 @@ public class MagiciansController extends GUIController {
         this.gui = gui;
     }
 
-
+    @FXML
+    public void selectedMagician(MouseEvent mouseEvent){
+        System.out.println("ciao");
+    }
     public void showMagicians() {
-       /* List<Button> buttons = tempGame.getAvailableMagicians().stream()
-                .map(p->{
-                    //TODO try with imageview on clicked after upload the image
-                    Button btn = new Button();
 
-                    btn.setId(p.toString());
-                    btn.setStyle(" -fx-background-color: transparent; -fx-background-image: url('/graphics/magicians/mago1.png'); -fx-background-size: stretch; -fx-font-size: 24px;");
-                    btn.setOnMouseClicked(this::chooseMagician);
-                    btn.setOnMouseEntered(this::showDescription);
-                    btn.setOnMouseExited(this::showDescription);
-                    return btn;
-                    }
-                ).toList();
-        //List<String> mags = tempGame
 
-        assert buttons.size() <= availableMagicians.size();
+        ///List<String> mgcns = gui.getModelView().getAvailableMagiciansStr(); //TODO check the bind from Model and scene builder
+        List<String> mgcns = List.of(new String[]{"Wizard", "King"});
 
-        for(int i = 0; i< buttons.size(); i ++){
-            availableMagicians.get(i).getChildren().clear();
-            availableMagicians.get(i).getChildren().add(buttons.get(i));
+        for(int i = 0; i< mgcns.size(); i++){
 
+            ImageView view = new ImageView(magiciansImage.get(i));
+            view.setFitHeight(175);
+            view.setFitWidth(200);
+            view.setOnMouseClicked(this::selectedMagician);
+            view.setOnMouseEntered(this::showDescription);
+            view.setOnMouseExited(this::showDescription);
+            magiciansPane.get(i).getChildren().clear();
+            magiciansPane.get(i).getChildren().add(view);
         }
-*/
-    }
-    public void chooseMagician(MouseEvent event){
-      System.out.println("prova");
+
 
     }
+    @FXML
     public void showDescription(MouseEvent mouseEvent){
 
         Button btn = (Button) mouseEvent.getSource();
@@ -100,10 +99,11 @@ public class MagiciansController extends GUIController {
         }
            else{
 
-            K.setText("");
-            WH.setText("");
-            WD.setText("");
-            S.setText("");
+            sleepAndExec(()->K.setText(""));
+            sleepAndExec(()->WH.setText(""));
+            sleepAndExec(()->WD.setText(""));
+            sleepAndExec(()->S.setText(""));
+
          }
 
 

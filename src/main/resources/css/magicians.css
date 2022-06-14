@@ -3,12 +3,12 @@
     -fx-background-size: cover;
 
 }
-.image{
+.magicians{
     -fx-max-height: auto;
     -fx-min-height: auto;
 }
-.image:hover{
-    -fx-opacity: 0.9;
+.magicians:hover{
+    -fx-opacity: 0.8;
 }
 .title{
     -fx-font-size: 30 px;

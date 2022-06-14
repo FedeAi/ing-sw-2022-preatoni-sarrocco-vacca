@@ -91,9 +91,9 @@ public class BoardController extends GUIController {
         loadAssets();
 
         GameManager tempGM = new GameManager(new Game(), new GameHandler(new Server()));
-        tempGM.addPlayer(new Player(0,"Davide"));
-        tempGM.addPlayer(new Player(1,"asdfghjhgfdsasdfghj"));
-        tempGM.addPlayer(new Player(2,"hamilton"));
+        tempGM.addPlayer(new Player(0,"davide"));
+        tempGM.addPlayer(new Player(1,"federico"));
+        tempGM.addPlayer(new Player(2,"alessandro"));
         tempGM.initGame();
         tempGame = tempGM.getGame();
         // move some students to the hall just to see

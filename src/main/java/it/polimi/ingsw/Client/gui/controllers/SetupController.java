@@ -99,7 +99,7 @@ public class SetupController extends GUIController{
             }else{
                 gui.changeScene(LOADING);
             }*/
-            gui.changeScene(BOARD);
+            gui.changeScene(MODE);
 
         }
 

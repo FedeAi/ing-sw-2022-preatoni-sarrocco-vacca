@@ -16,7 +16,7 @@ public abstract class GUIController implements Initializable {
     public void sleepAndExec(Runnable func){
         Thread thread = new Thread(()->{
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

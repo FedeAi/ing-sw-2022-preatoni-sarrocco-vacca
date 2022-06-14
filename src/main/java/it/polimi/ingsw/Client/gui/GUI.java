@@ -73,11 +73,11 @@ public class GUI extends Application implements UI{
         run();
     }
 
-    // NOT NEEDED AS OF NOW
-    public void setup() throws IOException {
+      public void setup() throws IOException {
 
 
-        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, SETUP, BOARD, MAGIs, LOADER, MODE));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, SETUP, BOARD, LOADER, MODE, MAGIs));
+
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -89,7 +89,7 @@ public class GUI extends Application implements UI{
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(MODE);
+        currentScene = nameMapScene.get(MAGIs);
         //currentScene = nameMapScene.get(LOADER);
     }
     public void run() {
@@ -107,7 +107,9 @@ public class GUI extends Application implements UI{
     }
 
     public void setConnectionSocket(ConnectionSocket connectionSocket) {
-        this.connectionSocket = connectionSocket;
+        if(this.connectionSocket == null){
+            this.connectionSocket = connectionSocket;
+        }
     }
 
     public ModelView getModelView(){
@@ -138,6 +140,7 @@ public class GUI extends Application implements UI{
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case ServerMessageHandler.GENERERIC_MODEL_UPDATE_LISTENER -> handleModelChange();
+
         }
     }
 

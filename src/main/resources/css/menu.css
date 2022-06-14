@@ -13,6 +13,7 @@
     -fx-font-size: 21 px;
     -fx-font-weight: bold;
     -fx-font-family: Papyrus;
+
 }
 .button{
     -fx-background-image: url("../graphics/perg2.png");
