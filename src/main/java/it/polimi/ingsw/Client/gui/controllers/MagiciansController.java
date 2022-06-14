@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
+import it.polimi.ingsw.Client.InputToMessage;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Model.Game;
@@ -28,86 +29,74 @@ public class MagiciansController extends GUIController {
     private final ArrayList<Pane> magiciansPane = new ArrayList<>();
 
     @FXML
-    Label WD,K,WH,S; //wizard, king, witch and sage label
+    Label description; //wizard, king, witch and sage label
 
     @FXML
-    Pane Wizard,King,Witch,Sage;
+    Pane Wizard, King, Witch, Sage;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        magiciansImage.add(new Image(getClass().getResourceAsStream("graphics/magicians/mago1.png")));
-        magiciansImage.add(new Image(getClass().getResourceAsStream("graphics/magicians/mago2.png")));
-        magiciansImage.add(new Image(getClass().getResourceAsStream("graphics/magicians/mago3.png")));
-        magiciansImage.add(new Image(getClass().getResourceAsStream("graphics/magicians/mago4.png")));
-        magiciansPane.addAll(List.of(Wizard,King,Witch,Sage));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago1.png")));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago2.png")));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago3.png")));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago4.png")));
+        magiciansPane.addAll(List.of(Wizard, King, Witch, Sage));
         showMagicians();
-
     }
+
     @Override
     public void setGui(GUI gui) {
         this.gui = gui;
     }
 
     @FXML
-    public void selectedMagician(MouseEvent mouseEvent){
-        System.out.println("ciao");
+    public void selectedMagician(MouseEvent mouseEvent) {
+        ImageView selection = (ImageView) mouseEvent.getSource();
+        String magician = selection.getId();
+
     }
+
     public void showMagicians() {
-
-
         ///List<String> mgcns = gui.getModelView().getAvailableMagiciansStr(); //TODO check the bind from Model and scene builder
-        List<String> mgcns = List.of(new String[]{"Wizard", "King"});
+        List<String> mgcns = List.of(new String[]{"Wizard", "King", "Witch", "Sage"});
 
-        for(int i = 0; i< mgcns.size(); i++){
-
+        for (int i = 0; i < mgcns.size(); i++) {
             ImageView view = new ImageView(magiciansImage.get(i));
-            view.setFitHeight(175);
-            view.setFitWidth(200);
+            view.setFitHeight(404);
+            view.setFitWidth(350);
             view.setOnMouseClicked(this::selectedMagician);
             view.setOnMouseEntered(this::showDescription);
             view.setOnMouseExited(this::showDescription);
+            view.setId(mgcns.get(i));
             magiciansPane.get(i).getChildren().clear();
             magiciansPane.get(i).getChildren().add(view);
         }
-
-
     }
+
     @FXML
-    public void showDescription(MouseEvent mouseEvent){
-
-        Button btn = (Button) mouseEvent.getSource();
-        String id = btn.getId();
-
-        if(mouseEvent.getEventType() == MouseEvent.MOUSE_ENTERED){
-            // restore player school
+    public void showDescription(MouseEvent mouseEvent) {
+        ImageView selection = (ImageView) mouseEvent.getSource();
+        String id = selection.getId();
+        if (mouseEvent.getEventType() == MouseEvent.MOUSE_ENTERED) {
             switch (id.toLowerCase()) {
                 case "king" -> {
-                    K.setText("the king of all kings! He can conquer all empires and masterfully vanquish all his opponents");
+                    description.setText("The king of all kings!");
                 }
                 case "witch" -> {
-                    WH.setText("The most powerful witch in the world will be able to enchant you and convince you to give up! Always be wary");
+                    description.setText("The most powerful witch in the world!");
                 }
-                case "sage"->{
-                    S.setText("the wise old man is a formidable strategist and a weighted character between brains and brawn! ");
+                case "sage" -> {
+                    description.setText("The wise old formidable strategist!");
                 }
-                case "wizard"->{
-                    WD.setText("The grand master of sorcerers is extraordinarily powerful, once across the multiverse to win a challenge! ");
+                case "wizard" -> {
+                    description.setText("The grand master of sorcerers!");
                 }
             }
-
+        } else {
+            description.setText("");
         }
-           else{
-
-            sleepAndExec(()->K.setText(""));
-            sleepAndExec(()->WH.setText(""));
-            sleepAndExec(()->WD.setText(""));
-            sleepAndExec(()->S.setText(""));
-
-         }
-
-
-        }
+    }
 }
 
 
