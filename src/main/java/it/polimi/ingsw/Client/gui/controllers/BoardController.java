@@ -2,19 +2,12 @@ package it.polimi.ingsw.Client.gui.controllers;
 
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Constants.Color;
-import it.polimi.ingsw.Constants.Printable;
 import it.polimi.ingsw.Constants.TowerColor;
-import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.SuperIsland;
-import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.School;
-import it.polimi.ingsw.Server.GameHandler;
-import it.polimi.ingsw.Server.Server;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
@@ -26,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
+import java.beans.PropertyChangeSupport;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -33,6 +27,12 @@ import java.util.List;
 public class BoardController extends GUIController {
 
     GUI gui;
+
+    public static final String ENTRY_STUDENT_LISTENER = "selectSchoolStudent";
+    public static final String SCHOOL_HALL_LISTENER = "selectSchoolHall"; //ciao, Bella, mi senti?
+    public static final String SELECT_ISLAND_LISTENER = "selectIsland"; //ciao, Bella, mi senti?
+    public static final String SELECT_ASSISTANT_CARD_LISTENER = "selectAssistantCard"; //ciao, Bella, mi senti?
+    private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);    // support
 
     @FXML
     GridPane grid;
@@ -99,8 +99,6 @@ public class BoardController extends GUIController {
 
         loadAssets();
 
-
-
     }
 
     public void init(){
@@ -109,6 +107,8 @@ public class BoardController extends GUIController {
         String player = gui.getModelView().getPlayerName();
         buildSchool(gui.getModelView().getPlayerMapSchool().get(player), getProfsFromNickname(gui.getModelView().getProfessors(), player));
         showCards(gui.getModelView().getHand());
+
+        changeSupport.addPropertyChangeListener(new EventsToActions(gui));
     }
 
     private void loadAssets(){
@@ -176,9 +176,12 @@ public class BoardController extends GUIController {
             cardImg.setImage(cardImgs.get(assistantCard.getValue()-1));
             cardImg.setFitWidth(100);
             cardImg.setFitHeight(150);
+            cardImg.setOnMouseEntered(this::onSelectNode);
+            cardImg.setOnMouseExited(this::onSelectNode);
             cardImg.setSmooth(true);
             cardImg.setCache(true);
 
+            cardImg.setOnMouseReleased((e) -> changeSupport.firePropertyChange(SELECT_ASSISTANT_CARD_LISTENER, null, assistantCard.getValue()));
             cardContainer.getChildren().add(cardImg);
         }
     }
@@ -294,6 +297,9 @@ public class BoardController extends GUIController {
         pane.getChildren().add(hContainer);
 //        pane.getChildren().add(tower);
 
+        pane.setOnMouseReleased((e) -> changeSupport.firePropertyChange(SELECT_ISLAND_LISTENER, null, index));
+        pane.setOnMouseEntered(this::onSelectNode);
+        pane.setOnMouseExited(this::onSelectNode);
         return pane;
     }
 
@@ -304,13 +310,17 @@ public class BoardController extends GUIController {
         for(int i = 0; i < studentEntryPanes.size(); i++){
             studentEntryPanes.get(i).getChildren().clear(); // first remove previous items
             if(i < entryStuds.size()){
-                ImageView student = new ImageView(studentImgs.get(entryStuds.get(i)));
+                Color studentC = entryStuds.get(i);
+                ImageView student = new ImageView(studentImgs.get(studentC));
                 student.fitWidthProperty().bind(studentEntryPanes.get(i).widthProperty());
                 student.fitHeightProperty().bind(studentEntryPanes.get(i).heightProperty());
                 student.setSmooth(true);
                 student.setCache(true);
-
-                studentEntryPanes.get(i).getChildren().add(student);
+                Pane pane = studentEntryPanes.get(i);
+                pane.setOnMouseEntered(this::onSelectNode);
+                pane.setOnMouseExited(this::onSelectNode);
+                pane.setOnMouseClicked((e) -> changeSupport.firePropertyChange(ENTRY_STUDENT_LISTENER, null, studentC));
+                pane.getChildren().add(student);
             }
         }
 
@@ -378,6 +388,39 @@ public class BoardController extends GUIController {
         }
 
     }
+    public void onSelectNode(MouseEvent evt) {
+
+        if (evt.getSource() instanceof Pane) {
+            Pane pane = (Pane) evt.getSource();
+            if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
+
+                pane.setStyle("-fx-opacity: 0.8");
+                pane.setScaleX(1.25);
+                pane.setScaleY(1.25);
+            } else {
+                pane.setStyle("-fx-opacity: 1");
+                pane.setScaleX(1);
+                pane.setScaleY(1);
+            }
+
+        }
+        else if(evt.getSource() instanceof ImageView) {
+            ImageView view = (ImageView) evt.getSource();
+            if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
+                view.setStyle("-fx-opacity: 0.8");
+                view.setScaleX(1.25);
+                view.setScaleY(1.25);
+            } else {
+                view.setStyle("-fx-opacity: 1");
+                view.setScaleX(1);
+                view.setScaleY(1);
+            }
+        }
+    }
+
+
+
+
     /**
      * Method quit kills the application when the "Quit" button is pressed.
      */

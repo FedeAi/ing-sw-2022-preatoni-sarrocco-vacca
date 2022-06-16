@@ -74,11 +74,13 @@ public class Game {
         listeners.firePropertyChange(ISLANDS_LISTENER, null, islandContainer);
         listeners.firePropertyChange(CLOUDS_LISTENER, null, clouds);
         listeners.firePropertyChange(ROUND_OWNER_LISTENER, null, roundOwner.getNickname());
-        listeners.firePropertyChange(GAME_STATE_LISTENER, null, gameState);
+
 
         listeners.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, players.stream().map(Player::getNickname).toList());
 
         players.forEach(Player::fireInitialState);
+
+        listeners.firePropertyChange(GAME_STATE_LISTENER, null, gameState);
     }
 
     /**

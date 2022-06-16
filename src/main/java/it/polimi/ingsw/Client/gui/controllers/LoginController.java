@@ -44,7 +44,8 @@ public class LoginController extends GUIController{
      */
     @FXML
     public void join() {
-
+        ip.setText("localhost");
+        port.setText("8080");
         if (username.getText().equals("") || ip.getText().equals("") || port.getText().equals("")) {
             error.setText("Error: missing parameters!");
             sleepAndExec(()->error.setText(""));
@@ -73,7 +74,6 @@ public class LoginController extends GUIController{
 
                 ConnectionSocket connectionSocket = new ConnectionSocket();
                 int num_players = gui.getModelView().getConnectedPlayers().size();
-
                 if (!connectionSocket.setup(username.getText(), gui.getModelView(), gui.getServerMessageHandler())) {
                     error.setText("Server not reachable, try another IP");
                     sleepAndExec(()->ip.setText(""));

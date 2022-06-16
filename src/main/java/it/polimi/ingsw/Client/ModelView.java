@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client;
 
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,13 +16,13 @@ import it.polimi.ingsw.Model.Islands.IslandContainer;
 import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.Answer;
 
-public class ModelView {
+public class ModelView implements Serializable {
 
-    private Answer serverAnswer;
+    private transient Answer serverAnswer;
     private String playerName;
     private String roundOwner;
-    private final CLI cli;
-    private final GUI gui;
+    private transient final CLI cli;
+    private transient final GUI gui;
 
     /** Model data **/
     private List<String> connectedPlayers;
@@ -54,6 +55,7 @@ public class ModelView {
         this.playedCards = new HashMap<String, AssistantCard>();
         this.playerMapSchool = new HashMap <String, School>() ;
         this.connectedPlayers = new ArrayList<>();
+        gameState = GameState.GAME_ROOM;
     }
 
     /**
@@ -67,6 +69,7 @@ public class ModelView {
         this.playedCards = new HashMap<String, AssistantCard>();
         this.playerMapSchool = new HashMap <String, School>() ;
         this.connectedPlayers = new ArrayList<>();
+        gameState = GameState.GAME_ROOM;
     }
     /** Getter and Setter **/
 
@@ -239,5 +242,31 @@ public class ModelView {
         return players;
     }
 
+    public void saveToFile(){
+        try (FileOutputStream fos = new FileOutputStream("modelview.dat");
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+
+            // write object to file
+            oos.writeObject(this);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public ModelView readFromFile(){
+        ModelView modelView = null;
+        try (FileInputStream fis = new FileInputStream("modelview.dat");
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            // read object from file
+            modelView = (ModelView) ois.readObject();
+
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return modelView; 
+    }
 
 }

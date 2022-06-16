@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 //--module-path /home/federico/libs/javafx-sdk-18.0.1/lib  --add-modules javafx.controls,javafx.fxml
-public class GUI extends Application implements UI{
+public class GUI extends Application implements UI {
 
 
     protected static final String MENU = "menu.fxml";
@@ -47,18 +47,19 @@ public class GUI extends Application implements UI{
     private Scene currentScene;
 
 
-
     /**
      * Maps each scene name to the effective scene object, in order to easily find it during scene changing operations.
      */
     private final HashMap<String, Scene> nameMapScene = new HashMap<>();
     private final HashMap<String, GUIController> nameMapController = new HashMap<>();
 
-    public GUI(){
+    public GUI() {
         modelView = new ModelView(this);
+//        modelView = (new ModelView(this)).readFromFile();
         serverMessageHandler = new ServerMessageHandler(this, modelView);
         activeGame = true;
     }
+
     /**
      * Main class of the GUI, which is called from the Eriantys launcher in case user decides to play with it.
      *
@@ -76,7 +77,7 @@ public class GUI extends Application implements UI{
         run();
     }
 
-      public void setup() throws IOException {
+    public void setup() throws IOException {
 
 
         List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, LOGIN, BOARD, LOADER, SETUP, MAGIs));
@@ -92,9 +93,10 @@ public class GUI extends Application implements UI{
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(MENU);
+        currentScene = nameMapScene.get(LOGIN);
         //currentScene = nameMapScene.get(LOADER);
     }
+
     public void run() {
         stage.setTitle("Eriantys");
         stage.setScene(currentScene);
@@ -102,24 +104,24 @@ public class GUI extends Application implements UI{
         stage.show();
 
     }
-    
-    public void changeScene(String newScene){
+
+    public void changeScene(String newScene) {
         stage.setScene(nameMapScene.get(newScene));
         stage.centerOnScreen();
         stage.show();
     }
 
     public void setConnectionSocket(ConnectionSocket connectionSocket) {
-        if(this.connectionSocket == null){
+        if (this.connectionSocket == null) {
             this.connectionSocket = connectionSocket;
         }
     }
 
-    public ModelView getModelView(){
+    public ModelView getModelView() {
         return modelView;
     }
 
-    public ServerMessageHandler getServerMessageHandler(){
+    public ServerMessageHandler getServerMessageHandler() {
         return serverMessageHandler;
     }
 
@@ -127,10 +129,10 @@ public class GUI extends Application implements UI{
         return nameMapController.get(name);
     }
 
-    private void handleModelChange(){
+    private void handleModelChange() {
         Platform.runLater(() -> {
             Answer message = modelView.getServerAnswer();
-            if(message instanceof ModelMessage){
+            if (message instanceof ModelMessage) {
 
             }
         });
@@ -144,28 +146,40 @@ public class GUI extends Application implements UI{
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case ServerMessageHandler.GENERERIC_MODEL_UPDATE_LISTENER -> handleModelChange();
-            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> Platform.runLater(()->{changeScene(SETUP);});    // setup scene
-            case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> Platform.runLater(()->{changeScene(MAGIs);});    // magician scene
+            case ServerMessageHandler.GENERERIC_MODEL_UPDATE_LISTENER -> {
+                handleModelChange();
+                // TODO  update only the changed part ( fire to board controller (propagate) )
+                if(!(modelView.getGameState()==GameState.GAME_ROOM)){
+                    Platform.runLater(() -> {
+                        ((BoardController) nameMapController.get(BOARD)).init();
+                    });
+                }
+            }
+            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> Platform.runLater(() -> {
+                changeScene(SETUP);
+            });    // setup scene
+            case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> Platform.runLater(() -> {
+                changeScene(MAGIs);
+            });    // magician scene
             case ServerMessageHandler.GAME_STATE_LISTENER -> {
-                if(modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()){
+                if (modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()) {
 
-                    Platform.runLater(()->{
+                    Platform.runLater(() -> {
                         ((MagiciansController) nameMapController.get(MAGIs)).init();
                         changeScene(MAGIs);
                     });
 
                 }
                 // first turn -> board
-                if(modelView.getGameState() == GameState.PLANNING_CHOOSE_CARD && modelView.getPrevGameState() == GameState.SETUP_CHOOSE_MAGICIAN){
-                    Platform.runLater(()->{
+                if (modelView.getGameState() == GameState.PLANNING_CHOOSE_CARD && modelView.getPrevGameState() == GameState.SETUP_CHOOSE_MAGICIAN) {
+                    Platform.runLater(() -> {
                         ((BoardController) nameMapController.get(BOARD)).init();
-                        changeScene(BOARD);});
+                        changeScene(BOARD);
+                    });
                 }
-
-
             }
         }
+
     }
 
 }
