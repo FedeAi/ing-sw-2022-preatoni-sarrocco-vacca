@@ -88,7 +88,7 @@ public class GUI extends Application implements UI{
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(MAGIs);
+        currentScene = nameMapScene.get(MODE);
         //currentScene = nameMapScene.get(LOADER);
     }
     public void run() {

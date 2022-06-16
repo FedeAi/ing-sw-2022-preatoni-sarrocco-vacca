@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class GameModeController extends GUIController{
 
     private GUI gui;
-    private final static String BOARD ="/fxml/board.fxml";
+    private final static String MAGI ="magicians.fxml";
 
     @FXML
     RadioButton NormalGame, ExpertGame;
@@ -40,7 +40,7 @@ public class GameModeController extends GUIController{
         }
         if(NormalGame.isSelected() || ExpertGame.isSelected()){
            // gui.getModelView().setExpert(expert);
-           gui.changeScene(BOARD);
+           gui.changeScene(MAGI);
         }
         else{
             error.setText("choose the mode you want to play before starting");

@@ -28,6 +28,7 @@ public class SetupController extends GUIController{
     private String MENU = "menu.fxml";
     private  String MODE = "gameMode.fxml";
     private String BOARD = "board.fxml";
+    private String MAGI = "magicians.fxml";
 
 
     @FXML
@@ -71,7 +72,7 @@ public class SetupController extends GUIController{
                 return;
             }
             try {
-                gui.changeScene(BOARD);
+                gui.changeScene(MODE);
                 ConnectionSocket connectionSocket = new ConnectionSocket();
                 if (!connectionSocket.setup(username.getText(), gui.getModelView(), gui.getServerMessageHandler())) {
                     error.setText("Server not reachable, try another IP");
