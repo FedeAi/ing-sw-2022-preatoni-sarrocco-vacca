@@ -1,23 +1,15 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
-import it.polimi.ingsw.Client.InputToMessage;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Constants.Magician;
-import it.polimi.ingsw.Controller.GameManager;
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Server.GameHandler;
-import it.polimi.ingsw.Server.Server;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -37,12 +29,11 @@ public class MagiciansController extends GUIController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago1.png")));
-        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago2.png")));
-        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago3.png")));
-        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago4.png")));
-        magiciansPane.addAll(List.of(Wizard, King, Witch, Sage));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/king.png")));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/wizard.png")));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/witch.png")));
+        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/sage.png")));
+        magiciansPane.addAll(List.of(King, Wizard, Witch, Sage));
         description.setFont(font);
 
     }

@@ -114,6 +114,10 @@ public class LoginController extends GUIController{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        username.setFont(font);
+        ip.setFont(font);
+        port.setFont(font);
+        error.setFont(font);
 
     }
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Client.*;
+import it.polimi.ingsw.Client.gui.controllers.BoardController;
 import it.polimi.ingsw.Client.gui.controllers.GUIController;
 import it.polimi.ingsw.Client.gui.controllers.MagiciansController;
 import it.polimi.ingsw.Constants.GameState;
@@ -108,13 +109,6 @@ public class GUI extends Application implements UI{
         stage.show();
     }
 
-    public void initInitialSceneState(){
-        Platform.runLater(()->{
-            ((MagiciansController) nameMapController.get(MAGIs)).init();
-            // same for board todo
-        });
-    }
-
     public void setConnectionSocket(ConnectionSocket connectionSocket) {
         if(this.connectionSocket == null){
             this.connectionSocket = connectionSocket;
@@ -155,15 +149,20 @@ public class GUI extends Application implements UI{
             case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> Platform.runLater(()->{changeScene(MAGIs);});    // magician scene
             case ServerMessageHandler.GAME_STATE_LISTENER -> {
                 if(modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()){
-                    initInitialSceneState();
-                    Platform.runLater(()->{changeScene(MAGIs);});
-                }
 
+                    Platform.runLater(()->{
+                        ((MagiciansController) nameMapController.get(MAGIs)).init();
+                        changeScene(MAGIs);
+                    });
+
+                }
                 // first turn -> board
                 if(modelView.getGameState() == GameState.PLANNING_CHOOSE_CARD && modelView.getPrevGameState() == GameState.SETUP_CHOOSE_MAGICIAN){
-
-                    Platform.runLater(()->{changeScene(BOARD);});
+                    Platform.runLater(()->{
+                        ((BoardController) nameMapController.get(BOARD)).init();
+                        changeScene(BOARD);});
                 }
+
 
             }
         }
