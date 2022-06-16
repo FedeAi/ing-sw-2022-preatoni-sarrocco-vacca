@@ -45,6 +45,12 @@ public class MagiciansController extends GUIController {
         magiciansPane.addAll(List.of(Wizard, King, Witch, Sage));
         description.setFont(font);
 
+    }
+
+    /**
+     * this function must be called after the controller has been initialized
+     */
+    public void init(){
         showMagicians();
     }
 
@@ -70,8 +76,8 @@ public class MagiciansController extends GUIController {
     }
 
     public void showMagicians() {
-//        List<String> mgcns = gui.getModelView().getAvailableMagiciansStr(); //TODO check the bind from Model and scene builder
-        List<String> mgcns = List.of(new String[]{"Wizard", "King", "Witch", "Sage"});
+        List<String> mgcns = gui.getModelView().getAvailableMagiciansStr(); //TODO check the bind from Model and scene builder
+//        List<String> mgcns = List.of(new String[]{"Wizard", "King", "Witch", "Sage"});
 
         for (int i = 0; i < mgcns.size(); i++) {
             ImageView view = new ImageView(magiciansImage.get(i));

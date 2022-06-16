@@ -2,7 +2,9 @@ package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Client.*;
 import it.polimi.ingsw.Client.gui.controllers.GUIController;
+import it.polimi.ingsw.Client.gui.controllers.MagiciansController;
 import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Server.Answer.Answer;
 import it.polimi.ingsw.Server.Answer.modelUpdate.ModelMessage;
 import javafx.application.Application;
@@ -89,7 +91,7 @@ public class GUI extends Application implements UI{
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(LOGIN);
+        currentScene = nameMapScene.get(MENU);
         //currentScene = nameMapScene.get(LOADER);
     }
     public void run() {
@@ -104,6 +106,13 @@ public class GUI extends Application implements UI{
         stage.setScene(nameMapScene.get(newScene));
         stage.centerOnScreen();
         stage.show();
+    }
+
+    public void initInitialSceneState(){
+        Platform.runLater(()->{
+            ((MagiciansController) nameMapController.get(MAGIs)).init();
+            // same for board todo
+        });
     }
 
     public void setConnectionSocket(ConnectionSocket connectionSocket) {
@@ -146,11 +155,13 @@ public class GUI extends Application implements UI{
             case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> Platform.runLater(()->{changeScene(MAGIs);});    // magician scene
             case ServerMessageHandler.GAME_STATE_LISTENER -> {
                 if(modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()){
+                    initInitialSceneState();
                     Platform.runLater(()->{changeScene(MAGIs);});
                 }
 
                 // first turn -> board
                 if(modelView.getGameState() == GameState.PLANNING_CHOOSE_CARD && modelView.getPrevGameState() == GameState.SETUP_CHOOSE_MAGICIAN){
+
                     Platform.runLater(()->{changeScene(BOARD);});
                 }
 
