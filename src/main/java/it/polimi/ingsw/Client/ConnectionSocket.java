@@ -79,6 +79,8 @@ public class ConnectionSocket {
             listener = new SocketListener(socket, modelView, input, serverMessageHandler);
             Thread thread = new Thread(listener);
             thread.start();
+
+            System.out.println(CLIColors.ANSI_GREEN + "Socket Connection setup completed!" + CLIColors.RESET);
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");

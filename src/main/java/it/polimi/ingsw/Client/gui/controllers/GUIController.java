@@ -11,6 +11,7 @@ public abstract class GUIController implements Initializable {
 
     protected Font font = Font.loadFont(getClass().getResourceAsStream("/font/PAPYRUS.ttf"), 20);
 
+
     public abstract void setGui(GUI gui);
 
     public void sleepAndExec(Runnable func){

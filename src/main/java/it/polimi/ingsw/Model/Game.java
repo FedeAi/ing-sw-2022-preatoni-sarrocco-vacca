@@ -208,6 +208,7 @@ public class Game {
     public void createPlayer(int playerID, String nickname) {
         Player p = new Player(playerID, nickname);
         players.add(p);
+        listeners.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, players.stream().filter(Player::isConnected).map(Player::getNickname).toList());
     }
 
     /**
@@ -243,8 +244,10 @@ public class Game {
         if (!(isNicknameTaken(player.getNickname()))) {
             players.add(player);
             playersActionPhase = players;   // initialize players for action phase
+            listeners.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, players.stream().filter(Player::isConnected).map(Player::getNickname).toList());
             return true;
         }
+
         return false;
     }
 

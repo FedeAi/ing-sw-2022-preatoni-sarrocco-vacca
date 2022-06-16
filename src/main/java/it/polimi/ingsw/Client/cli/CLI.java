@@ -148,7 +148,7 @@ public class CLI implements UI {
                 System.err.println("The entered IP/port doesn't match any active server or the server is not " + "running. Please try again!");
                 CLI.main(null);
             }
-            System.out.println(CLIColors.ANSI_GREEN + "Socket Connection setup completed!" + CLIColors.RESET);
+
         } catch (DuplicateNicknameException | InvalidNicknameException e) {
             setup();
         }

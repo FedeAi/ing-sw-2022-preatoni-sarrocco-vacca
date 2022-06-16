@@ -1,122 +1,79 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
-import it.polimi.ingsw.Client.ConnectionSocket;
-import it.polimi.ingsw.Client.InputToMessage;
 import it.polimi.ingsw.Client.gui.GUI;
-import it.polimi.ingsw.Client.messages.MessageBuilder;
-import it.polimi.ingsw.Constants.Constants;
-import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
-import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-
-import java.awt.*;
-
-import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.text.Font;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
+
 
 public class SetupController extends GUIController{
 
-    GUI gui;
-    private final HashMap<Color, String> magiciansImg = new HashMap<>();
-    private String MAGICIANS = "magicians.fxml";
-    private String LOADING = "loading.fxml";
-    private String MENU = "menu.fxml";
-    private  String MODE = "gameMode.fxml";
-    private String BOARD = "board.fxml";
+    private GUI gui;
+
+    @FXML
+    RadioButton NormalGame, ExpertGame;
+    @FXML
+    Button btn2,btn3;
+    @FXML
+    ToggleGroup gameModeToggle;
+    @FXML
+    Label title,error;
+
+
 
 
     @FXML
-    private TextField username, ip , port;
-    @FXML
-    private Label error;
+    public void check(MouseEvent event) {
+        Button btn = (Button) event.getSource();
+        String id = btn.getId();
+        String expert = "";
+
+        if(ExpertGame.isSelected() || NormalGame.isSelected()){
+            if (ExpertGame.isPressed()) {
+                expert = " expert";
+            }
+
+            String numPlayer = " 2";
+            if (id.equalsIgnoreCase("btn3")) {
+                numPlayer = " 3";
+            }
+
+            gui.changeScene("loading.fxml");
+            String message = "SETUP" + numPlayer + expert;   //if normal mode string must be empty
+            // send setup option
+            Platform.runLater(() -> {
+                gui.getListeners().firePropertyChange("action", null, message);
+            });
+
+
+        }
+        else{
+            error.setText("choose the mode you want to play before starting");
+            sleepAndExec(()->error.setText(""));
+        }
+
+
+    }
 
     @Override
     public void setGui(GUI gui) {
         this.gui = gui;
     }
-
-    /**
-     * Method join changes the stage scene into loading.fxml when the button "Play" is pressed.
-     */
-    @FXML
-    public void join() {
-
-        if (username.getText().equals("") || ip.getText().equals("") || port.getText().equals("")) {
-            error.setText("Error: missing parameters!");
-            sleepAndExec(()->error.setText(""));
-
-        } else if (!Constants.validateNickname(username.getText())) {
-            error.setText("Error: username(2-18) e no special character");
-            sleepAndExec(()->username.setText(""));
-            sleepAndExec(()->error.setText(""));
-        } else if (!(Constants.validatePort(port.getText()) > 1023 || Constants.validatePort(port.getText()) < 65355)) {
-            error.setText("Error: port should be  >1023 and  < 65355");
-            sleepAndExec(()->port.setText(""));
-            sleepAndExec(()->error.setText(""));
-        }
-        else {
-            gui.getModelView().setPlayerName(username.getText());
-            LoaderController loaderController;
-            try {
-                Constants.setAddress(ip.getText());
-                Constants.setPort(Integer.parseInt(port.getText()));
-            } catch (NumberFormatException e) {
-                error.setText(e.getMessage());
-                sleepAndExec(()->error.setText(""));
-                return;
-            }
-            try {
-                gui.changeScene(BOARD);
-                ConnectionSocket connectionSocket = new ConnectionSocket();
-                if (!connectionSocket.setup(username.getText(), gui.getModelView(), gui.getServerMessageHandler())) {
-                    error.setText("Server not reachable, try another IP");
-                    sleepAndExec(()->ip.setText(""));
-                    sleepAndExec(()->error.setText(""));
-                    return;
-                }
-
-                gui.setConnectionSocket(connectionSocket);
-                error.setText("SOCKET CONNECTION \nSETUP COMPLETED!");
-                sleepAndExec(()->error.setText(""));
-                gui.getListeners().addPropertyChangeListener("action", new InputToMessage(gui.getModelView(),connectionSocket ));
-
-            } catch (DuplicateNicknameException e) {
-                error.setText("This nickname is already in use! Please choose another one.");
-                sleepAndExec(()->error.setText(""));
-
-            } catch (InvalidNicknameException e) {
-                error.setText("Server ERROR: Invalid character nickname");
-                sleepAndExec(()->error.setText(""));
-
-            }
-           /* if(gui.getModelView().getPlayers().get(0).equals(username.getText())){
-                gui.changeScene(MODE);
-            }else{
-                gui.changeScene(LOADING);
-            }*/
-            gui.changeScene(MODE);
-
-        }
-
-    }
-    @FXML
-    public void clean(){
-
-            String clean = "";
-            username.setText(clean);
-            ip.setText(clean);
-            port.setText(clean);
-
-    }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        btn2.setFont(font);
+        btn3.setFont(font);
+        error.setFont(font);
+        title.setFont(font);
+
 
     }
 

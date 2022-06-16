@@ -90,6 +90,7 @@ public class BoardController extends GUIController {
 
         loadAssets();
 
+        // ####################### START TEMP STUFFF
         GameManager tempGM = new GameManager(new Game(), new GameHandler(new Server()));
         tempGM.addPlayer(new Player(0,"davide"));
         tempGM.addPlayer(new Player(1,"federico"));
@@ -107,7 +108,7 @@ public class BoardController extends GUIController {
         profs.put(Color.YELLOW, tempGame.getPlayers().get(1).getNickname());
         tempGame.setProfessors(profs);
 
-
+        // ####################### END TEMP STUFFF
 
         showChangeSchoolButtons();
         showIslands();

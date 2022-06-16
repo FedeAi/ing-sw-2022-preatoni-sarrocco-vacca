@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Client.*;
 import it.polimi.ingsw.Client.gui.controllers.GUIController;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Server.Answer.Answer;
 import it.polimi.ingsw.Server.Answer.modelUpdate.ModelMessage;
 import javafx.application.Application;
@@ -24,12 +25,12 @@ import java.util.logging.Level;
 public class GUI extends Application implements UI{
 
 
-    private static final String MENU = "menu.fxml";
-    private static final String BOARD = "board.fxml";
-    private static final String LOADER = "loading.fxml";
-    private static final String SETUP = "setup.fxml";
-    private static final String MAGIs = "magicians.fxml";
-    private static final String MODE = "gameMode.fxml";
+    protected static final String MENU = "menu.fxml";
+    protected static final String BOARD = "board.fxml";
+    protected static final String LOADER = "loading.fxml";
+    protected static final String LOGIN = "login.fxml";
+    protected static final String MAGIs = "magicians.fxml";
+    protected static final String SETUP = "setup.fxml";
 
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final ModelView modelView;
@@ -75,7 +76,7 @@ public class GUI extends Application implements UI{
       public void setup() throws IOException {
 
 
-        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, SETUP, BOARD, LOADER, MODE, MAGIs));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, LOGIN, BOARD, LOADER, SETUP, MAGIs));
 
         try {
             for (String path : fxmList) {
@@ -88,7 +89,7 @@ public class GUI extends Application implements UI{
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(MAGIs);
+        currentScene = nameMapScene.get(LOGIN);
         //currentScene = nameMapScene.get(LOADER);
     }
     public void run() {
@@ -131,6 +132,8 @@ public class GUI extends Application implements UI{
             }
         });
     }
+
+
     public PropertyChangeSupport getListeners() {
         return listeners;
     }
@@ -139,7 +142,19 @@ public class GUI extends Application implements UI{
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case ServerMessageHandler.GENERERIC_MODEL_UPDATE_LISTENER -> handleModelChange();
+            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> Platform.runLater(()->{changeScene(SETUP);});    // setup scene
+            case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> Platform.runLater(()->{changeScene(MAGIs);});    // magician scene
+            case ServerMessageHandler.GAME_STATE_LISTENER -> {
+                if(modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()){
+                    Platform.runLater(()->{changeScene(MAGIs);});
+                }
 
+                // first turn -> board
+                if(modelView.getGameState() == GameState.PLANNING_CHOOSE_CARD && modelView.getPrevGameState() == GameState.SETUP_CHOOSE_MAGICIAN){
+                    Platform.runLater(()->{changeScene(BOARD);});
+                }
+
+            }
         }
     }
 

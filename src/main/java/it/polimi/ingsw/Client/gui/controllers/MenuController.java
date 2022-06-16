@@ -15,10 +15,10 @@ import static java.lang.System.exit;
 public class MenuController extends GUIController {
 
     GUI gui;
-    private  static final String SETUP = "setup.fxml";
+    private  static final String SETUP = "login.fxml";
 
     /**
-     * Method play run the setup.fxml (change of the scene) when the "Play" button is clicked.
+     * Method play run the login.fxml (change of the scene) when the "Play" button is clicked.
      */
     @FXML
     public void play() {

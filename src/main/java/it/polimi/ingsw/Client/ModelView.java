@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Client;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import it.polimi.ingsw.Client.cli.CLI;
@@ -15,7 +12,6 @@ import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.ReducedCharacterCard;
 import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
-import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.School;
 import it.polimi.ingsw.Server.Answer.Answer;
 
@@ -40,7 +36,7 @@ public class ModelView {
     private List<ReducedCharacterCard> characterCards;
     private Map<String, AssistantCard> playedCards;
     private int motherNature;
-    private GameState gameState;
+    private GameState gameState, prevGameState;
     private boolean expert = false;
 
     private boolean isInputActive = true; // TODO FIXME this must be set not true forever
@@ -216,7 +212,12 @@ public class ModelView {
         return gameState;
     }
 
+    public GameState getPrevGameState(){
+        return prevGameState;
+    }
+
     public void setGameState(GameState gameState) {
+        prevGameState = this.gameState;
         this.gameState = gameState;
     }
 
@@ -228,7 +229,9 @@ public class ModelView {
         return expert;
     }
 
-
+    public boolean amIRoundOwner(){
+        return Objects.equals(roundOwner,playerName);
+    }
 
     public List<String> getPlayers() {
         List<String> players = new ArrayList<>();

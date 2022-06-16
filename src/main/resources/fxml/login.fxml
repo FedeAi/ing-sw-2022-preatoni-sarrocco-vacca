@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane id="backgroundSetup" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="backgroundSetup" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.LoginController">
+   <children>
+      <Label fx:id="error" layoutX="58.0" layoutY="35.0" prefHeight="26.0" prefWidth="452.0" textAlignment="CENTER" textFill="#8d1919" />
+      <Label id="testo" layoutX="60.0" layoutY="72.0" styleClass="testo" stylesheets="@../css/setup.css" text="Username:" textAlignment="JUSTIFY" />
+      <Label id="testo" layoutX="60.0" layoutY="141.0" styleClass="testo" stylesheets="@../css/setup.css" text="IP address:" />
+      <Label id="testo" layoutX="60.0" layoutY="222.0" styleClass="testo" stylesheets="@../css/setup.css" text="Port:" />
+      <TextField fx:id="username" layoutX="238.0" layoutY="72.0">
+         <font>
+            <Font name="Papyrus Condensed" size="18.0" />
+         </font></TextField>
+      <TextField fx:id="port" layoutX="238.0" layoutY="222.0">
+         <font>
+            <Font name="Papyrus Condensed" size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ip" layoutX="238.0" layoutY="141.0">
+         <font>
+            <Font name="Papyrus Condensed" size="18.0" />
+         </font>
+      </TextField>
+      <Button fx:id="connect" layoutX="336.0" layoutY="312.0" mnemonicParsing="false" onAction="#join" prefHeight="62.0" prefWidth="157.0" stylesheets="@../css/menu.css" text="Connect" />
+      <Button id="button" fx:id="clean" layoutX="148.0" layoutY="312.0" mnemonicParsing="false" onAction="#clean" prefHeight="62.0" prefWidth="159.0" text="Clean">
+         <stylesheets>
+            <URL value="@../css/setup.css" />
+            <URL value="@../css/menu.css" />
+         </stylesheets>
+      </Button>
+   </children>
+   <stylesheets>
+      <URL value="@../css/setup.css" />
+      <URL value="@../css/menu.css" />
+   </stylesheets>
+</Pane>

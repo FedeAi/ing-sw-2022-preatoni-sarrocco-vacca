@@ -23,9 +23,9 @@ public class Cloud implements Serializable {
         return students.size() == 0;
     }
 
-    public void addStudent(Color color) {
-        students.put(color, students.getOrDefault(color, 0) + 1);
-    }
+//    public void addStudent(Color color) {
+//        students.put(color, students.getOrDefault(color, 0) + 1);
+//    }
 
     public void addStudents(Map<Color, Integer> addStudents) {
         for (Map.Entry<Color, Integer> entry : addStudents.entrySet()) {

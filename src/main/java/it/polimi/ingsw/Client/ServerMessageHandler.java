@@ -23,6 +23,7 @@ public class ServerMessageHandler {
   public static final String CUSTOM_MESSAGE_LISTER = "customMessage";
   public static final String WIN_MESSAGE_LISTER = "winMessage";
   public static final String NEXT_ROUNDOWNER_LISTENER = "roundOwner";
+  public static final String REQ_MAGICIAN_LISTENER ="reqMagicians";
   public static final String GENERERIC_MODEL_UPDATE_LISTENER = "genericModelUpdate";
   public static final String GAME_STATE_LISTENER = "stateChange";
   public static final String PLAYED_CARD_LISTENER = "playedCard";
@@ -65,11 +66,15 @@ public class ServerMessageHandler {
    */
   public void answerHandler() {
     Answer answer = modelView.getServerAnswer();
+    System.out.println(answer.getClass().getSimpleName());
     if (answer instanceof ConnectionMessage connectionMessage) {
       System.out.println(connectionMessage.getMessage());
     }
     else if (answer instanceof ReqPlayersMessage){
       view.firePropertyChange(REQ_PLAYERS_LISTENER,null, answer);
+    }
+    else if (answer instanceof ReqMagicianMessage) {
+      view.firePropertyChange(REQ_MAGICIAN_LISTENER, null, "ReqMagician");
     }
     else if(answer instanceof ModelMessage){
       handleGameMessage((ModelMessage) answer);
@@ -84,6 +89,7 @@ public class ServerMessageHandler {
     else if(answer instanceof WinMessage){
       view.firePropertyChange(WIN_MESSAGE_LISTER,null, answer);
     }
+
 
   }
 
