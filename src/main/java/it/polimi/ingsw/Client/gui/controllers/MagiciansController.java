@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.gui.controllers;
 
 import it.polimi.ingsw.Client.InputToMessage;
 import it.polimi.ingsw.Client.gui.GUI;
+import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
@@ -36,6 +37,7 @@ public class MagiciansController extends GUIController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago1.png")));
         magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago2.png")));
         magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/mago3.png")));
@@ -53,6 +55,9 @@ public class MagiciansController extends GUIController {
 
     @FXML
     public void selectedMagician(MouseEvent mouseEvent) {
+
+        HashMap OwnMag = new HashMap();
+        Magician mag = null;
         ImageView selection = (ImageView) mouseEvent.getSource();
         String magician = selection.getId();
 
@@ -86,6 +91,7 @@ public class MagiciansController extends GUIController {
     public void showDescription(MouseEvent mouseEvent) {
         ImageView selection = (ImageView) mouseEvent.getSource();
         String id = selection.getId();
+
         if (mouseEvent.getEventType() == MouseEvent.MOUSE_ENTERED) {
             switch (id.toLowerCase()) {
                 case "king" -> {
