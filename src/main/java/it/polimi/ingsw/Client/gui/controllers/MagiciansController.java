@@ -17,7 +17,7 @@ import java.util.List;
 public class MagiciansController extends GUIController {
 
     GUI gui;
-    private final ArrayList<Image> magiciansImage = new ArrayList<>();
+    private final HashMap<String, Image> magiciansImage = new HashMap<>();
     private final ArrayList<Pane> magiciansPane = new ArrayList<>();
 
     @FXML
@@ -29,10 +29,11 @@ public class MagiciansController extends GUIController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/king.png")));
-        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/wizard.png")));
-        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/witch.png")));
-        magiciansImage.add(new Image(getClass().getResourceAsStream("/graphics/magicians/sage.png")));
+        magiciansImage.put(Magician.KING.name(), new Image(getClass().getResourceAsStream("/graphics/magicians/king.png")));
+        magiciansImage.put(Magician.WIZARD.name(), new Image(getClass().getResourceAsStream("/graphics/magicians/wizard.png")));
+        magiciansImage.put(Magician.WITCH.name(), new Image(getClass().getResourceAsStream("/graphics/magicians/witch.png")));
+        magiciansImage.put(Magician.SAGE.name(), new Image(getClass().getResourceAsStream("/graphics/magicians/sage.png")));
+
         magiciansPane.addAll(List.of(King, Wizard, Witch, Sage));
         description.setFont(font);
 
@@ -67,20 +68,22 @@ public class MagiciansController extends GUIController {
     }
 
     public void showMagicians() {
-        List<String> mgcns = gui.getModelView().getAvailableMagiciansStr(); //TODO check the bind from Model and scene builder
-//        List<String> mgcns = List.of(new String[]{"Wizard", "King", "Witch", "Sage"});
 
-        for (int i = 0; i < mgcns.size(); i++) {
-            ImageView view = new ImageView(magiciansImage.get(i));
+        List<String> mgcns = gui.getModelView().getAvailableMagiciansStr(); //TODO check the bind from Model and scene builder
+        int i = 0;
+        for (String mag: mgcns) {
+
+            ImageView view = new ImageView(magiciansImage.get(mag));
             view.setFitHeight(404);
             view.setFitWidth(350);
-            //view.setStyle("-fx-opacity: 0.3");
+
             view.setOnMouseClicked(this::selectedMagician);
             view.setOnMouseEntered(this::showDescription);
             view.setOnMouseExited(this::showDescription);
-            view.setId(mgcns.get(i));
+            view.setId(mag);
             magiciansPane.get(i).getChildren().clear();
             magiciansPane.get(i).getChildren().add(view);
+            i++;
         }
     }
 

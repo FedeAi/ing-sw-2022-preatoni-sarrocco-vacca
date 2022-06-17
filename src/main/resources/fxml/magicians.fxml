@@ -19,8 +19,8 @@
             </Label>
             <HBox id="magicians" fx:id="place" stylesheets="@../css/magicians.css">
                <children>
-                  <Pane fx:id="Wizard" />
                   <Pane fx:id="King" />
+                  <Pane fx:id="Wizard" />
                   <Pane fx:id="Witch" />
                   <Pane fx:id="Sage" />
                </children>

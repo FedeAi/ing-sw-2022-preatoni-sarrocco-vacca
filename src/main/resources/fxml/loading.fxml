@@ -2,11 +2,18 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="backgroundLoading" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="622.0" styleClass="backgroundLoading" stylesheets="@../css/loading.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.LoaderController">
+
+<StackPane prefHeight="200.0" prefWidth="398.0" styleClass="backgroundLoading" stylesheets="@../css/loading.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.LoaderController">
    <children>
-      <Label id="loading" layoutX="234.0" layoutY="200.0" styleClass="loading" stylesheets="@../css/loading.css" text="LOADING" />
-      <ProgressBar layoutX="99.0" layoutY="299.0" prefHeight="50.0" prefWidth="400.0" style="-fx-padding: 8;" />
+      <VBox alignment="CENTER">
+         <children>
+            <Label id="loading" alignment="CENTER" styleClass="loading" stylesheets="@../css/loading.css" text="LOADING" />
+            <ProgressBar prefHeight="50.0" prefWidth="300.0" style="-fx-padding: 8;" />
+            <Label fx:id="status" />
+         </children>
+      </VBox>
    </children>
-</AnchorPane>
+</StackPane>
