@@ -1,13 +1,17 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
+import it.polimi.ingsw.Client.ServerMessageHandler;
 import it.polimi.ingsw.Client.gui.GUI;
+import it.polimi.ingsw.Constants.GameState;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Font;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.concurrent.Callable;
 
-public abstract class GUIController implements Initializable {
+public abstract class GUIController implements Initializable, PropertyChangeListener {
 
     protected Font font = Font.loadFont(getClass().getResourceAsStream("/font/PAPYRUS.ttf"), 20);
 
@@ -25,5 +29,10 @@ public abstract class GUIController implements Initializable {
 
         });
         thread.start();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 }

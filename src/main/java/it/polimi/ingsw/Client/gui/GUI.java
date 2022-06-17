@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,6 +89,7 @@ public class GUI extends Application implements UI {
                 nameMapScene.put(path, new Scene(loader.load()));
                 GUIController controller = loader.getController();
                 controller.setGui(this);
+                listeners.addPropertyChangeListener(controller);
                 nameMapController.put(path, controller);
             }
         } catch (IOException e) {
@@ -129,32 +131,18 @@ public class GUI extends Application implements UI {
         return nameMapController.get(name);
     }
 
-    private void handleModelChange() {
-        Platform.runLater(() -> {
-            Answer message = modelView.getServerAnswer();
-            if (message instanceof ModelMessage) {
-
-            }
-        });
-    }
-
-
-    public PropertyChangeSupport getListeners() {
+    public PropertyChangeSupport getListeners(){
         return listeners;
     }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        Platform.runLater(() -> {
+            listeners.firePropertyChange(evt);
+        });
+
+
         switch (evt.getPropertyName()) {
-            case ServerMessageHandler.GENERERIC_MODEL_UPDATE_LISTENER -> {
-                handleModelChange();
-                // TODO  update only the changed part ( fire to board controller (propagate) )
-                if(!(modelView.getGameState()==GameState.GAME_ROOM)){
-                    Platform.runLater(() -> {
-                        ((BoardController) nameMapController.get(BOARD)).init();
-                    });
-                }
-            }
+
             case ServerMessageHandler.REQ_PLAYERS_LISTENER -> Platform.runLater(() -> {
                 changeScene(SETUP);
             });    // setup scene

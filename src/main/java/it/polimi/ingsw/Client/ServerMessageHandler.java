@@ -24,10 +24,21 @@ public class ServerMessageHandler {
   public static final String WIN_MESSAGE_LISTER = "winMessage";
   public static final String NEXT_ROUNDOWNER_LISTENER = "roundOwner";
   public static final String REQ_MAGICIAN_LISTENER ="reqMagicians";
-  public static final String GENERERIC_MODEL_UPDATE_LISTENER = "genericModelUpdate";
   public static final String GAME_STATE_LISTENER = "stateChange";
   public static final String PLAYED_CARD_LISTENER = "playedCard";
   public static final String CONNECTED_PLAYERS_LISTENER = "connectedPlayers";
+  // Model updates listeners
+  public static final String GENERERIC_MODEL_UPDATE_LISTENER = "genericModelUpdate";
+  public static final String BALANCE_LISTENER = "BalanceListener";
+  public static final String CLOUDS_LISTENER = "cloudsListeners";
+  public static final String HAND_LISTENER = "handListener";
+  public static final String ISLAND_LISTENER = "islandListener";
+  public static final String MOTHER_LISTENER = "motherListener";
+  public static final String PROFS_LISTENER = "profsListener";
+  public static final String SCHOOL_LISTENER = "schoolsListener";
+  public static final String MAGICIANS_LISTENER = "magiciansListener";
+  public static final String CHARACTERS_LISTENER = "charactersListeners";
+
 
   private final ModelView modelView;
   private final PropertyChangeSupport view = new PropertyChangeSupport(this);
@@ -94,30 +105,37 @@ public class ServerMessageHandler {
   }
 
   void handleGameMessage(ModelMessage answer){
-    if(answer instanceof BalanceMessage){
-      modelView.setBalance(((BalanceMessage) answer).getMessage());
+    if(answer instanceof BalanceMessage message){
+      modelView.setBalance(message.getMessage());
+      view.firePropertyChange(BALANCE_LISTENER, null, message.getMessage());
     }
-    else if(answer instanceof CloudsMessage){
-      modelView.setClouds(((CloudsMessage)answer).getMessage());
+    else if(answer instanceof CloudsMessage message){
+      modelView.setClouds(message.getMessage());
+      view.firePropertyChange(CLOUDS_LISTENER, null, message.getMessage());
     }
-    else if(answer instanceof HandMessage){
-      modelView.setHand(((HandMessage)answer).getMessage());
+    else if(answer instanceof HandMessage message){
+      modelView.setHand(message.getMessage());
+      view.firePropertyChange(HAND_LISTENER, null, message.getMessage());
     }
-    else if(answer instanceof IslandsMessage){
-      modelView.setIslandContainer(((IslandsMessage)answer).getMessage());
+    else if(answer instanceof IslandsMessage message){
+      modelView.setIslandContainer(message.getMessage());
+      view.firePropertyChange(ISLAND_LISTENER, null, message.getMessage());
     }
-    else if(answer instanceof MotherMessage){
-      modelView.setMotherNature(((MotherMessage)answer).getMessage());
+    else if(answer instanceof MotherMessage message){
+      modelView.setMotherNature(message.getMessage());
+      view.firePropertyChange(MOTHER_LISTENER, null, message.getMessage());
     }
     else if(answer instanceof PlayedCardMessage message){
       modelView.setPlayedCard(message.getPlayer(), message.getMessage());
-      view.firePropertyChange(PLAYED_CARD_LISTENER, null, message); // todo remove previousstate to trigger (also in game model)
+      view.firePropertyChange(PLAYED_CARD_LISTENER, null, message.getMessage()); // todo remove previousstate to trigger (also in game model)
     }
-    else if(answer instanceof ProfsMessage){
-      modelView.setProfessors(((ProfsMessage)answer).getMessage());
+    else if(answer instanceof ProfsMessage message){
+      modelView.setProfessors(message.getMessage());
+      view.firePropertyChange(PROFS_LISTENER, null, message.getMessage());
     }
     else if(answer instanceof SchoolMessage message){
       modelView.setPlayerSchool(message.getPlayer(), message.getMessage());
+      view.firePropertyChange(SCHOOL_LISTENER, null, message.getMessage());
     }
     else if(answer instanceof RoundOwnerMessage message){
       String previousOwner = modelView.getRoundOwner();
@@ -126,6 +144,7 @@ public class ServerMessageHandler {
     }
     else if(answer instanceof MagicianMessage message){
       modelView.setAvailableMagicians(message.getMessage());
+      view.firePropertyChange(MAGICIANS_LISTENER, null, message.getMessage());
     }
     else if(answer instanceof GameStateMessage message){
       GameState previousState = modelView.getGameState();
@@ -137,6 +156,7 @@ public class ServerMessageHandler {
     }
     else if(answer instanceof CharactersMessage message){
       modelView.setCharacterCards(message.getMessage());
+      view.firePropertyChange(CHARACTERS_LISTENER, null, message.getMessage());
     }
     else if(answer instanceof ConnectedPlayersMessage message) {
       modelView.setConnectedPlayers(message.getMessage());

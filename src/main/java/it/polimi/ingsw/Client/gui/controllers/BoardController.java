@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
+import it.polimi.ingsw.Client.ServerMessageHandler;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Constants.TowerColor;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cloud;
@@ -20,13 +22,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
 
-public class BoardController extends GUIController {
+public class BoardController extends GUIController implements PropertyChangeListener{
 
     GUI gui;
 
@@ -136,7 +139,7 @@ public class BoardController extends GUIController {
         updateIslands();
         String player = gui.getModelView().getPlayerName();
         updateSchool(player);
-        updateCards();
+        updateHand();
         changeSupport.addPropertyChangeListener(new EventsToActions(gui));
     }
 
@@ -217,12 +220,12 @@ public class BoardController extends GUIController {
             cloudsPane.get(i).getChildren().add(0,backCloud);
         }
 
-        fillClouds();
+        updateClouds();
     // REMEMBER LISTENER
 
     }
 
-    private void updateCards() {
+    private void updateHand() {
         List<AssistantCard> cards = gui.getModelView().getHand();
         cardContainer.getChildren().clear();
         cardContainer.setVgap(10);
@@ -268,7 +271,7 @@ public class BoardController extends GUIController {
     }
 
 
-    private void fillClouds() {
+    private void updateClouds() {
 
         List<Cloud> clouds = gui.getModelView().getClouds();
 
@@ -522,5 +525,23 @@ public class BoardController extends GUIController {
         System.exit(0);
     }
 
-
+    public void handleModelChange(){
+    }
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        GameState state = gui.getModelView().getGameState();
+        if( state != GameState.GAME_ROOM  && state != GameState.SETUP_CHOOSE_MAGICIAN) {
+            switch (evt.getPropertyName()) {
+                case ServerMessageHandler.BALANCE_LISTENER -> {
+                }
+                case ServerMessageHandler.CLOUDS_LISTENER -> updateClouds();
+                case ServerMessageHandler.HAND_LISTENER -> updateHand();
+                case ServerMessageHandler.ISLAND_LISTENER, ServerMessageHandler.MOTHER_LISTENER -> updateIslands();
+                case ServerMessageHandler.PROFS_LISTENER -> {}
+                case ServerMessageHandler.SCHOOL_LISTENER -> updateSchool();
+                case ServerMessageHandler.MAGICIANS_LISTENER -> {}
+                case ServerMessageHandler.CHARACTERS_LISTENER -> {}
+            }
+        }
+    }
 }
