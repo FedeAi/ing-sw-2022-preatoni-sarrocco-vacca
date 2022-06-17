@@ -20,4 +20,12 @@ public enum Color {
     public static Color randomColor() {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }
+
+    public static List<Color> fromMapToList(Map <Color,Integer> map){
+        ArrayList<Color> out = new ArrayList<>();
+        for(Map.Entry<Color,Integer> entry : map.entrySet()){
+            out.addAll(Collections.nCopies(entry.getValue(), entry.getKey()));
+        }
+        return out;
+    }
 }

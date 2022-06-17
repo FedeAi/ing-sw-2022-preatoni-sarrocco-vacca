@@ -251,29 +251,23 @@
             </Pane>
             <Pane fx:id="cloud0" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0" translateX="40.0">
-                     <image>
-                        <Image url="@../graphics/board/cloud_card_3.png" />
-                     </image>
-                  </ImageView>
+                  <Pane fx:id="studentCloud1" layoutX="15.0" layoutY="50.0" prefHeight="40.0" prefWidth="40.0" />
+                  <Pane fx:id="studentCloud2" layoutX="90.0" layoutY="25.0" prefHeight="40.0" prefWidth="40.0" />
+                  <Pane fx:id="studentCloud3" layoutX="70.0" layoutY="100.0" prefHeight="40.0" prefWidth="40.0" />
                </children>
             </Pane>
             <Pane fx:id="cloud1" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0" translateY="-100.0">
-                     <image>
-                        <Image url="@../graphics/board/cloud_card_2.png" />
-                     </image>
-                  </ImageView>
+                  <Pane fx:id="studentCloud4" layoutX="15.0" layoutY="50.0" prefHeight="40.0" prefWidth="40.0" />
+                  <Pane fx:id="studentCloud5" layoutX="90.0" layoutY="30.0" prefHeight="40.0" prefWidth="40.0" />
+                  <Pane fx:id="studentCloud6" layoutX="72.0" layoutY="100.0" prefHeight="40.0" prefWidth="40.0" />
                </children>
             </Pane>
             <Pane fx:id="cloud2" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0" translateX="-40.0">
-                     <image>
-                        <Image url="@../graphics/board/cloud_card_4.png" />
-                     </image>
-                  </ImageView>
+                  <Pane fx:id="studentCloud7" layoutX="15.0" layoutY="50.0" prefHeight="40.0" prefWidth="40.0" />
+                  <Pane fx:id="studentCloud8" layoutX="93.0" layoutY="23.0" prefHeight="40.0" prefWidth="40.0" />
+                  <Pane fx:id="studentCloud9" layoutX="73.0" layoutY="100.0" prefHeight="40.0" prefWidth="40.0" />
                </children>
             </Pane>
          </children>
