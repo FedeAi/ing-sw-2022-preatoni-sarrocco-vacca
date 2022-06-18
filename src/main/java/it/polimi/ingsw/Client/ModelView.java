@@ -242,31 +242,31 @@ public class ModelView implements Serializable {
         return players;
     }
 
-    public void saveToFile(){
-        try (FileOutputStream fos = new FileOutputStream("modelview.dat");
-             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-
-            // write object to file
-            oos.writeObject(this);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-    }
-
-    public ModelView readFromFile(){
-        ModelView modelView = null;
-        try (FileInputStream fis = new FileInputStream("modelview.dat");
-             ObjectInputStream ois = new ObjectInputStream(fis)) {
-
-            // read object from file
-            modelView = (ModelView) ois.readObject();
-
-        } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        return modelView; 
-    }
+//    public void saveToFile(){
+//        try (FileOutputStream fos = new FileOutputStream("modelview.dat");
+//             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+//
+//            // write object to file
+//            oos.writeObject(this);
+//
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//    }
+//
+//    public ModelView readFromFile(){
+//        ModelView modelView = null;
+//        try (FileInputStream fis = new FileInputStream("modelview.dat");
+//             ObjectInputStream ois = new ObjectInputStream(fis)) {
+//
+//            // read object from file
+//            modelView = (ModelView) ois.readObject();
+//
+//        } catch (IOException | ClassNotFoundException ex) {
+//            ex.printStackTrace();
+//        }
+//        return modelView;
+//    }
 
 }

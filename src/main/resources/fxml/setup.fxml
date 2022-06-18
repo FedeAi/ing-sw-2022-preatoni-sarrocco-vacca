@@ -44,7 +44,7 @@
                               <Insets bottom="15.0" />
                            </padding>
                         </HBox>
-                        <Button id="button" fx:id="btn2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#check" prefHeight="34.0" prefWidth="117.0" stylesheets="@../css/gamemode.css">
+                        <Button id="button2" fx:id="btn2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#check" prefHeight="34.0" prefWidth="117.0" stylesheets="@../css/gamemode.css">
                            <graphic>
                               <Label text="2">
                                  <font>
@@ -76,7 +76,7 @@
                               <Insets bottom="15.0" />
                            </padding>
                         </HBox>
-                        <Button id="button" fx:id="btn3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#check" prefHeight="34.0" prefWidth="117.0" stylesheets="@../css/gamemode.css">
+                        <Button id="button3" fx:id="btn3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#check" prefHeight="34.0" prefWidth="117.0" stylesheets="@../css/gamemode.css">
                            <font>
                               <Font size="20.0" />
                            </font>

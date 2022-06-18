@@ -41,7 +41,8 @@ public class SetupController extends GUIController{
             }
 
             String numPlayer = " 2";
-            if (id.equalsIgnoreCase("btn3")) {
+
+            if (id.equalsIgnoreCase("button3")) {
                 numPlayer = " 3";
             }
 

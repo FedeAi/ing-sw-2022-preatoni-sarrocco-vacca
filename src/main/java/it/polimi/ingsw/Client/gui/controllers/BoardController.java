@@ -70,6 +70,8 @@ public class BoardController extends GUIController implements PropertyChangeList
     @FXML
     Pane otherPlayer1Pane, otherPlayer2Pane;
 
+    @FXML
+    Pane avatarPain;
 
     // card container
 
@@ -83,6 +85,8 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     private Image motherImg;
     private final ArrayList<Image> islandImgs = new ArrayList<>();
+
+    private final ArrayList<Image> avatarImgs = new ArrayList<>();
 
     private final ArrayList<Image> cardImgs = new ArrayList<>();
 
@@ -102,7 +106,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         islandPanes.addAll(List.of(island0, island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11));
-        cloudsPane.addAll(List.of(cloud0, cloud1, cloud2));
+        cloudsPane.addAll(List.of(cloud0, cloud2, cloud1));
 
         studentEntryPanes.addAll(List.of(entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9));
         // fill colorToHallStudents Map
@@ -114,8 +118,8 @@ public class BoardController extends GUIController implements PropertyChangeList
 
         //fill cloudToStudents
         cloudStudents.add(List.of(studentCloud1, studentCloud2, studentCloud3));
-        cloudStudents.add( List.of(studentCloud4, studentCloud5, studentCloud6));
         cloudStudents.add(List.of(studentCloud7, studentCloud8, studentCloud9));
+        cloudStudents.add( List.of(studentCloud4, studentCloud5, studentCloud6));
 
 
         colorToPlayerProfs.put(Color.GREEN, playerProf1);
@@ -135,6 +139,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     public void init() {
         showChangeSchoolButtons();
         showClouds();
+        uploadAvatar();
 
         updateIslands();
         String player = gui.getModelView().getPlayerName();
@@ -153,6 +158,13 @@ public class BoardController extends GUIController implements PropertyChangeList
         cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud3.png")));
         cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud4.png")));
 
+        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/Kingavatar.png")));
+        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/Sageavatar.png")));
+        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/Witchavatar.png")));
+        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/Wizardavatar.png")));
+
+
+
         for (int i = 1; i < 11; i++) {
             cardImgs.add(new Image(getClass().getResourceAsStream("/graphics/assistants/" + String.valueOf(i) + ".png")));
         }
@@ -166,6 +178,8 @@ public class BoardController extends GUIController implements PropertyChangeList
             towerImgs.put(color, new Image(getClass().getResourceAsStream("/graphics/board/" + color.name().toLowerCase() + "_tower.png")));
         }
         motherImg = new Image(getClass().getResourceAsStream("/graphics/board/mother_nature.png"));
+
+
     }
 
     @Override
@@ -247,6 +261,26 @@ public class BoardController extends GUIController implements PropertyChangeList
             });
             cardContainer.getChildren().add(cardImg);
         }
+    }
+    private void uploadAvatar(){
+
+        ImageView avatar = new ImageView();
+        switch (gui.getModelView().getPlayerMapMagician().entrySet().toString().toLowerCase()){
+            case "king": avatar.setImage(avatarImgs.get(0));
+            case "sage": avatar.setImage(avatarImgs.get(1));
+            case "witch": avatar.setImage(avatarImgs.get(2));
+            case "wizard": avatar.setImage(avatarImgs.get(3));
+
+        }
+        avatar.setFitWidth(100);
+        avatar.setFitHeight(100);
+        avatar.setStyle("-fx-border-radius: 20px; -fx-border-style: ridge; -fx-border-width: 2px; -fx-border-color: black;");
+        avatar.setSmooth(true);
+        avatar.setCache(true);
+
+        //avatarPain.getChildren().clear();
+        avatarPain.getChildren().add(avatar);
+
     }
 
     private void showChangeSchoolButtons() {
@@ -396,6 +430,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     public void updateSchool(){
         updateSchool(playerSchool);
     }
+
     public void updateSchool(String player) {
         playerSchool = Objects.equals(player, "") ? gui.getModelView().getPlayerName() : player;
         School school = gui.getModelView().getPlayerMapSchool().get(player);
@@ -490,8 +525,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         if (evt.getSource() instanceof Pane) {
             Pane pane = (Pane) evt.getSource();
             if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
-
-                pane.setStyle("-fx-opacity: 0.8");
+                pane.setStyle("-fx-opacity: 0.8; -fx-effect: dropshadow(three-pass-box, rgba(59,52,218,0.8), 20, 0, 0, 0);");
                 pane.setScaleX(1.25);
                 pane.setScaleY(1.25);
             } else {
@@ -503,7 +537,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         } else if (evt.getSource() instanceof ImageView) {
             ImageView view = (ImageView) evt.getSource();
             if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                view.setStyle("-fx-opacity: 0.8");
+                view.setStyle("-fx-opacity: 0.8; -fx-border-radius:50%; dropshadow(three-pass-box, rgba(26,17,255,0.8), 10, 0, 0, 0);");
                 view.setScaleX(1.25);
                 view.setScaleY(1.25);
             } else {
@@ -525,8 +559,8 @@ public class BoardController extends GUIController implements PropertyChangeList
         System.exit(0);
     }
 
-    public void handleModelChange(){
-    }
+//    public void handleModelChange(){
+//    }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         GameState state = gui.getModelView().getGameState();
