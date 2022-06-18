@@ -139,7 +139,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     public void init() {
         showChangeSchoolButtons();
         showClouds();
-        uploadAvatar();
+        //uploadAvatar();
 
         updateIslands();
         String player = gui.getModelView().getPlayerName();
