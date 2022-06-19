@@ -7,6 +7,7 @@ import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public class MonkCharacter extends CharacterCard {
@@ -52,7 +53,12 @@ public class MonkCharacter extends CharacterCard {
         }
     }
 
-    public Map<Color, Integer> getStudents() {
+    public Map<Color, Integer> getStudentsMap() {
         return students;
+    }
+
+    @Override
+    public List<Color> getStudents(){
+        return Color.fromMapToList(students);
     }
 }

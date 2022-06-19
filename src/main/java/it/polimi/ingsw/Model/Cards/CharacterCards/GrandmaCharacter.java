@@ -42,6 +42,7 @@ public class GrandmaCharacter extends CharacterCard {
         }
     }
 
+    @Override
     public int getBlockingCards() {
         return blockingCards;
     }

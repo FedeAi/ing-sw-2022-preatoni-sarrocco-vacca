@@ -55,7 +55,7 @@ public class JokerSwapStudents extends Performable {
         }
 
         // the card does not have that student
-        if (joker.getStudents().getOrDefault(studentToPick, 0) <= 0) {
+        if (joker.getStudentsMap().getOrDefault(studentToPick, 0) <= 0) {
             throw new GameException("There isn't any student of the specified color (" + studentToPick.toString() + ") on the joker card.");
         }
         // the player does not have that student

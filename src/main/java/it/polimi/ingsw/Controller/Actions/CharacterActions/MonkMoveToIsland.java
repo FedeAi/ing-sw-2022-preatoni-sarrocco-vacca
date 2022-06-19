@@ -8,7 +8,6 @@ import it.polimi.ingsw.Model.Cards.CharacterCards.MonkCharacter;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
@@ -58,7 +57,7 @@ public class MonkMoveToIsland extends Performable {
         MonkCharacter monk = (MonkCharacter) card.get();
 
         // Verify that the MONK card has a student of the specified COLOR
-        if (monk.getStudents().getOrDefault(student, 0) <= 0) {
+        if (monk.getStudentsMap().getOrDefault(student, 0) <= 0) {
             throw new GameException("There isn't any student of the specified color (" + student.toString() + ") on the monk card.");
         }
     }

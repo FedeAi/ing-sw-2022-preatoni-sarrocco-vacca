@@ -1,9 +1,13 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
+import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Cards.Card;
 import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Model.Game;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class CharacterCard extends Card {
 
@@ -59,5 +63,19 @@ public abstract class CharacterCard extends Card {
 
     public String getActivatingPlayer() {
         return activatingPlayer;
+    }
+
+    /**
+     * @return the professors on the card
+     */
+    public List<Color> getStudents(){
+        return new ArrayList<>();
+    }
+
+    /**
+     * @return the number of blocking cards on the card
+     */
+    public int getBlockingCards(){
+        return 0;
     }
 }

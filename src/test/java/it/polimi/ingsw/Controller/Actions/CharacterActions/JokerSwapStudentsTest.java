@@ -51,7 +51,7 @@ class JokerSwapStudentsTest {
         cardList = new LinkedList<>();
         studentCard = Color.BLUE;
         for (Color c : Color.values()) {
-            selectionValue = card.getStudents().getOrDefault(c, 0);
+            selectionValue = card.getStudentsMap().getOrDefault(c, 0);
             if (selectionValue > 0) {
                 studentCard = c;
                 break;

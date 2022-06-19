@@ -7,6 +7,9 @@ import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MushroomCharacter extends CharacterCard {
     Color student;
@@ -43,5 +46,10 @@ public class MushroomCharacter extends CharacterCard {
 
     public GameState getPreviousState() {
         return previousState;
+    }
+
+    @Override
+    public List<Color> getStudents(){
+        return new ArrayList<>(List.of(student));
     }
 }

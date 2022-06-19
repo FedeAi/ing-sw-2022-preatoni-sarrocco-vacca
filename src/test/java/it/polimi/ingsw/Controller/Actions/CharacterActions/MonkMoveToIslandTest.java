@@ -57,7 +57,7 @@ class MonkMoveToIslandTest {
         // We need to have at least 1 of a color on the card to activate it, so we cycle through the colors
         selection = Color.BLUE;
         for (Color c : Color.values()) {
-            selectionValue = card.getStudents().getOrDefault(c, 0);
+            selectionValue = card.getStudentsMap().getOrDefault(c, 0);
             if (selectionValue > 0) {
                 selection = c;
                 break;
@@ -127,7 +127,7 @@ class MonkMoveToIslandTest {
         card.activate(gameManager.getRules(), game);
         Color missing = Color.BLUE;
         for (Color c : Color.values()) {
-            if (card.getStudents().getOrDefault(c, 0) == 0) {
+            if (card.getStudentsMap().getOrDefault(c, 0) == 0) {
                 missing = c;
                 break;
             }
