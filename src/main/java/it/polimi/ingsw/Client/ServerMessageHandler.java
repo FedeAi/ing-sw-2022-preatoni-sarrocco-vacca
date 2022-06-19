@@ -127,7 +127,7 @@ public class ServerMessageHandler {
     }
     else if(answer instanceof PlayedCardMessage message){
       modelView.setPlayedCard(message.getPlayer(), message.getMessage());
-      view.firePropertyChange(PLAYED_CARD_LISTENER, null, message.getMessage()); // todo remove previousstate to trigger (also in game model)
+      view.firePropertyChange(PLAYED_CARD_LISTENER, null, message); // todo remove previousstate to trigger (also in game model)
     }
     else if(answer instanceof ProfsMessage message){
       modelView.setProfessors(message.getMessage());
