@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
@@ -20,7 +20,7 @@
          <children>
             <StackPane>
                <children>
-                  <Pane>
+                  <Pane prefHeight="495.0" prefWidth="348.0">
                      <children>
                         <ImageView fitHeight="800.0" fitWidth="383.0" preserveRatio="true">
                            <image>
@@ -91,12 +91,12 @@
                         <Pane fx:id="playerProf3" layoutX="151.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
                         <Pane fx:id="playerProf4" layoutX="210.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
                         <Pane fx:id="playerProf5" layoutX="266.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
-                        <Pane fx:id="avatarPain" layoutX="352.0" layoutY="8.0" prefHeight="100.0" prefWidth="100.0" />
       
                      </children>
                   </Pane>
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" StackPane.alignment="TOP_CENTER">
                      <children>
+                        <Pane fx:id="avatarPane" />
                         <Pane fx:id="otherPlayer1Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                            <opaqueInsets>
                               <Insets />
@@ -114,189 +114,241 @@
       </AnchorPane>
    </left>
    <center>
-      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" stylesheets="@../css/board.css" BorderPane.alignment="CENTER">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <StackPane minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="island0" GridPane.columnIndex="1">
+            <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" pickOnBounds="false" prefHeight="720.0" prefWidth="720.0" stylesheets="@../css/board.css">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0" pickOnBounds="true">
+                  <Pane fx:id="island0" GridPane.columnIndex="1">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../graphics/board/island1.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island8" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../graphics/board/island1.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </ImageView>
+                        <VBox layoutX="-656.0" layoutY="-43.0" prefHeight="100.0" prefWidth="100.0" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island4" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../graphics/board/island1.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0">
+                           <image>
+                              <Image url="@../graphics/board/island2.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0">
+                           <image>
+                              <Image url="@../graphics/board/island2.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island5" prefHeight="200.0" prefWidth="200.0" translateX="-80.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0">
+                           <image>
+                              <Image url="@../graphics/board/island2.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island10" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0">
+                           <image>
+                              <Image url="@../graphics/board/island2.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island9" prefHeight="200.0" prefWidth="200.0" translateX="80.0" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0">
+                           <image>
+                              <Image url="@../graphics/board/island3.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island11" translateX="80.0" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../graphics/board/island1.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island3" prefHeight="200.0" prefWidth="200.0" translateX="-80.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0">
+                           <image>
+                              <Image url="@../graphics/board/island3.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island6" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0">
+                           <image>
+                              <Image url="@../graphics/board/island3.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="island2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+                     <children>
+                        <ImageView fitHeight="144.0" fitWidth="144.0">
+                           <image>
+                              <Image url="@../graphics/board/island2.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="cloud0" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <Pane fx:id="studentCloud1" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud2" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud3" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud4" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                           <image>
+                              <Image url="@../graphics/board/cloud_3p.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="cloud1" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <children>
+                        <Pane fx:id="studentCloud5" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud6" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud7" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud8" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                           <image>
+                              <Image url="@../graphics/board/cloud_2p.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="cloud2" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <children>
+                        <Pane fx:id="studentCloud9" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud10" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud11" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud12" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                           <image>
+                              <Image url="@../graphics/board/cloud3.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </GridPane>
+            <HBox fx:id="cardContainer" alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" spacing="5.0" translateY="70.0" StackPane.alignment="BOTTOM_CENTER">
+               <children>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../graphics/board/island1.png" />
+                        <Image url="@../graphics/assistants/1.png" />
                      </image>
-                     <cursor>
-                        <Cursor fx:constant="CROSSHAIR" />
-                     </cursor>
+                  </ImageView>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/assistants/1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/assistants/1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/assistants/1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/assistants/1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/assistants/1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/assistants/1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/assistants/3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/assistants/3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../graphics/assistants/3.png" />
+                     </image>
                   </ImageView>
                </children>
-            </Pane>
-            <Pane fx:id="island8" GridPane.columnIndex="1" GridPane.rowIndex="4">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../graphics/board/island1.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="CROSSHAIR" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island4" GridPane.columnIndex="4" GridPane.rowIndex="2">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../graphics/board/island1.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="CROSSHAIR" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0">
-                     <image>
-                        <Image url="@../graphics/board/island2.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island7" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0">
-                     <image>
-                        <Image url="@../graphics/board/island2.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island5" prefHeight="200.0" prefWidth="200.0" translateX="-80.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0">
-                     <image>
-                        <Image url="@../graphics/board/island2.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island10" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0">
-                     <image>
-                        <Image url="@../graphics/board/island2.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island9" prefHeight="200.0" prefWidth="200.0" translateX="80.0" GridPane.rowIndex="3">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0">
-                     <image>
-                        <Image url="@../graphics/board/island3.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island11" translateX="80.0" GridPane.rowIndex="1">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../graphics/board/island1.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="CROSSHAIR" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island3" prefHeight="200.0" prefWidth="200.0" translateX="-80.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0">
-                     <image>
-                        <Image url="@../graphics/board/island3.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island6" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0">
-                     <image>
-                        <Image url="@../graphics/board/island3.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="island2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
-               <children>
-                  <ImageView fitHeight="144.0" fitWidth="144.0">
-                     <image>
-                        <Image url="@../graphics/board/island2.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="cloud0" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <Pane fx:id="studentCloud1" layoutX="10.0" layoutY="45.0" prefHeight="40.0" prefWidth="40.0" />
-                  <Pane fx:id="studentCloud2" layoutX="84.0" layoutY="22.0" prefHeight="40.0" prefWidth="40.0" />
-                  <Pane fx:id="studentCloud3" layoutX="66.0" layoutY="98.0" prefHeight="40.0" prefWidth="40.0" />
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../graphics/board/cloud3.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="cloud1" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <children>
-                  <Pane fx:id="studentCloud4" layoutX="10.0" layoutY="45.0" prefHeight="40.0" prefWidth="40.0" />
-                  <Pane fx:id="studentCloud5" layoutX="84.0" layoutY="22.0" prefHeight="40.0" prefWidth="40.0" />
-                  <Pane fx:id="studentCloud6" layoutX="66.0" layoutY="98.0" prefHeight="40.0" prefWidth="40.0" />
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../graphics/board/cloud4.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="cloud2" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="3" GridPane.rowIndex="2">
-               <children>
-                  <Pane fx:id="studentCloud7" layoutX="10.0" layoutY="45.0" prefHeight="40.0" prefWidth="40.0" />
-                  <Pane fx:id="studentCloud8" layoutX="84.0" layoutY="22.0" prefHeight="40.0" prefWidth="40.0" />
-                  <Pane fx:id="studentCloud9" layoutX="66.0" layoutY="98.0" prefHeight="40.0" prefWidth="40.0" />
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../graphics/board/cloud3.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
+            </HBox>
          </children>
-         <BorderPane.margin>
-            <Insets right="10.0" />
-         </BorderPane.margin>
-      </GridPane>
+      </StackPane>
    </center>
-   <right>
-      <FlowPane fx:id="cardContainer" alignment="CENTER" columnHalignment="CENTER" prefHeight="800.0" prefWidth="261.0" BorderPane.alignment="CENTER">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </FlowPane>
-   </right>
 </BorderPane>

@@ -55,20 +55,10 @@ public class MagiciansController extends GUIController {
     @FXML
     public void selectedMagician(MouseEvent mouseEvent) {
 
-      //  HashMap ownMag = new HashMap();
-      //  Magician mag = null;
+
         ImageView selection = (ImageView) mouseEvent.getSource();
         String magician = selection.getId();
 
-//        switch (magician.toLowerCase()){
-//            case "king" -> mag= Magician.KING;
-//            case "wizard" -> mag= Magician.WIZARD;
-//            case "sage" -> mag= Magician.SAGE;
-//            case "witch" -> mag= Magician.WITCH;
-//        }
-//
-//        ownMag.put(gui.getModelView().getPlayerName(),mag);
-//        gui.getModelView().setPlayerMapMagician(ownMag);
 
         // send setup option
         String message = "MAGICIAN " + magician;
