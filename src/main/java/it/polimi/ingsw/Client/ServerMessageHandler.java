@@ -4,6 +4,7 @@ import it.polimi.ingsw.Client.cli.CLI;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Client.messages.turn.GameStartedMessage;
 import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Server.Answer.*;
 import it.polimi.ingsw.Server.Answer.modelUpdate.*;
 

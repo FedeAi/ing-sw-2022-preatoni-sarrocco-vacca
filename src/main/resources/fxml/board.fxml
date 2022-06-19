@@ -20,22 +20,22 @@
          <children>
             <StackPane>
                <children>
-                  <Pane prefHeight="495.0" prefWidth="348.0">
+                  <Pane>
                      <children>
                         <ImageView fitHeight="800.0" fitWidth="383.0" preserveRatio="true">
                            <image>
                               <Image url="@../graphics/board/school_compressed.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="entry1" layoutX="42.0" layoutY="691.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry2" layoutX="100.0" layoutY="693.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry3" layoutX="157.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry4" layoutX="214.0" layoutY="694.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry5" layoutX="270.0" layoutY="693.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry6" layoutX="97.0" layoutY="738.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry7" layoutX="154.0" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry8" layoutX="214.0" layoutY="736.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry9" layoutX="270.0" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="entry1" layoutX="42.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="entry2" layoutX="99.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="entry3" layoutX="155.5" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="entry4" layoutX="212.5" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="entry5" layoutX="269.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="entry6" layoutX="99.0" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="entry7" layoutX="155.5" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="entry8" layoutX="212.5" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="entry9" layoutX="269.0" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
                         <Pane fx:id="hallG1" layoutX="42.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
                         <Pane fx:id="hallG2" layoutX="42.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
                         <Pane fx:id="hallG3" layoutX="42.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
@@ -91,6 +91,11 @@
                         <Pane fx:id="playerProf3" layoutX="151.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
                         <Pane fx:id="playerProf4" layoutX="210.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
                         <Pane fx:id="playerProf5" layoutX="266.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                        <Pane fx:id="greenLane" layoutX="42.0" layoutY="274.0" prefHeight="378.0" prefWidth="46.0" />
+                        <Pane fx:id="redLane" layoutX="88.5" layoutY="274.0" prefHeight="378.0" prefWidth="55.5" />
+                        <Pane fx:id="yellowLane" layoutX="144.5" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
+                        <Pane fx:id="pinkLane" layoutX="202.0" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
+                        <Pane fx:id="blueLane" layoutX="259.0" layoutY="274.0" prefHeight="378.0" prefWidth="45.5" />
       
                      </children>
                   </Pane>
@@ -154,7 +159,6 @@
                               <Cursor fx:constant="CROSSHAIR" />
                            </cursor>
                         </ImageView>
-                        <VBox layoutX="-656.0" layoutY="-43.0" prefHeight="100.0" prefWidth="100.0" />
                      </children>
                   </Pane>
                   <Pane fx:id="island4" GridPane.columnIndex="4" GridPane.rowIndex="2">
@@ -266,12 +270,12 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Pane fx:id="cloud1" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Pane fx:id="cloud2" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <children>
-                        <Pane fx:id="studentCloud5" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud6" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud7" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud8" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud9" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud10" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud11" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud12" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../graphics/board/cloud_2p.png" />
@@ -279,12 +283,12 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Pane fx:id="cloud2" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Pane fx:id="cloud1" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <children>
-                        <Pane fx:id="studentCloud9" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud10" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud11" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud12" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud5" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud6" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud7" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
+                        <Pane fx:id="studentCloud8" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../graphics/board/cloud3.png" />
@@ -294,7 +298,7 @@
                   </Pane>
                </children>
             </GridPane>
-            <HBox fx:id="cardContainer" alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" spacing="5.0" translateY="70.0" StackPane.alignment="BOTTOM_CENTER">
+            <HBox fx:id="cardContainer" alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" spacing="5.0" translateY="50.0" StackPane.alignment="BOTTOM_CENTER">
                <children>
                   <ImageView fitHeight="92.25" fitWidth="63.0" pickOnBounds="true">
                      <image>
@@ -351,4 +355,22 @@
          </children>
       </StackPane>
    </center>
+   <right>
+      <VBox prefWidth="300.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <HBox fx:id="playedCardContainer" prefHeight="100.0" prefWidth="200.0" />
+         </children></VBox>
+   </right>
 </BorderPane>

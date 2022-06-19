@@ -46,7 +46,6 @@ public class EventsToActions implements PropertyChangeListener {
                             if (Objects.equals(currEvt.getPropertyName(), BoardController.SELECT_ISLAND_LISTENER)) {
                                 action = "STUDENTISLAND " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
                             }
-                            // TODO BIND HALL TO LISTENER
                             if (Objects.equals(currEvt.getPropertyName(), BoardController.SCHOOL_HALL_LISTENER)) {
                                 action = "STUDENTHALL " + prevEvt.getNewValue().toString();
                             }
@@ -55,16 +54,17 @@ public class EventsToActions implements PropertyChangeListener {
                 }
                 case ACTION_MOVE_MOTHER -> {
                     if (Objects.equals(currEvt.getPropertyName(), BoardController.SELECT_ISLAND_LISTENER)) {
-                        action = "MOVEMOTHER " + currEvt.getNewValue().toString();
+                        int mn = gui.getModelView().getMotherNature();
+                        // FIXME
+                        int movement = (mn - (int) currEvt.getNewValue()) % gui.getModelView().getIslandContainer().size();
+                        System.out.println(movement);
+                        action = "MOVEMOTHER " + movement;
                     }
                 }
                 case ACTION_CHOOSE_CLOUD -> {
-                /*
-                    TODO ADD LISTENERS ON CLOUDS
-                        if (Objects.equals(currEvt.getPropertyName(), BoardController.SELECT_CLOUD_LISTENER) {
-                            action = "CLOUD " + currEvt.getNewValue().toString();
-                        }
-                 */
+                    if (Objects.equals(currEvt.getPropertyName(), BoardController.CLOUD_LISTENER)) {
+                        action = "CLOUD " + currEvt.getNewValue().toString();
+                    }
                 }
             }
             if (!action.equals("")) {

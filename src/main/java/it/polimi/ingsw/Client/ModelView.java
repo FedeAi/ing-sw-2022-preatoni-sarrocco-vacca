@@ -151,6 +151,7 @@ public class ModelView implements Serializable {
 
     public void setMagicians(Map<Magician, String> magicians){
         this.mapMagicianPlayer = magicians;
+        playerMapMagician = mapMagicianPlayer.entrySet().stream().filter((e) -> !e.getValue().equals("")).collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
     public List<String> getAvailableMagiciansStr(){

@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.List;
 
-public class BoardController extends GUIController implements PropertyChangeListener{
+public class BoardController extends GUIController implements PropertyChangeListener {
 
     GUI gui;
 
@@ -38,6 +38,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     public static final String SCHOOL_HALL_LISTENER = "selectSchoolHall"; //ciao, Bella, mi senti?
     public static final String SELECT_ISLAND_LISTENER = "selectIsland"; //ciao, Bella, mi senti?
     public static final String SELECT_ASSISTANT_CARD_LISTENER = "selectAssistantCard"; //ciao, Bella, mi senti?
+    public static final String CLOUD_LISTENER = "selectCloud";
     private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);    // support
 
     @FXML
@@ -61,33 +62,32 @@ public class BoardController extends GUIController implements PropertyChangeList
     // player profs
     @FXML
     Pane playerProf1, playerProf2, playerProf3, playerProf4, playerProf5;
-
+    // These represent the hall's lanes
     @FXML
-    Pane cloud0,cloud1,cloud2;
+    Pane greenLane, redLane, yellowLane, pinkLane, blueLane;
+    @FXML
+    Pane cloud0, cloud1, cloud2;
 
     @FXML
     Pane studentCloud1, studentCloud2, studentCloud3, studentCloud4, studentCloud5, studentCloud6, studentCloud7, studentCloud8, studentCloud9, studentCloud10, studentCloud11, studentCloud12;
     // swap school buttons
     @FXML
     Pane otherPlayer1Pane, otherPlayer2Pane;
-
     @FXML
     Pane avatarPain;
-
     // card container
-
     @FXML
     HBox cardContainer;
-
+    @FXML
+    HBox playedCardContainer;
 
     private final ArrayList<Image> cloudImgs = new ArrayList<>();
     private final ArrayList<Pane> cloudsPane = new ArrayList<>();
     private final List<List<Pane>> cloudStudents = new ArrayList<>();
+    private final Map<Color, Pane> hallLanes = new EnumMap<>(Color.class);
 
-
-
-    private final List<Image>  avatarImgs = new ArrayList<>();
-    private final List<Image>  avatarImgsNRO = new ArrayList<>();
+    private final Map<Magician, Image> avatarImgs = new EnumMap<>(Magician.class);
+    private final List<Image> avatarImgsNRO = new ArrayList<>();
 
     private Image motherImg;
     private final ArrayList<Image> islandImgs = new ArrayList<>();
@@ -106,12 +106,12 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     private final List<Pane> switchPlayerPanes = new ArrayList<>(); // list of buttons to change school
     String playerSchool = ""; // player's school name
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         islandPanes.addAll(List.of(island0, island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11));
-        cloudsPane.addAll(List.of(cloud0, cloud2, cloud1));
-
+        //cloudsPane.addAll(List.of(cloud0, cloud2, cloud1));
+        cloudsPane.addAll(List.of(cloud0, cloud1, cloud2));
         studentEntryPanes.addAll(List.of(entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9));
         // fill colorToHallStudents Map
         colorToHallStudents.put(Color.GREEN, List.of(hallG1, hallG2, hallG3, hallG4, hallG5, hallG6, hallG7, hallG8, hallG9, hallG10));
@@ -119,12 +119,20 @@ public class BoardController extends GUIController implements PropertyChangeList
         colorToHallStudents.put(Color.YELLOW, List.of(hallY1, hallY2, hallY3, hallY4, hallY5, hallY6, hallY7, hallY8, hallY9, hallY10));
         colorToHallStudents.put(Color.PINK, List.of(hallP1, hallP2, hallP3, hallP4, hallP5, hallP6, hallP7, hallP8, hallP9, hallP10));
         colorToHallStudents.put(Color.BLUE, List.of(hallB1, hallB2, hallB3, hallB4, hallB5, hallB6, hallB7, hallB8, hallB9, hallB10));
-
+        // Add the lane FXML Panes to the list
+        hallLanes.put(Color.GREEN, greenLane);
+        hallLanes.put(Color.RED, redLane);
+        hallLanes.put(Color.YELLOW, yellowLane);
+        hallLanes.put(Color.PINK, pinkLane);
+        hallLanes.put(Color.BLUE, blueLane);
+        for (Color c : Color.values()) {
+            hallLanes.get(c).setOnMouseReleased((e) -> changeSupport.firePropertyChange(SCHOOL_HALL_LISTENER, null, c));
+        }
         //fill cloudToStudents
         cloudStudents.add(List.of(studentCloud1, studentCloud2, studentCloud3, studentCloud4));
+        //cloudStudents.add(List.of(studentCloud9, studentCloud10, studentCloud11, studentCloud12));
+        cloudStudents.add(List.of(studentCloud5, studentCloud6, studentCloud7, studentCloud8));
         cloudStudents.add(List.of(studentCloud9, studentCloud10, studentCloud11, studentCloud12));
-        cloudStudents.add( List.of(studentCloud5, studentCloud6, studentCloud7, studentCloud8));
-
 
         colorToPlayerProfs.put(Color.GREEN, playerProf1);
         colorToPlayerProfs.put(Color.RED, playerProf2);
@@ -132,65 +140,58 @@ public class BoardController extends GUIController implements PropertyChangeList
         colorToPlayerProfs.put(Color.PINK, playerProf4);
         colorToPlayerProfs.put(Color.BLUE, playerProf5);
 
-
         switchPlayerPanes.addAll(List.of(otherPlayer1Pane, otherPlayer2Pane));
 
-
         loadAssets();
-
     }
 
     public void init() {
         showChangeSchoolButtons();
 
         //need the ModelView to upload the right kind of cloud ( in initialize I can't check)
-        if(gui.getModelView().getClouds().size() == 2){
+        if (gui.getModelView().getClouds().size() == 2) {
 
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_2p.png")));
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_2p.png")));
-        }
-
-        else{
+        } else {
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_3p.png")));
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_3p.png")));
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_3p.png")));
         }
-        if(gui.getModelView().getExpert()){
-            ImageView coin  = new ImageView(new Image(getClass().getResourceAsStream("/graphics/board/coin.png")));
+        if (gui.getModelView().getExpert()) {
+            ImageView coin = new ImageView(new Image(getClass().getResourceAsStream("/graphics/board/coin.png")));
             coin.setSmooth(true);
             coin.setCache(true);
         }
 
         showClouds(); // have to be later of the upload image cloud
         updateIslands();
-        String player = gui.getModelView().getPlayerName();
-        updateSchool(player);
+        playerSchool = gui.getModelView().getPlayerName();
+        updateSchool();
+        updateProfessors();
         updateHand();
         //uploadAvatar(); //todo adjustment listener
         changeSupport.addPropertyChangeListener(new EventsToActions(gui));
     }
 
     private void loadAssets() {
-
-
         islandImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/island1.png")));
         islandImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/island2.png")));
         islandImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/island3.png")));
 
-
-        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/Kingavatar.png")));
-        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/Wizardavatar.png")));
-        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/Witchavatar.png")));
-        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/Sageavatar.png")));
-
+        avatarImgs.put(Magician.KING, new Image(getClass().getResourceAsStream("/graphics/avatar/Kingavatar.png")));
+        avatarImgs.put(Magician.WIZARD, new Image(getClass().getResourceAsStream("/graphics/avatar/Wizardavatar.png")));
+        avatarImgs.put(Magician.WITCH, new Image(getClass().getResourceAsStream("/graphics/avatar/Witchavatar.png")));
+        avatarImgs.put(Magician.SAGE, new Image(getClass().getResourceAsStream("/graphics/avatar/Sageavatar.png")));
 
         //if im not a round owner i have the grey version of my avatar
+        /*
+        FIXME the elements were added to the same list as the color images ?
         avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/KingavatarNRO.png")));
         avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/SageavatarNRO.png")));
         avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/WitchavatarNRO.png")));
         avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/WizardavatarNRO.png")));
-
-
+        */
 
         for (int i = 1; i < 11; i++) {
             cardImgs.add(new Image(getClass().getResourceAsStream("/graphics/assistants/" + String.valueOf(i) + ".png")));
@@ -205,8 +206,6 @@ public class BoardController extends GUIController implements PropertyChangeList
             towerImgs.put(color, new Image(getClass().getResourceAsStream("/graphics/board/" + color.name().toLowerCase() + "_tower.png")));
         }
         motherImg = new Image(getClass().getResourceAsStream("/graphics/board/mother_nature.png"));
-
-
     }
 
     @Override
@@ -251,7 +250,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         for (int i = 0; i < nCloud; i++) {
             cloudsPane.get(i).setPrefHeight(Control.USE_COMPUTED_SIZE);
             cloudsPane.get(i).setPrefWidth(Control.USE_COMPUTED_SIZE);
-
             ImageView backCloud = new ImageView();
             backCloud.setImage(cloudImgs.get(i));
             backCloud.fitWidthProperty().bind(cloudsPane.get(i).widthProperty());
@@ -260,13 +258,13 @@ public class BoardController extends GUIController implements PropertyChangeList
             cloudsPane.get(i).setOnMouseExited(this::OnSelectScaleColor);
             backCloud.setSmooth(true);
             backCloud.setCache(true);
-
-            cloudsPane.get(i).getChildren().add(0,backCloud);
+            int index = i;
+            cloudsPane.get(i).setOnMouseReleased((e) -> {
+                changeSupport.firePropertyChange(CLOUD_LISTENER, null, index);
+            });
+            cloudsPane.get(i).getChildren().add(0, backCloud);
         }
-
         updateClouds();
-
-
     }
 
     private void updateHand() {
@@ -280,18 +278,16 @@ public class BoardController extends GUIController implements PropertyChangeList
             cardImg.setImage(cardImgs.get(assistantCard.getValue() - 1));
             cardImg.setFitWidth(63);
             cardImg.setFitHeight(92.25);
-            cardImg.setOnMouseEntered((evt)->{
-                cardImg.setTranslateY(-70);
+            cardImg.setOnMouseEntered((evt) -> {
+                cardImg.setTranslateY(-50);
                 OnSelectScaleColor(evt);
-
             });
 
-            cardImg.setOnMouseExited((evt)->{
+            cardImg.setOnMouseExited((evt) -> {
                 cardImg.setTranslateY(0);
                 OnSelectScaleColor(evt);
 
             });
-
             cardImg.setSmooth(true);
             cardImg.setCache(true);
             cardImg.setOnMouseReleased((e) -> {
@@ -301,23 +297,40 @@ public class BoardController extends GUIController implements PropertyChangeList
             cardContainer.getChildren().add(cardImg);
         }
     }
-    private void uploadAvatar(){
 
+    private void updatePlayedCards() {
+        Map<String, AssistantCard> map = gui.getModelView().getPlayedCards();
+        playedCardContainer.getChildren().clear();
+        for(Map.Entry<String, AssistantCard> entry : map.entrySet()) {
+            StackPane s = new StackPane();
+            ImageView playedCard = new ImageView();
+            playedCard.setImage(cardImgs.get(entry.getValue().getValue() - 1));
+            playedCard.setFitWidth(63);
+            playedCard.setFitHeight(92.25);
+            s.getChildren().add(playedCard);
+            ImageView player = new ImageView();
+            player.setImage(avatarImgs.get(gui.getModelView().getPlayerMapMagician().get(entry.getKey())));
+            player.setFitWidth(20);
+            player.setFitHeight(20);
+            s.getChildren().add(player);
+            playedCardContainer.getChildren().add(s);
+        }
+    }
 
+    private void uploadAvatar() {
         ImageView avatar = new ImageView();
         //magician selected by the player
         String MoP = gui.getModelView().getPlayerMapMagician().getOrDefault(gui.getModelView().getPlayerName(), Magician.KING).toString();
 
-        if(gui.getModelView().amIRoundOwner()){
-            switch(MoP.toLowerCase()) {
+        if (gui.getModelView().amIRoundOwner()) {
+            switch (MoP.toLowerCase()) {
                 case "king" -> avatar.setImage(avatarImgs.get(0));
                 case "wizard" -> avatar.setImage(avatarImgs.get(1));
                 case "witch" -> avatar.setImage(avatarImgs.get(2));
                 case "sage" -> avatar.setImage(avatarImgs.get(3));
             }
-        }
-        else {
-            switch(MoP.toLowerCase()) {
+        } else {
+            switch (MoP.toLowerCase()) {
                 case "king" -> avatar.setImage(avatarImgsNRO.get(0));
                 case "wizard" -> avatar.setImage(avatarImgsNRO.get(1));
                 case "witch" -> avatar.setImage(avatarImgsNRO.get(2));
@@ -333,11 +346,7 @@ public class BoardController extends GUIController implements PropertyChangeList
 
         //avatarPain.getChildren().clear();
         avatarPain.getChildren().add(avatar);
-
-
     }
-
-
 
     private void showChangeSchoolButtons() {
 
@@ -361,29 +370,28 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
-
     private void updateClouds() {
-
         List<Cloud> clouds = gui.getModelView().getClouds();
 
-        for( int j = 0; j < clouds.size(); j++) {
+        for (int j = 0; j < clouds.size(); j++) {
             List<Color> students = Color.fromMapToList(clouds.get(j).getStudents());
             List<Pane> panes = cloudStudents.get(j);
 
             assert students.size() <= panes.size();
 
-            for (int i = 0; i < students.size(); i++) {
+            for (int i = 0; i < panes.size(); i++) {
                 panes.get(i).getChildren().clear(); // first remove previous items
-                Color studentC = students.get(i);
+                if (i < students.size()) {
+                    Color studentC = students.get(i);
 
-                ImageView student = new ImageView(studentImgs.get(studentC));
-                student.fitWidthProperty().bind(panes.get(i).widthProperty());
-                student.fitHeightProperty().bind(panes.get(i).heightProperty());
-                student.setSmooth(true);
-                student.setCache(true);
-                Pane pane = panes.get(i);
-                pane.getChildren().add(student);
-
+                    ImageView student = new ImageView(studentImgs.get(studentC));
+                    student.fitWidthProperty().bind(panes.get(i).widthProperty());
+                    student.fitHeightProperty().bind(panes.get(i).heightProperty());
+                    student.setSmooth(true);
+                    student.setCache(true);
+                    Pane pane = panes.get(i);
+                    pane.getChildren().add(student);
+                }
             }
         }
     }
@@ -484,76 +492,65 @@ public class BoardController extends GUIController implements PropertyChangeList
         pane.setOnMouseExited(this::OnSelectScaleColor);
         return pane;
     }
-    public void updateSchool(){
-        updateSchool(playerSchool);
-    }
 
-    public void updateSchool(String player){
-            playerSchool = Objects.equals(player, "") ? gui.getModelView().getPlayerName() : player;
-            School school = gui.getModelView().getPlayerMapSchool().get(player);
-            List<Color> profs = getProfsFromNickname(gui.getModelView().getProfessors(), player);
+    public void updateSchool() {
+        School school = gui.getModelView().getPlayerMapSchool().get(playerSchool);
+        // entry students
+        List<Color> entryStuds = school.getStudentsEntryList();
+        assert entryStuds.size() <= studentEntryPanes.size();
+        for (int i = 0; i < studentEntryPanes.size(); i++) {
+            studentEntryPanes.get(i).getChildren().clear(); // first remove previous items
+            if (i < entryStuds.size()) {
+                Color studentC = entryStuds.get(i);
+                ImageView student = new ImageView(studentImgs.get(studentC));
+                student.fitWidthProperty().bind(studentEntryPanes.get(i).widthProperty());
+                student.fitHeightProperty().bind(studentEntryPanes.get(i).heightProperty());
+                student.setSmooth(true);
+                student.setCache(true);
+                Pane pane = studentEntryPanes.get(i);
+                pane.setOnMouseEntered(this::OnSelectScaleColor);
+                pane.setOnMouseExited(this::OnSelectScaleColor);
+                pane.setOnMouseClicked((e) -> changeSupport.firePropertyChange(ENTRY_STUDENT_LISTENER, null, studentC));
+                pane.getChildren().add(student);
+            }
+        }
+        // hall students
+        // first remove all students in the lane
+        colorToHallStudents.forEach((key, value) -> value.forEach(
+                pane -> pane.getChildren().clear()
+        ));
 
-            // entry students
-            List<Color> entryStuds = school.getStudentsEntryList();
-            assert entryStuds.size() <= studentEntryPanes.size();
-            for (int i = 0; i < studentEntryPanes.size(); i++) {
-                studentEntryPanes.get(i).getChildren().clear(); // first remove previous items
-                if (i < entryStuds.size()) {
-                    Color studentC = entryStuds.get(i);
-                    ImageView student = new ImageView(studentImgs.get(studentC));
-                    student.fitWidthProperty().bind(studentEntryPanes.get(i).widthProperty());
-                    student.fitHeightProperty().bind(studentEntryPanes.get(i).heightProperty());
+        Map<Color, Integer> hallStuds = school.getStudentsHall();
+        for (Map.Entry<Color, Integer> entry : hallStuds.entrySet()) {
+            assert entry.getValue() <= colorToHallStudents.get(entry.getKey()).size();
+            if (entry.getValue() > 0) {
+                // add students to the first entry.getValue positions
+                colorToHallStudents.get(entry.getKey()).subList(0, entry.getValue()).forEach(pane -> {
+                    ImageView student = new ImageView(studentImgs.get(entry.getKey()));
+                    student.fitWidthProperty().bind(pane.widthProperty());
+                    student.fitHeightProperty().bind(pane.heightProperty());
                     student.setSmooth(true);
                     student.setCache(true);
-                    Pane pane = studentEntryPanes.get(i);
-                    pane.setOnMouseEntered(this::OnSelectScaleColor);
-                    pane.setOnMouseExited(this::OnSelectScaleColor);
-                    pane.setOnMouseClicked((e) -> changeSupport.firePropertyChange(ENTRY_STUDENT_LISTENER, null, studentC));
+
                     pane.getChildren().add(student);
-                }
-
+                });
             }
-
-            // hall students
-
-            // first remove all students in the lane
-            colorToHallStudents.forEach((key, value) -> value.forEach(
-                    pane -> pane.getChildren().clear()
-            ));
-
-            Map<Color, Integer> hallStuds = school.getStudentsHall();
-            for (Map.Entry<Color, Integer> entry : hallStuds.entrySet()) {
-                assert entry.getValue() <= colorToHallStudents.get(entry.getKey()).size();
-                if (entry.getValue() > 0) {
-
-                    // add students to the first entry.getValue positions
-                    colorToHallStudents.get(entry.getKey()).subList(0, entry.getValue()).forEach(pane -> {
-                        ImageView student = new ImageView(studentImgs.get(entry.getKey()));
-                        student.fitWidthProperty().bind(pane.widthProperty());
-                        student.fitHeightProperty().bind(pane.heightProperty());
-                        student.setSmooth(true);
-                        student.setCache(true);
-
-                        pane.getChildren().add(student);
-                    });
-
-                }
-            }
-
-            // PROFESSORS
-            // first remove all students in the lane
-            colorToPlayerProfs.forEach((key, value) -> value.getChildren().clear());
-
-            for (Color p : profs) {
-                ImageView prof = new ImageView(profsImgs.get(p));
-                prof.fitWidthProperty().bind(colorToPlayerProfs.get(p).widthProperty());
-                prof.fitHeightProperty().bind(colorToPlayerProfs.get(p).heightProperty());
-                prof.setSmooth(true);
-                prof.setCache(true);
-                colorToPlayerProfs.get(p).getChildren().add(prof);
-            }
-
         }
+    }
+
+    private void updateProfessors() {
+        // PROFESSORS
+        List<Color> profs = getProfsFromNickname(gui.getModelView().getProfessors(), playerSchool);
+        colorToPlayerProfs.forEach((key, value) -> value.getChildren().clear());
+        for (Color p : profs) {
+            ImageView prof = new ImageView(profsImgs.get(p));
+            prof.fitWidthProperty().bind(colorToPlayerProfs.get(p).widthProperty());
+            prof.fitHeightProperty().bind(colorToPlayerProfs.get(p).heightProperty());
+            prof.setSmooth(true);
+            prof.setCache(true);
+            colorToPlayerProfs.get(p).getChildren().add(prof);
+        }
+    }
 
     private void updateBalance() {
 //        int balance = gui.getModelView().getBalance();
@@ -561,6 +558,7 @@ public class BoardController extends GUIController implements PropertyChangeList
 //
 //        }
     }
+
     private List<Color> getProfsFromNickname(Map<Color, String> profs, String player) {
         return profs.entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), player)).map(Map.Entry::getKey).toList();
     }
@@ -569,22 +567,19 @@ public class BoardController extends GUIController implements PropertyChangeList
     public void changeSchool(MouseEvent event) {
         Button btn = (Button) event.getSource();
         String id = btn.getId();
-
         if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-            // restore player school
-
+            // Restore player school
             btn.setStyle(" -fx-background-color: transparent; -fx-background-image: url('/graphics/perg2.png'); -fx-background-size: stretch; -fx-font-size: 24px;");
-            String player = gui.getModelView().getPlayerName();
-            updateSchool(player);
+            playerSchool = gui.getModelView().getPlayerName();
         } else {
             btn.setStyle(" -fx-background-color: transparent; -fx-background-image: url('/graphics/perg_clicked.png'); -fx-background-size: stretch; -fx-font-size: 24px;");
-            updateSchool(id);
+            playerSchool = id;
         }
-
+        updateSchool();
+        updateProfessors();
     }
 
     public void OnSelectScaleColor(MouseEvent evt) {
-
         if (evt.getSource() instanceof Pane) {
             Pane pane = (Pane) evt.getSource();
             if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
@@ -608,7 +603,6 @@ public class BoardController extends GUIController implements PropertyChangeList
                 view.setScaleX(1);
                 view.setScaleY(1);
             }
-
         }
     }
 
@@ -616,16 +610,19 @@ public class BoardController extends GUIController implements PropertyChangeList
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         GameState state = gui.getModelView().getGameState();
-        if( state != GameState.GAME_ROOM  && state != GameState.SETUP_CHOOSE_MAGICIAN) {
+        if (state != GameState.GAME_ROOM && state != GameState.SETUP_CHOOSE_MAGICIAN) {
             switch (evt.getPropertyName()) {
                 case ServerMessageHandler.BALANCE_LISTENER -> updateBalance();
                 case ServerMessageHandler.CLOUDS_LISTENER -> updateClouds();
                 case ServerMessageHandler.HAND_LISTENER -> updateHand();
                 case ServerMessageHandler.ISLAND_LISTENER, ServerMessageHandler.MOTHER_LISTENER -> updateIslands();
-                case ServerMessageHandler.PROFS_LISTENER -> {}
                 case ServerMessageHandler.SCHOOL_LISTENER -> updateSchool();
-                case ServerMessageHandler.MAGICIANS_LISTENER -> {}
-                case ServerMessageHandler.CHARACTERS_LISTENER -> {}
+                case ServerMessageHandler.PROFS_LISTENER -> updateProfessors();
+                case ServerMessageHandler.PLAYED_CARD_LISTENER -> updatePlayedCards();
+                case ServerMessageHandler.MAGICIANS_LISTENER -> {
+                }
+                case ServerMessageHandler.CHARACTERS_LISTENER -> {
+                }
             }
         }
     }
