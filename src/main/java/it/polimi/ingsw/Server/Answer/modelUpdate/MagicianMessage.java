@@ -4,6 +4,7 @@ import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Model.Cloud;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * MagicianMessage class is a ModelMessage used for sending infos about .... to the client.
@@ -12,14 +13,14 @@ import java.util.List;
  * @see ModelMessage
  */
 public class MagicianMessage implements ModelMessage {
-  private final List<Magician> message;
+  private final Map<Magician,String> message;
 
   /**
    * Constructor MoveMessage creates a new MoveMessage instance.
    *
    * @param clouds .................
    */
-  public MagicianMessage(List<Magician> magicians) {
+  public MagicianMessage(Map<Magician,String> magicians) {
     this.message = magicians;
   }
 
@@ -30,7 +31,7 @@ public class MagicianMessage implements ModelMessage {
    * @see ModelMessage#getMessage()
    */
   @Override
-  public List<Magician> getMessage() {
+  public Map<Magician,String> getMessage() {
     return message;
   }
 }

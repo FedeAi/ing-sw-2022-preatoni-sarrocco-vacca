@@ -143,7 +143,7 @@ public class ServerMessageHandler {
       view.firePropertyChange(NEXT_ROUNDOWNER_LISTENER, previousOwner , message.getMessage());
     }
     else if(answer instanceof MagicianMessage message){
-      modelView.setAvailableMagicians(message.getMessage());
+      modelView.setMagicians(message.getMessage());
       view.firePropertyChange(MAGICIANS_LISTENER, null, message.getMessage());
     }
     else if(answer instanceof GameStateMessage message){

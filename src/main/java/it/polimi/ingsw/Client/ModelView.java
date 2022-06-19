@@ -33,7 +33,7 @@ public class ModelView implements Serializable {
     private List<AssistantCard> hand;
     private IslandContainer islandContainer;
     private List<Cloud> clouds;
-    private List<Magician> availableMagicians;
+    private Map<Magician, String>  mapMagicianPlayer;
     private List<ReducedCharacterCard> characterCards;
     private Map<String, AssistantCard> playedCards;
     private int motherNature;
@@ -149,12 +149,22 @@ public class ModelView implements Serializable {
         return clouds;
     }
 
-    public void setAvailableMagicians(List<Magician> availableMagicians){
-        this.availableMagicians = availableMagicians;
+    public void setMagicians(Map<Magician, String> magicians){
+        this.mapMagicianPlayer = magicians;
     }
 
     public List<String> getAvailableMagiciansStr(){
-        return availableMagicians.stream().map(Enum::toString).collect(Collectors.toList());
+        return mapMagicianPlayer.entrySet()
+                .stream().filter(magicianStringEntry -> Objects.equals(magicianStringEntry.getValue(), "")).
+                map(e -> e.getKey().toString()).toList();
+    }
+
+    /**
+     *
+     * @return map between magician and owner, the owner is "" if the prof is not owned by no one
+     */
+    public Map<Magician,String> getMagiciansToPlayer(){
+        return new HashMap<>(mapMagicianPlayer);
     }
 
     public void setClouds(List<Cloud> clouds) {

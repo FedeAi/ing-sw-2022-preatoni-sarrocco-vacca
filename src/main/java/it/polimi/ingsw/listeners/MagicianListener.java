@@ -6,9 +6,10 @@ import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
+import java.util.Map;
 
 /**
- * MoveMotherListener class is a AbsListener used for notifying the client after a move action.
+ * MagicianListener class is a AbsListener used for notifying the client after magician choose.
  *
  * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
@@ -34,7 +35,7 @@ public class MagicianListener extends AbsListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        MagicianMessage message = new MagicianMessage((List<Magician>) evt.getNewValue());
+        MagicianMessage message = new MagicianMessage((Map<Magician,String>) evt.getNewValue());
         virtualClient.send(message);
     }
 }

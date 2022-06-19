@@ -30,7 +30,7 @@ public class Game {
     private static final String CONNECTED_PLAYERS_LISTENER = "activePlayersListener";
 
     private final List<Player> players;
-    private final List<Magician> availableMagicians;
+    private final Map<Magician, String> mapMagicianToPlayer;
     private final List<Cloud> clouds;
     private final Bag bag;
     private int balance;
@@ -56,7 +56,7 @@ public class Game {
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
         playersPlanningPhase = new ArrayList<>();
-        availableMagicians = new ArrayList<>(Arrays.stream(Magician.values()).toList());
+        mapMagicianToPlayer = Arrays.stream(Magician.values()).collect(Collectors.toMap(magician -> magician, m->""));
         islandContainer = new IslandContainer();
         clouds = new ArrayList<>();
         characterCards = new ArrayList<>();
@@ -65,7 +65,7 @@ public class Game {
     }
 
     public void fireInitalState(){
-        listeners.firePropertyChange(MAGICIANS_LISTENER, null, availableMagicians);
+        listeners.firePropertyChange(MAGICIANS_LISTENER, null, mapMagicianToPlayer);
         listeners.firePropertyChange(MODE_LISTENER, null, expertMode);
         listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
         listeners.firePropertyChange(PROFS_LISTENER, null, professors);
@@ -221,10 +221,10 @@ public class Game {
      */
     public void chooseMagician(Player p, Magician magician) {
         p.setMagician(magician);
-        List<Magician> oldMagicians = new ArrayList<>(availableMagicians);
-        availableMagicians.remove(magician);
+        HashMap<Magician, String> oldMagicians = new HashMap<>(mapMagicianToPlayer);
+        mapMagicianToPlayer.remove(magician);
         playersActionPhase = players;
-        listeners.firePropertyChange(MAGICIANS_LISTENER, oldMagicians, availableMagicians);
+        listeners.firePropertyChange(MAGICIANS_LISTENER, oldMagicians, mapMagicianToPlayer);
     }
 
     public boolean isExpertMode() {
@@ -391,7 +391,9 @@ public class Game {
     }
 
     public List<Magician> getAvailableMagicians() { //choice for available magicians; main character
-        return availableMagicians;
+        return mapMagicianToPlayer.entrySet().stream().filter(
+                magicianStringEntry -> Objects.equals(magicianStringEntry.getValue(), "")).
+                map(Map.Entry::getKey).toList();
     }
 
     public List<Player> getPlayers() {
@@ -536,13 +538,6 @@ public class Game {
         }
         return null;
     }
-
-//    public void removeMagician(int chooseRemove){
-//        ArrayList<Magician> previousList = new ArrayList<Magician>(availableMagicians);
-//        availableMagicians.remove(chooseRemove);
-//        listeners.firePropertyChange(MAGICIANS_LISTENER, previousList, availableMagicians);
-//    }
-
     public void addPlayerToBeReconnected(String player){
         waitingPlayersReconnected.add(player);
     }
