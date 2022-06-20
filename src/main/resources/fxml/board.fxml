@@ -22,98 +22,102 @@
          <children>
             <StackPane>
                <children>
-                  <Pane>
+                  <StackPane StackPane.alignment="CENTER">
                      <children>
-                        <ImageView fitHeight="800.0" fitWidth="383.0" preserveRatio="true">
-                           <image>
-                              <Image url="@../graphics/board/school_compressed.png" />
-                           </image>
-                        </ImageView>
-                        <Pane fx:id="entry1" layoutX="42.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry2" layoutX="99.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry3" layoutX="155.5" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry4" layoutX="212.5" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry5" layoutX="269.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry6" layoutX="99.0" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry7" layoutX="155.5" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry8" layoutX="212.5" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="entry9" layoutX="269.0" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG1" layoutX="42.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG2" layoutX="42.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG3" layoutX="42.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG4" layoutX="42.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG5" layoutX="42.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG7" layoutX="42.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG8" layoutX="42.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG9" layoutX="42.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG10" layoutX="42.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallG6" layoutX="42.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR1" layoutX="99.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR2" layoutX="99.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR3" layoutX="99.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR4" layoutX="99.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR5" layoutX="99.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR7" layoutX="99.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR8" layoutX="99.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR9" layoutX="99.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR10" layoutX="99.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallR6" layoutX="99.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY1" layoutX="156.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY2" layoutX="156.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY3" layoutX="156.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY4" layoutX="156.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY5" layoutX="156.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY7" layoutX="156.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY8" layoutX="156.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY9" layoutX="156.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY10" layoutX="156.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallY6" layoutX="156.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP1" layoutX="213.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP2" layoutX="213.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP3" layoutX="213.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP4" layoutX="213.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP5" layoutX="213.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP7" layoutX="213.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP8" layoutX="213.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP9" layoutX="213.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP10" layoutX="213.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallP6" layoutX="213.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB1" layoutX="269.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB2" layoutX="269.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB3" layoutX="269.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB4" layoutX="269.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB5" layoutX="269.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB7" layoutX="269.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB8" layoutX="269.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB9" layoutX="269.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB10" layoutX="269.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="hallB6" layoutX="269.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
-                        <Pane fx:id="playerProf1" layoutX="39.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
-                        <Pane fx:id="playerProf2" layoutX="94.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
-                        <Pane fx:id="playerProf3" layoutX="151.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
-                        <Pane fx:id="playerProf4" layoutX="210.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
-                        <Pane fx:id="playerProf5" layoutX="266.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
-                        <Pane fx:id="greenLane" layoutX="42.0" layoutY="274.0" prefHeight="378.0" prefWidth="46.0" />
-                        <Pane fx:id="redLane" layoutX="88.5" layoutY="274.0" prefHeight="378.0" prefWidth="55.5" />
-                        <Pane fx:id="yellowLane" layoutX="144.5" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
-                        <Pane fx:id="pinkLane" layoutX="202.0" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
-                        <Pane fx:id="blueLane" layoutX="259.0" layoutY="274.0" prefHeight="378.0" prefWidth="45.5" />
-      
-                     </children>
-                  </Pane>
-                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" StackPane.alignment="TOP_CENTER">
-                     <children>
-                        <Pane fx:id="otherPlayer1Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
+                        <Pane>
+                           <children>
+                              <ImageView fitHeight="800.0" fitWidth="383.0" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../graphics/board/school_compressed.png" />
+                                 </image>
+                              </ImageView>
+                              <Pane fx:id="entry1" layoutX="42.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="entry2" layoutX="99.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="entry3" layoutX="155.5" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="entry4" layoutX="212.5" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="entry5" layoutX="269.0" layoutY="692.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="entry6" layoutX="99.0" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="entry7" layoutX="155.5" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="entry8" layoutX="212.5" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="entry9" layoutX="269.0" layoutY="739.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG1" layoutX="42.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG2" layoutX="42.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG3" layoutX="42.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG4" layoutX="42.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG5" layoutX="42.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG7" layoutX="42.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG8" layoutX="42.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG9" layoutX="42.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG10" layoutX="42.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallG6" layoutX="42.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR1" layoutX="99.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR2" layoutX="99.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR3" layoutX="99.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR4" layoutX="99.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR5" layoutX="99.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR7" layoutX="99.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR8" layoutX="99.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR9" layoutX="99.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR10" layoutX="99.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallR6" layoutX="99.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY1" layoutX="156.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY2" layoutX="156.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY3" layoutX="156.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY4" layoutX="156.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY5" layoutX="156.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY7" layoutX="156.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY8" layoutX="156.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY9" layoutX="156.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY10" layoutX="156.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallY6" layoutX="156.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP1" layoutX="213.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP2" layoutX="213.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP3" layoutX="213.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP4" layoutX="213.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP5" layoutX="213.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP7" layoutX="213.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP8" layoutX="213.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP9" layoutX="213.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP10" layoutX="213.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallP6" layoutX="213.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB1" layoutX="269.0" layoutY="617.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB2" layoutX="269.0" layoutY="578.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB3" layoutX="269.0" layoutY="540.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB4" layoutX="269.0" layoutY="502.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB5" layoutX="269.0" layoutY="464.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB7" layoutX="269.0" layoutY="388.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB8" layoutX="269.0" layoutY="350.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB9" layoutX="269.0" layoutY="313.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB10" layoutX="269.0" layoutY="274.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="hallB6" layoutX="269.0" layoutY="426.0" prefHeight="35.0" prefWidth="35.0" />
+                              <Pane fx:id="playerProf1" layoutX="39.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                              <Pane fx:id="playerProf2" layoutX="94.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                              <Pane fx:id="playerProf3" layoutX="151.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                              <Pane fx:id="playerProf4" layoutX="210.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                              <Pane fx:id="playerProf5" layoutX="266.0" layoutY="199.0" prefHeight="35.0" prefWidth="42.0" />
+                              <Pane fx:id="greenLane" layoutX="42.0" layoutY="274.0" prefHeight="378.0" prefWidth="46.0" />
+                              <Pane fx:id="redLane" layoutX="88.5" layoutY="274.0" prefHeight="378.0" prefWidth="55.5" />
+                              <Pane fx:id="yellowLane" layoutX="144.5" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
+                              <Pane fx:id="pinkLane" layoutX="202.0" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
+                              <Pane fx:id="blueLane" layoutX="259.0" layoutY="274.0" prefHeight="378.0" prefWidth="45.5" />
+            
+                           </children>
                         </Pane>
-                        <Pane fx:id="otherPlayer2Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" StackPane.alignment="TOP_CENTER">
+                           <children>
+                              <Pane fx:id="otherPlayer1Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Pane>
+                              <Pane fx:id="otherPlayer2Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                           </children>
+                        </VBox>
                      </children>
-                  </VBox>
+                  </StackPane>
                </children>
             </StackPane>
          </children>
@@ -377,71 +381,76 @@
                   <Insets />
                </StackPane.margin>
             </ImageView>
-            <VBox alignment="TOP_CENTER" prefWidth="300.0">
+            <StackPane>
                <children>
-                  <GridPane alignment="TOP_CENTER" prefHeight="260.0" prefWidth="300.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="71.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="162.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.546142578125" minWidth="10.0" prefWidth="67.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <padding>
-                        <Insets top="30.0" />
-                     </padding>
+                  <Pane>
                      <children>
-                        <StackPane fx:id="avatar0" GridPane.rowIndex="1">
+                        <GridPane alignment="TOP_CENTER" prefHeight="300.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="71.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="162.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.546142578125" minWidth="10.0" prefWidth="67.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
                            <children>
-                              <ImageView fitHeight="47.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../Downloads/risorse%20grafiche/Personaggi_retri/KING.png" />
-                                 </image>
-                              </ImageView>
+                              <StackPane fx:id="avatar0" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fitHeight="47.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../Downloads/risorse%20grafiche/Personaggi_retri/KING.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <StackPane fx:id="avatar1" GridPane.rowIndex="2">
+                                 <children>
+                                    <ImageView fitHeight="54.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../Downloads/risorse%20grafiche/Personaggi_retri/WIZARD.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <Label fx:id="username0" alignment="CENTER" contentDisplay="CENTER" text="ALE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <StackPane fx:id="avatar2" GridPane.rowIndex="3" />
+                              <StackPane fx:id="roundOwner0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <StackPane fx:id="roundOwner1" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <children>
+                                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../graphics/board/mother_nature.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <StackPane fx:id="roundOwner2" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <Label fx:id="username1" alignment="CENTER" contentDisplay="CENTER" text="FEDE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <Label fx:id="username2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Label alignment="CENTER" text="PLAYERS" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
                            </children>
-                        </StackPane>
-                        <StackPane fx:id="avatar1" GridPane.rowIndex="2">
-                           <children>
-                              <ImageView fitHeight="54.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../Downloads/risorse%20grafiche/Personaggi_retri/WIZARD.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </StackPane>
-                        <Label fx:id="username0" alignment="CENTER" contentDisplay="CENTER" text="ALE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <StackPane fx:id="avatar2" GridPane.rowIndex="3" />
-                        <StackPane fx:id="roundOwner0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <StackPane fx:id="roundOwner1" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <children>
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../graphics/board/mother_nature.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </StackPane>
-                        <StackPane fx:id="roundOwner2" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Label fx:id="username1" alignment="CENTER" contentDisplay="CENTER" text="FEDE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Label fx:id="username2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <Label alignment="CENTER" text="PLAYERS" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                        </Label>
+                        </GridPane>
                      </children>
-                  </GridPane>
-                  <HBox fx:id="playedCardContainer" prefHeight="100.0" prefWidth="200.0">
-                     <VBox.margin>
-                        <Insets top="300.0" />
-                     </VBox.margin></HBox>
-                  <HBox fx:id="characterContainer" prefHeight="100.0" prefWidth="200.0" spacing="5.0" />
+                  </Pane>
+                  <VBox maxHeight="-Infinity" prefHeight="300.0" StackPane.alignment="BOTTOM_CENTER">
+                     <children>
+                        <HBox fx:id="playedCardContainer" alignment="BOTTOM_LEFT" prefHeight="200.0" />
+                        <HBox fx:id="characterContainer" prefHeight="100.0" prefWidth="200.0" spacing="5.0" />
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
+            </StackPane>
          </children>
       </StackPane>
    </right>
