@@ -1,18 +1,20 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
+import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 
-public class GrandmaCharacter extends CharacterCard {
+public class Grandma extends CharacterCard {
 
     private int blockingCards;
     private GameState previousState;
 
-    public GrandmaCharacter(String imagePath) {
+    public Grandma(String imagePath) {
         super(imagePath);
         price = 2;
         blockingCards = 4;
+        character = Character.GRANDMA;
     }
 
     @Override

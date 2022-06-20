@@ -14,14 +14,14 @@ public abstract class CharacterCard extends Card {
     protected int price;
     protected boolean activated;
     protected boolean isActive;
-    private Character character;
+    protected Character character;
     private String activatingPlayer;
 
     public CharacterCard(String imagePath) {
         super(imagePath);
         activated = false;
         isActive = false;
-        activatingPlayer="";
+        activatingPlayer = "";
     }
 
     /**
@@ -68,14 +68,14 @@ public abstract class CharacterCard extends Card {
     /**
      * @return the professors on the card
      */
-    public List<Color> getStudents(){
+    public List<Color> getStudents() {
         return new ArrayList<>();
     }
 
     /**
      * @return the number of blocking cards on the card
      */
-    public int getBlockingCards(){
+    public int getBlockingCards() {
         return 0;
     }
 }

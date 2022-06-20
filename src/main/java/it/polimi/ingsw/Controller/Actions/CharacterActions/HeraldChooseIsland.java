@@ -4,7 +4,7 @@ import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.HeraldCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Herald;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
@@ -32,13 +32,13 @@ public class HeraldChooseIsland extends Performable {
 
         // is action legal check
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter(HeraldCharacter.class);
+        Optional<CharacterCard> card = game.getActiveCharacter(Herald.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
 
         // the active card is not the right one
-        if (!(card.get() instanceof HeraldCharacter)) {
+        if (!(card.get() instanceof Herald)) {
             throw new GameException("The card that has been activated in this turn is not of the herald type.");
         }
 

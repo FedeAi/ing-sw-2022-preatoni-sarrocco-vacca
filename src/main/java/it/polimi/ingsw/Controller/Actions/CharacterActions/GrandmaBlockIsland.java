@@ -4,7 +4,7 @@ import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.GrandmaCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Grandma;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 
@@ -40,7 +40,7 @@ public class GrandmaBlockIsland extends Performable {
         }
 
         // We check if any of the cards on the table are of the GRANDMA type
-        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof GrandmaCharacter)) {
+        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof Grandma)) {
             throw new GameException("There isn't any character card of the type grandma on the table.");
         }
 
@@ -51,12 +51,12 @@ public class GrandmaBlockIsland extends Performable {
         }
 
         // Checking if the activated card is of the GRANDMA type
-        if (!(card.get() instanceof GrandmaCharacter)) {
+        if (!(card.get() instanceof Grandma)) {
             throw new GameException("The card that has been activated in this turn is not of the grandma type.");
         }
 
         // Now it's safe to cast the activated card
-        GrandmaCharacter grandma = (GrandmaCharacter) card.get();
+        Grandma grandma = (Grandma) card.get();
 
         // Verify that we have at least 1 blockingCard to use
         if (grandma.getBlockingCards() <= 0) {
@@ -68,8 +68,8 @@ public class GrandmaBlockIsland extends Performable {
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         // Redundant card presence check, then we execute the action
-        if (game.getActiveCharacter(GrandmaCharacter.class).isPresent()) {
-            GrandmaCharacter grandma = (GrandmaCharacter) game.getActiveCharacter(GrandmaCharacter.class).get();
+        if (game.getActiveCharacter(Grandma.class).isPresent()) {
+            Grandma grandma = (Grandma) game.getActiveCharacter(Grandma.class).get();
             grandma.moveBlockingCard();
             game.setIslandBlock(islandIndex, true);
             game.deactivateCharacterCard(game.getCharacterCards().indexOf(grandma), rules);

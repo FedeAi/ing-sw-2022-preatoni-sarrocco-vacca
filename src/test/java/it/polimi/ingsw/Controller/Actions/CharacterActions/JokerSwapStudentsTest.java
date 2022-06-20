@@ -5,8 +5,8 @@ import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.JokerCharacter;
-import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Joker;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Knight;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -30,7 +30,7 @@ class JokerSwapStudentsTest {
     Player p1, p2, p3;
     Color studentCard, studentEntry;
     int selectionValue;
-    JokerCharacter card;
+    Joker card;
     LinkedList<CharacterCard> cardList;
 
     @BeforeEach
@@ -46,7 +46,7 @@ class JokerSwapStudentsTest {
         game = gameManager.getGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new JokerCharacter("", game.getBag());
+        card = new Joker("", game.getBag());
         card.init();
         cardList = new LinkedList<>();
         studentCard = Color.BLUE;
@@ -93,7 +93,7 @@ class JokerSwapStudentsTest {
         // We now have a card present, but not the JOKER
         // It's important also to not have a card that changes the game state
         card.activate(gameManager.getRules(), game);
-        CharacterCard tempCard = new KnightCharacter("");
+        CharacterCard tempCard = new Knight("");
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);

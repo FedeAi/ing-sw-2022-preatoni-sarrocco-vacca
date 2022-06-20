@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Controller.Rules.DynamicRules;
 
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MushroomCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Mushroom;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Model.Game;
 
@@ -11,9 +11,9 @@ public class MushroomRules extends BaseRules {
 
     @Override
     protected int influenceModifier(Game game, Color student, int influence) {
-        Optional<CharacterCard> mushCard = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof MushroomCharacter).findFirst();
+        Optional<CharacterCard> mushCard = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof Mushroom).findFirst();
         if (mushCard.isPresent()) {
-            Color excludedColor = ((MushroomCharacter) mushCard.get()).getStudent();
+            Color excludedColor = ((Mushroom) mushCard.get()).getStudent();
             if (excludedColor != null && excludedColor.equals(student)) {
                 return 0;
             } else {

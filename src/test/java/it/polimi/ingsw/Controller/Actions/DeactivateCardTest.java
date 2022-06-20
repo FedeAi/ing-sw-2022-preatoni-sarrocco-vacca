@@ -2,9 +2,7 @@ package it.polimi.ingsw.Controller.Actions;
 
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Exceptions.GameException;
-import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;

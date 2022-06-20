@@ -8,7 +8,7 @@ import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.PrincessCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Princess;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -34,12 +34,12 @@ public class PrincessMoveToEntry extends Performable {
             throw new WrongStateException("state you access by activating the princess card.");
         }
 
-        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof PrincessCharacter)) {
+        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof Princess)) {
             throw new GameException("There isn't any character card of the type princess on the table.");
         }
 
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter(PrincessCharacter.class);
+        Optional<CharacterCard> card = game.getActiveCharacter(Princess.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present of the princess type.");
         }
@@ -56,8 +56,8 @@ public class PrincessMoveToEntry extends Performable {
         canPerform(game, rules);
         Player player = getPlayer(game);
         // to check instance of and make cast
-        PrincessCharacter princessCharacter = (PrincessCharacter) game.getActiveCharacter(PrincessCharacter.class).get();
-        princessCharacter.moveStudent(student);
+        Princess princess = (Princess) game.getActiveCharacter(Princess.class).get();
+        princess.moveStudent(student);
         player.getSchool().addStudentHall(student);
         // Update the professor owner list
         game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game));

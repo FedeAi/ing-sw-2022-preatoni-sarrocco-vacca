@@ -1,12 +1,10 @@
 package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
-import it.polimi.ingsw.Controller.Actions.MoveStudentFromEntryToHall;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.HeraldCharacter;
-import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Herald;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
@@ -44,7 +42,7 @@ class HeraldChooseIslandTest {
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         index = 1;
-        card = new HeraldCharacter("");
+        card = new Herald("");
         cardList = new LinkedList<>();
         action = new HeraldChooseIsland(p1.getNickname(), index);
     }

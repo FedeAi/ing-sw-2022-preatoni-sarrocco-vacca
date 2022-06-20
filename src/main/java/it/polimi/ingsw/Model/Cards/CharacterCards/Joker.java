@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
+import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Bag;
 import it.polimi.ingsw.Constants.Color;
@@ -10,23 +11,27 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class PrincessCharacter extends CharacterCard {
+public class Joker extends CharacterCard {
 
     private Map<Color, Integer> students;
     private GameState previousState;
+    private int swappedStudents;
     private Bag bag;
+    public static final int maxSwaps = 3;
 
-
-    public PrincessCharacter(String imagePath, Bag bag) {
+    public Joker(String imagePath, Bag bag) {
         super(imagePath);
-        price = 2;
+        price = 1;
+        swappedStudents = 0;
         this.bag = bag;
-        students = new EnumMap<Color, Integer>(Color.class);
+        // students map
+        this.students = new EnumMap<>(Color.class);
+        character = Character.JOKER;
     }
 
     @Override
     public void init() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             Color student = bag.extractOne();
             this.students.put(student, this.students.getOrDefault(student, 0) + 1);
         }
@@ -36,8 +41,8 @@ public class PrincessCharacter extends CharacterCard {
     public void activate(Rules rules, Game game) {
         super.activate(rules, game);
         previousState = game.getGameState();
-        game.setGameState(GameState.PRINCESS_MOVE_STUDENT);
-
+        game.setGameState(GameState.JOKER_SWAP_STUDENTS);
+        swappedStudents = 0;
     }
 
     @Override
@@ -46,12 +51,18 @@ public class PrincessCharacter extends CharacterCard {
         game.setGameState(previousState);
     }
 
-    public void moveStudent(Color student) {
-        if (students.get(student) != null) {
-            students.put(student, students.get(student) - 1);
-            Color refill = bag.extractOne();
-            students.put(refill, this.students.getOrDefault(refill, 0) + 1);
-        }
+    /**
+     * @param studentToPick the student you pick from the card
+     * @param studentToPut  the student you put on the card
+     */
+    public void swapStudents(Color studentToPick, Color studentToPut) throws IllegalArgumentException {
+        students.put(studentToPut, students.getOrDefault(studentToPut, 0) + 1);
+        students.put(studentToPut, students.get(studentToPick) - 1);
+        swappedStudents++;
+    }
+
+    public int getSwappedStudents() {
+        return swappedStudents;
     }
 
     public Map<Color, Integer> getStudentsMap() {
@@ -62,5 +73,4 @@ public class PrincessCharacter extends CharacterCard {
     public List<Color> getStudents(){
         return Color.fromMapToList(students);
     }
-
 }

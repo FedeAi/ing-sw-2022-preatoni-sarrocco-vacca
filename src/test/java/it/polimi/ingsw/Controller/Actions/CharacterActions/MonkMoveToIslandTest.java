@@ -4,8 +4,8 @@ import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MonkCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Knight;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Monk;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -29,7 +29,7 @@ class MonkMoveToIslandTest {
     Game game;
     GameManager gameManager;
     Player p1, p2, p3;
-    MonkCharacter card;
+    Monk card;
     List<CharacterCard> cardList;
     Random r;
     int index;
@@ -49,7 +49,7 @@ class MonkMoveToIslandTest {
         game = gameManager.getGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new MonkCharacter("", game.getBag());
+        card = new Monk("", game.getBag());
         card.init();
         cardList = new ArrayList<>();
         r = new Random();
@@ -97,7 +97,7 @@ class MonkMoveToIslandTest {
     @Test
     void noMonks() {
         // Now we're going to have some cards in the list, but not of the MONK type
-        KnightCharacter tempCard = new KnightCharacter("");
+        Knight tempCard = new Knight("");
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);

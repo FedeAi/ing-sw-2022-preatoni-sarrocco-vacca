@@ -11,14 +11,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CharacterCardTest {
-    private PostmanCharacter card;
+    private Postman card;
     private Game game;
     private GameManager gameManager;
     private Player p1, p2;
 
     @BeforeEach
     void init() {
-        card = new PostmanCharacter("");
+        card = new Postman("");
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
         p1 = new Player(0, "Ale");
         p2 = new Player(1, "Fede");

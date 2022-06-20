@@ -7,7 +7,7 @@ import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MushroomCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Mushroom;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -31,18 +31,18 @@ public class MushroomChooseColor extends Performable {
             throw new WrongStateException("state you access by activating the mushroom card.");
         }
 
-        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof MushroomCharacter)) {
+        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof Mushroom)) {
             throw new GameException("There isn't any character card of the type mushroom on the table.");
         }
 
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter(MushroomCharacter.class);
+        Optional<CharacterCard> card = game.getActiveCharacter(Mushroom.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
 
         // the active card is not the right one
-        if (!(card.get() instanceof MushroomCharacter)) {
+        if (!(card.get() instanceof Mushroom)) {
             throw new GameException("The card that has been activated in this turn is not of the mushroom type.");
         }
     }
@@ -50,8 +50,8 @@ public class MushroomChooseColor extends Performable {
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
-        Optional<CharacterCard> mushroom = game.getActiveCharacter(MushroomCharacter.class);
-        mushroom.ifPresent(characterCard -> ((MushroomCharacter) characterCard).setStudent(this.student));
+        Optional<CharacterCard> mushroom = game.getActiveCharacter(Mushroom.class);
+        mushroom.ifPresent(characterCard -> ((Mushroom) characterCard).setStudent(this.student));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class MushroomChooseColor extends Performable {
         } catch (Exception e) {
             return game.getGameState();
         }
-        MushroomCharacter mushroom = (MushroomCharacter) game.getActiveCharacter(MushroomCharacter.class).get();
+        Mushroom mushroom = (Mushroom) game.getActiveCharacter(Mushroom.class).get();
         return mushroom.getPreviousState();
     }
 }

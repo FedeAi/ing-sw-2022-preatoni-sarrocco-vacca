@@ -1,29 +1,28 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
+import it.polimi.ingsw.Constants.Character;
+import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
+import it.polimi.ingsw.Controller.Rules.DynamicRules.CentaurRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 
-public class HeraldCharacter extends CharacterCard {
-    private GameState previousState;
+public class Centaur extends CharacterCard {
 
-    public HeraldCharacter(String imagePath) {
+    public Centaur(String imagePath) {
         super(imagePath);
         price = 3;
+        character = Character.CENTAUR;
     }
 
     @Override
     public void activate(Rules rules, Game game) {
         super.activate(rules, game);
-        previousState = game.getGameState();
-        game.setGameState(GameState.HERALD_ACTIVE);
+        rules.setDynamicRules(new CentaurRules());
     }
 
     @Override
     public void deactivate(Rules rules, Game game) {
         super.deactivate(rules, game);
-        game.setGameState(previousState);
+        rules.setDynamicRules(new BaseRules());
     }
-
-
 }

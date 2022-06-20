@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
+import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Bag;
 import it.polimi.ingsw.Constants.Color;
@@ -10,17 +11,18 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class MonkCharacter extends CharacterCard {
+public class Monk extends CharacterCard {
 
     private Map<Color, Integer> students;
     private GameState previousState;
     private Bag bag;
 
-    public MonkCharacter(String imagePath, Bag bag) {
+    public Monk(String imagePath, Bag bag) {
         super(imagePath);
         price = 1;
         this.bag = bag;
-        students = new EnumMap<Color, Integer>(Color.class);
+        students = new EnumMap<>(Color.class);
+        character = Character.MONK;
     }
 
     @Override

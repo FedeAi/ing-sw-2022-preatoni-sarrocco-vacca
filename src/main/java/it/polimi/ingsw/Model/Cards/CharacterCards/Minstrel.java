@@ -1,21 +1,20 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
+import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Controller.Rules.Rules;
-import it.polimi.ingsw.Model.Bag;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 
-public class MinstrelCharacter extends CharacterCard {
-
+public class Minstrel extends CharacterCard {
 
     private GameState previousState;
-    private Bag bag;
     private int swappedStudents;
     public static final int maxSwaps = 2;
 
-    public MinstrelCharacter(String imagePath) {
+    public Minstrel(String imagePath) {
         super(imagePath);
         price = 1;
+        character = Character.MINSTREL;
     }
 
     @Override
@@ -36,8 +35,7 @@ public class MinstrelCharacter extends CharacterCard {
         return swappedStudents;
     }
 
-    public void incrementSwapped(){
+    public void incrementSwapped() {
         swappedStudents++;
     }
-
 }

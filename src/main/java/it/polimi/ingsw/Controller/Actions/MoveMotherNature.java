@@ -3,7 +3,7 @@ package it.polimi.ingsw.Controller.Actions;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.GrandmaCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Grandma;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Islands.Island;
@@ -78,11 +78,11 @@ public class MoveMotherNature extends Performable {
             }
         } else {
             game.setIslandBlock(newMotherPosition,false);
-            Optional<CharacterCard> card = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof GrandmaCharacter).findFirst();
+            Optional<CharacterCard> card = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof Grandma).findFirst();
             if (card.isEmpty()) {
                 return;
             }
-            GrandmaCharacter grandma = (GrandmaCharacter) card.get();
+            Grandma grandma = (Grandma) card.get();
             grandma.addBlockingCard();
         }
     }

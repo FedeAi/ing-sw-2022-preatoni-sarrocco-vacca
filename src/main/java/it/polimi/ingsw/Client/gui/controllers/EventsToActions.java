@@ -55,8 +55,8 @@ public class EventsToActions implements PropertyChangeListener {
                 case ACTION_MOVE_MOTHER -> {
                     if (Objects.equals(currEvt.getPropertyName(), BoardController.SELECT_ISLAND_LISTENER)) {
                         int mn = gui.getModelView().getMotherNature();
-                        // FIXME
-                        int movement = (mn - (int) currEvt.getNewValue()) % gui.getModelView().getIslandContainer().size();
+                        int islands = gui.getModelView().getIslandContainer().size();
+                        int movement = ((int) currEvt.getNewValue() - mn + islands) % islands;
                         System.out.println(movement);
                         action = "MOVEMOTHER " + movement;
                     }

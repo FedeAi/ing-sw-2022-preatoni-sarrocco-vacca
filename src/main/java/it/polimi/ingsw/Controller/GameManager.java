@@ -14,8 +14,6 @@ import it.polimi.ingsw.Constants.TowerColor;
 import it.polimi.ingsw.Model.Islands.BaseIsland;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Server.GameHandler;
-import it.polimi.ingsw.Server.VirtualClient;
-import it.polimi.ingsw.listeners.NextRoundListener;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -79,18 +77,18 @@ public class GameManager implements PropertyChangeListener {
 
     private void initCharacters() {
         List<CharacterCard> characters = new ArrayList<>();
-        characters.add(new CentaurCharacter(""));
-        characters.add(new FarmerCharacter(""));
-        characters.add(new HeraldCharacter(""));
-        characters.add(new JokerCharacter("", game.getBag()));
-        characters.add(new KnightCharacter(""));
-        characters.add(new MushroomCharacter(""));
-        characters.add(new PostmanCharacter(""));
-        characters.add(new ThiefCharacter(""));
-        characters.add(new PrincessCharacter("", game.getBag()));
-        characters.add(new MinstrelCharacter(""));
-        characters.add(new MonkCharacter("", game.getBag()));
-        characters.add(new GrandmaCharacter(""));
+        characters.add(new Centaur(""));
+        characters.add(new Farmer(""));
+        characters.add(new Herald(""));
+        characters.add(new Joker("", game.getBag()));
+        characters.add(new Knight(""));
+        characters.add(new Mushroom(""));
+        characters.add(new Postman(""));
+        characters.add(new Thief(""));
+        characters.add(new Princess("", game.getBag()));
+        characters.add(new Minstrel(""));
+        characters.add(new Monk("", game.getBag()));
+        characters.add(new Grandma(""));
 
         Collections.shuffle(characters);
         List<CharacterCard> extractedCharacters = characters.subList(0, 3);

@@ -369,7 +369,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <HBox fx:id="characterContainer" prefHeight="100.0" prefWidth="200.0" spacing="5.0" />
             <HBox fx:id="playedCardContainer" prefHeight="100.0" prefWidth="200.0" />
          </children></VBox>
    </right>

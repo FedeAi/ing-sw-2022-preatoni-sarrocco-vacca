@@ -6,7 +6,7 @@ import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.PrincessCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Princess;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -28,7 +28,7 @@ public class PrincessMoveToEntryTest {
     private Game game;
     private GameManager gameManager;
     private Player p1, p2, p3;
-    private PrincessCharacter card;
+    private Princess card;
     private List<CharacterCard> cardList;
     private Color selectionColor;
     private int selectionValue;
@@ -46,7 +46,7 @@ public class PrincessMoveToEntryTest {
         game = gameManager.getGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new PrincessCharacter("", game.getBag());
+        card = new Princess("", game.getBag());
         card.init();
         cardList = new ArrayList<>();
         cardList.add(card);

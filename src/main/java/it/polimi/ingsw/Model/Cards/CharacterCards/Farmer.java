@@ -1,15 +1,17 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
+import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.FarmerRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Model.Game;
 
-public class FarmerCharacter extends CharacterCard {
+public class Farmer extends CharacterCard {
 
-    public FarmerCharacter(String imagePath) {
+    public Farmer(String imagePath) {
         super(imagePath);
         price = 2;
+        character = Character.FARMER;
     }
 
     @Override

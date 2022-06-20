@@ -13,20 +13,18 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class SetupController extends GUIController{
+public class SetupController extends GUIController {
 
     private GUI gui;
 
     @FXML
-    RadioButton NormalGame, ExpertGame;
+    RadioButton normalGame, expertGame;
     @FXML
-    Button btn2,btn3;
+    Button btn2, btn3;
     @FXML
     ToggleGroup gameModeToggle;
     @FXML
-    Label title,error;
-
-
+    Label title, error;
 
 
     @FXML
@@ -35,8 +33,8 @@ public class SetupController extends GUIController{
         String id = btn.getId();
         String expert = "";
 
-        if(ExpertGame.isSelected() || NormalGame.isSelected()){
-            if (ExpertGame.isPressed()) {
+        if (expertGame.isSelected() || normalGame.isSelected()) {
+            if (expertGame.isSelected()) {
                 expert = " expert";
             }
 
@@ -52,32 +50,24 @@ public class SetupController extends GUIController{
             Platform.runLater(() -> {
                 gui.getListeners().firePropertyChange("action", null, message);
             });
-
-
-        }
-        else{
+        } else {
             error.setText("choose the mode you want to play before starting");
-            sleepAndExec(()->error.setText(""));
+            sleepAndExec(() -> error.setText(""));
         }
-
-
     }
 
     @Override
     public void setGui(GUI gui) {
         this.gui = gui;
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         btn2.setFont(font);
         btn3.setFont(font);
         error.setFont(font);
         title.setFont(font);
-        NormalGame.setFont(font);
-        ExpertGame.setFont(font);
-
-
+        normalGame.setFont(font);
+        expertGame.setFont(font);
     }
-
 }

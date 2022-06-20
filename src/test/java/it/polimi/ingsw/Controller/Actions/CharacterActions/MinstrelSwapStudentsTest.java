@@ -6,7 +6,7 @@ import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MinstrelCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Minstrel;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -30,7 +30,7 @@ class MinstrelSwapStudentsTest {
     GameManager gameManager;
     Player p1, p2, p3;
     Color studentFromEntry, studentFromHall;
-    MinstrelCharacter card;
+    Minstrel card;
     LinkedList<CharacterCard> cardList;
 
     @BeforeEach
@@ -46,7 +46,7 @@ class MinstrelSwapStudentsTest {
         game = gameManager.getGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new MinstrelCharacter("");
+        card = new Minstrel("");
         card.init();
         cardList = new LinkedList<>();
         cardList.add(card);

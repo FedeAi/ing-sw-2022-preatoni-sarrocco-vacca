@@ -34,7 +34,7 @@
                                     <Insets right="5.0" />
                                  </padding>
                               </Label>
-                              <RadioButton fx:id="NormalGame" mnemonicParsing="false">
+                              <RadioButton fx:id="normalGame" mnemonicParsing="false">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="gameModeToggle" />
                                  </toggleGroup>
@@ -70,7 +70,7 @@
                                     <Insets right="5.0" />
                                  </padding>
                               </Label>
-                              <RadioButton fx:id="ExpertGame" mnemonicParsing="false" toggleGroup="$gameModeToggle" />
+                              <RadioButton fx:id="expertGame" mnemonicParsing="false" toggleGroup="$gameModeToggle" />
                            </children>
                            <padding>
                               <Insets bottom="15.0" />

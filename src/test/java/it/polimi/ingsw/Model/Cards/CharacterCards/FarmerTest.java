@@ -11,16 +11,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FarmerCharacterTest {
+class FarmerTest {
 
-    FarmerCharacter card;
+    Farmer card;
     Game game;
     GameManager gameManager;
     Player p1, p2, p3;
 
     @BeforeEach
      void init() {
-        card = new FarmerCharacter("");
+        card = new Farmer("");
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
         p1 = new Player(0, "Ale");
         p2 = new Player(1, "Fede");

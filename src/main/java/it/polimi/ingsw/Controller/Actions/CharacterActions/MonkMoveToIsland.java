@@ -4,7 +4,7 @@ import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MonkCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Monk;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -38,23 +38,23 @@ public class MonkMoveToIsland extends Performable {
         }
 
         // We check if any of the cards on the table are of the MONK type
-        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof MonkCharacter)) {
+        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof Monk)) {
             throw new GameException("There isn't any character card of the type monk on the table.");
         }
 
         // Simple check to see if we have an active card
-        Optional<CharacterCard> card = game.getActiveCharacter(MonkCharacter.class);
+        Optional<CharacterCard> card = game.getActiveCharacter(Monk.class);
         if (card.isEmpty()) {
             throw new GameException("The monk character isn't active.");
         }
 
         // Checking if the activated card is of the MONK type
-        if (!(card.get() instanceof MonkCharacter)) {
+        if (!(card.get() instanceof Monk)) {
             throw new GameException("The card that has been activated in this turn is not of the monk type.");
         }
 
         // Now it's safe to cast the activated card
-        MonkCharacter monk = (MonkCharacter) card.get();
+        Monk monk = (Monk) card.get();
 
         // Verify that the MONK card has a student of the specified COLOR
         if (monk.getStudentsMap().getOrDefault(student, 0) <= 0) {
@@ -66,8 +66,8 @@ public class MonkMoveToIsland extends Performable {
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         // Redundant card presence check and general canPerform() check, then we execute the action
-        if (game.getActiveCharacter(MonkCharacter.class).isPresent()) {
-            MonkCharacter monk = (MonkCharacter) game.getActiveCharacter(MonkCharacter.class).get();
+        if (game.getActiveCharacter(Monk.class).isPresent()) {
+            Monk monk = (Monk) game.getActiveCharacter(Monk.class).get();
             monk.moveStudent(student);
             // Now we add the student to the specified island
             game.addIslandStudent(islandIndex, student);

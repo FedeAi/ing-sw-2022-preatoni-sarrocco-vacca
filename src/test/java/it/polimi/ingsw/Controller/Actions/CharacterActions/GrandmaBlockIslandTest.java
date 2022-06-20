@@ -7,8 +7,7 @@ import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.GrandmaCharacter;
-import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Grandma;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -41,7 +40,7 @@ class GrandmaBlockIslandTest {
     Player p1, p2, p3;
     Game game;
     Performable action;
-    GrandmaCharacter grandma;
+    Grandma grandma;
     List<CharacterCard> cardList;
     int selectedIsland;
 
@@ -63,7 +62,7 @@ class GrandmaBlockIslandTest {
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         game.setRoundOwner(p1);
         selectedIsland = game.getIslandContainer().correctIndex(1, game.getMotherNature().getPosition());
-        grandma = new GrandmaCharacter("");
+        grandma = new Grandma("");
         cardList = new ArrayList<>();
         cardList.add(grandma);
         game.initCharacterCards(cardList);

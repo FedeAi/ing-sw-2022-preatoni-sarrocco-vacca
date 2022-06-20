@@ -8,7 +8,7 @@ import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MinstrelCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Minstrel;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -38,15 +38,15 @@ public class MinstrelSwapStudents extends Performable {
 
         // is action legal check
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter(MinstrelCharacter.class);
+        Optional<CharacterCard> card = game.getActiveCharacter(Minstrel.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present of the minstrel type.");
         }
 
-        MinstrelCharacter minstrel = (MinstrelCharacter) card.get();
+        Minstrel minstrel = (Minstrel) card.get();
 
         // already done all possible movements
-        if (minstrel.getSwappedStudents() >= MinstrelCharacter.maxSwaps) {
+        if (minstrel.getSwappedStudents() >= Minstrel.maxSwaps) {
             throw new GameException("You already swapped from the minstrel the maximum amount of students allowed per card activation.");
         }
 
@@ -69,8 +69,8 @@ public class MinstrelSwapStudents extends Performable {
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
 
-        Optional<CharacterCard> card = game.getActiveCharacter(MinstrelCharacter.class);
-        MinstrelCharacter minstrel = (MinstrelCharacter) card.get();
+        Optional<CharacterCard> card = game.getActiveCharacter(Minstrel.class);
+        Minstrel minstrel = (Minstrel) card.get();
         Player player = getPlayer(game);
 
         player.getSchool().swapStudents(studentFromEntry, studentFromHall);

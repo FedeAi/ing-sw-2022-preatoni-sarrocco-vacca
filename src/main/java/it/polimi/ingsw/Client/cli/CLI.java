@@ -15,7 +15,6 @@ import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
 import it.polimi.ingsw.Server.Answer.WinMessage;
 import it.polimi.ingsw.Server.Answer.modelUpdate.PlayedCardMessage;
 
-import java.awt.desktop.ScreenSleepEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
@@ -26,8 +25,6 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 import static it.polimi.ingsw.Constants.Constants.validateNickname;
@@ -371,8 +368,8 @@ public class CLI implements UI {
             }
             if (modelView.getExpert()) {
                 if (modelView.getGameState() != GameState.SETUP_CHOOSE_MAGICIAN) {
-                    String characters = modelView.getCharacterCards().stream().map(c -> c.name).toList().toString(); // todo in teoria dal codice del activate si può attivare solo in movestudent e altro stato e basta
-                    String activeCharacters = modelView.getCharacterCards().stream().filter(c -> c.isActive).map(c -> c.name).toList().toString(); // todo in teoria dal codice del activate si può attivare solo in movestudent e altro stato e basta
+                    String characters = modelView.getCharacterCards().stream().map(c -> c.type).toList().toString(); // todo in teoria dal codice del activate si può attivare solo in movestudent e altro stato e basta
+                    String activeCharacters = modelView.getCharacterCards().stream().filter(c -> c.isActive).map(c -> c.type).toList().toString(); // todo in teoria dal codice del activate si può attivare solo in movestudent e altro stato e basta
                     System.out.println(CLIColors.ANSI_BLUE + "\t activate " + characters + CLIColors.RESET);
                     System.out.println(CLIColors.ANSI_BLUE + "\t deactivate " + activeCharacters + CLIColors.RESET);
                 }
@@ -400,7 +397,7 @@ public class CLI implements UI {
      *  This method returns the character cards present in the current game.
      */
     private void showCharacters(){
-        modelView.getCharacterCards().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c.name + ", price: " + c.price +
+        modelView.getCharacterCards().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c.type + ", price: " + c.price +
                 ", state: " + (c.isActive ? "active" : "no-active") + CLIColors.RESET).forEach(System.out::println);
     }
 

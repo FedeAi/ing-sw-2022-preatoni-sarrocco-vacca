@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.Cards.CharacterCards;
 
+import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.BaseRules;
 import it.polimi.ingsw.Controller.Rules.DynamicRules.MushroomRules;
 import it.polimi.ingsw.Controller.Rules.Rules;
@@ -11,13 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MushroomCharacter extends CharacterCard {
+public class Mushroom extends CharacterCard {
     Color student;
     private GameState previousState;
 
-    public MushroomCharacter(String imagePath) {
+    public Mushroom(String imagePath) {
         super(imagePath);
         price = 3;
+        character = Character.MUSHROOM;
     }
 
     @Override

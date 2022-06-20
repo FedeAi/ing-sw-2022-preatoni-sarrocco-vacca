@@ -8,8 +8,8 @@ import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.KnightCharacter;
-import it.polimi.ingsw.Model.Cards.CharacterCards.MushroomCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Knight;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Mushroom;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -58,7 +58,7 @@ class MushroomChooseColorTest {
         game = gameManager.getGame();
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         game.setRoundOwner(p1);
-        card = new MushroomCharacter("");
+        card = new Mushroom("");
         cardList = new ArrayList<>();
         cardList.add(card);
         game.initCharacterCards(cardList);
@@ -82,7 +82,7 @@ class MushroomChooseColorTest {
         // We now have a card present, but not the JOKER
         // It's important also to not have a card that changes the game state
         card.activate(gameManager.getRules(), game);
-        CharacterCard tempCard = new KnightCharacter("");
+        CharacterCard tempCard = new Knight("");
         tempCard.activate(gameManager.getRules(), game);
         cardList = new ArrayList<>();
         cardList.add(tempCard);
@@ -97,7 +97,7 @@ class MushroomChooseColorTest {
     void noActives() {
         // No cards present check
         cardList = new ArrayList<>();
-        cardList.add(new MushroomCharacter(""));
+        cardList.add(new Mushroom(""));
         game.initCharacterCards(cardList);
         card.activate(gameManager.getRules(), game);
         assertThrows(GameException.class, () -> {

@@ -7,7 +7,7 @@ import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.JokerCharacter;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Joker;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -37,20 +37,20 @@ public class JokerSwapStudents extends Performable {
 
         // is action legal check
         // there is no an active card
-        Optional<CharacterCard> card = game.getActiveCharacter(JokerCharacter.class);
+        Optional<CharacterCard> card = game.getActiveCharacter(Joker.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
 
         // the active card is not the right one
-        if (!(card.get() instanceof JokerCharacter)) {
+        if (!(card.get() instanceof Joker)) {
             throw new GameException("The card that has been activated in this turn is not of the joker type.");
         }
 
-        JokerCharacter joker = (JokerCharacter) card.get();
+        Joker joker = (Joker) card.get();
 
         // The player has already moved the allowed students
-        if (joker.getSwappedStudents() >= JokerCharacter.maxSwaps) {
+        if (joker.getSwappedStudents() >= Joker.maxSwaps) {
             throw new GameException("You already swapped from the joker the maximum amount of students allowed per card activation.");
         }
 
@@ -70,13 +70,13 @@ public class JokerSwapStudents extends Performable {
         Player player = getPlayer(game);
 
         // to check instance of and make cast
-        JokerCharacter joker = (JokerCharacter) game.getActiveCharacter(JokerCharacter.class).get();
+        Joker joker = (Joker) game.getActiveCharacter(Joker.class).get();
         joker.swapStudents(studentToPick, studentToPut);
         player.getSchool().addStudentEntry(studentToPick);
         player.getSchool().removeStudentFromEntry(studentToPut);
 
         // card deactivate
-        if (joker.getSwappedStudents() >= JokerCharacter.maxSwaps) {
+        if (joker.getSwappedStudents() >= Joker.maxSwaps) {
             game.deactivateCharacterCard(game.getCharacterCards().indexOf(joker), rules);
         }
     }

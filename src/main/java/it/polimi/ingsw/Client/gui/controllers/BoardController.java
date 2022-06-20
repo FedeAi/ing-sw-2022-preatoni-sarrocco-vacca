@@ -3,10 +3,12 @@ package it.polimi.ingsw.Client.gui.controllers;
 import it.polimi.ingsw.Client.ServerMessageHandler;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Constants.TowerColor;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
+import it.polimi.ingsw.Model.Cards.CharacterCards.ReducedCharacterCard;
 import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.SuperIsland;
@@ -80,6 +82,8 @@ public class BoardController extends GUIController implements PropertyChangeList
     HBox cardContainer;
     @FXML
     HBox playedCardContainer;
+    @FXML
+    HBox characterContainer;
 
     private final ArrayList<Image> cloudImgs = new ArrayList<>();
     private final ArrayList<Pane> cloudsPane = new ArrayList<>();
@@ -105,6 +109,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     private final EnumMap<Color, Pane> colorToPlayerProfs = new EnumMap<Color, Pane>(Color.class);
 
     private final List<Pane> switchPlayerPanes = new ArrayList<>(); // list of buttons to change school
+    private final EnumMap<Character, Image> charactersImages = new EnumMap<>(Character.class);
     String playerSchool = ""; // player's school name
 
     @Override
@@ -141,7 +146,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         colorToPlayerProfs.put(Color.BLUE, playerProf5);
 
         switchPlayerPanes.addAll(List.of(otherPlayer1Pane, otherPlayer2Pane));
-
         loadAssets();
     }
 
@@ -162,6 +166,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             ImageView coin = new ImageView(new Image(getClass().getResourceAsStream("/graphics/board/coin.png")));
             coin.setSmooth(true);
             coin.setCache(true);
+            updateCharacters();
         }
 
         showClouds(); // have to be later of the upload image cloud
@@ -205,7 +210,12 @@ public class BoardController extends GUIController implements PropertyChangeList
         for (TowerColor color : TowerColor.values()) {
             towerImgs.put(color, new Image(getClass().getResourceAsStream("/graphics/board/" + color.name().toLowerCase() + "_tower.png")));
         }
+
         motherImg = new Image(getClass().getResourceAsStream("/graphics/board/mother_nature.png"));
+
+        for (Character c : Character.values()) {
+            charactersImages.put(c,  new Image(getClass().getResourceAsStream("/graphics/characters/" +  c.toString().toLowerCase() + ".jpg")));
+        }
     }
 
     @Override
@@ -301,7 +311,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     private void updatePlayedCards() {
         Map<String, AssistantCard> map = gui.getModelView().getPlayedCards();
         playedCardContainer.getChildren().clear();
-        for(Map.Entry<String, AssistantCard> entry : map.entrySet()) {
+        for (Map.Entry<String, AssistantCard> entry : map.entrySet()) {
             StackPane s = new StackPane();
             ImageView playedCard = new ImageView();
             playedCard.setImage(cardImgs.get(entry.getValue().getValue() - 1));
@@ -349,7 +359,6 @@ public class BoardController extends GUIController implements PropertyChangeList
     }
 
     private void showChangeSchoolButtons() {
-
         List<Button> buttons = gui.getModelView().getPlayers().stream().filter(player -> !Objects.equals(player, gui.getModelView().getPlayerName()))
                 .map(p -> {
                             Button btn = new Button(p);
@@ -366,7 +375,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         for (int i = 0; i < buttons.size(); i++) {
             switchPlayerPanes.get(i).getChildren().clear();
             switchPlayerPanes.get(i).getChildren().add(buttons.get(i));
-
         }
     }
 
@@ -397,7 +405,6 @@ public class BoardController extends GUIController implements PropertyChangeList
     }
 
     private Node buildIsland(Island island, int index, boolean has_mother) {
-
         ImageView mother = null;
         StackPane pane = new StackPane();
 //        pane.setPrefWidth(200);
@@ -559,6 +566,19 @@ public class BoardController extends GUIController implements PropertyChangeList
 //        }
     }
 
+    private void updateCharacters() {
+        for (ReducedCharacterCard c : gui.getModelView().getCharacterCards()) {
+            characterContainer.getChildren().clear();
+            StackPane s = new StackPane();
+            ImageView character = new ImageView();
+            character.setImage(charactersImages.get(c.type));
+            character.setFitWidth(63);
+            character.setFitHeight(92.25);
+            s.getChildren().add(character);
+            characterContainer.getChildren().add(s);
+        }
+    }
+
     private List<Color> getProfsFromNickname(Map<Color, String> profs, String player) {
         return profs.entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), player)).map(Map.Entry::getKey).toList();
     }
@@ -619,10 +639,8 @@ public class BoardController extends GUIController implements PropertyChangeList
                 case ServerMessageHandler.SCHOOL_LISTENER -> updateSchool();
                 case ServerMessageHandler.PROFS_LISTENER -> updateProfessors();
                 case ServerMessageHandler.PLAYED_CARD_LISTENER -> updatePlayedCards();
-                case ServerMessageHandler.MAGICIANS_LISTENER -> {
-                }
-                case ServerMessageHandler.CHARACTERS_LISTENER -> {
-                }
+                case ServerMessageHandler.MAGICIANS_LISTENER -> {}
+                case ServerMessageHandler.CHARACTERS_LISTENER -> updateCharacters();
             }
         }
     }
