@@ -69,5 +69,6 @@ public class SetupController extends GUIController {
         title.setFont(font);
         normalGame.setFont(font);
         expertGame.setFont(font);
+
     }
 }

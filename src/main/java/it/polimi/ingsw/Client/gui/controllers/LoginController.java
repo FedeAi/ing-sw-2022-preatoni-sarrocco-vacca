@@ -13,6 +13,8 @@ import java.awt.*;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -34,6 +36,16 @@ public class LoginController extends GUIController{
     @FXML
     private Label error;
 
+    @Override
+    public void init(){
+        // handle enter pressed
+        // send when
+        gui.getScene(GUI.LOGIN).addEventFilter(KeyEvent.ANY,(keyEvent) -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                join();
+            }
+        });
+    }
     @Override
     public void setGui(GUI gui) {
         this.gui = gui;
@@ -118,7 +130,6 @@ public class LoginController extends GUIController{
         ip.setFont(font);
         port.setFont(font);
         error.setFont(font);
-
     }
 
 }

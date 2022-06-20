@@ -31,6 +31,14 @@ public abstract class GUIController implements Initializable, PropertyChangeList
         thread.start();
     }
 
+    /**
+     * This method is used to initialize parameters of the controller that are not available
+     * when Initializable.initialize is called. It must be called after the controller has been initialized
+     */
+    public void init(){
+
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 

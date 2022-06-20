@@ -15,6 +15,7 @@ import it.polimi.ingsw.Model.Islands.SuperIsland;
 import it.polimi.ingsw.Model.School;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.image.Image;
@@ -149,6 +150,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         loadAssets();
     }
 
+    @Override
     public void init() {
         showChangeSchoolButtons();
 
@@ -494,7 +496,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         pane.getChildren().add(hContainer);
 //        pane.getChildren().add(tower);
 
-        pane.setOnMouseReleased((e) -> changeSupport.firePropertyChange(SELECT_ISLAND_LISTENER, null, index));
         pane.setOnMouseEntered(this::OnSelectScaleColor);
         pane.setOnMouseExited(this::OnSelectScaleColor);
         return pane;
@@ -565,7 +566,7 @@ public class BoardController extends GUIController implements PropertyChangeList
 //
 //        }
     }
-
+    
     private void updateCharacters() {
         for (ReducedCharacterCard c : gui.getModelView().getCharacterCards()) {
             characterContainer.getChildren().clear();

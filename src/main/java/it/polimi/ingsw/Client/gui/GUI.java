@@ -5,9 +5,6 @@ import it.polimi.ingsw.Client.gui.controllers.BoardController;
 import it.polimi.ingsw.Client.gui.controllers.GUIController;
 import it.polimi.ingsw.Client.gui.controllers.MagiciansController;
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Constants.Magician;
-import it.polimi.ingsw.Server.Answer.Answer;
-import it.polimi.ingsw.Server.Answer.modelUpdate.ModelMessage;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,15 +100,18 @@ public class GUI extends Application implements UI {
         stage.setScene(currentScene);
         stage.centerOnScreen();
         stage.show();
-
     }
 
     public void changeScene(String newScene) {
-        stage.setScene(nameMapScene.get(newScene));
+        currentScene = nameMapScene.get(newScene);
+        stage.setScene(currentScene);
         stage.centerOnScreen();
         stage.show();
     }
 
+    public Scene getScene(String name){
+        return nameMapScene.get(name);
+    }
     public void setConnectionSocket(ConnectionSocket connectionSocket) {
         if (this.connectionSocket == null) {
             this.connectionSocket = connectionSocket;
@@ -161,8 +160,8 @@ public class GUI extends Application implements UI {
                 // first turn -> board
                 if (modelView.getGameState() == GameState.PLANNING_CHOOSE_CARD && modelView.getPrevGameState() == GameState.SETUP_CHOOSE_MAGICIAN) {
                     Platform.runLater(() -> {
-                        ((BoardController) nameMapController.get(BOARD)).init();
                         changeScene(BOARD);
+                        ((BoardController) nameMapController.get(BOARD)).init();
                     });
                 }
             }

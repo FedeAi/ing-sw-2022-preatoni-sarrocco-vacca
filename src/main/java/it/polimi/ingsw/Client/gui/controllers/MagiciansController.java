@@ -40,9 +40,7 @@ public class MagiciansController extends GUIController {
 
     }
 
-    /**
-     * this function must be called after the controller has been initialized
-     */
+    @Override
     public void init(){
         showMagicians();
     }
