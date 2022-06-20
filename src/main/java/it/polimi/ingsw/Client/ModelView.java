@@ -118,10 +118,6 @@ public class ModelView implements Serializable {
         return playerMapMagician;
     }
 
-    public void setPlayerMapMagician(Map<String, Magician> playerMapMagician) {
-        this.playerMapMagician = playerMapMagician;
-    }
-
     public Map<String, School> getPlayerMapSchool() {
         return playerMapSchool;
     }

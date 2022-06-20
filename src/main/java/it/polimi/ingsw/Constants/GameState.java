@@ -2,6 +2,7 @@ package it.polimi.ingsw.Constants;
 
 public enum GameState {
     GAME_ROOM,
+    INITIAL_FIRE_COMPLETED,
     GAME_STARTED,
     GAME_ENDED,
     ROUND_STARTED,

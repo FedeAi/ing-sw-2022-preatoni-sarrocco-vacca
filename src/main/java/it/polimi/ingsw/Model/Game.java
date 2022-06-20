@@ -80,6 +80,7 @@ public class Game {
 
         players.forEach(Player::fireInitialState);
 
+        listeners.firePropertyChange(GAME_STATE_LISTENER, null, GameState.INITIAL_FIRE_COMPLETED);
         listeners.firePropertyChange(GAME_STATE_LISTENER, null, gameState);
     }
 
@@ -223,6 +224,12 @@ public class Game {
         Map<String, List<String>> map = new HashMap<>();
         map.put(PlayersStatusMessage.CONNECTED_PLAYERS, connectedPlayers);
         map.put(PlayersStatusMessage.PLAYERS, allPlayers);
+        return map;
+    }
+
+    private Map<String, List<String>> buildMapPlayers(String reConnectedPlayer){
+        Map<String, List<String>> map = buildMapPlayers();
+        map.put(PlayersStatusMessage.REJOINING_PLAYERS, List.of(reConnectedPlayer));
         return map;
     }
 
@@ -561,7 +568,8 @@ public class Game {
 
     public void setPlayerConnected(int player, boolean isConnected){
         getPlayerByID(player).setConnected(isConnected);
-        listeners.firePropertyChange(PLAYERS_LISTENER, null, buildMapPlayers());
+        listeners.firePropertyChange(PLAYERS_LISTENER, null, isConnected ?
+                buildMapPlayers(getPlayerByID(player).getNickname()) : buildMapPlayers());
     }
 
     public List<String> getWaitingPlayersReconnected(){

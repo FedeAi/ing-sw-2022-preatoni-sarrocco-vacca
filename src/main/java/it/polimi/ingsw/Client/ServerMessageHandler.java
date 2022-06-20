@@ -30,6 +30,7 @@ public class ServerMessageHandler {
   public static final String GAME_STATE_LISTENER = "stateChange";
   public static final String PLAYED_CARD_LISTENER = "playedCard";
   public static final String PLAYERS_STATUS_LISTENER = "connectedPlayers";
+  public static final String PLAYERS_REJOIN_LISTENER = "playerRejoin";
   // Model updates listeners
   public static final String GENERERIC_MODEL_UPDATE_LISTENER = "genericModelUpdate";
   public static final String BALANCE_LISTENER = "BalanceListener";
@@ -164,7 +165,10 @@ public class ServerMessageHandler {
     else if(answer instanceof PlayersStatusMessage message) {
       modelView.setConnectedPlayers(message.getConnectedPlayers());
       modelView.setPlayers(message.getPlayers());
-      view.firePropertyChange(PLAYERS_STATUS_LISTENER, null, message.getMessage());
+      if( message.getRejoiningPlayers().size()>0)
+        view.firePropertyChange(PLAYERS_REJOIN_LISTENER, null, message.getRejoiningPlayers());
+      view.firePropertyChange(PLAYERS_STATUS_LISTENER, null, message);
+
     }
   }
 

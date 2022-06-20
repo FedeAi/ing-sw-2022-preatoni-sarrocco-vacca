@@ -123,6 +123,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     private final List<Pane> switchPlayerPanes = new ArrayList<>(); // list of buttons to change school
     private final EnumMap<Character, Image> charactersImages = new EnumMap<>(Character.class);
     String playerSchool = ""; // player's school name
+    boolean initCompleted = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -193,6 +194,8 @@ public class BoardController extends GUIController implements PropertyChangeList
         updateHand();
         showPlayers();
         //uploadAvatar(); //todo adjustment listener
+
+        initCompleted = true;
         changeSupport.addPropertyChangeListener(new EventsToActions(gui));
     }
 
@@ -340,6 +343,7 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     private void updatePlayers() {
         Map<String, Magician> map = gui.getModelView().getPlayerMapMagician();
+        
         List<String> players = gui.getModelView().getPlayers();
         for (int i = 0; i < players.size(); i++) {
             playerAvatars.get(i).getChildren().clear();
@@ -502,6 +506,8 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     public void updateSchool() {
         School school = gui.getModelView().getPlayerMapSchool().get(playerSchool);
+        if(school==null)
+            return;
         // entry students
         List<Color> entryStuds = school.getStudentsEntryList();
         assert entryStuds.size() <= studentEntryPanes.size();
@@ -678,7 +684,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         GameState state = gui.getModelView().getGameState();
-        if (state != GameState.GAME_ROOM && state != GameState.SETUP_CHOOSE_MAGICIAN) {
+        if (state != GameState.GAME_ROOM && state != GameState.SETUP_CHOOSE_MAGICIAN && initCompleted) {
             switch (evt.getPropertyName()) {
                 case ServerMessageHandler.BALANCE_LISTENER -> updateBalance();
                 case ServerMessageHandler.CLOUDS_LISTENER -> updateClouds();
