@@ -25,12 +25,12 @@ import java.util.logging.Level;
 public class GUI extends Application implements UI {
 
 
-    protected static final String MENU = "menu.fxml";
-    protected static final String BOARD = "board.fxml";
-    protected static final String LOADER = "loading.fxml";
-    protected static final String LOGIN = "login.fxml";
-    protected static final String MAGIs = "magicians.fxml";
-    protected static final String SETUP = "setup.fxml";
+    public static final String MENU = "menu.fxml";
+    public static final String BOARD = "board.fxml";
+    public static final String LOADER = "loading.fxml";
+    public static final String LOGIN = "login.fxml";
+    public static final String MAGIs = "magicians.fxml";
+    public static final String SETUP = "setup.fxml";
 
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final ModelView modelView;
