@@ -105,7 +105,21 @@ public class EventsToActions implements PropertyChangeListener {
         if(Objects.equals(prevEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)
                 && Objects.equals(currEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)){
             if(activeCards.contains(Character.JOKER)){
-                return "JOKER" + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
+                return "JOKER " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
+            }
+        }
+        if(Objects.equals(prevEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)
+                && Objects.equals(currEvt.getPropertyName(), BoardController.SCHOOL_HALL_LISTENER)){
+            if(activeCards.contains(Character.MINSTREL)){
+                return "MINSTREL " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
+            }
+        }
+        if(Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)){
+            if(activeCards.contains(Character.MUSHROOM)){
+                return "MUSHROOM " + currEvt.getNewValue().toString();
+            }
+            if(activeCards.contains(Character.PRINCESS)){
+                return "PRINCESS " + currEvt.getNewValue().toString();
             }
         }
         return "";

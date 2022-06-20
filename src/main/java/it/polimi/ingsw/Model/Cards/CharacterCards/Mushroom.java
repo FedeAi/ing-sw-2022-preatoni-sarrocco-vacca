@@ -52,6 +52,6 @@ public class Mushroom extends CharacterCard {
 
     @Override
     public List<Color> getStudents(){
-        return new ArrayList<>(List.of(student));
+        return new ArrayList<>(List.of(Color.values()));
     }
 }
