@@ -19,7 +19,6 @@ public class RoundManager {
 
     public static final String ROUND_OWNER_LISTENER = "roundOwnerListener";
 
-
     private GameManager gameManager;
     private Game gameInstance;
     private final PropertyChangeSupport listeners = new PropertyChangeSupport(this);
@@ -55,10 +54,15 @@ public class RoundManager {
             nextPlayer = gameInstance.setPlanningOrder();
         }
 
+        // starting a new action phase
         if(nextPlayer == null && nextState == GameState.ACTION_MOVE_STUDENTS){
             nextPlayer = gameInstance.setActionOrder();
         }
+
+        // starting a new planning phase
         if(nextPlayer == null && nextState == GameState.PLANNING_CHOOSE_CARD){
+            // remove played cards to all players
+            gameInstance.removePlayedCards();
             // handle the disconnected players now re-connected
             gameManager.getGameHandler().reEnterWaitingPlayers();
             nextPlayer = gameInstance.setPlanningOrder();

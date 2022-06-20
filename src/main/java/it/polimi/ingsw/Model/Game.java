@@ -51,7 +51,6 @@ public class Game {
     //private Comparator<Integer> influenceComparator = Comparator.comparing((i1,i2)->(i1.intValue()-i2));
 
     public Game() {
-
         this.bag = new Bag(Constants.INITIAL_BAG_SIZE);
         players = new ArrayList<>();
         playersActionPhase = new ArrayList<>();
@@ -294,6 +293,10 @@ public class Game {
             }
         }
         return playedCards;
+    }
+
+    public void removePlayedCards(){
+        players.forEach(Player::removePlayedCard);
     }
 
     /**
