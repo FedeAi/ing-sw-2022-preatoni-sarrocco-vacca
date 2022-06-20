@@ -181,6 +181,11 @@ public class Player implements PropertyChangeListener {
         listeners.firePropertyChange(PLAYED_CARD_LISTENER, null, playedCard);
     }
 
+    protected void removePlayedCard(){
+        listeners.firePropertyChange(PLAYED_CARD_LISTENER, playedCard, null);
+        this.playedCard = null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

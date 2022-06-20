@@ -185,7 +185,11 @@ public class ModelView implements Serializable {
     }
 
     public void setPlayedCard(String player, AssistantCard playedCard) {
-        this.playedCards.put(player, playedCard);
+        if(playedCard==null){
+            this.playedCards.remove(player);
+        }else{
+            this.playedCards.put(player, playedCard);
+        }
     }
 
     public void setMotherNature(int position){
