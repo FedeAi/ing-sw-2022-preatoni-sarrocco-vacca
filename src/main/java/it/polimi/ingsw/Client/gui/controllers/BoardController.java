@@ -346,8 +346,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             playerRoundOwners.get(i).getChildren().clear();
             String username = players.get(i);
             ImageView magician = new ImageView();
-            magician.setImage(motherImg);
-            //magician.setImage(avatarImgs.get(map.get(username)));
+            magician.setImage(avatarImgs.get(map.get(username)));
             magician.setFitWidth(55);
             magician.setFitHeight(55);
             if (!gui.getModelView().getConnectedPlayers().contains(username)) {

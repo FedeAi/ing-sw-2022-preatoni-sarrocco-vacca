@@ -235,9 +235,9 @@ public class Game {
     public void chooseMagician(Player p, Magician magician) {
         p.setMagician(magician);
         HashMap<Magician, String> oldMagicians = new HashMap<>(mapMagicianToPlayer);
-        mapMagicianToPlayer.remove(magician);
+        mapMagicianToPlayer.put(magician, p.getNickname());
         playersActionPhase = players;
-        listeners.firePropertyChange(MAGICIANS_LISTENER, oldMagicians, mapMagicianToPlayer);
+        listeners.firePropertyChange(MAGICIANS_LISTENER, null, mapMagicianToPlayer);
     }
 
     public boolean isExpertMode() {
