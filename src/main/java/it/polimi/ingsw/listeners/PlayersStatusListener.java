@@ -1,26 +1,27 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Server.Answer.modelUpdate.ConnectedPlayersMessage;
+import it.polimi.ingsw.Server.Answer.modelUpdate.PlayersStatusMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
+import java.util.Map;
 
 /**
- *  ConnectedPlayerListener class is a AbsListener used for notifying the client after an update of the player list (disconnection or reconnection).
+ *  PlayersStatusListener class is a AbsListener used for notifying the client after an update of the player list (disconnection or reconnection).
  *
  * @author Alessandro Vacca
  * @see AbsListener
  */
 
-public class ConnectedPlayerListener extends AbsListener {
+public class PlayersStatusListener extends AbsListener {
 
     /**
-     * Constructor ConnectedPlayerListener creates a new ConnectedPlayerListener instance.
+     * Constructor PlayersStatusListener creates a new PlayersStatusListener instance.
      *
      * @param client of type VirtualClient - the virtual client's view on Server.
      */
-    public ConnectedPlayerListener(VirtualClient client, String propertyName) {
+    public PlayersStatusListener(VirtualClient client, String propertyName) {
         super(client, propertyName);
     }
 
@@ -32,7 +33,8 @@ public class ConnectedPlayerListener extends AbsListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ConnectedPlayersMessage message = new ConnectedPlayersMessage((List<String>) evt.getNewValue());
+        PlayersStatusMessage message = new PlayersStatusMessage((Map<String,List<String>>) evt.getNewValue());
+
         virtualClient.send(message);
     }
 }

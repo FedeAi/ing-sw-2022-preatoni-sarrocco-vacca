@@ -9,6 +9,7 @@ import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
+import it.polimi.ingsw.Server.Answer.modelUpdate.PlayersStatusMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 import it.polimi.ingsw.listeners.*;
 
@@ -27,7 +28,7 @@ public class Game {
     public static final String GAME_STATE_LISTENER = "gameStateListener";
     private static final String MODE_LISTENER = "modeListener";
     private static final String CHARACTERS_LISTENER = "charactersListener";
-    private static final String CONNECTED_PLAYERS_LISTENER = "activePlayersListener";
+    private static final String PLAYERS_LISTENER = "activePlayersListener";
 
     private final List<Player> players;
     private final Map<Magician, String> mapMagicianToPlayer;
@@ -75,7 +76,7 @@ public class Game {
         listeners.firePropertyChange(ROUND_OWNER_LISTENER, null, roundOwner.getNickname());
 
 
-        listeners.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, players.stream().map(Player::getNickname).toList());
+        listeners.firePropertyChange(PLAYERS_LISTENER, null, buildMapPlayers());
 
         players.forEach(Player::fireInitialState);
 
@@ -110,8 +111,8 @@ public class Game {
         createdListeners.add(0,new CharactersListener(client, CHARACTERS_LISTENER));
         listeners.addPropertyChangeListener(CHARACTERS_LISTENER, createdListeners.get(0));
 
-        createdListeners.add(0,new ConnectedPlayerListener(client, CONNECTED_PLAYERS_LISTENER));
-        listeners.addPropertyChangeListener(CONNECTED_PLAYERS_LISTENER, createdListeners.get(0));
+        createdListeners.add(0,new PlayersStatusListener(client, PLAYERS_LISTENER));
+        listeners.addPropertyChangeListener(PLAYERS_LISTENER, createdListeners.get(0));
 
         // Player listeners
         Optional<Player> player = getPlayerByNickname(client.getNickname());
@@ -209,7 +210,20 @@ public class Game {
     public void createPlayer(int playerID, String nickname) {
         Player p = new Player(playerID, nickname);
         players.add(p);
-        listeners.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, players.stream().filter(Player::isConnected).map(Player::getNickname).toList());
+        listeners.firePropertyChange(PLAYERS_LISTENER, null, buildMapPlayers());
+    }
+
+    /**
+     * it builds a map with players and only connected players
+     * @return
+     */
+    private Map<String, List<String>> buildMapPlayers(){
+        List<String> connectedPlayers = players.stream().filter(Player::isConnected).map(Player::getNickname).toList();
+        List<String> allPlayers = players.stream().map(Player::getNickname).toList();
+        Map<String, List<String>> map = new HashMap<>();
+        map.put(PlayersStatusMessage.CONNECTED_PLAYERS, connectedPlayers);
+        map.put(PlayersStatusMessage.PLAYERS, allPlayers);
+        return map;
     }
 
     /**
@@ -245,7 +259,7 @@ public class Game {
         if (!(isNicknameTaken(player.getNickname()))) {
             players.add(player);
             playersActionPhase = players;   // initialize players for action phase
-            listeners.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, players.stream().filter(Player::isConnected).map(Player::getNickname).toList());
+            listeners.firePropertyChange(PLAYERS_LISTENER, null, buildMapPlayers());
             return true;
         }
 
@@ -547,7 +561,7 @@ public class Game {
 
     public void setPlayerConnected(int player, boolean isConnected){
         getPlayerByID(player).setConnected(isConnected);
-        listeners.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, players.stream().filter(Player::isConnected).map(Player::getNickname).toList());
+        listeners.firePropertyChange(PLAYERS_LISTENER, null, buildMapPlayers());
     }
 
     public List<String> getWaitingPlayersReconnected(){

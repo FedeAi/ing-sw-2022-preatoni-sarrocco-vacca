@@ -4,11 +4,13 @@ import it.polimi.ingsw.Client.cli.CLI;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Client.messages.turn.GameStartedMessage;
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Server.Answer.*;
 import it.polimi.ingsw.Server.Answer.modelUpdate.*;
 
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * ServerMessageHandler class handles the answers from the server notifying the correct part of the GUI or
@@ -27,7 +29,7 @@ public class ServerMessageHandler {
   public static final String REQ_MAGICIAN_LISTENER ="reqMagicians";
   public static final String GAME_STATE_LISTENER = "stateChange";
   public static final String PLAYED_CARD_LISTENER = "playedCard";
-  public static final String CONNECTED_PLAYERS_LISTENER = "connectedPlayers";
+  public static final String PLAYERS_STATUS_LISTENER = "connectedPlayers";
   // Model updates listeners
   public static final String GENERERIC_MODEL_UPDATE_LISTENER = "genericModelUpdate";
   public static final String BALANCE_LISTENER = "BalanceListener";
@@ -159,9 +161,10 @@ public class ServerMessageHandler {
       modelView.setCharacterCards(message.getMessage());
       view.firePropertyChange(CHARACTERS_LISTENER, null, message.getMessage());
     }
-    else if(answer instanceof ConnectedPlayersMessage message) {
-      modelView.setConnectedPlayers(message.getMessage());
-      view.firePropertyChange(CONNECTED_PLAYERS_LISTENER, null, message.getMessage());
+    else if(answer instanceof PlayersStatusMessage message) {
+      modelView.setConnectedPlayers(message.getConnectedPlayers());
+      modelView.setPlayers(message.getPlayers());
+      view.firePropertyChange(PLAYERS_STATUS_LISTENER, null, message.getMessage());
     }
   }
 

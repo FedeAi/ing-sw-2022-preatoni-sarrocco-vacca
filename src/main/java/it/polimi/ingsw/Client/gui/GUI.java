@@ -1,9 +1,7 @@
 package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Client.*;
-import it.polimi.ingsw.Client.gui.controllers.BoardController;
 import it.polimi.ingsw.Client.gui.controllers.GUIController;
-import it.polimi.ingsw.Client.gui.controllers.MagiciansController;
 import it.polimi.ingsw.Constants.GameState;
 import javafx.application.Application;
 import javafx.application.Platform;

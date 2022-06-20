@@ -689,7 +689,7 @@ public class BoardController extends GUIController implements PropertyChangeList
                 case ServerMessageHandler.PROFS_LISTENER -> updateProfessors();
                 case ServerMessageHandler.PLAYED_CARD_LISTENER -> updatePlayedCards();
                 case ServerMessageHandler.CHARACTERS_LISTENER -> updateCharacters();
-                case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER, ServerMessageHandler.CONNECTED_PLAYERS_LISTENER ->
+                case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER, ServerMessageHandler.PLAYERS_STATUS_LISTENER ->
                         updatePlayers();
             }
         }

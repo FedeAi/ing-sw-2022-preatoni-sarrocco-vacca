@@ -2,9 +2,7 @@ package it.polimi.ingsw.Client.gui.controllers;
 
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Constants.Character;
-import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Model.Cards.CharacterCards.ReducedCharacterCard;
 import javafx.application.Platform;
 
 import java.beans.PropertyChangeEvent;

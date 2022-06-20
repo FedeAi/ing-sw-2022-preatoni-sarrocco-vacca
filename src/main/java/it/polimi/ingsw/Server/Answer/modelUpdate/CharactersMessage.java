@@ -22,8 +22,7 @@ public class CharactersMessage implements ModelMessage {
    * @param assistantCards .................
    */
   public CharactersMessage(List<CharacterCard> characterCards) {
-    this.message = characterCards.stream().map(c ->
-            new ReducedCharacterCard(c)
+    this.message = characterCards.stream().map(ReducedCharacterCard::new
     ).toList();
   }
 

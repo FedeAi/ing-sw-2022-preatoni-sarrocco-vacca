@@ -26,6 +26,7 @@ public class ModelView implements Serializable {
 
     /** Model data **/
     private List<String> connectedPlayers;
+    private List<String> players;
     private Map<Color, String> professors;
     private int balance;
     private Map<String, Magician> playerMapMagician;
@@ -200,6 +201,14 @@ public class ModelView implements Serializable {
         this.connectedPlayers = connectedPlayers;
     }
 
+    public void setPlayers(List<String> players) {
+        this.players = players;
+    }
+
+    public List<String> getPlayers() {
+        return players;
+    }
+
     public List<String> getConnectedPlayers() {
         return connectedPlayers;
     }
@@ -216,7 +225,6 @@ public class ModelView implements Serializable {
     public void deactivateInput() {
         isInputActive = false;
     }
-
 
 
     public CLI getCli(){
@@ -250,38 +258,5 @@ public class ModelView implements Serializable {
     public boolean amIRoundOwner(){
         return Objects.equals(roundOwner,playerName);
     }
-
-    public List<String> getPlayers() {
-        List<String> players = new ArrayList<>();
-        players.addAll(playerMapSchool.keySet());
-        return players;
-    }
-
-//    public void saveToFile(){
-//        try (FileOutputStream fos = new FileOutputStream("modelview.dat");
-//             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-//
-//            // write object to file
-//            oos.writeObject(this);
-//
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//
-//    }
-//
-//    public ModelView readFromFile(){
-//        ModelView modelView = null;
-//        try (FileInputStream fis = new FileInputStream("modelview.dat");
-//             ObjectInputStream ois = new ObjectInputStream(fis)) {
-//
-//            // read object from file
-//            modelView = (ModelView) ois.readObject();
-//
-//        } catch (IOException | ClassNotFoundException ex) {
-//            ex.printStackTrace();
-//        }
-//        return modelView;
-//    }
 
 }
