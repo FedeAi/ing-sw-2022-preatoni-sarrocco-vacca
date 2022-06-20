@@ -4,7 +4,6 @@ import it.polimi.ingsw.Constants.Character;
 import it.polimi.ingsw.Constants.Color;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReducedCharacterCard implements Serializable {
@@ -13,6 +12,7 @@ public class ReducedCharacterCard implements Serializable {
     public final int price;
     public final List<Color> students;
     public final int blockingCards;
+    public final boolean activatedOnce;
 
     public ReducedCharacterCard(CharacterCard characterCard) {
         this.isActive = characterCard.isActive();
@@ -20,5 +20,6 @@ public class ReducedCharacterCard implements Serializable {
         this.price = characterCard.getPrice();
         this.students = characterCard.getStudents();
         this.blockingCards = characterCard.getBlockingCards();
+        this.activatedOnce = characterCard.alreadyActivatedOnce();
     }
 }

@@ -15,7 +15,6 @@ import it.polimi.ingsw.Model.Islands.SuperIsland;
 import it.polimi.ingsw.Model.School;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.image.Image;
@@ -42,6 +41,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     public static final String SELECT_ISLAND_LISTENER = "selectIsland"; //ciao, Bella, mi senti?
     public static final String SELECT_ASSISTANT_CARD_LISTENER = "selectAssistantCard"; //ciao, Bella, mi senti?
     public static final String CLOUD_LISTENER = "selectCloud";
+    public static final String CHARACTER_LISTENER = "character";
     private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);    // support
 
     @FXML
@@ -101,7 +101,7 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     private final HashMap<Color, Image> studentImgs = new HashMap<>();
     private final HashMap<Color, Image> profsImgs = new HashMap<>();
-
+    private Image coinImg;
     private final HashMap<TowerColor, Image> towerImgs = new HashMap<>();
 
     private final ArrayList<Pane> islandPanes = new ArrayList<>();
@@ -165,9 +165,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_3p.png")));
         }
         if (gui.getModelView().getExpert()) {
-            ImageView coin = new ImageView(new Image(getClass().getResourceAsStream("/graphics/board/coin.png")));
-            coin.setSmooth(true);
-            coin.setCache(true);
+            coinImg = new Image(getClass().getResourceAsStream("/graphics/board/coin.png"));
             updateCharacters();
         }
 
@@ -568,15 +566,52 @@ public class BoardController extends GUIController implements PropertyChangeList
     }
     
     private void updateCharacters() {
-        for (ReducedCharacterCard c : gui.getModelView().getCharacterCards()) {
-            characterContainer.getChildren().clear();
+        characterContainer.getChildren().clear();
+        List<ReducedCharacterCard> reducedCards = gui.getModelView().getCharacterCards();
+        for (int i = 0; i < reducedCards.size(); i++ ) {
+            ReducedCharacterCard c = reducedCards.get(i);
             StackPane s = new StackPane();
+            s.setAlignment(Pos.CENTER);
+
+            //Background character
             ImageView character = new ImageView();
             character.setImage(charactersImages.get(c.type));
-            character.setFitWidth(63);
-            character.setFitHeight(92.25);
+            character.setFitWidth(80);
+            character.setFitHeight(120);
+
+            VBox content = new VBox();
+            content.setAlignment(Pos.CENTER);
+            //Students
+            FlowPane students = new FlowPane();
+            students.setVgap(4);
+            students.setHgap(4);
+            students.setAlignment(Pos.CENTER);
+            c.students.forEach((color) -> {
+                ImageView student = new ImageView();
+                student.setImage(studentImgs.get(color));
+                student.setFitWidth(22);
+                student.setFitHeight(22);
+                students.getChildren().add(student);
+            });
+            content.getChildren().add(students);
+
+            // Activated
+            if (c.activatedOnce){
+                ImageView coin = new ImageView(coinImg);
+                coin.setFitWidth(22);
+                coin.setFitHeight(22);
+                content.getChildren().add(coin);
+            }
+
+            // Blocking cards
             s.getChildren().add(character);
+            s.getChildren().add(content);
+
+            int finalI = i;
+            s.setOnMouseReleased((e) -> changeSupport.firePropertyChange(CHARACTER_LISTENER, null, finalI));
+
             characterContainer.getChildren().add(s);
+
         }
     }
 

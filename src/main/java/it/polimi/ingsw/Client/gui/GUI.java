@@ -69,8 +69,8 @@ public class GUI extends Application implements UI {
 
     @Override
     public void start(Stage stage) throws IOException {
-        setup();
         this.stage = stage;
+        setup();
         run();
     }
 
@@ -91,18 +91,18 @@ public class GUI extends Application implements UI {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        currentScene = nameMapScene.get(LOGIN);
+        changeScene(LOGIN);
         //currentScene = nameMapScene.get(LOADER);
     }
 
     public void run() {
         stage.setTitle("Eriantys");
-        stage.setScene(currentScene);
         stage.centerOnScreen();
         stage.show();
     }
 
     public void changeScene(String newScene) {
+        nameMapController.get(newScene).init();
         currentScene = nameMapScene.get(newScene);
         stage.setScene(currentScene);
         stage.centerOnScreen();
@@ -152,7 +152,6 @@ public class GUI extends Application implements UI {
                 if (modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()) {
 
                     Platform.runLater(() -> {
-                        ((MagiciansController) nameMapController.get(MAGIs)).init();
                         changeScene(MAGIs);
                     });
 
@@ -161,7 +160,6 @@ public class GUI extends Application implements UI {
                 if (modelView.getGameState() == GameState.PLANNING_CHOOSE_CARD && modelView.getPrevGameState() == GameState.SETUP_CHOOSE_MAGICIAN) {
                     Platform.runLater(() -> {
                         changeScene(BOARD);
-                        ((BoardController) nameMapController.get(BOARD)).init();
                     });
                 }
             }

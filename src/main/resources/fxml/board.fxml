@@ -356,7 +356,7 @@
       </StackPane>
    </center>
    <right>
-      <VBox prefWidth="300.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <GridPane>
               <columnConstraints>

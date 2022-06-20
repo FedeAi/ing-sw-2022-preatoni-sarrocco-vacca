@@ -67,6 +67,17 @@ public class EventsToActions implements PropertyChangeListener {
                     }
                 }
             }
+
+            if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_LISTENER)) {
+                int cardIndex = (int) currEvt.getNewValue();
+                if(gui.getModelView().getCharacterCards().get(cardIndex).isActive){
+                    action = "DEACTIVATE " + cardIndex;
+                }else{
+                    action = "ACTIVATE " + cardIndex;
+                }
+
+            }
+
             if (!action.equals("")) {
                 final String actionToSend = action;
                 Platform.runLater(() -> {

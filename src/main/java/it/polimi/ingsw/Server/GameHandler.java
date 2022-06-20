@@ -116,12 +116,15 @@ public class GameHandler {
             game.createListeners(server.getClientByID(p.getID()));
 
         }
+
+        controller.initGame();
+
         for (int i = 3; i > 0; i--) {
             sendAll(new CustomMessage("Match starting in " + i));
             TimeUnit.MILLISECONDS.sleep(500);
         }
+
         sendAll(new CustomMessage("The match has started!"));
-        controller.initGame();
         isStarted = true;
     }
 
