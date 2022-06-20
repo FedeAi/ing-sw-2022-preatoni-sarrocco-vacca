@@ -1,11 +1,15 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
 import it.polimi.ingsw.Client.gui.GUI;
+import it.polimi.ingsw.Constants.Character;
+import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Model.Cards.CharacterCards.ReducedCharacterCard;
 import javafx.application.Platform;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -68,6 +72,9 @@ public class EventsToActions implements PropertyChangeListener {
                 }
             }
 
+            if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)) {
+                action = handleCharacterCardsEvents();
+            }
             if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_LISTENER)) {
                 int cardIndex = (int) currEvt.getNewValue();
                 if(gui.getModelView().getCharacterCards().get(cardIndex).isActive){
@@ -77,6 +84,8 @@ public class EventsToActions implements PropertyChangeListener {
                 }
 
             }
+
+
 
             if (!action.equals("")) {
                 final String actionToSend = action;
@@ -88,6 +97,18 @@ public class EventsToActions implements PropertyChangeListener {
                 currEvt = null;
             }
         }
+    }
+
+    private String handleCharacterCardsEvents(){
+        List<Character> activeCards = gui.getModelView().getCharacterCards().stream()
+                .filter(c -> c.isActive).map(c -> c.type).toList();
+        if(Objects.equals(prevEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)
+                && Objects.equals(currEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)){
+            if(activeCards.contains(Character.JOKER)){
+                return "JOKER" + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
+            }
+        }
+        return "";
     }
 }
 

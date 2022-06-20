@@ -42,6 +42,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     public static final String SELECT_ASSISTANT_CARD_LISTENER = "selectAssistantCard"; //ciao, Bella, mi senti?
     public static final String CLOUD_LISTENER = "selectCloud";
     public static final String CHARACTER_LISTENER = "character";
+    public static final String CHARACTER_STUDENT_LISTENER = "characterStudent";
     private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);    // support
 
     @FXML
@@ -591,6 +592,7 @@ public class BoardController extends GUIController implements PropertyChangeList
                 student.setImage(studentImgs.get(color));
                 student.setFitWidth(22);
                 student.setFitHeight(22);
+                student.setOnMouseReleased((e) -> changeSupport.firePropertyChange(CHARACTER_STUDENT_LISTENER, null, color));
                 students.getChildren().add(student);
             });
             content.getChildren().add(students);
