@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Node;
@@ -30,7 +31,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.net.URL;
 import java.util.*;
-import java.util.List;
 
 public class BoardController extends GUIController implements PropertyChangeListener {
 
@@ -77,8 +77,6 @@ public class BoardController extends GUIController implements PropertyChangeList
     // swap school buttons
     @FXML
     Pane otherPlayer1Pane, otherPlayer2Pane;
-    @FXML
-    Pane avatarPain;
     // card container
     @FXML
     HBox cardContainer;
@@ -86,6 +84,16 @@ public class BoardController extends GUIController implements PropertyChangeList
     HBox playedCardContainer;
     @FXML
     HBox characterContainer;
+    @FXML
+    StackPane avatar0, avatar1, avatar2;
+    @FXML
+    Label username0, username1, username2;
+    @FXML
+    StackPane roundOwner0, roundOwner1, roundOwner2;
+    @FXML
+    Label balance;
+    @FXML
+    HBox balanceContainer;
 
     private final ArrayList<Image> cloudImgs = new ArrayList<>();
     private final ArrayList<Pane> cloudsPane = new ArrayList<>();
@@ -93,7 +101,6 @@ public class BoardController extends GUIController implements PropertyChangeList
     private final Map<Color, Pane> hallLanes = new EnumMap<>(Color.class);
 
     private final Map<Magician, Image> avatarImgs = new EnumMap<>(Magician.class);
-    private final List<Image> avatarImgsNRO = new ArrayList<>();
 
     private Image motherImg;
     private final ArrayList<Image> islandImgs = new ArrayList<>();
@@ -110,6 +117,9 @@ public class BoardController extends GUIController implements PropertyChangeList
     private final EnumMap<Color, List<Pane>> colorToHallStudents = new EnumMap<Color, List<Pane>>(Color.class);
     private final EnumMap<Color, Pane> colorToPlayerProfs = new EnumMap<Color, Pane>(Color.class);
 
+    private final List<Label> playerLabels = new ArrayList<>();
+    private final List<StackPane> playerAvatars = new ArrayList<>();
+    private final List<StackPane> playerRoundOwners = new ArrayList<>();
     private final List<Pane> switchPlayerPanes = new ArrayList<>(); // list of buttons to change school
     private final EnumMap<Character, Image> charactersImages = new EnumMap<>(Character.class);
     String playerSchool = ""; // player's school name
@@ -148,6 +158,11 @@ public class BoardController extends GUIController implements PropertyChangeList
         colorToPlayerProfs.put(Color.BLUE, playerProf5);
 
         switchPlayerPanes.addAll(List.of(otherPlayer1Pane, otherPlayer2Pane));
+
+        playerLabels.addAll(List.of(username0, username1, username2));
+        playerAvatars.addAll(List.of(avatar0, avatar1, avatar2));
+        playerRoundOwners.addAll(List.of(roundOwner0, roundOwner1, roundOwner2));
+
         loadAssets();
     }
 
@@ -157,7 +172,6 @@ public class BoardController extends GUIController implements PropertyChangeList
 
         //need the ModelView to upload the right kind of cloud ( in initialize I can't check)
         if (gui.getModelView().getClouds().size() == 2) {
-
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_2p.png")));
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_2p.png")));
         } else {
@@ -168,6 +182,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         if (gui.getModelView().getExpert()) {
             coinImg = new Image(getClass().getResourceAsStream("/graphics/board/coin.png"));
             updateCharacters();
+            showBalance();
         }
 
         showClouds(); // have to be later of the upload image cloud
@@ -176,6 +191,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         updateSchool();
         updateProfessors();
         updateHand();
+        showPlayers();
         //uploadAvatar(); //todo adjustment listener
         changeSupport.addPropertyChangeListener(new EventsToActions(gui));
     }
@@ -185,19 +201,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         islandImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/island2.png")));
         islandImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/island3.png")));
 
-        avatarImgs.put(Magician.KING, new Image(getClass().getResourceAsStream("/graphics/avatar/Kingavatar.png")));
-        avatarImgs.put(Magician.WIZARD, new Image(getClass().getResourceAsStream("/graphics/avatar/Wizardavatar.png")));
-        avatarImgs.put(Magician.WITCH, new Image(getClass().getResourceAsStream("/graphics/avatar/Witchavatar.png")));
-        avatarImgs.put(Magician.SAGE, new Image(getClass().getResourceAsStream("/graphics/avatar/Sageavatar.png")));
-
-        //if im not a round owner i have the grey version of my avatar
-        /*
-        FIXME the elements were added to the same list as the color images ?
-        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/KingavatarNRO.png")));
-        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/SageavatarNRO.png")));
-        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/WitchavatarNRO.png")));
-        avatarImgs.add(new Image(getClass().getResourceAsStream("/graphics/avatar/WizardavatarNRO.png")));
-        */
+        for (Magician m : Magician.values()) {
+            avatarImgs.put(m, new Image(getClass().getResourceAsStream("/graphics/avatar/" + m.toString().toLowerCase() + ".png")));
+        }
 
         for (int i = 1; i < 11; i++) {
             cardImgs.add(new Image(getClass().getResourceAsStream("/graphics/assistants/" + String.valueOf(i) + ".png")));
@@ -215,7 +221,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         motherImg = new Image(getClass().getResourceAsStream("/graphics/board/mother_nature.png"));
 
         for (Character c : Character.values()) {
-            charactersImages.put(c,  new Image(getClass().getResourceAsStream("/graphics/characters/" +  c.toString().toLowerCase() + ".jpg")));
+            charactersImages.put(c, new Image(getClass().getResourceAsStream("/graphics/characters/" + c.toString().toLowerCase() + ".jpg")));
         }
     }
 
@@ -253,9 +259,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     }
 
     public void showClouds() {
-
         int nCloud = gui.getModelView().getClouds().size();
-
         // empty all clouds panes
         assert nCloud <= cloudsPane.size();
         for (int i = 0; i < nCloud; i++) {
@@ -282,7 +286,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         List<AssistantCard> cards = gui.getModelView().getHand();
         cardContainer.getChildren().clear();
 
-
         for (AssistantCard assistantCard : cards) {
             // build imageview of the card
             ImageView cardImg = new ImageView();
@@ -293,7 +296,6 @@ public class BoardController extends GUIController implements PropertyChangeList
                 cardImg.setTranslateY(-50);
                 OnSelectScaleColor(evt);
             });
-
             cardImg.setOnMouseExited((evt) -> {
                 cardImg.setTranslateY(0);
                 OnSelectScaleColor(evt);
@@ -328,35 +330,39 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
-    private void uploadAvatar() {
-        ImageView avatar = new ImageView();
-        //magician selected by the player
-        String MoP = gui.getModelView().getPlayerMapMagician().getOrDefault(gui.getModelView().getPlayerName(), Magician.KING).toString();
+    private void showPlayers() {
+        List<String> players = gui.getModelView().getPlayers();
+        for (int i = 0; i < players.size(); i++) {
+            playerLabels.get(i).setText(players.get(i));
+        }
+        updatePlayers();
+    }
 
-        if (gui.getModelView().amIRoundOwner()) {
-            switch (MoP.toLowerCase()) {
-                case "king" -> avatar.setImage(avatarImgs.get(0));
-                case "wizard" -> avatar.setImage(avatarImgs.get(1));
-                case "witch" -> avatar.setImage(avatarImgs.get(2));
-                case "sage" -> avatar.setImage(avatarImgs.get(3));
+    private void updatePlayers() {
+        Map<String, Magician> map = gui.getModelView().getPlayerMapMagician();
+        List<String> players = gui.getModelView().getPlayers();
+        for (int i = 0; i < players.size(); i++) {
+            playerAvatars.get(i).getChildren().clear();
+            playerRoundOwners.get(i).getChildren().clear();
+            String username = players.get(i);
+            ImageView magician = new ImageView();
+            magician.setImage(motherImg);
+            //magician.setImage(avatarImgs.get(map.get(username)));
+            magician.setFitWidth(55);
+            magician.setFitHeight(55);
+            if (!gui.getModelView().getConnectedPlayers().contains(username)) {
+                ColorAdjust monochrome = new ColorAdjust();
+                monochrome.setSaturation(-1);
+                magician.setEffect(monochrome);
             }
-        } else {
-            switch (MoP.toLowerCase()) {
-                case "king" -> avatar.setImage(avatarImgsNRO.get(0));
-                case "wizard" -> avatar.setImage(avatarImgsNRO.get(1));
-                case "witch" -> avatar.setImage(avatarImgsNRO.get(2));
-                case "sage" -> avatar.setImage(avatarImgsNRO.get(3));
+            playerAvatars.get(i).getChildren().add(magician);
+            if (username.equals(gui.getModelView().getRoundOwner())) {
+                ImageView owner = new ImageView(motherImg);
+                owner.setFitWidth(50);
+                owner.setFitHeight(50);
+                playerRoundOwners.get(i).getChildren().add(owner);
             }
         }
-
-        avatar.setFitWidth(100);
-        avatar.setFitHeight(100);
-        avatar.setStyle("-fx-border-radius: 20px; -fx-border-style: ridge; -fx-border-width: 2px; -fx-border-color: black;");
-        avatar.setSmooth(true);
-        avatar.setCache(true);
-
-        //avatarPain.getChildren().clear();
-        avatarPain.getChildren().add(avatar);
     }
 
     private void showChangeSchoolButtons() {
@@ -408,8 +414,6 @@ public class BoardController extends GUIController implements PropertyChangeList
     private Node buildIsland(Island island, int index, boolean has_mother) {
         ImageView mother = null;
         StackPane pane = new StackPane();
-//        pane.setPrefWidth(200);
-//        pane.setPrefHeight(200);
         pane.setAlignment(Pos.CENTER);
 
         // island background
@@ -455,7 +459,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         int numTower = island.getNumTower();
 
         if (numTower > 0) {
-
             TowerColor color = gui.getModelView().getPlayerMapSchool().get(island.getOwner()).getTowerColor();
             ImageView towerImg = new ImageView(towerImgs.get(color));
             towerImg.setFitWidth(30);
@@ -467,7 +470,6 @@ public class BoardController extends GUIController implements PropertyChangeList
             label.setFont(font);
 
             tower.getChildren().addAll(towerImg, label);
-
         }
         if (island instanceof SuperIsland) {
             background.setScaleX(1.5);
@@ -493,8 +495,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         // add elements to the pane
         pane.getChildren().add(background);
         pane.getChildren().add(hContainer);
-//        pane.getChildren().add(tower);
-
+        pane.setOnMouseReleased((e) -> changeSupport.firePropertyChange(SELECT_ISLAND_LISTENER, null, index));
         pane.setOnMouseEntered(this::OnSelectScaleColor);
         pane.setOnMouseExited(this::OnSelectScaleColor);
         return pane;
@@ -559,17 +560,27 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
-    private void updateBalance() {
-//        int balance = gui.getModelView().getBalance();
-//        for (int i = 0; i < balance; i++) {
-//
-//        }
+    private void showBalance() {
+        ImageView coin = new ImageView(coinImg);
+        coin.setCache(true);
+        coin.setFitHeight(50);
+        coin.setFitWidth(50);
+        balanceContainer.getChildren().add(0, coin);
+        updateBalance();
     }
-    
+
+    private void updateBalance() {
+        if (gui.getModelView().getExpert()) {
+            int coins = gui.getModelView().getBalance();
+            balance.setFont(Font.getDefault());
+            balance.setText(": " + coins);
+        }
+    }
+
     private void updateCharacters() {
         characterContainer.getChildren().clear();
         List<ReducedCharacterCard> reducedCards = gui.getModelView().getCharacterCards();
-        for (int i = 0; i < reducedCards.size(); i++ ) {
+        for (int i = 0; i < reducedCards.size(); i++) {
             ReducedCharacterCard c = reducedCards.get(i);
             StackPane s = new StackPane();
             s.setAlignment(Pos.CENTER);
@@ -598,7 +609,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             content.getChildren().add(students);
 
             // Activated
-            if (c.activatedOnce){
+            if (c.activatedOnce) {
                 ImageView coin = new ImageView(coinImg);
                 coin.setFitWidth(22);
                 coin.setFitHeight(22);
@@ -677,8 +688,9 @@ public class BoardController extends GUIController implements PropertyChangeList
                 case ServerMessageHandler.SCHOOL_LISTENER -> updateSchool();
                 case ServerMessageHandler.PROFS_LISTENER -> updateProfessors();
                 case ServerMessageHandler.PLAYED_CARD_LISTENER -> updatePlayedCards();
-                case ServerMessageHandler.MAGICIANS_LISTENER -> {}
                 case ServerMessageHandler.CHARACTERS_LISTENER -> updateCharacters();
+                case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER, ServerMessageHandler.CONNECTED_PLAYERS_LISTENER ->
+                        updatePlayers();
             }
         }
     }
