@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 public class LoaderController extends GUIController {
     @FXML
     Label status;
+
     @Override
     public void setGui(GUI gui) {
 
@@ -18,6 +19,9 @@ public class LoaderController extends GUIController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         status.setFont(font);
-        status.setText("prova");
+    }
+
+    public void setText(String status) {
+        this.status.setText(status);
     }
 }

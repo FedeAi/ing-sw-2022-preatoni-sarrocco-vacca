@@ -165,7 +165,7 @@ public class CLI implements UI {
                     System.out.println(CLIColors.ANSI_RED + ((GameError) evt.getNewValue()).getMessage() + CLIColors.RESET);
             case ServerMessageHandler.REQ_PLAYERS_LISTENER ->
                     System.out.println(CLIColors.ANSI_GREEN + ((ReqPlayersMessage) evt.getNewValue()).getMessage() + CLIColors.RESET);
-            case ServerMessageHandler.CUSTOM_MESSAGE_LISTER ->
+            case ServerMessageHandler.CUSTOM_MESSAGE_LISTENER ->
                     System.out.println(((CustomMessage) evt.getNewValue()).getMessage());
             case ServerMessageHandler.GAME_STATE_LISTENER ->
                     statePrinter((GameState) evt.getOldValue(), (GameState) evt.getNewValue());

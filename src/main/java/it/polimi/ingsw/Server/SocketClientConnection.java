@@ -240,6 +240,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
                         server.getGameByID(clientID).setPlayersNumber(playerNumber);
                         server.getGameByID(clientID).setExportMode(expertMode);
                         server.getClientByID(this.clientID).send(new CustomMessage("Success: player number " + "set to " + playerNumber + ", game mode: " + (expertMode ? "expert" : "normal")));
+                        server.getClientByID(this.clientID).send(new CustomMessage("Waiting for the other players..."));
                         break;
                     // FIXME custom exception
                     } catch (Exception e) {

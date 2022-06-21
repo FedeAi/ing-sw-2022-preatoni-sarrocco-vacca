@@ -2,8 +2,9 @@ package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Client.*;
 import it.polimi.ingsw.Client.gui.controllers.GUIController;
+import it.polimi.ingsw.Client.gui.controllers.LoaderController;
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Server.Answer.modelUpdate.PlayersStatusMessage;
+import it.polimi.ingsw.Server.Answer.CustomMessage;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -109,9 +110,10 @@ public class GUI extends Application implements UI {
         stage.show();
     }
 
-    public Scene getScene(String name){
+    public Scene getScene(String name) {
         return nameMapScene.get(name);
     }
+
     public void setConnectionSocket(ConnectionSocket connectionSocket) {
         if (this.connectionSocket == null) {
             this.connectionSocket = connectionSocket;
@@ -130,41 +132,47 @@ public class GUI extends Application implements UI {
         return nameMapController.get(name);
     }
 
-    public PropertyChangeSupport getListeners(){
+    public PropertyChangeSupport getListeners() {
         return listeners;
     }
+
+    private void handleCustomMessages(String msg) {
+        boolean roundOwner = modelView.amIRoundOwner();
+        if (modelView.getGameState() == GameState.GAME_ROOM && !roundOwner) {
+            LoaderController loader = (LoaderController) getControllerFromName(LOADER);
+            Platform.runLater(() -> loader.setText(msg));
+        }
+        if (modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN &&  !roundOwner) {
+            LoaderController loader = (LoaderController) getControllerFromName(LOADER);
+            Platform.runLater(() -> loader.setText(msg));
+        }
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Platform.runLater(() -> {
             listeners.firePropertyChange(evt);
         });
-
-
         switch (evt.getPropertyName()) {
-
             case ServerMessageHandler.REQ_PLAYERS_LISTENER -> Platform.runLater(() -> {
                 changeScene(SETUP);
             });    // setup scene
             case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> Platform.runLater(() -> {
                 changeScene(MAGIs);
             });    // magician scene
-
             case ServerMessageHandler.PLAYERS_REJOIN_LISTENER -> {
-                if(((List<String>)evt.getNewValue()).contains(getModelView().getPlayerName())){
+                if (((List<String>) evt.getNewValue()).contains(getModelView().getPlayerName())) {
                     // Rejoin of the player
                     Platform.runLater(() -> {
                         changeScene(BOARD);
                     });
                 }
-
             }
             case ServerMessageHandler.GAME_STATE_LISTENER -> {
                 if (modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()) {
-
                     Platform.runLater(() -> {
                         changeScene(MAGIs);
                     });
-
                 }
                 // starting the play
                 if (modelView.getGameState() == GameState.PLANNING_CHOOSE_CARD && modelView.getPrevGameState() == GameState.SETUP_CHOOSE_MAGICIAN) {
@@ -172,10 +180,8 @@ public class GUI extends Application implements UI {
                         changeScene(BOARD);
                     });
                 }
-
             }
+            case ServerMessageHandler.CUSTOM_MESSAGE_LISTENER -> handleCustomMessages(((CustomMessage) evt.getNewValue()).getMessage());
         }
-
     }
-
 }
