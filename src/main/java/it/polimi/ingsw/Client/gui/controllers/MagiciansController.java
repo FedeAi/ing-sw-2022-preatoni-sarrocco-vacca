@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-import javax.net.ssl.HostnameVerifier;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -18,30 +17,29 @@ import java.util.List;
 public class MagiciansController extends GUIController {
 
     GUI gui;
-    private final HashMap<String, Image> magiciansImage = new HashMap<>();
-    private final ArrayList<Pane> magiciansPane = new ArrayList<>();
+    private final EnumMap<Magician, Image> magiciansImage = new EnumMap<>(Magician.class);
+    private final EnumMap<Magician, Pane> viewMap = new EnumMap<>(Magician.class);
 
     @FXML
     Label description; //wizard, king, witch and sage label
-
     @FXML
     Pane Wizard, King, Witch, Sage;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        magiciansImage.put(Magician.KING.name(), new Image(getClass().getResourceAsStream("/graphics/magicians/king.png")));
-        magiciansImage.put(Magician.WIZARD.name(), new Image(getClass().getResourceAsStream("/graphics/magicians/wizard.png")));
-        magiciansImage.put(Magician.WITCH.name(), new Image(getClass().getResourceAsStream("/graphics/magicians/witch.png")));
-        magiciansImage.put(Magician.SAGE.name(), new Image(getClass().getResourceAsStream("/graphics/magicians/sage.png")));
-
-        magiciansPane.addAll(List.of(King, Wizard, Witch, Sage));
+        for (Magician m : Magician.values()) {
+            magiciansImage.put(m, new Image(getClass().getResourceAsStream("/graphics/magicians/" + m.toString().toLowerCase() + ".png")));
+        }
+        viewMap.put(Magician.KING, King);
+        viewMap.put(Magician.WIZARD, Wizard);
+        viewMap.put(Magician.WITCH, Witch);
+        viewMap.put(Magician.SAGE, Sage);
         description.setFont(font);
-
     }
 
     @Override
-    public void init(){
+    public void init() {
         showMagicians();
     }
 
@@ -52,15 +50,10 @@ public class MagiciansController extends GUIController {
 
     @FXML
     public void selectedMagician(MouseEvent mouseEvent) {
-
-
         ImageView selection = (ImageView) mouseEvent.getSource();
         String magician = selection.getId();
-
-
         // send setup option
         String message = "MAGICIAN " + magician;
-
         Platform.runLater(() -> {
             gui.getListeners().firePropertyChange("action", null, message);
         });
@@ -68,22 +61,18 @@ public class MagiciansController extends GUIController {
     }
 
     public void showMagicians() {
-
-        List<String> mgcns = gui.getModelView().getAvailableMagiciansStr(); //TODO check the bind from Model and scene builder
-        int i = 0;
-        for (String mag: mgcns) {
-
-            ImageView view = new ImageView(magiciansImage.get(mag));
+        List<Magician> availableMagis = Magician.orderMagicians(gui.getModelView().getAvailableMagicians());
+        for (Magician m : availableMagis) {
+            ImageView view = new ImageView(magiciansImage.get(m));
             view.setFitHeight(404);
             view.setFitWidth(350);
 
             view.setOnMouseClicked(this::selectedMagician);
             view.setOnMouseEntered(this::showDescription);
             view.setOnMouseExited(this::showDescription);
-            view.setId(mag);
-            magiciansPane.get(i).getChildren().clear();
-            magiciansPane.get(i).getChildren().add(view);
-            i++;
+            view.setId(m.toString());
+            viewMap.get(m).getChildren().clear();
+            viewMap.get(m).getChildren().add(view);
         }
     }
 
@@ -91,7 +80,6 @@ public class MagiciansController extends GUIController {
     public void showDescription(MouseEvent mouseEvent) {
         ImageView selection = (ImageView) mouseEvent.getSource();
         String id = selection.getId();
-
         if (mouseEvent.getEventType() == MouseEvent.MOUSE_ENTERED) {
             switch (id.toLowerCase()) {
                 case "king" -> {
@@ -117,9 +105,3 @@ public class MagiciansController extends GUIController {
         }
     }
 }
-
-
-
-
-
-

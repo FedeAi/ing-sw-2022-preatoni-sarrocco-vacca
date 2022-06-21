@@ -23,7 +23,6 @@ import java.util.logging.Level;
 //--module-path /home/federico/libs/javafx-sdk-18.0.1/lib  --add-modules javafx.controls,javafx.fxml
 public class GUI extends Application implements UI {
 
-
     public static final String MENU = "menu.fxml";
     public static final String BOARD = "board.fxml";
     public static final String LOADER = "loading.fxml";
@@ -73,11 +72,13 @@ public class GUI extends Application implements UI {
         run();
     }
 
+    @Override
+    public void stop() {
+        System.exit(0);
+    }
+
     public void setup() throws IOException {
-
-
         List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, LOGIN, BOARD, LOADER, SETUP, MAGIs));
-
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));

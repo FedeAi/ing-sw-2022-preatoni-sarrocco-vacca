@@ -14,18 +14,18 @@ import java.util.concurrent.Callable;
 public abstract class GUIController implements Initializable, PropertyChangeListener {
 
     protected Font font = Font.loadFont(getClass().getResourceAsStream("/font/PAPYRUS.ttf"), 20);
-
+    protected Font balanceFont = Font.loadFont(getClass().getResourceAsStream("/font/PAPYRUS.ttf"), 35);
 
     public abstract void setGui(GUI gui);
 
-    public void sleepAndExec(Runnable func){
-        Thread thread = new Thread(()->{
+    public void sleepAndExec(Runnable func) {
+        Thread thread = new Thread(() -> {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-             Platform.runLater(func);
+            Platform.runLater(func);
 
         });
         thread.start();
@@ -35,7 +35,7 @@ public abstract class GUIController implements Initializable, PropertyChangeList
      * This method is used to initialize parameters of the controller that are not available
      * when Initializable.initialize is called. It must be called after the controller has been initialized
      */
-    public void init(){
+    public void init() {
 
     }
 

@@ -122,7 +122,7 @@ public class Constants {
      */
     public static boolean validateNickname(String user) {
         boolean validate = false;
-        Pattern p = Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$");
+        Pattern p = Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){1,14}[a-zA-Z0-9]$");
         Matcher m = p.matcher(user);
         if (m.matches()) {
             validate = true;

@@ -357,7 +357,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <HBox fx:id="balanceContainer" alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" spacing="5.0" translateX="50.0" translateY="-70.0" StackPane.alignment="BOTTOM_LEFT">
+            <HBox fx:id="balanceContainer" alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" spacing="5.0" translateX="50.0" translateY="-90.0" StackPane.alignment="BOTTOM_LEFT">
                <children>
                   <Label fx:id="balance" />
                </children>
@@ -436,7 +436,7 @@
                               <Label fx:id="username2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                               <Label alignment="CENTER" text="PLAYERS" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                  <font>
-                                    <Font name="System Bold" size="21.0" />
+                                    <Font name="System Bold" size="31.0" />
                                  </font>
                               </Label>
                            </children>

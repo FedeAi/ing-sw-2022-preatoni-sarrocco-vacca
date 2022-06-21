@@ -24,7 +24,9 @@ public class ModelView implements Serializable {
     private transient final CLI cli;
     private transient final GUI gui;
 
-    /** Model data **/
+    /**
+     * Model data
+     **/
     private List<String> connectedPlayers;
     private List<String> players;
     private Map<Color, String> professors;
@@ -34,7 +36,7 @@ public class ModelView implements Serializable {
     private List<AssistantCard> hand;
     private IslandContainer islandContainer;
     private List<Cloud> clouds;
-    private Map<Magician, String>  mapMagicianPlayer;
+    private Map<Magician, String> mapMagicianPlayer;
     private List<ReducedCharacterCard> characterCards;
     private Map<String, AssistantCard> playedCards;
     private int motherNature;
@@ -47,14 +49,13 @@ public class ModelView implements Serializable {
      * Constructor ModelView creates a new ModelView instance.
      *
      * @param cli of type GUI - GUI reference.
-     *
      **/
 
     public ModelView(CLI cli) {
         this.cli = cli;
         gui = null;
         this.playedCards = new HashMap<String, AssistantCard>();
-        this.playerMapSchool = new HashMap <String, School>() ;
+        this.playerMapSchool = new HashMap<String, School>();
         this.connectedPlayers = new ArrayList<>();
         gameState = GameState.GAME_ROOM;
     }
@@ -68,11 +69,14 @@ public class ModelView implements Serializable {
         this.gui = gui;
         this.cli = null;
         this.playedCards = new HashMap<String, AssistantCard>();
-        this.playerMapSchool = new HashMap <String, School>() ;
+        this.playerMapSchool = new HashMap<String, School>();
         this.connectedPlayers = new ArrayList<>();
         gameState = GameState.GAME_ROOM;
     }
-    /** Getter and Setter **/
+
+    /**
+     * Getter and Setter
+     **/
 
     public Answer getServerAnswer() {
         return serverAnswer;
@@ -146,22 +150,27 @@ public class ModelView implements Serializable {
         return clouds;
     }
 
-    public void setMagicians(Map<Magician, String> magicians){
+    public void setMagicians(Map<Magician, String> magicians) {
         this.mapMagicianPlayer = magicians;
         playerMapMagician = mapMagicianPlayer.entrySet().stream().filter((e) -> !e.getValue().equals("")).collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
-    public List<String> getAvailableMagiciansStr(){
+    public List<String> getAvailableMagiciansStr() {
         return mapMagicianPlayer.entrySet()
                 .stream().filter(magicianStringEntry -> Objects.equals(magicianStringEntry.getValue(), "")).
                 map(e -> e.getKey().toString()).toList();
     }
 
+    public List<Magician> getAvailableMagicians() {
+        return mapMagicianPlayer.entrySet()
+                .stream().filter(magicianStringEntry -> Objects.equals(magicianStringEntry.getValue(), "")).
+                map(e -> e.getKey()).toList();
+    }
+
     /**
-     *
      * @return map between magician and owner, the owner is "" if the prof is not owned by no one
      */
-    public Map<Magician,String> getMagiciansToPlayer(){
+    public Map<Magician, String> getMagiciansToPlayer() {
         return new HashMap<>(mapMagicianPlayer);
     }
 
@@ -182,14 +191,14 @@ public class ModelView implements Serializable {
     }
 
     public void setPlayedCard(String player, AssistantCard playedCard) {
-        if(playedCard==null){
+        if (playedCard == null) {
             this.playedCards.remove(player);
-        }else{
+        } else {
             this.playedCards.put(player, playedCard);
         }
     }
 
-    public void setMotherNature(int position){
+    public void setMotherNature(int position) {
         motherNature = position;
     }
 
@@ -209,32 +218,36 @@ public class ModelView implements Serializable {
         return connectedPlayers;
     }
 
-    public int getMotherNature(){
+    public int getMotherNature() {
         return motherNature;
     }
+
     public boolean isInputActive() {
         return isInputActive;
     }
+
     public void activateInput() {
         isInputActive = true;
     }
+
     public void deactivateInput() {
         isInputActive = false;
     }
 
 
-    public CLI getCli(){
+    public CLI getCli() {
         return cli;
     }
-    public GUI getGui( ) {
+
+    public GUI getGui() {
         return gui;
     }
 
-    public GameState getGameState(){
+    public GameState getGameState() {
         return gameState;
     }
 
-    public GameState getPrevGameState(){
+    public GameState getPrevGameState() {
         return prevGameState;
     }
 
@@ -247,12 +260,12 @@ public class ModelView implements Serializable {
         expert = expertMode;
     }
 
-    public boolean getExpert(){
+    public boolean getExpert() {
         return expert;
     }
 
-    public boolean amIRoundOwner(){
-        return Objects.equals(roundOwner,playerName);
+    public boolean amIRoundOwner() {
+        return Objects.equals(roundOwner, playerName);
     }
 
 }

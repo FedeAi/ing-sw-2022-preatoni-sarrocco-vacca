@@ -1,4 +1,5 @@
 package it.polimi.ingsw.Client.messages;
+
 import it.polimi.ingsw.Client.ModelView;
 import it.polimi.ingsw.Constants.*;
 import it.polimi.ingsw.Constants.Color;
@@ -13,7 +14,6 @@ import it.polimi.ingsw.Constants.CLIColors;
 public class MessageBuilder {
 
     private ModelView modelView;
-
     private final String PLAY_CARD_ERROR = "syntax playcard #card (ex: playcard 5) ";
     private final String SETUP_ERROR = "syntax setup error: setup #player #mod (ex: setup 2 expert)";
     private final String MOVE_MOTHER_ERROR = "syntax move mother nature error: movemother #island (ex: movemother 2)";
@@ -32,7 +32,7 @@ public class MessageBuilder {
     private final String THIEF_ERROR = "syntax thief error: thief color (ex: thief green) ";
     private final String MAGICIAN_ERROR = "syntax magician error: MAGICIAN type (ex: magician king) ";
 
-    public MessageBuilder(ModelView modelView){
+    public MessageBuilder(ModelView modelView) {
         this.modelView = modelView;
     }
 
@@ -40,111 +40,113 @@ public class MessageBuilder {
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action playCard(String[] in){
-        try{
+    public Action playCard(String[] in) {
+        try {
             return new Action(ActionType.PLAY_CARD, Integer.parseInt(in[1]));
-        }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + PLAY_CARD_ERROR + CLIColors.RESET); // TODO fire error listener no print
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action chooseMagician(String[] in){
-        try{
+    public Action chooseMagician(String[] in) {
+        try {
             Action actionToSend;
-            int magicianIndex = modelView.getAvailableMagiciansStr().indexOf(in[1].toUpperCase());
-            if(magicianIndex==-1)
+            int magicianIndex = Magician.orderMagicians(modelView.getAvailableMagicians()).indexOf(Magician.parseMagician(in[1].toUpperCase()));
+            if (magicianIndex == -1)
                 throw new IllegalArgumentException();
             actionToSend = new Action(ActionType.CHOOSE_MAGICIAN, magicianIndex);
             return actionToSend;
-        }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + MAGICIAN_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action moveMother(String[] in){
+    public Action moveMother(String[] in) {
         try {
             return new Action(ActionType.MOVE_MOTHER_NATURE, Integer.parseInt(in[1]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + MOVE_MOTHER_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action chooseCloud(String[] in){
+    public Action chooseCloud(String[] in) {
         try {
             return new Action(ActionType.CHOOSE_CLOUD, Integer.parseInt(in[1]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + CHOOSE_CLOUD_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action moveStudentIsland(String[] in){
+    public Action moveStudentIsland(String[] in) {
         try {
-            return new Action(ActionType.MOVE_STUDENT_ISLAND, Color.parseColor(in[1]) , Integer.parseInt(in[2]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+            return new Action(ActionType.MOVE_STUDENT_ISLAND, Color.parseColor(in[1]), Integer.parseInt(in[2]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + MOVE_STUDENT_ISLAND_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action moveStudentHall(String[] in){
+    public Action moveStudentHall(String[] in) {
         try {
-            return new Action(ActionType.MOVE_STUDENT_HALL,  Color.parseColor(in[1]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+            return new Action(ActionType.MOVE_STUDENT_HALL, Color.parseColor(in[1]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + MOVE_STUDENT_HALL_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action activateCard(String[] in){
+    public Action activateCard(String[] in) {
         try {
             Action actionToSend;
-            actionToSend = new Action(ActionType.ACTIVATE_CARD,  Integer.parseInt(in[1]));  // TODO LIKE MAGICIAN name not index
+            actionToSend = new Action(ActionType.ACTIVATE_CARD, Integer.parseInt(in[1]));  // TODO LIKE MAGICIAN name not index
             return actionToSend;
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + ACTIVATE_CARD_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action deactivateCard(String[] in){
+    public Action deactivateCard(String[] in) {
         try {
             return new Action(ActionType.DEACTIVATE_CARD, Integer.parseInt(in[1]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + DEACTIVATE_CARD_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
@@ -161,110 +163,111 @@ public class MessageBuilder {
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action grandmaBlock(String[] in){
+    public Action grandmaBlock(String[] in) {
         try {
-            return new Action(ActionType.GRANDMA_BLOCK,  Integer.parseInt(in[1]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
+            return new Action(ActionType.GRANDMA_BLOCK, Integer.parseInt(in[1]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + GRANDMA_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action heraldChoose(String[] in){
+    public Action heraldChoose(String[] in) {
         try {
-            return new Action(ActionType.HERALD_CHOOSE,  Integer.parseInt(in[1]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(CLIColors.ANSI_RED +  HERALD_ERROR+ CLIColors.RESET);
+            return new Action(ActionType.HERALD_CHOOSE, Integer.parseInt(in[1]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(CLIColors.ANSI_RED + HERALD_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action jokerSwap(String[] in){ //FIXME ??
+    public Action jokerSwap(String[] in) { //FIXME ??
         try {
-            return new Action(ActionType.JOKER_SWAP,  Color.parseColor(in[1]), Color.parseColor(in[2]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(CLIColors.ANSI_RED +  JOKER_ERROR+ CLIColors.RESET);
+            return new Action(ActionType.JOKER_SWAP, Color.parseColor(in[1]), Color.parseColor(in[2]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(CLIColors.ANSI_RED + JOKER_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action minstrelSwap(String[] in){
+    public Action minstrelSwap(String[] in) {
         try {
-            return new Action(ActionType.MINSTREL_SWAP,  Color.parseColor(in[1]), Color.parseColor(in[2]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(CLIColors.ANSI_RED +  MINSTREL_ERROR+ CLIColors.RESET);
+            return new Action(ActionType.MINSTREL_SWAP, Color.parseColor(in[1]), Color.parseColor(in[2]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(CLIColors.ANSI_RED + MINSTREL_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action monkMove(String[] in){
+    public Action monkMove(String[] in) {
         try {
-            return new Action(ActionType.MONK_MOVE,  Color.parseColor(in[1]), Integer.parseInt(in[2]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(CLIColors.ANSI_RED +  MONK_ERROR+ CLIColors.RESET);
+            return new Action(ActionType.MONK_MOVE, Color.parseColor(in[1]), Integer.parseInt(in[2]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(CLIColors.ANSI_RED + MONK_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action mushroomChoose(String[] in){
+    public Action mushroomChoose(String[] in) {
         try {
-            return new Action(ActionType.MUSHROOM_CHOOSE,  Color.parseColor(in[1]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(CLIColors.ANSI_RED +  MUSHROOM_ERROR+ CLIColors.RESET);
+            return new Action(ActionType.MUSHROOM_CHOOSE, Color.parseColor(in[1]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(CLIColors.ANSI_RED + MUSHROOM_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action princessMove(String[] in){
+    public Action princessMove(String[] in) {
         try {
-            return new Action(ActionType.PRINCESS_MOVE,  Color.parseColor(in[1]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(CLIColors.ANSI_RED +  PRINCESS_ERROR + CLIColors.RESET);
+            return new Action(ActionType.PRINCESS_MOVE, Color.parseColor(in[1]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(CLIColors.ANSI_RED + PRINCESS_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * @param in is the command write by CLI from the user.
      * @return the  appropriate action built
      */
-    public Action thiefChoose(String[] in){
+    public Action thiefChoose(String[] in) {
         try {
-            return new Action(ActionType.THIEF_CHOOSE,  Color.parseColor(in[1]));
-        }
-        catch (IllegalArgumentException | ArrayIndexOutOfBoundsException  e){
-            System.out.println(CLIColors.ANSI_RED +  THIEF_ERROR + CLIColors.RESET);
+            return new Action(ActionType.THIEF_CHOOSE, Color.parseColor(in[1]));
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(CLIColors.ANSI_RED + THIEF_ERROR + CLIColors.RESET);
             return null;
         }
     }
+
     /**
      * 'quit' is used to close the connection
      */

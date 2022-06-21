@@ -49,9 +49,6 @@ public class BoardController extends GUIController implements PropertyChangeList
     private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);    // support
 
     @FXML
-    GridPane grid;
-
-    @FXML
     Pane island0, island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11;
 
     // entry students (school)
@@ -196,8 +193,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         updateProfessors();
         updateHand();
         showPlayers();
-        //uploadAvatar(); //todo adjustment listener
-
         initCompleted = true;
         changeSupport.addPropertyChangeListener(new EventsToActions(gui));
     }
@@ -331,6 +326,8 @@ public class BoardController extends GUIController implements PropertyChangeList
     private void showPlayers() {
         List<String> players = gui.getModelView().getPlayers();
         for (int i = 0; i < players.size(); i++) {
+            playerLabels.get(i).setFont(font);
+            playerLabels.get(i).setStyle("-fx-font-size: 24");
             playerLabels.get(i).setText(players.get(i));
         }
         updatePlayers();
@@ -338,8 +335,8 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     private void updatePlayers() {
         Map<String, Magician> map = gui.getModelView().getPlayerMapMagician();
-        
         List<String> players = gui.getModelView().getPlayers();
+
         for (int i = 0; i < players.size(); i++) {
             playerAvatars.get(i).getChildren().clear();
             playerRoundOwners.get(i).getChildren().clear();
@@ -351,7 +348,6 @@ public class BoardController extends GUIController implements PropertyChangeList
             if (!gui.getModelView().getConnectedPlayers().contains(username)) {
                 // Avatar to grayScale
                 ColorAdjust monochrome = new ColorAdjust();
-
                 monochrome.setSaturation(-1);
                 magician.setEffect(monochrome);
                 // Blocking image on it
@@ -360,9 +356,9 @@ public class BoardController extends GUIController implements PropertyChangeList
                 block.setFitWidth(55);
                 block.setFitHeight(55);
                 block.setEffect(monochrome);
-                playerAvatars.get(i).getChildren().add(0,block);
+                playerAvatars.get(i).getChildren().add(0, block);
             }
-            playerAvatars.get(i).getChildren().add(0,magician);
+            playerAvatars.get(i).getChildren().add(0, magician);
             if (username.equals(gui.getModelView().getRoundOwner())) {
                 ImageView owner = new ImageView(motherImg);
                 owner.setFitWidth(50);
@@ -394,18 +390,15 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     private void updateClouds() {
         List<Cloud> clouds = gui.getModelView().getClouds();
-
         for (int j = 0; j < clouds.size(); j++) {
             List<Color> students = Color.fromMapToList(clouds.get(j).getStudents());
             List<Pane> panes = cloudStudents.get(j);
 
             assert students.size() <= panes.size();
-
             for (int i = 0; i < panes.size(); i++) {
                 panes.get(i).getChildren().clear(); // first remove previous items
                 if (i < students.size()) {
                     Color studentC = students.get(i);
-
                     ImageView student = new ImageView(studentImgs.get(studentC));
                     student.fitWidthProperty().bind(panes.get(i).widthProperty());
                     student.fitHeightProperty().bind(panes.get(i).heightProperty());
@@ -422,7 +415,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         ImageView mother = null;
         StackPane pane = new StackPane();
         pane.setAlignment(Pos.CENTER);
-
         // island background
         ImageView background = new ImageView();
         background.setImage(islandImgs.get(index % islandImgs.size()));
@@ -431,10 +423,8 @@ public class BoardController extends GUIController implements PropertyChangeList
         background.setSmooth(true);
         background.setCache(true);
 
-
         HBox hContainer = new HBox();
         hContainer.setAlignment(Pos.CENTER);
-
         // build students
         VBox students = new VBox();
         students.setAlignment(Pos.CENTER);
@@ -454,51 +444,41 @@ public class BoardController extends GUIController implements PropertyChangeList
                 label.setFont(font);
                 label.setText(" " + island.getStudents().getOrDefault(entry.getKey(), 0).toString());
                 hBox.getChildren().add(label);
-
                 students.getChildren().add(hBox);
             }
         }
-
         // tower
         HBox tower = new HBox();
         tower.setAlignment(Pos.CENTER);
-
         int numTower = island.getNumTower();
-
         if (numTower > 0) {
             TowerColor color = gui.getModelView().getPlayerMapSchool().get(island.getOwner()).getTowerColor();
             ImageView towerImg = new ImageView(towerImgs.get(color));
             towerImg.setFitWidth(30);
             towerImg.setPreserveRatio(true);
-
             Label label = new Label(String.valueOf(numTower));
             Font font = new Font("System Bold", 12);
-
             label.setFont(font);
-
             tower.getChildren().addAll(towerImg, label);
         }
         if (island instanceof SuperIsland) {
             background.setScaleX(1.5);
             background.setScaleY(1.5);
         }
-
         // mother nature
         if (has_mother) {
             mother = new ImageView(motherImg);
             mother.setFitWidth(45);
             mother.setPreserveRatio(true);
         }
-
         VBox secondColumn = new VBox();
         secondColumn.setAlignment(Pos.CENTER);
         secondColumn.getChildren().add(tower);
-        if (mother != null)
+        if (mother != null) {
             secondColumn.getChildren().add(mother);
-
+        }
         hContainer.getChildren().add(students);
         hContainer.getChildren().add(secondColumn);
-
         // add elements to the pane
         pane.getChildren().add(background);
         pane.getChildren().add(hContainer);
@@ -510,7 +490,7 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     public void updateSchool() {
         School school = gui.getModelView().getPlayerMapSchool().get(playerSchool);
-        if(school==null)
+        if (school == null)
             return;
         // entry students
         List<Color> entryStuds = school.getStudentsEntryList();
@@ -581,12 +561,12 @@ public class BoardController extends GUIController implements PropertyChangeList
     private void updateBalance() {
         if (gui.getModelView().getExpert()) {
             int coins = gui.getModelView().getBalance();
-            balance.setFont(Font.getDefault());
+            balance.setFont(balanceFont);
             balance.setText(": " + coins);
         }
     }
 
-    private ImageView buildCard(double width, double height, Image img){
+    private ImageView buildCard(double width, double height, Image img) {
         //Background character
         Rectangle rectangle = new Rectangle(width, height);
         rectangle.setArcWidth(20.0);   // Corner radius
