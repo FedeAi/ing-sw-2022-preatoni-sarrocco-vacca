@@ -102,14 +102,13 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     private final Map<Magician, Image> avatarImgs = new EnumMap<>(Magician.class);
 
-    private Image motherImg;
+    private Image motherImg, coinImg, blockImg;
     private final ArrayList<Image> islandImgs = new ArrayList<>();
 
     private final ArrayList<Image> cardImgs = new ArrayList<>();
 
     private final HashMap<Color, Image> studentImgs = new HashMap<>();
     private final HashMap<Color, Image> profsImgs = new HashMap<>();
-    private Image coinImg;
     private final HashMap<TowerColor, Image> towerImgs = new HashMap<>();
 
     private final ArrayList<Pane> islandPanes = new ArrayList<>();
@@ -180,6 +179,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_3p.png")));
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_3p.png")));
         }
+        blockImg = new Image(getClass().getResourceAsStream(("/graphics/characters/deny_island_icon.png")));
         if (gui.getModelView().getExpert()) {
             coinImg = new Image(getClass().getResourceAsStream("/graphics/board/coin.png"));
             updateCharacters();
@@ -354,11 +354,18 @@ public class BoardController extends GUIController implements PropertyChangeList
             magician.setFitWidth(55);
             magician.setFitHeight(55);
             if (!gui.getModelView().getConnectedPlayers().contains(username)) {
+                // Avatar to grayScale
                 ColorAdjust monochrome = new ColorAdjust();
                 monochrome.setSaturation(-1);
                 magician.setEffect(monochrome);
+                // Blocking image on it
+                ImageView block = new ImageView();
+                block.setImage(blockImg);
+                block.setFitWidth(55);
+                block.setFitHeight(55);
+                playerAvatars.get(i).getChildren().add(0,block);
             }
-            playerAvatars.get(i).getChildren().add(magician);
+            playerAvatars.get(i).getChildren().add(0,magician);
             if (username.equals(gui.getModelView().getRoundOwner())) {
                 ImageView owner = new ImageView(motherImg);
                 owner.setFitWidth(50);
