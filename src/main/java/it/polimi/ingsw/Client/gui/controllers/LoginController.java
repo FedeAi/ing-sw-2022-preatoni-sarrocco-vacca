@@ -93,11 +93,12 @@ public class LoginController extends GUIController{
                     return;
                 }
                 gui.setConnectionSocket(connectionSocket);
+                gui.getListeners().addPropertyChangeListener("action", new InputToMessage(gui.getModelView(),connectionSocket ));
 
                 error.setText("SOCKET CONNECTION \nSETUP COMPLETED!");
                 sleepAndExec(()->error.setText(""));
 
-                gui.getListeners().addPropertyChangeListener("action", new InputToMessage(gui.getModelView(),connectionSocket ));
+
 
                 gui.changeScene(LOADING);
 

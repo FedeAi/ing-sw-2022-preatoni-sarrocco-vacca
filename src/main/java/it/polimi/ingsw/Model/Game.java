@@ -65,7 +65,9 @@ public class Game {
     }
 
     public void fireInitalState(){
+
         listeners.firePropertyChange(MAGICIANS_LISTENER, null, mapMagicianToPlayer);
+        listeners.firePropertyChange(MAGICIANS_LISTENER, null, mapMagicianToPlayer); // FIXME ( the first fire when the client is connected is not received)
         listeners.firePropertyChange(MODE_LISTENER, null, expertMode);
         listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
         listeners.firePropertyChange(PROFS_LISTENER, null, professors);
