@@ -18,12 +18,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 import java.beans.PropertyChangeEvent;
@@ -31,6 +33,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class BoardController extends GUIController implements PropertyChangeListener {
 
@@ -291,10 +294,7 @@ public class BoardController extends GUIController implements PropertyChangeList
 
         for (AssistantCard assistantCard : cards) {
             // build imageview of the card
-            ImageView cardImg = new ImageView();
-            cardImg.setImage(cardImgs.get(assistantCard.getValue() - 1));
-            cardImg.setFitWidth(63);
-            cardImg.setFitHeight(92.25);
+            ImageView cardImg = buildCard(63, 92, cardImgs.get(assistantCard.getValue() - 1));
             cardImg.setOnMouseEntered((evt) -> {
                 cardImg.setTranslateY(-50);
                 OnSelectScaleColor(evt);
@@ -304,8 +304,6 @@ public class BoardController extends GUIController implements PropertyChangeList
                 OnSelectScaleColor(evt);
 
             });
-            cardImg.setSmooth(true);
-            cardImg.setCache(true);
             cardImg.setOnMouseReleased((e) -> {
                 changeSupport.firePropertyChange(SELECT_ASSISTANT_CARD_LISTENER, null, assistantCard.getValue());
                 e.consume();
@@ -319,10 +317,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         playedCardContainer.getChildren().clear();
         for (Map.Entry<String, AssistantCard> entry : map.entrySet()) {
             StackPane s = new StackPane();
-            ImageView playedCard = new ImageView();
-            playedCard.setImage(cardImgs.get(entry.getValue().getValue() - 1));
-            playedCard.setFitWidth(63);
-            playedCard.setFitHeight(92.25);
+            ImageView playedCard = buildCard(80, 120, cardImgs.get(entry.getValue().getValue() - 1));
             s.getChildren().add(playedCard);
             ImageView player = new ImageView();
             player.setImage(avatarImgs.get(gui.getModelView().getPlayerMapMagician().get(entry.getKey())));
@@ -356,6 +351,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             if (!gui.getModelView().getConnectedPlayers().contains(username)) {
                 // Avatar to grayScale
                 ColorAdjust monochrome = new ColorAdjust();
+
                 monochrome.setSaturation(-1);
                 magician.setEffect(monochrome);
                 // Blocking image on it
@@ -363,6 +359,7 @@ public class BoardController extends GUIController implements PropertyChangeList
                 block.setImage(blockImg);
                 block.setFitWidth(55);
                 block.setFitHeight(55);
+                block.setEffect(monochrome);
                 playerAvatars.get(i).getChildren().add(0,block);
             }
             playerAvatars.get(i).getChildren().add(0,magician);
@@ -589,6 +586,22 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    private ImageView buildCard(double width, double height, Image img){
+        //Background character
+        Rectangle rectangle = new Rectangle(width, height);
+        rectangle.setArcWidth(20.0);   // Corner radius
+        rectangle.setArcHeight(20.0);
+        rectangle.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(0, 0, 0, 0.8)));  // Shadow
+
+        ImageView character = new ImageView();
+        character.setImage(img);
+        character.setFitWidth(width);
+        character.setFitHeight(height);
+        character.setClip(rectangle);
+        character.setCache(true);
+        return character;
+    }
+
     private void updateCharacters() {
         characterContainer.getChildren().clear();
         List<ReducedCharacterCard> reducedCards = gui.getModelView().getCharacterCards();
@@ -598,10 +611,8 @@ public class BoardController extends GUIController implements PropertyChangeList
             s.setAlignment(Pos.CENTER);
 
             //Background character
-            ImageView character = new ImageView();
+            ImageView character = buildCard(80, 120, charactersImages.get(c.type));
             character.setImage(charactersImages.get(c.type));
-            character.setFitWidth(80);
-            character.setFitHeight(120);
 
             VBox content = new VBox();
             content.setAlignment(Pos.CENTER);

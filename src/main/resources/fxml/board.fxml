@@ -445,8 +445,8 @@
                   </Pane>
                   <VBox maxHeight="-Infinity" prefHeight="300.0" StackPane.alignment="BOTTOM_CENTER">
                      <children>
-                        <HBox fx:id="playedCardContainer" alignment="BOTTOM_LEFT" prefHeight="200.0" />
-                        <HBox fx:id="characterContainer" prefHeight="100.0" prefWidth="200.0" spacing="5.0" />
+                        <HBox fx:id="playedCardContainer" alignment="CENTER" prefHeight="200.0" prefWidth="300.0" spacing="5.0" />
+                        <HBox fx:id="characterContainer" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" spacing="5.0" />
                      </children>
                   </VBox>
                </children>
