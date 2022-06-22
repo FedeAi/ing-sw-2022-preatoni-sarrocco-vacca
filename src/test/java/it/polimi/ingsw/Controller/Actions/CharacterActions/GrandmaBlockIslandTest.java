@@ -51,14 +51,14 @@ class GrandmaBlockIslandTest {
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
-        p1 = new Player(0, "Ale");
-        p2 = new Player(1, "Fede");
-        p3 = new Player(2, "Davide");
-        gameManager.addPlayer(p1);
-        gameManager.addPlayer(p2);
-        gameManager.addPlayer(p3);
-        gameManager.initGame();
         game = gameManager.getGame();
+        game.createPlayer(0, "Ale");
+        game.createPlayer(1, "Davide");
+        game.createPlayer(2, "Fede");
+        p1 = game.getPlayers().get(0);
+        p2 = game.getPlayers().get(1);
+        p3 = game.getPlayers().get(2);
+        gameManager.initGame();
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         game.setRoundOwner(p1);
         selectedIsland = game.getIslandContainer().correctIndex(1, game.getMotherNature().getPosition());

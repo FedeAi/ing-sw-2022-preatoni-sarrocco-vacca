@@ -28,13 +28,13 @@ class DeactivateCardTest {
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
-        p1 = new Player(0, "Ale");
-        p2 = new Player(1, "Fede");
-        p3 = new Player(2, "Davide");
-        gameManager.addPlayer(p1);
-        gameManager.addPlayer(p2);
-        gameManager.addPlayer(p3);
         game = gameManager.getGame();
+        game.createPlayer(0, "Ale");
+        game.createPlayer(1, "Fede");
+        game.createPlayer(2, "Davide");
+        p1 = game.getPlayers().get(0);
+        p2 = game.getPlayers().get(1);
+        p3 = game.getPlayers().get(2);
         game.setExpertMode(true);
         gameManager.initGame();
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);

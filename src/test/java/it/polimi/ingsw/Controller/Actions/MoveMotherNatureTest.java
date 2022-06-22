@@ -16,6 +16,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,14 +44,14 @@ class MoveMotherNatureTest {
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
-        p1 = new Player(0,"Ale");
-        p2 = new Player(1,"Davide");
-        p3 = new Player(2,"Fede");
-        gameManager.addPlayer(p1);
-        gameManager.addPlayer(p2);
-        gameManager.addPlayer(p3);
-        gameManager.initGame();
         game = gameManager.getGame();
+        game.createPlayer(0, "Ale");
+        game.createPlayer(1, "Davide");
+        game.createPlayer(2, "Fede");
+        p1 = game.getPlayers().get(0);
+        p2 = game.getPlayers().get(1);
+        p3 = game.getPlayers().get(2);
+        gameManager.initGame();
         game.setGameState(GameState.ACTION_MOVE_MOTHER);
         movement = 3;
         game.setRoundOwner(p3);
@@ -172,7 +173,9 @@ class MoveMotherNatureTest {
     @DisplayName("Previous SuperIsland creation")
     void previousSuperIsland() {
         // Simple action test
-        game.setProfessor(profColor, game.getRoundOwner().getNickname());
+        EnumMap<Color, String> map = new EnumMap<>(Color.class);
+        map.put(profColor, game.getRoundOwner().getNickname());
+        game.setProfessors(map);
         // Now Fede controls the BLUE professor
         // Next we will be adding some students to the island we're going to go to
         int nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
@@ -228,8 +231,9 @@ class MoveMotherNatureTest {
     @DisplayName("Next SuperIsland creation")
     void nextSuperIsland() {
         // Simple action test
-        game.setProfessor(profColor, game.getRoundOwner().getNickname());
-        // Now Fede controls the BLUE professor
+        EnumMap<Color, String> map = new EnumMap<>(Color.class);
+        map.put(profColor, game.getRoundOwner().getNickname());
+        game.setProfessors(map);        // Now Fede controls the BLUE professor
         // Next we will be adding some students to the island we're going to go to
         int nextPosition = game.getIslandContainer().correctIndex(movement, game.getMotherNature().getPosition());
         for (int i = 0; i < 5; i++) {

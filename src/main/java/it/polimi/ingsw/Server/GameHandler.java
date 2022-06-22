@@ -2,7 +2,6 @@ package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.*;
 import it.polimi.ingsw.Exceptions.GameException;
@@ -60,7 +59,7 @@ public class GameHandler {
     public void reEnterPlayer(String nickName) {
         game.addPlayerToBeReconnected(nickName);
         game.createListeners(server.getClientByID(server.getIDByNickname(nickName)));
-        game.fireInitalState();
+        game.fireInitialState();
         if(game.numActivePlayers()==1){
             reEnterWaitingPlayers();
         }

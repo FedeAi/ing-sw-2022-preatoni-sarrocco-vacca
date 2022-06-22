@@ -69,7 +69,7 @@ public class ChooseCloud extends Performable {
 
         while (nextActionPlayer.isPresent() && !game.getPlayerByNickname(nextActionPlayer.get()).get().isConnected()) {
             i++;
-            nextActionPlayer = game.getNextPlayerActionPhasePlus(i);
+            nextActionPlayer = game.getNextPlayerActionPhase(i);
         }
 
         if (nextActionPlayer.isEmpty()) { //if end Turn

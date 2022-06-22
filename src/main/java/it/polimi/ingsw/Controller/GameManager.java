@@ -56,10 +56,6 @@ public class GameManager implements PropertyChangeListener {
         return rules;
     }
 
-    public void addPlayer(Player player) {
-        this.game.addPlayer(player);
-    }
-
     public void initGame() {
         initMotherNature();
         initIslands();
@@ -72,7 +68,7 @@ public class GameManager implements PropertyChangeListener {
             game.initBalance(Constants.NUM_COINS);
             initPlayersBalance();
         }
-        game.fireInitalState();
+        game.fireInitialState();
         game.setGameState(GameState.SETUP_CHOOSE_MAGICIAN);
     }
 
