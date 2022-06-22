@@ -7,9 +7,11 @@ import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Server.Answer.CustomMessage;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
@@ -69,6 +71,14 @@ public class GUI extends Application implements UI {
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+
         setup();
         run();
     }
