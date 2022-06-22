@@ -121,7 +121,7 @@ public class GameManager implements PropertyChangeListener {
         for (int i = 0; i < Constants.MAX_ISLANDS; i++) {
             Island island = new BaseIsland();
             if (i != opposite && i != motherNaturePosition) {
-                island.addStudent(game.getBag().extractOne());
+                island.addStudent(game.getBag().extract());
             }
             islands.add(island);
         }

@@ -32,7 +32,7 @@ public class Joker extends CharacterCard {
     @Override
     public void init() {
         for (int i = 0; i < 6; i++) {
-            Color student = bag.extractOne();
+            Color student = bag.extract();
             this.students.put(student, this.students.getOrDefault(student, 0) + 1);
         }
     }

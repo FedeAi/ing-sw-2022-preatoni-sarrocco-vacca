@@ -41,7 +41,7 @@ public class BagTest {
         int numStudents = 1 * Color.values().length; //point out that num students, 1 for each color
         Bag myBag = new Bag(numStudents);
         int initialSize = myBag.getStudents().size();
-        Color out = myBag.extractOne();
+        Color out = myBag.extract();
         assertEquals("control bag dim ", myBag.getStudents().size(), initialSize - 1);
 
     }
