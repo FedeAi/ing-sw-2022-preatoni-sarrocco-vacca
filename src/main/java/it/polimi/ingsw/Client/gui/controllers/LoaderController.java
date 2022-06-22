@@ -29,6 +29,7 @@ public class LoaderController extends GUIController {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case ServerMessageHandler.CUSTOM_MESSAGE_LISTENER -> handleCustomMessages(((CustomMessage) evt.getNewValue()).getMessage());
+            case ServerMessageHandler.GAME_STATE_LISTENER -> handleCustomMessages("");
         }
     }
 
@@ -38,7 +39,12 @@ public class LoaderController extends GUIController {
             this.status.setText(msg);
         }
         if (gui.getModelView().getGameState() == GameState.SETUP_CHOOSE_MAGICIAN &&  !roundOwner) {
-            this.status.setText(msg);
+//            this.status.setText(msg);
+            this.status.setText(gui.getModelView().getRoundOwner() + " is choosing the magician");
+        }
+
+        if (gui.getModelView().getGameState() != GameState.GAME_ROOM && gui.getModelView().getGameState() != GameState.SETUP_CHOOSE_MAGICIAN) {
+            this.status.setText("Waiting to be re-admitted");
         }
     }
 }

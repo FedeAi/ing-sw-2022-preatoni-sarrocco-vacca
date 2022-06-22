@@ -42,7 +42,7 @@ public class SetupController extends GUIController {
                 numPlayer = " 3";
             }
 
-            gui.changeScene(GUI.LOGIN);
+            gui.changeScene(GUI.LOADER);
             String message = "SETUP" + numPlayer + expert;   //if normal mode string must be empty
             // send setup option
             Platform.runLater(() -> {
