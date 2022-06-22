@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane id="background" styleClass="background" stylesheets="@../css/gamemode.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
+<StackPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" styleClass="background" stylesheets="@../css/gamemode.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.SetupController">
    <children>
-      <VBox alignment="CENTER" stylesheets="@../css/gamemode.css">
+      <VBox alignment="CENTER" spacing="20.0" stylesheets="@../css/gamemode.css">
          <children>
             <Label fx:id="error" textFill="#8d1919" />
-            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" text="Please select your game mode and number of players:">
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" text="Please select game mode and number of players:">
                <font>
                   <Font name="Papyrus Condensed" size="24.0" />
                </font>

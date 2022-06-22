@@ -17,7 +17,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <HBox id="magicians" fx:id="place" stylesheets="@../css/magicians.css">
+            <HBox id="magicians" fx:id="place" alignment="CENTER" stylesheets="@../css/magicians.css">
                <children>
                   <Pane fx:id="King" />
                   <Pane fx:id="Wizard" />
