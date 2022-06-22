@@ -28,15 +28,13 @@ class BaseRulesTest {
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
-        p1 = new Player(0, "Ale");
-        p2 = new Player(1, "Fede");
-        gameManager.addPlayer(p1);
-        gameManager.addPlayer(p2);
-        gameManager.initGame();
         game = gameManager.getGame();
-
+        game.createPlayer(0, "Ale");
+        game.createPlayer(1, "Fede");
+        p1 = game.getPlayers().get(0);
+        p2 = game.getPlayers().get(1);
+        gameManager.initGame();
         game.setRoundOwner(p1);
-
         baseRules = new BaseRules();
     }
 

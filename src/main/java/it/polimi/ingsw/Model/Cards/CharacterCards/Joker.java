@@ -11,6 +11,9 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Joker class is model representation of the Joker character card.
+ */
 public class Joker extends CharacterCard {
 
     private Map<Color, Integer> students;
@@ -19,6 +22,9 @@ public class Joker extends CharacterCard {
     private Bag bag;
     public static final int maxSwaps = 3;
 
+    /**
+     * Constructor Joker sets the correct Character enum type and the correct price to the card.
+     */
     public Joker(String imagePath, Bag bag) {
         super(imagePath);
         price = 1;
@@ -29,6 +35,10 @@ public class Joker extends CharacterCard {
         character = Character.JOKER;
     }
 
+    /**
+     * Method init overrides the default init behaviour of the CharacterCard abstract with the Joker logic.
+     * The method fills the Joker student list with extracted students from the Bag.
+     */
     @Override
     public void init() {
         for (int i = 0; i < 6; i++) {
@@ -37,6 +47,12 @@ public class Joker extends CharacterCard {
         }
     }
 
+    /**
+     * Method activate extends the default activate behaviour of the CharacterCard abstract with the Joker logic.
+     *
+     * @param rules the current rules of the game.
+     * @param game  the reference to the current game.
+     */
     @Override
     public void activate(Rules rules, Game game) {
         super.activate(rules, game);
@@ -45,6 +61,12 @@ public class Joker extends CharacterCard {
         swappedStudents = 0;
     }
 
+    /**
+     * Method deactivate extends the default deactivate behaviour of the CharacterCard abstract with the Joker logic.
+     *
+     * @param rules the current rules of the game.
+     * @param game  the reference to the current game.
+     */
     @Override
     public void deactivate(Rules rules, Game game) {
         super.deactivate(rules, game);
@@ -52,6 +74,7 @@ public class Joker extends CharacterCard {
     }
 
     /**
+     * Method swapStudents swaps students from the card's student map.
      * @param studentToPick the student you pick from the card
      * @param studentToPut  the student you put on the card
      */
@@ -61,14 +84,24 @@ public class Joker extends CharacterCard {
         swappedStudents++;
     }
 
+    /**
+     * Method getSwappedStudents returns the number of students currently swapped.
+     */
     public int getSwappedStudents() {
         return swappedStudents;
     }
 
+    /**
+     * Method getStudentsMap returns the map of the card's students.
+     */
     public Map<Color, Integer> getStudentsMap() {
         return students;
     }
 
+    /**
+     * Method getStudents overrides the default behaviour of the CharacterCard abstract.
+     * @return A student list built from the card's student map.
+     */
     @Override
     public List<Color> getStudents(){
         return Color.fromMapToList(students);

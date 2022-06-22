@@ -151,7 +151,7 @@ class ActivateCardTest {
     }
 
     @DisplayName("Card activation test")
-    @RepeatedTest(300)
+    @RepeatedTest(30)
     void activateCard() {
         CharacterCard card = game.getCharacterCards().get(selection);
         for (int i = 0; i < card.getPrice() + 1; i++) {
