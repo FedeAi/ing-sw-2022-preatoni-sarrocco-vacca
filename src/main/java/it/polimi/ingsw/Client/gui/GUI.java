@@ -146,18 +146,6 @@ public class GUI extends Application implements UI {
         return listeners;
     }
 
-    private void handleCustomMessages(String msg) {
-        boolean roundOwner = modelView.amIRoundOwner();
-        if (modelView.getGameState() == GameState.GAME_ROOM && !roundOwner) {
-            LoaderController loader = (LoaderController) getControllerFromName(LOADER);
-            Platform.runLater(() -> loader.setText(msg));
-        }
-        if (modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN &&  !roundOwner) {
-            LoaderController loader = (LoaderController) getControllerFromName(LOADER);
-            Platform.runLater(() -> loader.setText(msg));
-        }
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Platform.runLater(() -> {
@@ -191,7 +179,7 @@ public class GUI extends Application implements UI {
                     });
                 }
             }
-            case ServerMessageHandler.CUSTOM_MESSAGE_LISTENER -> handleCustomMessages(((CustomMessage) evt.getNewValue()).getMessage());
+
         }
     }
 }

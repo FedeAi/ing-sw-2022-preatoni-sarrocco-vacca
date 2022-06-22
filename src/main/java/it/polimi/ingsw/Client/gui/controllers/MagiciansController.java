@@ -16,7 +16,6 @@ import java.util.List;
 
 public class MagiciansController extends GUIController {
 
-    GUI gui;
     private final EnumMap<Magician, Image> magiciansImage = new EnumMap<>(Magician.class);
     private final EnumMap<Magician, Pane> viewMap = new EnumMap<>(Magician.class);
 
@@ -43,11 +42,6 @@ public class MagiciansController extends GUIController {
         showMagicians();
     }
 
-    @Override
-    public void setGui(GUI gui) {
-        this.gui = gui;
-    }
-
     @FXML
     public void selectedMagician(MouseEvent mouseEvent) {
         ImageView selection = (ImageView) mouseEvent.getSource();
@@ -57,7 +51,7 @@ public class MagiciansController extends GUIController {
         Platform.runLater(() -> {
             gui.getListeners().firePropertyChange("action", null, message);
         });
-        gui.changeScene("loading.fxml");
+        gui.changeScene(GUI.LOGIN);
     }
 
     public void showMagicians() {

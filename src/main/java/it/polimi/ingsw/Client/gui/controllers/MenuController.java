@@ -14,15 +14,12 @@ import static java.lang.System.exit;
 
 public class MenuController extends GUIController {
 
-    GUI gui;
-    private  static final String SETUP = "login.fxml";
-
     /**
      * Method play run the login.fxml (change of the scene) when the "Play" button is clicked.
      */
     @FXML
     public void play() {
-        gui.changeScene(SETUP);
+        gui.changeScene(GUI.SETUP);
     }
     /**
      * Method about show our github when the label that contains the names is clicked
@@ -37,11 +34,6 @@ public class MenuController extends GUIController {
     @FXML
     public void quit() {
         exit(1);
-    }
-
-    @Override
-    public void setGui(GUI gui) {
-        this.gui = gui;
     }
 
     @Override

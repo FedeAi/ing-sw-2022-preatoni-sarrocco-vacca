@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 
 public class LoginController extends GUIController {
 
-    GUI gui;
     @FXML
     private TextField username, ip, port;
     @FXML
@@ -34,11 +33,6 @@ public class LoginController extends GUIController {
                 join();
             }
         });
-    }
-
-    @Override
-    public void setGui(GUI gui) {
-        this.gui = gui;
     }
 
     /**

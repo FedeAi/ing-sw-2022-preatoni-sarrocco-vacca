@@ -15,8 +15,6 @@ import java.util.ResourceBundle;
 
 public class SetupController extends GUIController {
 
-    private GUI gui;
-
     @FXML
     RadioButton normalGame, expertGame;
     @FXML
@@ -44,7 +42,7 @@ public class SetupController extends GUIController {
                 numPlayer = " 3";
             }
 
-            gui.changeScene("loading.fxml");
+            gui.changeScene(GUI.LOGIN);
             String message = "SETUP" + numPlayer + expert;   //if normal mode string must be empty
             // send setup option
             Platform.runLater(() -> {
@@ -54,11 +52,6 @@ public class SetupController extends GUIController {
             error.setText("choose the mode you want to play before starting");
             sleepAndExec(() -> error.setText(""));
         }
-    }
-
-    @Override
-    public void setGui(GUI gui) {
-        this.gui = gui;
     }
 
     @Override

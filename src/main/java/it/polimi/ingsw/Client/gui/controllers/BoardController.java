@@ -37,8 +37,6 @@ import java.util.List;
 
 public class BoardController extends GUIController implements PropertyChangeListener {
 
-    GUI gui;
-
     public static final String ENTRY_STUDENT_LISTENER = "selectSchoolStudent";
     public static final String SCHOOL_HALL_LISTENER = "selectSchoolHall"; //ciao, Bella, mi senti?
     public static final String SELECT_ISLAND_LISTENER = "selectIsland"; //ciao, Bella, mi senti?
@@ -224,11 +222,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         for (Character c : Character.values()) {
             charactersImages.put(c, new Image(getClass().getResourceAsStream("/graphics/characters/" + c.toString().toLowerCase() + ".jpg")));
         }
-    }
-
-    @Override
-    public void setGui(GUI gui) {
-        this.gui = gui;
     }
 
     public void updateIslands() {

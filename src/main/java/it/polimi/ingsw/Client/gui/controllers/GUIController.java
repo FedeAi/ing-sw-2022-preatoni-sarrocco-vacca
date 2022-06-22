@@ -15,8 +15,11 @@ public abstract class GUIController implements Initializable, PropertyChangeList
 
     protected Font font = Font.loadFont(getClass().getResourceAsStream("/font/PAPYRUS.ttf"), 20);
     protected Font balanceFont = Font.loadFont(getClass().getResourceAsStream("/font/PAPYRUS.ttf"), 35);
+    protected GUI gui;
 
-    public abstract void setGui(GUI gui);
+    public void setGui(GUI gui) {
+        this.gui = gui;
+    }
 
     public void sleepAndExec(Runnable func) {
         Thread thread = new Thread(() -> {
