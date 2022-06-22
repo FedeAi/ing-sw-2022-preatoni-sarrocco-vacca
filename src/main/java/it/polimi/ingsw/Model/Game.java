@@ -89,7 +89,7 @@ public class Game {
     /**
      * Method fireInitialState is responsible for forwarding the initial or current game state if a client connects.
      *
-     * @return void
+     * @see Player#fireInitialState()
      */
     public void fireInitialState() {
         // FIXME ( the first fire when the client is connected is not received) IS THIS FIXED OR NOT?
@@ -188,7 +188,6 @@ public class Game {
      * Method initClouds is a setter method for the cloud list.
      *
      * @param clouds the cloud List to be set to the game
-     * @return void
      */
     public void initClouds(LinkedList<Cloud> clouds) {
         //new object create with the same elements
@@ -197,10 +196,9 @@ public class Game {
     }
 
     /**
-     * Method initClouds is a setter method for the MotherNature object. This method also fires any changes to the clients.
+     * Method initMotherNature is a setter method for the MotherNature object. This method also fires any changes to the clients.
      *
      * @param motherNature the MotherNature instance to be set to the game
-     * @return void
      */
     public void initMotherNature(MotherNature motherNature) {
         this.motherNature = motherNature;
