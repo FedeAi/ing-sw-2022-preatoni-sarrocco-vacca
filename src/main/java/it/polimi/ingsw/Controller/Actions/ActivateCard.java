@@ -8,21 +8,40 @@ import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
+/**
+ * ActivateCard class represent the character card activation game action.
+ */
 public class ActivateCard extends Performable {
 
     private final int choice;
 
-    public ActivateCard(String myNickname, int choice) {
-        super(myNickname);
+    /**
+     * Constructor ActivateCard creates the ActivateCard instance, and sets the character card selection by index.
+     *
+     * @param player the nickname of the action owner.
+     * @param choice the index of the character card selection.
+     */
+    public ActivateCard(String player, int choice) {
+        super(player);
         this.choice = choice;
     }
 
+    /**
+     * Method canPerform extends the Performable definition with the ActivateCard specific checks.
+     *
+     * @param game  represents the game Model.
+     * @param rules represents the current game rules.
+     * @throws InvalidPlayerException if the player is not in the current game.
+     * @throws RoundOwnerException    if the player is not the current round owner.
+     * @throws GameException          for generic errors.
+     * @see Performable#canPerform(Game, Rules)
+     */
     @Override
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
-        // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
+        // Simple check that verifies that there is a player with the specified name, and that he is the roundOwner
         super.canPerform(game, rules);
-
         Player player = getPlayer(game);
+
         // Simple check to verify that we're in the correct state
         if (!game.getGameState().equals(GameState.ACTION_MOVE_MOTHER) && !game.getGameState().equals(GameState.ACTION_MOVE_STUDENTS)) {
             throw new WrongStateException("action phase!");
@@ -45,16 +64,24 @@ public class ActivateCard extends Performable {
         if (chosenCard.isActive()) {
             throw new GameException("The selected card is already active.");
         }
-        if (chosenCard.getActivatingPlayer().equals(myNickName)) {
+        if (chosenCard.getActivatingPlayer().equals(this.player)) {
             throw new GameException("You can activate a card once per turn.");
         }
     }
 
+    /**
+     * Method performMove checks if an action is performable,
+     * and only if successful it executes the action on the Game Model.
+     * The character card will be activated, and the state will be changed if necessary (this logic is on the card itself).
+     * The method is also responsible for the removal of coins from the player that has activated the card.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     */
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         Player player = getPlayer(game);
-
         CharacterCard chosenCard = game.getCharacterCards().get(choice);
 
         if (chosenCard.alreadyActivatedOnce()) {
@@ -62,9 +89,7 @@ public class ActivateCard extends Performable {
         } else {
             game.incrementBalance(chosenCard.getPrice() - 1);
         }
-
         player.spendCoins(chosenCard.getPrice());
         game.activateCharacterCard(choice, rules);
     }
-
 }

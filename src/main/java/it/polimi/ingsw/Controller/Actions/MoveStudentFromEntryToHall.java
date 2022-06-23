@@ -9,12 +9,33 @@ import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
+/**
+ * MoveStudentFromEntryToHall represents the action where a student is moved from the student entry to the hall.
+ *
+ * @see MoveStudentFromEntry
+ */
 public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
 
+    /**
+     * Constructor MoveStudentFromEntryToHall creates the action instance.
+     *
+     * @param player the nickname of the action owner.
+     * @param color  the selected color from the student entry to be moved to the hall.
+     */
     public MoveStudentFromEntryToHall(String player, Color color) {
         super(player, color);
     }
 
+    /**
+     * Method canPerform extends the Performable MoveStudentFromEntry with the specific MoveStudentFromEntryToHall checks.
+     *
+     * @param game  represents the game Model.
+     * @param rules represents the current game rules.
+     * @throws InvalidPlayerException if the player is not in the current game.
+     * @throws RoundOwnerException    if the player is not the current round owner.
+     * @throws GameException          for generic errors.
+     * @see MoveStudentFromEntry#canPerform(Game, Rules)
+     */
     @Override
     protected void canPerform(Game game, Rules rules) throws GameException, InvalidPlayerException, RoundOwnerException {
         super.canPerform(game, rules);
@@ -24,13 +45,21 @@ public class MoveStudentFromEntryToHall extends MoveStudentFromEntry {
         }
     }
 
+    /**
+     * Method performMove checks if an action is performable,
+     * and only if successful it executes the MoveStudentFromEntryToHall action.
+     * It also checks for the coin addition to the player's balance.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     * @see Performable#canPerform(Game, Rules)
+     */
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         Player player = getPlayer(game);
-
-        player.getSchool().moveStudentFromEntryToHall(color);   // model modification
-
+        // model modification
+        player.getSchool().moveStudentFromEntryToHall(color);
         // coin
         int hallPosition = player.getSchool().getStudentsHall().getOrDefault(color, 0);
         if (Rules.checkCoin(hallPosition)) {

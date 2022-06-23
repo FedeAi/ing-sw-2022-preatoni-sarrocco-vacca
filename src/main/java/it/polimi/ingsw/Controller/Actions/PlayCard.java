@@ -7,15 +7,34 @@ import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 
+/**
+ * PlayCard class represent the AssistantCard play move in the game, executed in the planning phase of the game.
+ */
 public class PlayCard extends Performable {
 
     private final int choice;
 
-    public PlayCard(String myNickName, int choice) {
-        super(myNickName);
+    /**
+     * Constructor PlayCard creates the PlayCard instance, and sets the AssistantCard selection by index.
+     *
+     * @param player the nickname of the action owner.
+     * @param choice the index of the AssistantCard selection.
+     */
+    public PlayCard(String player, int choice) {
+        super(player);
         this.choice = choice;
     }
 
+    /**
+     * Method canPerform extends the Performable definition with the PlayCard specific checks.
+     *
+     * @param game  represents the game Model.
+     * @param rules represents the current game rules.
+     * @throws InvalidPlayerException if the player is not in the current game.
+     * @throws RoundOwnerException    if the player is not the current round owner.
+     * @throws GameException          for generic errors.
+     * @see Performable#canPerform(Game, Rules)
+     */
     @Override
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
@@ -36,6 +55,14 @@ public class PlayCard extends Performable {
         }
     }
 
+    /**
+     * Method performMove checks if an action is performable,
+     * and only if successful it executes the action on the Game Model.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     * @see PlayCard#canPerform(Game, Rules)
+     */
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
@@ -44,6 +71,13 @@ public class PlayCard extends Performable {
         game.playCard(player, playedCard);
     }
 
+    /**
+     * Method nextState determines the next game state after a PlayCard action is executed.
+     * Only when all the players have played a card the game can proceed to the next state.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     */
     @Override
     public GameState nextState(Game game, Rules rules) {
         int playerIndex = game.getOrderedPlanningPlayers().indexOf(getPlayer(game));
@@ -54,9 +88,11 @@ public class PlayCard extends Performable {
     }
 
     /**
-     * @param game
-     * @param rules
-     * @return null if im the last player in planning phase
+     * Method nextPlayer determines the next player after a PlayCard action is executed.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     * @return the next player for the planning phase, null if the owner is the last player.
      */
     @Override
     public Player nextPlayer(Game game, Rules rules) {

@@ -1,31 +1,46 @@
 package it.polimi.ingsw.Controller.Actions;
 
-import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.GameException;
+import it.polimi.ingsw.Exceptions.InvalidIndexException;
 import it.polimi.ingsw.Exceptions.InvalidPlayerException;
 import it.polimi.ingsw.Exceptions.RoundOwnerException;
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Player;
-
-import java.util.stream.IntStream;
 
 /**
- * It is used when a player decide not to go on with the effect of the active character Card (per i fino a)
+ * DeactivateCard class represent the character card manual deactivation game action.
  */
 public class DeactivateCard extends Performable {
     private final int cardIndex;
+
+    /**
+     * Constructor DeactivateCard creates the DeactivateCard instance, and sets the character card selection by index.
+     *
+     * @param player the nickname of the action owner.
+     * @param cardIndex the index of the character card selection.
+     */
     public DeactivateCard(String player, int cardIndex) {
         super(player);
         this.cardIndex = cardIndex;
     }
 
+    /**
+     * Method canPerform extends the Performable definition with the DeactivateCard specific checks.
+     *
+     * @param game  represents the game Model.
+     * @param rules represents the current game rules.
+     * @throws InvalidPlayerException if the player is not in the current game.
+     * @throws RoundOwnerException    if the player is not the current round owner.
+     * @throws GameException          for generic errors.
+     * @see Performable#canPerform(Game, Rules)
+     */
     @Override
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
         super.canPerform(game, rules);
         if(cardIndex < 0 || cardIndex >= game.getCharacterCards().size()){
-            throw new GameException("The selected card's index is not valid, [0," + game.getCharacterCards().size() +"]");
+            throw new InvalidIndexException("character card", 0, Constants.NUM_CHARACTER_CARDS, cardIndex);
         }
         if(!game.getCharacterCards().get(cardIndex).isActive()){
             throw new GameException(game.getCharacterCards().get(cardIndex).getClass().getSimpleName() + " is not active");
@@ -35,12 +50,18 @@ public class DeactivateCard extends Performable {
         }
     }
 
+    /**
+     * Method performMove checks if an action is performable,
+     * and only if successful it executes the action on the Game Model.
+     * The character card will be deactivated,
+     * and the state will be restored to the previous state if necessary (this logic is on the card itself).
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     */
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         game.deactivateCharacterCard(cardIndex, rules);
-//        IntStream.range(0, game.getCharacterCards().size()).filter(i -> game.getCharacterCards().get(i).isActive()).forEach(i->game.deactivateCharacterCard(i,rules));
     }
-
-
 }

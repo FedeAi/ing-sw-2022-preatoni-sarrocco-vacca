@@ -23,7 +23,10 @@ public class Rules {
      * @param numPlayers the number of players in the game.
      */
     public static int getEntrySize(int numPlayers) {
-        return 9;
+        return switch(numPlayers) {
+            case 2 ->  7;
+            default -> 9;
+        };
     }
 
     /**

@@ -10,23 +10,32 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
+/**
+ * Performable class is an abstract shared between every action possible in the game.
+ */
 public abstract class Performable {
-    protected String myNickName;
+    protected String player;
 
-    public Performable(String nickName) {
-        this.myNickName = nickName;
+    /**
+     * Constructor Performable initializes the instance and sets the action owner.
+     *
+     * @param player the nickname of the action owner.
+     */
+    public Performable(String player) {
+        this.player = player;
     }
 
     /**
-     * CanPerform method checks if a player can perform a move.
+     * CanPerform method checks if a player can perform a move, determined by his objects and game state.
      *
-     * @param game - represents the game Model.
-     * @param rules - represents the current game rules.
-     * @throws InvalidPlayerException
-     * @throws RoundOwnerException
+     * @param game  represents the game Model.
+     * @param rules represents the current game rules.
+     * @throws InvalidPlayerException if the player is not in the current game.
+     * @throws RoundOwnerException    if the player is not the current round owner.
+     * @throws GameException          if there is no round owner, or you are the only player left in the game (the game is frozen).
      */
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
-        Optional<Player> player_opt = game.getPlayerByNickname(myNickName);
+        Optional<Player> player_opt = game.getPlayerByNickname(player);
         // Checks if there is a player with the specified nickname in the game
         if (player_opt.isEmpty()) {
             throw new InvalidPlayerException();
@@ -35,10 +44,10 @@ public abstract class Performable {
 
         // Checks if the player is the round owner
         if (!player.equals(game.getRoundOwner())) {
-            if(game.getRoundOwner() != null)
+            if (game.getRoundOwner() != null)
                 throw new RoundOwnerException(game.getRoundOwner().getNickname());
             else
-                throw new RoundOwnerException("nobody (internal server error)");
+                throw new GameException("RoundOwner is empty (Internal server error).");
         }
 
         // Checks the number of active players, if I'm the only one solitario is a better game for me
@@ -48,39 +57,49 @@ public abstract class Performable {
     }
 
     /**
-     * Perform move method.
+     * Method performMove will be overridden by each action to determine the action behaviour.
      *
-     * @param game  of type GameExt: the game
-     * @param rules
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     * @see Performable#canPerform(Game, Rules)
      */
     public abstract void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException;
 
-    public GameState nextState(Game game, Rules rules){
+    /**
+     * Method nextState will be overridden by each action to determine the next game state.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     */
+    public GameState nextState(Game game, Rules rules) {
         return game.getGameState();
     }
 
-    public Player nextPlayer(Game game, Rules rules){
+    /**
+     * Method nextPlayer will be overridden by each action to determine the next player.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     */
+    public Player nextPlayer(Game game, Rules rules) {
         return game.getRoundOwner();
     }
 
     /**
-     * Gets NickName player.
-     *
-     * @return of type int: the player's id.
+     * Method getNickname returns the nickname of the action's owner.
      */
-    String getNickNamePlayer() {
-        return myNickName;
+    public String getNickname() {
+        return player;
     }
 
     /**
-     * this method return the player given the nickname
+     * Method getPlayer returns the Player reference to  the action's owner.
      *
-     * @param game
-     * @return
+     * @param game the current game model reference.
+     * @return the reference to the player if present in the game, null otherwise.
      */
     protected Player getPlayer(Game game) {
-        Optional<Player> playerByNickname = game.getPlayerByNickname(myNickName);
+        Optional<Player> playerByNickname = game.getPlayerByNickname(player);
         return playerByNickname.orElse(null);
     }
-
 }
