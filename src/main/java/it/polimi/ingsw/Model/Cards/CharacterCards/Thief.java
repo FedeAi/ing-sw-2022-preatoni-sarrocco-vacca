@@ -7,6 +7,8 @@ import it.polimi.ingsw.Model.Game;
 
 /**
  * Thief class is model representation of the Thief character card.
+ *
+ * @see it.polimi.ingsw.Controller.Actions.CharacterActions.ThiefChooseColor
  */
 public class Thief extends CharacterCard {
 

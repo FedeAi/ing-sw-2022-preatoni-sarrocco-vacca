@@ -8,6 +8,8 @@ import it.polimi.ingsw.Model.Game;
 
 /**
  * Farmer class is model representation of the Farmer character card.
+ *
+ * @see FarmerRules
  */
 public class Farmer extends CharacterCard {
 

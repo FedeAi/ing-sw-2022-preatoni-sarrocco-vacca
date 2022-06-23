@@ -7,6 +7,8 @@ import it.polimi.ingsw.Model.Game;
 
 /**
  * Grandma class is model representation of the Grandma character card.
+ *
+ * @see it.polimi.ingsw.Controller.Actions.CharacterActions.GrandmaBlockIsland
  */
 public class Grandma extends CharacterCard {
 

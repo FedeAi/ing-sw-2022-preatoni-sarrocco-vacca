@@ -11,17 +11,41 @@ import it.polimi.ingsw.Model.Game;
 
 import java.util.Optional;
 
+/**
+ * MonkMoveToIsland class represent the Monk character card game action.
+ * The action allows a player to put a student from the card to a certain island.
+ *
+ * @see Monk
+ */
 public class MonkMoveToIsland extends Performable {
 
     private Color student;
     private int islandIndex;
 
-    public MonkMoveToIsland(String nickname, Color student, int islandIndex) {
-        super(nickname);
+    /**
+     * Constructor MonkMoveToIsland creates the MonkMoveToIsland instance,
+     * and sets the entry and character card student selection.
+     *
+     * @param player      the nickname of the action owner.
+     * @param student     the student to be picked from the card and put on the island.
+     * @param islandIndex the selected island index.
+     */
+    public MonkMoveToIsland(String player, Color student, int islandIndex) {
+        super(player);
         this.student = student;
         this.islandIndex = islandIndex;
     }
 
+    /**
+     * Method canPerform extends the Performable definition with the MonkMoveToIsland specific checks.
+     *
+     * @param game  represents the game Model.
+     * @param rules represents the current game rules.
+     * @throws InvalidPlayerException if the player is not in the current game.
+     * @throws RoundOwnerException    if the player is not the current round owner.
+     * @throws GameException          for generic errors.
+     * @see Performable#canPerform(Game, Rules)
+     */
     @Override
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he is the roundOwner
@@ -62,6 +86,15 @@ public class MonkMoveToIsland extends Performable {
         }
     }
 
+    /**
+     * Method performMove checks if an action is performable,
+     * and only if successful it executes the action on the Game Model.
+     * The monk card effect will be activated, and the card's selected student will be put on the island.
+     * The method also handles automatic deactivation after the action.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     */
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);

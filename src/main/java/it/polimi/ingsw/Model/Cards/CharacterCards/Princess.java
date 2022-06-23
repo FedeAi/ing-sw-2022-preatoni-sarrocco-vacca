@@ -13,6 +13,8 @@ import java.util.Map;
 
 /**
  * Princess class is model representation of the Princess character card.
+ *
+ * @see it.polimi.ingsw.Controller.Actions.CharacterActions.PrincessMoveToEntry
  */
 public class Princess extends CharacterCard {
 
@@ -74,6 +76,7 @@ public class Princess extends CharacterCard {
     /**
      * Method moveStudent removes a student from the card's student map and returns it
      * (to be added to the player's hall).
+     *
      * @param student the selected student's color.
      */
     public void moveStudent(Color student) {
@@ -95,7 +98,7 @@ public class Princess extends CharacterCard {
      * Method getStudents returns the list of the card's students map.
      */
     @Override
-    public List<Color> getStudents(){
+    public List<Color> getStudents() {
         return Color.fromMapToList(students);
     }
 }

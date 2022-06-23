@@ -8,6 +8,8 @@ import it.polimi.ingsw.Model.Game;
 
 /**
  * Centaur class is model representation of the Centaur character card.
+ *
+ * @see CentaurRules
  */
 public class Centaur extends CharacterCard {
 

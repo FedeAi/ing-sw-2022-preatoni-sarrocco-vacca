@@ -8,6 +8,8 @@ import it.polimi.ingsw.Model.Game;
 
 /**
  * Knight class is model representation of the Knight character card.
+ *
+ * @see KnightRules
  */
 public class Knight extends CharacterCard {
 

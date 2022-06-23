@@ -7,6 +7,8 @@ import it.polimi.ingsw.Model.Game;
 
 /**
  * Herald class is model representation of the Herald character card.
+ *
+ * @see it.polimi.ingsw.Controller.Actions.CharacterActions.HeraldChooseIsland
  */
 public class Herald extends CharacterCard {
 

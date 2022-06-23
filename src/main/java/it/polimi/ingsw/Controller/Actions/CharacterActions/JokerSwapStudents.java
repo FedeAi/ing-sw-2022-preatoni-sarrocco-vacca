@@ -15,18 +15,43 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.Optional;
 
+/**
+ * JokerSwapStudents class represent the Joker character card game action.
+ * The action allows a player to swap a maximum of 3 students between his school's entry and the card.
+ *
+ * @see Joker
+ */
 public class JokerSwapStudents extends Performable {
+
     private Color studentToPick, studentToPut;
 
-    public JokerSwapStudents(String nickName, Color studentToPick, Color studentToPut) {
-        super(nickName);
+    /**
+     * Constructor JokerSwapStudents creates the JokerSwapStudents instance,
+     * and sets the entry and character card student selection.
+     *
+     * @param player        the nickname of the action owner.
+     * @param studentToPick the student to be picked from the card and put into the school's entry.
+     * @param studentToPut  the student to be picked from the entry and swapped to the card.
+     */
+    public JokerSwapStudents(String player, Color studentToPick, Color studentToPut) {
+        super(player);
         this.studentToPick = studentToPick;
         this.studentToPut = studentToPut;
     }
 
+    /**
+     * Method canPerform extends the Performable definition with the JokerSwapStudent specific checks.
+     *
+     * @param game  represents the game Model.
+     * @param rules represents the current game rules.
+     * @throws InvalidPlayerException if the player is not in the current game.
+     * @throws RoundOwnerException    if the player is not the current round owner.
+     * @throws GameException          for generic errors.
+     * @see Performable#canPerform(Game, Rules)
+     */
     @Override
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
-        // Simple check that verifies that there is a player with the specified name, and that he/she is the roundOwner
+        // Simple check that verifies that there is a player with the specified name, and that he is the roundOwner
         super.canPerform(game, rules);
 
         Player player = getPlayer(game);
@@ -35,14 +60,13 @@ public class JokerSwapStudents extends Performable {
             throw new WrongStateException("state you access by activating the joker card.");
         }
 
-        // is action legal check
-        // there is no an active card
+        // There is not an active card check
         Optional<CharacterCard> card = game.getActiveCharacter(Joker.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
         }
 
-        // the active card is not the right one
+        // The active card is not of the right type
         if (!(card.get() instanceof Joker)) {
             throw new GameException("The card that has been activated in this turn is not of the joker type.");
         }
@@ -64,22 +88,28 @@ public class JokerSwapStudents extends Performable {
         }
     }
 
+    /**
+     * Method performMove checks if an action is performable,
+     * and only if successful it executes the action on the Game Model.
+     * The joker card effect will be activated,
+     * the swap between the selected student from the entry and from the card will be executed.
+     * The method also handles automatic deactivation after the maximum swaps.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     */
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
         Player player = getPlayer(game);
-
         // to check instance of and make cast
         Joker joker = (Joker) game.getActiveCharacter(Joker.class).get();
         joker.swapStudents(studentToPick, studentToPut);
         player.getSchool().addStudentEntry(studentToPick);
         player.getSchool().removeStudentFromEntry(studentToPut);
-
         // card deactivate
         if (joker.getSwappedStudents() >= Joker.maxSwaps) {
             game.deactivateCharacterCard(game.getCharacterCards().indexOf(joker), rules);
         }
     }
 }
-
-

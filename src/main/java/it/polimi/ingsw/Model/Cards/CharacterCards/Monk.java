@@ -13,6 +13,8 @@ import java.util.Map;
 
 /**
  * Monk class is model representation of the Monk character card.
+ *
+ * @see it.polimi.ingsw.Controller.Actions.CharacterActions.MonkMoveToIsland
  */
 public class Monk extends CharacterCard {
 
@@ -71,6 +73,7 @@ public class Monk extends CharacterCard {
     /**
      * Method moveStudent removes the specified student from the card,
      * and then it refills it with a new one from the game bag.
+     *
      * @param student the selected student from the card.
      */
     public void moveStudent(Color student) {
@@ -91,10 +94,11 @@ public class Monk extends CharacterCard {
 
     /**
      * Method getStudentsMap returns the card's students.
+     *
      * @return A list of students present on the card.
      */
     @Override
-    public List<Color> getStudents(){
+    public List<Color> getStudents() {
         return Color.fromMapToList(students);
     }
 }

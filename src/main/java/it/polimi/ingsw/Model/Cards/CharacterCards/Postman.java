@@ -8,6 +8,8 @@ import it.polimi.ingsw.Model.Game;
 
 /**
  * Postman class is model representation of the Postman character card.
+ *
+ * @see PostmanRules
  */
 public class Postman extends CharacterCard {
 

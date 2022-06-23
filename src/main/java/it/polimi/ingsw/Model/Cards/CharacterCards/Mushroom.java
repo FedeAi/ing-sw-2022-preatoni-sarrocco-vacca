@@ -13,6 +13,8 @@ import java.util.List;
 
 /**
  * Mushroom class is model representation of the Mushroom character card.
+ *
+ * @see it.polimi.ingsw.Controller.Actions.CharacterActions.MushroomChooseColor
  */
 public class Mushroom extends CharacterCard {
 
@@ -66,6 +68,7 @@ public class Mushroom extends CharacterCard {
     /**
      * Method setStudent allows the player that activates the card to set a student on the card.
      * The selected student's color will not count towards influence calculation.
+     *
      * @param student
      */
     public void setStudent(Color student) {
@@ -83,7 +86,7 @@ public class Mushroom extends CharacterCard {
      * Method getStudents returns a list of all colors, in order to make them selectable in the client.
      */
     @Override
-    public List<Color> getStudents(){
+    public List<Color> getStudents() {
         return new ArrayList<>(List.of(Color.values()));
     }
 }

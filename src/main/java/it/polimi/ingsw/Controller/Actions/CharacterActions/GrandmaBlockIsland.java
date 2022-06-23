@@ -10,15 +10,37 @@ import it.polimi.ingsw.Model.Game;
 
 import java.util.Optional;
 
+/**
+ * GrandmaBlockIsland class represent the Grandma character card game action.
+ * The action allows a player to block an island, which freeze the influence updates for a single time.
+ *
+ * @see Grandma
+ */
 public class GrandmaBlockIsland extends Performable {
 
     int islandIndex;
 
-    public GrandmaBlockIsland(String nickName, int islandIndex) {
-        super(nickName);
+    /**
+     * Constructor GrandmaBlockIsland creates the GrandmaBlockIsland instance, and sets the island selection by index.
+     *
+     * @param player      the nickname of the action owner.
+     * @param islandIndex the index of the island selection.
+     */
+    public GrandmaBlockIsland(String player, int islandIndex) {
+        super(player);
         this.islandIndex = islandIndex;
     }
 
+    /**
+     * Method canPerform extends the Performable definition with the GrandmaBlockIsland specific checks.
+     *
+     * @param game  represents the game Model.
+     * @param rules represents the current game rules.
+     * @throws InvalidPlayerException if the player is not in the current game.
+     * @throws RoundOwnerException    if the player is not the current round owner.
+     * @throws GameException          for generic errors.
+     * @see Performable#canPerform(Game, Rules)
+     */
     @Override
     protected void canPerform(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         // Simple check that verifies that there is a player with the specified name, and that he is the roundOwner
@@ -64,6 +86,15 @@ public class GrandmaBlockIsland extends Performable {
         }
     }
 
+    /**
+     * Method performMove checks if an action is performable,
+     * and only if successful it executes the action on the Game Model.
+     * The grandma card effect will be activated, and the selected island will be blocked.
+     * The method also handles automatic deactivation after the execution.
+     *
+     * @param game  the current game model reference.
+     * @param rules the current game rules.
+     */
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);

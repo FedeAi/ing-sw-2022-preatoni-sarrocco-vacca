@@ -7,6 +7,8 @@ import it.polimi.ingsw.Model.Game;
 
 /**
  * Minstrel class is model representation of the Minstrel character card.
+ *
+ * @see it.polimi.ingsw.Controller.Actions.CharacterActions.MinstrelSwapStudents
  */
 public class Minstrel extends CharacterCard {
 

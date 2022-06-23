@@ -13,6 +13,8 @@ import java.util.Map;
 
 /**
  * Joker class is model representation of the Joker character card.
+ *
+ * @see it.polimi.ingsw.Controller.Actions.CharacterActions.JokerSwapStudents
  */
 public class Joker extends CharacterCard {
 
@@ -75,6 +77,7 @@ public class Joker extends CharacterCard {
 
     /**
      * Method swapStudents swaps students from the card's student map.
+     *
      * @param studentToPick the student you pick from the card
      * @param studentToPut  the student you put on the card
      */
@@ -100,10 +103,11 @@ public class Joker extends CharacterCard {
 
     /**
      * Method getStudents overrides the default behaviour of the CharacterCard abstract.
+     *
      * @return A student list built from the card's student map.
      */
     @Override
-    public List<Color> getStudents(){
+    public List<Color> getStudents() {
         return Color.fromMapToList(students);
     }
 }
