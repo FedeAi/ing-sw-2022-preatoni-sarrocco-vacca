@@ -1,20 +1,20 @@
 package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
-import it.polimi.ingsw.Constants.Constants;
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Exceptions.GameException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
 import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Model.Cards.CharacterCards.Princess;
-import it.polimi.ingsw.Constants.Color;
-import it.polimi.ingsw.Constants.GameState;
+import it.polimi.ingsw.Model.Cards.CharacterCards.Thief;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -22,16 +22,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PrincessMoveToEntryTest {
 
+class ThiefChooseColorTest {
     private Performable action;
     private Game game;
     private GameManager gameManager;
     private Player p1, p2, p3;
-    private Princess card;
+    private Thief card;
     private List<CharacterCard> cardList;
-    private Color selectionColor;
-    private int selectionValue;
+    private Color color;
 
     @BeforeEach
     void init() {
@@ -46,22 +45,21 @@ public class PrincessMoveToEntryTest {
         gameManager.initGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new Princess("", game.getBag());
-        card.init();
+        card = new Thief("");
         cardList = new ArrayList<>();
         cardList.add(card);
         game.initCharacterCards(cardList);
-        // We need to have at least 1 of a color on the card to activate it, so we cycle through the colors
-        selectionColor = Color.BLUE;
-        for (Color c : Color.values()) {
-            selectionValue = card.getStudentsMap().getOrDefault(c, 0);
-            if (selectionValue > 0) {
-                selectionColor = c;
-                break;
-            }
-        }
-        action = new PrincessMoveToEntry(p1.getNickname(), selectionColor);
+        color = Color.randomColor();
+        action = new ThiefChooseColor(p1.getNickname(), color);
         card.activate(gameManager.getRules(), game);
+
+        p1.getSchool().addStudentHall(color);
+        p1.getSchool().addStudentHall(color);
+        p1.getSchool().addStudentHall(color);
+        p1.getSchool().addStudentHall(color);
+
+        p2.getSchool().addStudentHall(color);
+        p2.getSchool().addStudentHall(color);
     }
 
     @Test
@@ -74,9 +72,9 @@ public class PrincessMoveToEntryTest {
         });
     }
 
-    @DisplayName("No princesses in the game test")
+    @DisplayName("No thieves in the game test")
     @Test
-    void noPrincesses() {
+    void noThieves() {
         game.initCharacterCards(new ArrayList<>());
         assertThrows(GameException.class, () -> {
             action.performMove(game, gameManager.getRules());
@@ -87,32 +85,36 @@ public class PrincessMoveToEntryTest {
     @Test
     void notActive() {
         card.deactivate(gameManager.getRules(), game);
-        game.setGameState(GameState.PRINCESS_MOVE_STUDENT);
+        game.setGameState(GameState.THIEF_CHOOSE_COLOR);
         assertThrows(GameException.class, () -> {
             action.performMove(game, gameManager.getRules());
         });
     }
 
-    @DisplayName("Max color in the hall test")
+    @DisplayName("Wrong color test")
     @Test
-    void maxHall() {
-        for (int i = 0; i < Constants.SCHOOL_LANE_SIZE; i++) {
-            p1.getSchool().addStudentHall(selectionColor);
-        }
+    void noColor() {
+        card.deactivate(gameManager.getRules(), game);
+        action = new ThiefChooseColor(p1.getNickname(), null);
+        card.activate(gameManager.getRules(), game);
         assertThrows(GameException.class, () -> {
             action.performMove(game, gameManager.getRules());
         });
     }
 
-    @DisplayName("Princess move to entry test")
+    @DisplayName("Thief remove from hall test")
     @Test
-    void princessCard() {
-        int prevHall = p1.getSchool().getStudentsHall().getOrDefault(selectionColor, 0);
+    void thiefCard() {
+        int hallSize1 = p1.getSchool().getStudentsHall().get(color);
+        int hallSize2 = p2.getSchool().getStudentsHall().get(color);
         try {
             action.performMove(game, gameManager.getRules());
         } catch (Exception e) {
             fail(e.getMessage());
         }
-        assertEquals(prevHall + 1, p1.getSchool().getStudentsHall().getOrDefault(selectionColor, 0));
+        int finalHallSize1 = p1.getSchool().getStudentsHall().get(color);
+        int finalHallSize2 = p2.getSchool().getStudentsHall().get(color);
+        assertEquals(hallSize1 - 3, finalHallSize1);
+        assertEquals(hallSize2 - 2, finalHallSize2);
     }
 }

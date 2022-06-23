@@ -212,6 +212,21 @@ public class School implements Serializable {
     }
 
     /**
+     * Method removeStudentFromHall removes a single student from the school's hall.
+     *
+     * @param student the student to be removed.
+     */
+    public void removeStudentFromHall(Color student) {
+        Integer numStudents = studentsHall.get(student);
+        if (numStudents != null && numStudents > 1) {
+            studentsHall.put(student, studentsHall.get(student) - 1);
+        } else {
+            studentsHall.put(student, 0);
+        }
+        listener.firePropertyChange("", null, null);
+    }
+
+    /**
      * Method swapStudents manages the logic of the Minstrel character card,
      * which allows the swap of a student from the hall to the entry and vice versa.
      *

@@ -13,6 +13,7 @@ import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Model.School;
 
 import java.util.List;
 import java.util.Map;
@@ -61,15 +62,15 @@ public class ThiefChooseColor extends Performable {
             throw new WrongStateException("state you access by activating the thief card.");
         }
 
+        // We check if any of the cards on the table are of the THIEF type
+        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof Thief)) {
+            throw new GameException("There isn't any character card of the type thief on the table.");
+        }
+
         // Simple check to see if we have an active card
         Optional<CharacterCard> card = game.getActiveCharacter(Thief.class);
         if (card.isEmpty()) {
             throw new GameException("There isn't any active card present.");
-        }
-
-        // We check if any of the cards on the table are of the THIEF type
-        if (game.getCharacterCards().stream().noneMatch(characterCard -> characterCard instanceof Thief)) {
-            throw new GameException("There isn't any character card of the type thief on the table.");
         }
 
         // Checking if the activated card is of the THIEF type
@@ -95,22 +96,16 @@ public class ThiefChooseColor extends Performable {
     @Override
     public void performMove(Game game, Rules rules) throws InvalidPlayerException, RoundOwnerException, GameException {
         canPerform(game, rules);
-        // TODO TESTING
         if (game.getActiveCharacter(Thief.class).isPresent()) {
             List<Player> players = game.getPlayers();
             for (Player p : players) {
-                Map<Color, Integer> studentsHall = p.getSchool().getStudentsHall();
+                School school = p.getSchool();
                 /*
                     If we have more than 3 students of the chosenColor we remove 3 of them,
                     otherwise we reset the value to 0
                 */
-                if (studentsHall.getOrDefault(chosenColor, 0) > 3) {
-                    // getOrDefault() just for general safety
-                    for (int i = 0; i < 3; i++) {
-                        studentsHall.put(chosenColor, studentsHall.getOrDefault(chosenColor, 0) - 1);
-                    }
-                } else {
-                    studentsHall.put(chosenColor, 0);
+                for (int i = 0; i < 3; i++) {
+                    school.removeStudentFromHall(chosenColor);
                 }
             }
             Thief thief = (Thief) game.getActiveCharacter(Thief.class).get();
