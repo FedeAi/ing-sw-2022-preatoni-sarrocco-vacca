@@ -69,7 +69,7 @@ public class Mushroom extends CharacterCard {
      * Method setStudent allows the player that activates the card to set a student on the card.
      * The selected student's color will not count towards influence calculation.
      *
-     * @param student
+     * @param student the student to be set.
      */
     public void setStudent(Color student) {
         this.student = student;

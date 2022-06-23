@@ -237,7 +237,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         int viewIslandIndex = 0;
         for (int i = 0; i < islands.size(); i++) {
             Island island = islands.get(i);
-            Boolean hasMother = false;
+            boolean hasMother = false;
             if (i == gui.getModelView().getMotherNature()) {
                 hasMother = true;
             }

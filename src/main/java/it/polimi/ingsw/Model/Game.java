@@ -157,7 +157,6 @@ public class Game {
      * Method removeListeners removes a disconnected client from the list of listeners.
      *
      * @param client the VirtualClient on the server.
-     * @return void
      */
     public void removeListeners(VirtualClient client) {
         if (clientMapLister.containsKey(client)) {
@@ -173,8 +172,6 @@ public class Game {
     /**
      * Method initProfessor is responsible for the creation of the starting professor map
      * (a professor doesn't have an owner yet).
-     *
-     * @return void
      */
     public void initProfessors() {
         professors = new EnumMap<Color, String>(Color.class);
@@ -236,7 +233,7 @@ public class Game {
     /**
      * Method incrementPlayerBalance increments player balance and decreases the game's balance.
      *
-     * @param nickname
+     * @param nickname the selected player's username.
      */
     public void incrementPlayerBalance(String nickname) {
         getPlayerByNickname(nickname).ifPresent(player -> {
@@ -440,7 +437,7 @@ public class Game {
             if (p1.isConnected() && p2.isConnected()) {
                 value = p1.getPlayedCard().getValue() - p2.getPlayedCard().getValue();
             } else if (!p1.isConnected() && p2.isConnected()) {
-                value = +1;
+                value = 1;
             } else if (p1.isConnected() && !p2.isConnected()) {
                 value = -1;
             }

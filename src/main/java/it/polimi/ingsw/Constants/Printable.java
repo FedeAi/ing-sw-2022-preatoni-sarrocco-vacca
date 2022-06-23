@@ -103,7 +103,7 @@ public class Printable {
         System.out.println();
     }
 
-    private static String[] islandFormat(boolean isMerged, boolean motherNature, String pIsland[], Map<Color, Integer> map, int towers, String towerColor, int n) {
+    private static String[] islandFormat(boolean isMerged, boolean motherNature, String[] pIsland, Map<Color, Integer> map, int towers, String towerColor, int n) {
         String[] island = Arrays.copyOf(pIsland, pIsland.length);
         String s = "   ";
         if (isMerged) {

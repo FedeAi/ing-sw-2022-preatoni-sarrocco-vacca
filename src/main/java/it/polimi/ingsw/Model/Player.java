@@ -231,8 +231,6 @@ public class Player implements PropertyChangeListener {
 
     /**
      * Method getPlayedCard returns the Player's last played card.
-     *
-     * @return
      */
     public AssistantCard getPlayedCard() {
         return playedCard;
