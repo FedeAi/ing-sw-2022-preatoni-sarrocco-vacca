@@ -7,8 +7,20 @@ import it.polimi.ingsw.Model.Game;
 
 import java.util.Optional;
 
+/**
+ * MushroomRules class extends the BaseRules class,
+ * overriding the rules that have changed since the activation of the Mushroom character card.
+ */
 public class MushroomRules extends BaseRules {
 
+    /**
+     * Method influenceModifier will exclude from the influence computation a selected student color.
+     *
+     * @param game      the game model reference.
+     * @param student   the selected student color.
+     * @param influence the calculated influence for that color.
+     * @return 0 if the color corresponds with the selected one, the input influence otherwise.
+     */
     @Override
     protected int influenceModifier(Game game, Color student, int influence) {
         Optional<CharacterCard> mushCard = game.getCharacterCards().stream().filter(characterCard -> characterCard instanceof Mushroom).findFirst();
@@ -19,7 +31,8 @@ public class MushroomRules extends BaseRules {
             } else {
                 return influence;
             }
-        } else {   // it should never enter this branch ( if MushRooms are active there must be a MushRoomCard
+        } else {
+            // This branch should never be entered! (If a Mushroom is active there must be a Mushroom Card in the Game).
             throw new NoSuchMethodError();
         }
     }

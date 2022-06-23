@@ -10,28 +10,38 @@ import it.polimi.ingsw.Model.School;
 import java.util.*;
 import java.util.stream.Stream;
 
+/**
+ * BaseRules class represent the normal version of the game's DynamicRules, that may get modified by CharacterCards.
+ */
 public class BaseRules implements DynamicRules {
 
+    /**
+     * Method influence comparator checks if a player has more influence than another.
+     *
+     * @param influence1 the first player's influence.
+     * @param influence2 the second player's influence.
+     * @return true if the first player has more influence, false otherwise.
+     */
     protected boolean influenceComparator(int influence1, int influence2) {
         return Integer.compare(influence1, influence2) > 0;
     }
 
+    /**
+     * Method getProfessorInfluence checks if current round owner has the maximum influence on every color.
+     *
+     * @param game the current game instance
+     * @return the updated map of professors - players.
+     */
     @Override
     public EnumMap<Color, String> getProfessorInfluence(Game game) {
-        Player roundOwner = game.getRoundOwner();
-        String roundOwnerNickname = game.getRoundOwner().getNickname();
-        Island motherNatureIsland = game.getIslandContainer().get(game.getMotherNature().getPosition());
-        Map<Color, Integer> studentsOnIsland = motherNatureIsland.getStudents();
-
-        EnumMap<Color, String> outProfessorsInfluence = new EnumMap<Color, String>(Color.class);
+        EnumMap<Color, String> outProfessorsInfluence = new EnumMap<>(Color.class);
         EnumMap<Color, String> initialProfessorInfluence = game.getProfessors();
-
         for (Color prof : Color.values()) {
-            // find who has the most students in the hall of that color
+            // Find who has the most students in the hall of that color
             Stream<Player> playersWithStudentsInHall = game.getPlayers().stream().filter(player -> player.getSchool().getStudentsHall().get(prof) != null);
             Optional<Player> tempOwner = playersWithStudentsInHall.max((p1, p2) -> Integer.compare(p1.getSchool().getStudentsHall().getOrDefault(prof, 0), p2.getSchool().getStudentsHall().getOrDefault(prof, 0)));
             if (tempOwner.isPresent()) {
-                //compare against the influence comparator for current owner
+                // Compare against the influence comparator for current owner
                 String currentOwner = initialProfessorInfluence.get(prof);
                 if (currentOwner == null) {
                     outProfessorsInfluence.put(prof, tempOwner.get().getNickname());
@@ -42,9 +52,7 @@ public class BaseRules implements DynamicRules {
                     } else {
                         outProfessorsInfluence.put(prof, currentOwner);
                     }
-
                 }
-
             } else {
                 outProfessorsInfluence.put(prof, null);
             }
@@ -52,11 +60,24 @@ public class BaseRules implements DynamicRules {
         return outProfessorsInfluence;
     }
 
+    /**
+     * Method computeMotherMaxMoves returns the value of the maximum movement of MotherNature.
+     *
+     * @param card the AssistantCard that has been played by the current player.
+     */
     @Override
     public int computeMotherMaxMoves(AssistantCard card) {
         return card.getMaxMoves();
     }
 
+    /**
+     * Method computeIslandInfluence calculates the player with the maximum influence on that island,
+     * or Optional.Empty if no players have influence.
+     *
+     * @param game   the current game instance reference.
+     * @param island the reference to the island to calculate the influence on.
+     * @return The nickname of the new owner, empty otherwise.
+     */
     @Override
     public Optional<String> computeIslandInfluence(Game game, Island island) {
         Map<String, Integer> playerInfluence = new HashMap<>();
@@ -89,35 +110,32 @@ public class BaseRules implements DynamicRules {
         } else {
             return Optional.empty();
         }
-
     }
 
     /**
-     * This function is used by MushRoomEffect
+     * Method influenceModifier is a simple function that will be overridden by the MushroomRules.
      *
-     * @param student
-     * @param influence
-     * @param game
-     * @return
+     * @return the input influence without any changes.
+     * @see MushroomRules
      */
     protected int influenceModifier(Game game, Color student, int influence) {
         return influence;
     }
 
     /**
-     * This function is used by CentaurEffect
+     * Method towerInfluenceModifier is a simple function that will be overridden by the CentaurRules.
      *
-     * @param value
-     * @return
+     * @return the input tower influence without any changes.
+     * @see CentaurRules
      */
     protected int towerInfluenceModifier(int value) {
         return value;
     }
 
     /**
-     * This function is used in by knightEffect
+     * Method turnOwnerInfluenceModifier is a simple function that will be overridden by the KnightRules.
      *
-     * @param playerInfluence
+     * @see KnightRules
      */
     protected void turnOwnerInfluenceModifier(Map<String, Integer> playerInfluence, String roundOwner) {
         return;

@@ -8,7 +8,16 @@ import it.polimi.ingsw.Model.Player;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * WinController class checks if a player has won.
+ */
 public class WinController {
+
+    /**
+     * Method check returns the nickname of the player that has won, and null otherwise.
+     *
+     * @param game the game model reference.
+     */
     public static String check(Game game) {
         for (Player p : game.getPlayers()) {
             if (p.getSchool().getNumTowers() <= 0) {
@@ -27,6 +36,11 @@ public class WinController {
         return null;
     }
 
+    /**
+     * Method winner checks for the player with the most islands owned or, in case of parity, the most professors.
+     *
+     * @param game the game model reference.
+     */
     // TODO REVIEW AND TEST THIS!
     private static String winner(Game game) {
         IslandContainer container = game.getIslandContainer();
@@ -37,7 +51,7 @@ public class WinController {
                 towerMap.put(owner, towerMap.getOrDefault(owner, 0) + 1);
             }
         }
-        // Maybe there's a smarter method to do it with streams + comparator ?
+        // FIXME Maybe there's a smarter method to do it with streams + comparator ?
         int max = 0;
         String winner = null;
         Map<String, Integer> profMap = new HashMap<>();
