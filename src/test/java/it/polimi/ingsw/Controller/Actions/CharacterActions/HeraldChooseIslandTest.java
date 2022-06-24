@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Controller.Actions.CharacterActions;
 
+import it.polimi.ingsw.Constants.Color;
+import it.polimi.ingsw.Controller.Actions.MoveStudentFromEntryToHall;
 import it.polimi.ingsw.Controller.Actions.Performable;
 import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Exceptions.*;
@@ -12,6 +14,7 @@ import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
@@ -83,12 +86,11 @@ class HeraldChooseIslandTest {
         });
     }
 
-    /*
     @DisplayName("Herald conquer island test")
     @Test
     void heraldCard() {
-
         Color profColor = Color.BLUE;
+        p1.getSchool().addStudentEntry(profColor);
         action = new MoveStudentFromEntryToHall(p1.getNickname(), profColor);
         try {
             action.performMove(game, gameManager.getRules());
@@ -117,7 +119,6 @@ class HeraldChooseIslandTest {
         for (int i = 0; i < 5; i++) {
             game.getIslandContainer().get(index).addStudent(profColor);
         }
-        // FIXME THIS DOESNt WORK!
         // Card trigger, and the current islandIndex will be joined with the previous one
         try {
             action.performMove(game, gameManager.getRules());
@@ -139,5 +140,4 @@ class HeraldChooseIslandTest {
         }
         assertEquals(p1.getNickname(), game.getIslandContainer().get(index).getOwner());
     }
-    */
 }
