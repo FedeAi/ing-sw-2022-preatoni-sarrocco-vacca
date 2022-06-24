@@ -97,7 +97,6 @@ class RoundManagerTest {
         p = game.getNextPlayerActionPhase().get();
         assertEquals(p, p2.getNickname());
         game.setRoundOwner(p2);
-
     }
 
 
@@ -209,7 +208,9 @@ class RoundManagerTest {
 
         assertNotEquals(p.getNickname(), game.getRoundOwner().getNickname(), "after choose cloud, it's next player turn");
         assertEquals(game.getRoundOwner().getNickname(), p3.getNickname());
-
+        gameManager.handleNewRoundOwnerOnDisconnect(game.getRoundOwner().getNickname());
+        game.getWaitingPlayersReconnected();
+        game.reEnterWaitingPlayers();
+        game.getPlayerByID(0);
     }
-
 }

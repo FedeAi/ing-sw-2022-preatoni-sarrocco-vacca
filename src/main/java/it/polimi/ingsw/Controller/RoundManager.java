@@ -13,6 +13,7 @@ import it.polimi.ingsw.Model.Player;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 /**
@@ -110,7 +111,7 @@ public class RoundManager {
      * @param nickname the nickname of the disconnected Player.
      */
     public void handleNewRoundOwnerOnDisconnect(String nickname) {
-        if (nickname.equals(gameInstance.getRoundOwner().getNickname()) && gameInstance.numActivePlayers() > 1) {
+        if (Objects.equals(nickname, gameInstance.getRoundOwner().getNickname()) && gameInstance.numActivePlayers() > 1) {
             switch (gameInstance.getGameState()) {
                 case PLANNING_CHOOSE_CARD -> updateRoundOwnerAndGameState(new PlayCard(nickname, -1));
                 default -> updateRoundOwnerAndGameState(new ChooseCloud(nickname, -1));
