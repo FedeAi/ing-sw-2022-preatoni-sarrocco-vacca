@@ -1,6 +1,7 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Server.VirtualClient;
+
 import java.beans.PropertyChangeListener;
 
 /**
@@ -11,22 +12,24 @@ import java.beans.PropertyChangeListener;
  */
 public abstract class AbsListener implements PropertyChangeListener {
 
-  final VirtualClient virtualClient;
-  final String propertyName;
+    final VirtualClient virtualClient;
+    final String propertyName;
 
+    /**
+     * Constructor AbsListener creates a new AbsListener instance.
+     *
+     * @param client       the virtual client on Server.
+     * @param propertyName the type of the listener to be set.
+     */
+    public AbsListener(VirtualClient client, String propertyName) {
+        virtualClient = client;
+        this.propertyName = propertyName;
+    }
 
-  /**
-   * Constructor AbsListener creates a new AbsListener instance.
-   *
-   * @param client       of type VirtualClient - the virtual client on Server.
-   * @param propertyName
-   */
-  public AbsListener(VirtualClient client, String propertyName) {
-    virtualClient = client;
-    this.propertyName = propertyName;
-  }
-
-  public String getPropertyName(){
-    return propertyName;
-  }
+    /**
+     * Method getPropertyName returns the type of listener instantiated.
+     */
+    public String getPropertyName() {
+        return propertyName;
+    }
 }

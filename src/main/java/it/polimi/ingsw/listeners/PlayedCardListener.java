@@ -6,19 +6,26 @@ import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 
+/**
+ * PlayedCardListener class is a AbsListener used for notifying the client after a PlayCard action.
+ *
+ * @author Federico Sarrocco Alessandro Vacca
+ * @see AbsListener
+ */
 public class PlayedCardListener extends AbsListener {
 
     /**
      * Constructor PlayedCardListener creates a new PlayedCardListener instance.
      *
-     * @param client of type VirtualView - the virtual client's view on the Server.
+     * @param client       the virtual client's view on the Server.
+     * @param propertyName the type of the listener to be set.
      */
     public PlayedCardListener(VirtualClient client, String propertyName) {
         super(client, propertyName);
     }
 
     /**
-     * Method propertyChange notifies the client with a MoveMessage.
+     * Method propertyChange notifies the client with a PlayedCardMessage.
      *
      * @param evt of type PropertyChangeEvent - the event received.
      * @see AbsListener#propertyChange(PropertyChangeEvent)

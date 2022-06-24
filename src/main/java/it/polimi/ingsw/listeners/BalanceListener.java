@@ -6,26 +6,25 @@ import it.polimi.ingsw.Server.VirtualClient;
 import java.beans.PropertyChangeEvent;
 
 /**
- * MoveMotherListener class is a AbsListener used for notifying the client after a move action.
+ * BalanceListener class is a AbsListener used for notifying the client after a player's balance change.
  *
  * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
-
-
 public class BalanceListener extends AbsListener {
 
     /**
-     * Constructor HandListener creates a new HandListener instance.
+     * Constructor BalanceListener creates a new BalanceListener instance.
      *
-     * @param client of type VirtualView - the virtual client's view on Server.
+     * @param client       the virtual client's view on Server.
+     * @param propertyName the type of the listener to be set.
      */
     public BalanceListener(VirtualClient client, String propertyName) {
         super(client, propertyName);
     }
 
     /**
-     * Method propertyChange notifies the client with a MoveMessage.
+     * Method propertyChange notifies the client with a BalanceMessage.
      *
      * @param evt of type PropertyChangeEvent - the event received.
      * @see AbsListener#propertyChange(PropertyChangeEvent)

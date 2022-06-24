@@ -7,33 +7,32 @@ import it.polimi.ingsw.Server.VirtualClient;
 import java.beans.PropertyChangeEvent;
 
 /**
- * MoveMotherListener class is a AbsListener used for notifying the client after a move action.
+ * SchoolListener class is a AbsListener used for notifying the client after a player's school update.
  *
  * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
-
-
 public class SchoolListener extends AbsListener {
 
     /**
-     * Constructor MoveMotherListener creates a new MoveListener instance.
+     * Constructor SchoolListener creates a new SchoolListener instance.
      *
-     * @param client of type VirtualClient - the virtual client on the Server.
+     * @param client       the virtual client on the Server.
+     * @param propertyName the type of the listener to be set.
      */
     public SchoolListener(VirtualClient client, String propertyName) {
         super(client, propertyName);
     }
 
     /**
-     * Method propertyChange notifies the client with a MoveMessage.
+     * Method propertyChange notifies the client with a SchoolMessage.
      *
      * @param evt of type PropertyChangeEvent - the event received.
      * @see AbsListener#propertyChange(PropertyChangeEvent)
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        SchoolMessage message = new SchoolMessage(virtualClient.getNickname(),(School) evt.getNewValue());
+        SchoolMessage message = new SchoolMessage(virtualClient.getNickname(), (School) evt.getNewValue());
         virtualClient.sendAll(message);
     }
 }

@@ -6,26 +6,25 @@ import it.polimi.ingsw.Server.VirtualClient;
 import java.beans.PropertyChangeEvent;
 
 /**
- * MoveMotherListener class is a AbsListener used for notifying the client after a move action.
+ * ModeListener class is a AbsListener used for notifying the client after the game mode selection.
  *
  * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
-
-
 public class ModeListener extends AbsListener {
 
     /**
-     * Constructor HandListener creates a new HandListener instance.
+     * Constructor ModeListener creates a new ModeListener instance.
      *
-     * @param client of type VirtualView - the virtual client's view on Server.
+     * @param client       the virtual client's view on Server.
+     * @param propertyName the type of the listener to be set.
      */
     public ModeListener(VirtualClient client, String propertyName) {
         super(client, propertyName);
     }
 
     /**
-     * Method propertyChange notifies the client with a MoveMessage.
+     * Method propertyChange notifies the client with a ModeMessage.
      *
      * @param evt of type PropertyChangeEvent - the event received.
      * @see AbsListener#propertyChange(PropertyChangeEvent)

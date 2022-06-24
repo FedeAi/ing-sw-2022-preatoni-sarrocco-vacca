@@ -8,26 +8,25 @@ import java.beans.PropertyChangeEvent;
 import java.util.EnumMap;
 
 /**
- * MoveMotherListener class is a AbsListener used for notifying the client after a move action.
+ * ProfsListener class is a AbsListener used for notifying the client after change in professor ownership.
  *
  * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
-
-
 public class ProfsListener extends AbsListener {
 
     /**
-     * Constructor HandListener creates a new HandListener instance.
+     * Constructor ProfsListener creates a new ProfsListener instance.
      *
-     * @param client of type VirtualView - the virtual client's view on Server.
+     * @param client       the virtual client's view on Server.
+     * @param propertyName the type of the listener to be set.
      */
     public ProfsListener(VirtualClient client, String propertyName) {
         super(client, propertyName);
     }
 
     /**
-     * Method propertyChange notifies the client with a MoveMessage.
+     * Method propertyChange notifies the client with a ProfsMessage.
      *
      * @param evt of type PropertyChangeEvent - the event received.
      * @see AbsListener#propertyChange(PropertyChangeEvent)

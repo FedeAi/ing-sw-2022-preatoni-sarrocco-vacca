@@ -8,26 +8,25 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 /**
- * MoveMotherListener class is a AbsListener used for notifying the client after a move action.
+ * CharactersListener class is a AbsListener used for notifying the client after a change in character cards.
  *
  * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
-
-
 public class CharactersListener extends AbsListener {
 
     /**
-     * Constructor HandListener creates a new HandListener instance.
+     * Constructor CharactersListener creates a new CharactersListener instance.
      *
-     * @param client of type VirtualView - the virtual client's view on Server.
+     * @param client       the virtual client's view on Server.
+     * @param propertyName the type of the listener to be set.
      */
     public CharactersListener(VirtualClient client, String propertyName) {
         super(client, propertyName);
     }
 
     /**
-     * Method propertyChange notifies the client with a MoveMessage.
+     * Method propertyChange notifies the client with a CharactersMessage.
      *
      * @param evt of type PropertyChangeEvent - the event received.
      * @see AbsListener#propertyChange(PropertyChangeEvent)
@@ -35,6 +34,6 @@ public class CharactersListener extends AbsListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         CharactersMessage message = new CharactersMessage((ArrayList<CharacterCard>) evt.getNewValue());
-        virtualClient.send(message);    
+        virtualClient.send(message);
     }
 }
