@@ -37,12 +37,12 @@
                         <Font name="Papyrus Condensed" size="18.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="port" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField fx:id="ip" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="Papyrus Condensed" size="18.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="ip" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="port" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font name="Papyrus Condensed" size="18.0" />
                      </font>

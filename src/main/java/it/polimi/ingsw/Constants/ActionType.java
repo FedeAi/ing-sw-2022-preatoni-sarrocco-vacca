@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Constants;
 
 /**
- * Class Action contains all the possible user actions
+ * Class Action contains all the possible user actions to identify a client message.
  */
 public enum ActionType {
     CHOOSE_MAGICIAN,

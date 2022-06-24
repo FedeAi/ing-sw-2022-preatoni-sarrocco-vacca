@@ -1,8 +1,12 @@
 package it.polimi.ingsw.Constants;
 
+/**
+ * Class GameState represents all the possibile internal game states.
+ */
 public enum GameState {
     GAME_ROOM,
     INITIAL_FIRE_COMPLETED,
+    // FIXME THESE ARENT USED (?)
     GAME_STARTED,
     GAME_ENDED,
     ROUND_STARTED,
@@ -10,18 +14,18 @@ public enum GameState {
     ROUND_ENDED,
     TURN_STARTED,
     TURN_ENDED,
-
+    /* initial magician selection phase */
     SETUP_CHOOSE_MAGICIAN,
 
-    /* planning */
+    /* Planning phase */
+    PLANNING_CHOOSE_CARD,
 
-    PLANNING_CHOOSE_CARD, //choosing assistant card -->3 consequence
-    /* action phase */
+    /* Action phase */
     ACTION_MOVE_STUDENTS,
     ACTION_MOVE_MOTHER,
     ACTION_CHOOSE_CLOUD,
 
-    /* CharacterCards States     */
+    /* Character cards states (accessibile only by activating the homonym character card) */
     HERALD_ACTIVE,
     MUSHROOM_CHOOSE_COLOR,
     JOKER_SWAP_STUDENTS,
@@ -30,5 +34,4 @@ public enum GameState {
     GRANDMA_BLOCK_ISLAND,
     MINSTREL_SWAP_STUDENTS,
     THIEF_CHOOSE_COLOR,
-
 }

@@ -2,10 +2,12 @@ package it.polimi.ingsw.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class Constants represents all the game's game constraints, and it also contains the network address and port.
+ */
 public class Constants {
 
     public static final int MIN_PLAYERS = 2;
@@ -48,9 +50,7 @@ public class Constants {
                     + CLIColors.RESET;
 
     /**
-     * Method getErr returns the err of this Constants object.
-     *
-     * @return the err (type String) of this Constants object.
+     * Method getErr returns the error of this Constants object.
      */
     public static String getErr() {
         return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " ERR: ");
@@ -58,34 +58,49 @@ public class Constants {
 
     /**
      * Method getInfo returns the info of this Constants object.
-     *
-     * @return the info (type String) of this Constants object.
      */
     public static String getInfo() {
         return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " INFO: ");
     }
 
+    /**
+     * Method setAddress sets a new port.
+     *
+     * @param port the new port to be set.
+     */
     public static void setPort(int port) {
         Constants.port = port;
     }
 
+    /**
+     * Method getAddress returns the set port.
+     */
     public static int getPort() {
         return port;
     }
 
+    /**
+     * Method setAddress sets a new IP address.
+     *
+     * @param address the new IP address to be set.
+     */
     public static void setAddress(String address) {
         Constants.address = address;
     }
 
+    /**
+     * Method getAddress returns the set IP address.
+     */
     public static String getAddress() {
         return address;
     }
 
     /**
-     * input validation method: true if the string has matched with the pattern of Regex
+     * Method validateIP checks for the correctness of a given IP address with a regular expression.
+     *
+     * @return true if the given ip is valid, false otherwise.
      */
-    public static boolean validateIp(String ip) {
-
+    public static boolean validateIP(String ip) {
         boolean validate = false;
         ip = ip.toLowerCase();
         Pattern p = Pattern.compile("\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){3}\\b"); //pattern for validate the ip address
@@ -94,31 +109,34 @@ public class Constants {
             validate = true;
         }
         return validate;
-
     }
 
     /**
-     * input validation method: true if the string has matched with the pattern of Regex
+     * Method validatePort checks for the correctness of a given port with a regular expression.
      *
-     * @return integer because we passed a string (the pattern of regex required a string) and after we cast the port
+     * @returns the chosen port if valid, -1 otherwise.
      */
     public static int validatePort(String Port) {
-
-        Pattern p = Pattern.compile("^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"); //pattern tto validate port
+        // REGEX pattern for input port validation.
+        Pattern p = Pattern.compile(
+                "^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$");
         Matcher m = p.matcher(Port);
         try {
             int port = Integer.parseInt(Port);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return -1;
         }
-        if (!(port > 1023 && m.matches())) { // below 1023 the are ports reserved for OS
+        // If a port is below 1024 it's not valid.
+        if (!(port > 1023 && m.matches())) {
             return -1;
         }
         return port;
     }
 
     /**
-     * input validation method: true if the string has matched with the pattern of Regex
+     * Method validateNickname checks for the correctness of a nickname with a regular expression.
+     *
+     * @return true if the string has matched with the pattern of the regex, false otherwise.
      */
     public static boolean validateNickname(String user) {
         boolean validate = false;
@@ -129,5 +147,4 @@ public class Constants {
         }
         return validate;
     }
-
 }
