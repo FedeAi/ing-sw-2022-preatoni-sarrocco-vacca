@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Constants.Exceptions;
+package it.polimi.ingsw.Exceptions;
 
 
 /**

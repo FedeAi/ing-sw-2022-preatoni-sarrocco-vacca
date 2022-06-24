@@ -4,8 +4,8 @@ import it.polimi.ingsw.Client.ConnectionSocket;
 import it.polimi.ingsw.Client.InputToMessage;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Constants.Constants;
-import it.polimi.ingsw.Constants.Exceptions.DuplicateNicknameException;
-import it.polimi.ingsw.Constants.Exceptions.InvalidNicknameException;
+import it.polimi.ingsw.Exceptions.DuplicateNicknameException;
+import it.polimi.ingsw.Exceptions.InvalidNicknameException;
 import javafx.fxml.FXML;
 
 
