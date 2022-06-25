@@ -28,13 +28,16 @@ import java.util.logging.Logger;
  * @author Federico Sarrocco, Davide Preatoni
  */
 public class ConnectionSocket {
+
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final String serverAddress;
     private final int serverPort;
     SocketListener listener;
     private ObjectOutputStream outputStream;
 
-    /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
+    /**
+     * Constructor ConnectionSocket creates a new ConnectionSocket instance.
+     */
     public ConnectionSocket() {
         this.serverAddress = Constants.getAddress();
         this.serverPort = Constants.getPort();
@@ -45,13 +48,13 @@ public class ConnectionSocket {
      * loops until the server confirms the successful connection (with no nickname duplication and
      * with a correctly configured match lobby).
      *
-     * @param nickname of type String - the username chosen by the user.
-     * @param modelView of type ModelView - the structure, stored into the client, containing simple
-     *     logic of the model.
+     * @param nickname             of type String - the username chosen by the user.
+     * @param modelView            of type ModelView - the structure, stored into the client, containing simple
+     *                             logic of the model.
      * @param serverMessageHandler of type ServerMessageHandler - the class handling the answers.
      * @return boolean true if connection is successful, false otherwise.
      * @throws DuplicateNicknameException when the nickname is already in use.
-     * @throws InvalidNicknameException when the nickname contains illegal characters (like "-").
+     * @throws InvalidNicknameException   when the nickname contains illegal characters (like "-").
      */
     public boolean setup(String nickname, ModelView modelView, ServerMessageHandler serverMessageHandler) throws DuplicateNicknameException, InvalidNicknameException {
         try {
@@ -94,10 +97,10 @@ public class ConnectionSocket {
      * Method readInput handles the input reading in order to reduce the setup complexity.
      *
      * @param nickname of type String - the chosen nickname.
-     * @param input of type ObjectInputStream - the input socket stream.
+     * @param input    of type ObjectInputStream - the input socket stream.
      * @return boolean true if nickname is available and set, false otherwise.
      * @throws DuplicateNicknameException when the nickname has already been chosen.
-     * @throws InvalidNicknameException when the nickname contains illegal characters (like "-").
+     * @throws InvalidNicknameException   when the nickname contains illegal characters (like "-").
      */
     private boolean readSetupInput(String nickname, ObjectInputStream input)
             throws DuplicateNicknameException, InvalidNicknameException {
@@ -109,12 +112,12 @@ public class ConnectionSocket {
         } catch (IOException | ClassNotFoundException e) {
             System.err.println(e.getMessage());
             return false;
-       }
+        }
         return true;
     }
 
     /**
-     * Method send sends a new message to the server, encapsulating the object in a SerializedMessage
+     * Method send forwards a new message to the server, encapsulating the object in a SerializedMessage
      * type unpacked and read later by the server.
      *
      * @param message of type Message - the message to be sent to the server.
@@ -132,7 +135,7 @@ public class ConnectionSocket {
     }
 
     /**
-     * Method send sends a new action to the server, encapsulating the object in a SerializedMessage
+     * Method send forwards a new action to the server, encapsulating the object in a SerializedMessage
      * type unpacked and read later by the server.
      *
      * @param action of type UserAction - the action to be sent to the server.
@@ -148,15 +151,16 @@ public class ConnectionSocket {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
+
     /**
-     * Method send sends a new action to the server, encapsulating the object in a SerializedMessage
-     * type unpacked and read later by the server.
+     * Method nicknameChecker remotely checks if a name is invalid or already taken.
      *
-     *
+     * @param input the client's inserted nickname.
+     * @return True if successful, false otherwise
+     * @throws DuplicateNicknameException thrown if the nickname is already taken.
+     * @throws InvalidNicknameException thrown if the nickname is not valid.
      */
-
     public boolean nicknameChecker(Object input) throws DuplicateNicknameException, InvalidNicknameException {
-
         SerializedAnswer answer = (SerializedAnswer) input;
         if (answer.getServerAnswer() instanceof ConnectionMessage && ((ConnectionMessage) answer.getServerAnswer()).isValid()) {
             return true;
@@ -176,5 +180,4 @@ public class ConnectionSocket {
         }
         return false;
     }
-
 }

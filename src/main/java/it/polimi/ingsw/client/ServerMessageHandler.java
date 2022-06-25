@@ -40,7 +40,6 @@ public class ServerMessageHandler {
     public static final String MAGICIANS_LISTENER = "magiciansListener";
     public static final String CHARACTERS_LISTENER = "charactersListeners";
 
-
     private final ModelView modelView;
     private final PropertyChangeSupport view = new PropertyChangeSupport(this);
     private CLI cli;
@@ -73,8 +72,8 @@ public class ServerMessageHandler {
     }
 
     /**
-     * Method answerHandler handles the answer received from the server. It calls the client interface
-     * passing values relying on the type of answer the server has sent.
+     * Method answerHandler handles the answer received from the server.
+     * It calls the client's listeners passing values relying on the type of message the server has sent.
      */
     public void answerHandler() {
         Answer answer = modelView.getServerAnswer();
@@ -97,6 +96,11 @@ public class ServerMessageHandler {
         }
     }
 
+    /**
+     * Method answerHandler handles the answer received from the server.
+     * It calls the client's model update listeners passing values relying on the type of ModelMessage
+     * the server has sent.
+     */
     void handleGameMessage(ModelMessage answer) {
         if (answer instanceof BalanceMessage message) {
             modelView.setBalance(message.getMessage());
@@ -147,6 +151,10 @@ public class ServerMessageHandler {
         }
     }
 
+    /**
+     * Method setupMessageHandler handles the answer received from the server.
+     * @param answer the setup message received.
+     */
     public void setupMessageHandler(Answer answer) {
         if (answer instanceof ReqPlayersMessage) {
             view.firePropertyChange(GAME_SETUP_LISTENER, null, "ReqPlayers");  // ((ReqPlayersMessage)answer).getClass().getSimpleName() TODO this should also work
