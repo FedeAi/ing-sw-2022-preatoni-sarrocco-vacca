@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<StackPane prefHeight="200.0" prefWidth="398.0" styleClass="backgroundLoading" stylesheets="@../css/loading.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.LoaderController">
+<StackPane prefHeight="200.0" prefWidth="398.0" styleClass="backgroundLoading" stylesheets="@../css/loading.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.LoaderController">
    <children>
       <VBox alignment="CENTER">
          <children>

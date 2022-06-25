@@ -1,8 +1,8 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Client.cli.CLI;
-import it.polimi.ingsw.Client.gui.GUI;
-import it.polimi.ingsw.Server.Server;
+import it.polimi.ingsw.client.cli.CLI;
+import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.server.Server;
 
 import java.util.Scanner;
 

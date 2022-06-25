@@ -1,8 +1,8 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Model.Islands.IslandContainer;
-import it.polimi.ingsw.Server.answers.model.IslandsMessage;
-import it.polimi.ingsw.Server.VirtualClient;
+import it.polimi.ingsw.model.islands.IslandContainer;
+import it.polimi.ingsw.server.answers.model.IslandsMessage;
+import it.polimi.ingsw.server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 

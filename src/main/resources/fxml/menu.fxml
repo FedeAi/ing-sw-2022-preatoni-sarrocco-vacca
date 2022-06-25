@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<StackPane prefHeight="598.0" prefWidth="1037.0" styleClass="mainMenu" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.MenuController">
+<StackPane prefHeight="598.0" prefWidth="1037.0" styleClass="mainMenu" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.MenuController">
    <children>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
          <children>

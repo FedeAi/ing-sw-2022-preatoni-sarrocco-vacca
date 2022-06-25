@@ -1,8 +1,8 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Constants.Magician;
-import it.polimi.ingsw.Server.answers.model.MagicianMessage;
-import it.polimi.ingsw.Server.VirtualClient;
+import it.polimi.ingsw.constants.Magician;
+import it.polimi.ingsw.server.answers.model.MagicianMessage;
+import it.polimi.ingsw.server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.Map;

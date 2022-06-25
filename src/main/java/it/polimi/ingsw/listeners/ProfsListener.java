@@ -1,8 +1,8 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Constants.Color;
-import it.polimi.ingsw.Server.answers.model.ProfsMessage;
-import it.polimi.ingsw.Server.VirtualClient;
+import it.polimi.ingsw.constants.Color;
+import it.polimi.ingsw.server.answers.model.ProfsMessage;
+import it.polimi.ingsw.server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.EnumMap;

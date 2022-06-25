@@ -1,8 +1,8 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Server.answers.model.PlayedCardMessage;
-import it.polimi.ingsw.Server.VirtualClient;
+import it.polimi.ingsw.model.cards.AssistantCard;
+import it.polimi.ingsw.server.answers.model.PlayedCardMessage;
+import it.polimi.ingsw.server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 

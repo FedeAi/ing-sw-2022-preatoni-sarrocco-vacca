@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="mainBoard" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1440.0" styleClass="mainBoard" stylesheets="@../css/board.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.controllers.BoardController">
+<BorderPane id="mainBoard" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1440.0" styleClass="mainBoard" stylesheets="@../css/board.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.BoardController">
    <left>
       <StackPane prefHeight="800.0">
          <children>

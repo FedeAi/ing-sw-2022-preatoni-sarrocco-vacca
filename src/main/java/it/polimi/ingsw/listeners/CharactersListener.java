@@ -1,8 +1,8 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Model.Cards.CharacterCards.CharacterCard;
-import it.polimi.ingsw.Server.answers.model.CharactersMessage;
-import it.polimi.ingsw.Server.VirtualClient;
+import it.polimi.ingsw.model.cards.characters.CharacterCard;
+import it.polimi.ingsw.server.answers.model.CharactersMessage;
+import it.polimi.ingsw.server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;

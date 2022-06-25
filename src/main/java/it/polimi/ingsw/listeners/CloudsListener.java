@@ -1,8 +1,8 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Model.Cloud;
-import it.polimi.ingsw.Server.answers.model.CloudsMessage;
-import it.polimi.ingsw.Server.VirtualClient;
+import it.polimi.ingsw.model.Cloud;
+import it.polimi.ingsw.server.answers.model.CloudsMessage;
+import it.polimi.ingsw.server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
