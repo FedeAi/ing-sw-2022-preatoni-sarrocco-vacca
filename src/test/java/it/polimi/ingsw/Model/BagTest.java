@@ -1,63 +1,54 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Constants.Color;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BagTest {
 
     @Test
-    public void createNewBag() {
-
+    public void bagCreation() {
         int numStudents = 5 * Color.values().length;
         Bag myBag = new Bag(numStudents);
 
-        assertEquals("size check", numStudents, myBag.getStudents().size());
+        assertEquals(numStudents, myBag.getStudents().size(), "size check");
 
         for (final Color color : Color.values()) {
-            assertEquals("color check", numStudents / Color.values().length, myBag.getStudents().stream().filter(student -> student.equals(color)).count());
+            assertEquals(numStudents / Color.values().length, myBag.getStudents().stream().filter(student -> student.equals(color)).count(), "color check");
         }
     }
 
     @Test
     public void extract() {
-
         int numStudents = 5 * Color.values().length;
         Bag myBag = new Bag(numStudents);
         int initialSize = myBag.getStudents().size();
         Map<Color, Integer> out = myBag.extract(8);
-        assertEquals("control out dim ", out.values().stream().reduce(0, Integer::sum).intValue(), 8);
-        assertEquals("control bag dim ", myBag.getStudents().size(), initialSize - 8);
-
+        assertEquals(out.values().stream().reduce(0, Integer::sum).intValue(), 8, "control out dim");
+        assertEquals(myBag.getStudents().size(), initialSize - 8, "control bag dim");
     }
 
     @Test
     //corner case of extract(), so doesn't change the logic test
     public void extractOne() {
-
-        int numStudents = 1 * Color.values().length; //point out that num students, 1 for each color
+        // Point out that num students, 1 for each color
+        int numStudents = Color.values().length;
         Bag myBag = new Bag(numStudents);
         int initialSize = myBag.getStudents().size();
         Color out = myBag.extract();
-        assertEquals("control bag dim ", myBag.getStudents().size(), initialSize - 1);
-
+        assertEquals(myBag.getStudents().size(), initialSize - 1, "control bag dim");
     }
 
     @Test
     public void extendBag() {
-
         int extensionSize = Color.values().length;
-        int numStudents = 1 * Color.values().length;
+        int numStudents = Color.values().length;
         Bag myBag = new Bag(numStudents);
         Bag myBag2 = new Bag(numStudents);
         myBag2.extendBag(extensionSize);
-
-        assertEquals("the diff of the bags should be the extensionSize ", myBag.getStudents().size() + extensionSize, myBag2.getStudents().size());
-
-
+        assertEquals(myBag.getStudents().size() + extensionSize, myBag2.getStudents().size(), "the diff of the bags should be the extensionSize ");
     }
-
 }

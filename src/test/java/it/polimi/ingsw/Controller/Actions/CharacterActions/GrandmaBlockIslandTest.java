@@ -15,7 +15,6 @@ import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -159,7 +158,6 @@ class GrandmaBlockIslandTest {
         assertTrue(game.getIslandContainer().get(selectedIsland).isBlocked());
     }
 
-    @Ignore
     @Test
     @DisplayName("Checks if the island is blocked")
     void influenceBlocked() {

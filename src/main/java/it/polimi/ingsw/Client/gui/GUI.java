@@ -64,7 +64,6 @@ public class GUI extends Application implements UI {
      * @param args of type String[] - parsed arguments.
      */
     public static void main(String[] args) {
-        System.setProperty("prism.allowhidpi", "false");
         launch(args);
     }
 

@@ -4,7 +4,6 @@ import it.polimi.ingsw.Controller.GameManager;
 import it.polimi.ingsw.Controller.Rules.Rules;
 import it.polimi.ingsw.Exceptions.InvalidIndexException;
 import it.polimi.ingsw.Exceptions.WrongStateException;
-import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Constants.Color;
 import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Model.Game;
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ChooseCloudTest {
 
