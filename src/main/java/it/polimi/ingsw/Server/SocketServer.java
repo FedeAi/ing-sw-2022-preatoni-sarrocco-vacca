@@ -26,7 +26,7 @@ public class SocketServer implements Runnable {
     /**
      * Constructor SocketServer creates a new SocketServer instance.
      *
-     * @param port of type int - the port on which server will listen.
+     * @param port   of type int - the port on which server will listen.
      * @param server of type Server - the main server object.
      */
     public SocketServer(int port, Server server) {

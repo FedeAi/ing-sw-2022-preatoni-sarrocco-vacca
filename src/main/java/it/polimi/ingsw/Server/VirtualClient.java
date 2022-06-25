@@ -26,11 +26,10 @@ public class VirtualClient implements PropertyChangeListener {
     /**
      * Constructor VirtualClient creates a new VirtualClient instance.
      *
-     * @param clientID of type int - the client ID.
-     * @param nickname of type String - the player's nickname.
-     * @param socketClientConnection of type SocketClientConnection - the class linking client to
-     *     server via socket.
-     * @param gameHandler of type GameHandler - GameHandler reference.
+     * @param clientID               of type int - the client ID.
+     * @param nickname               of type String - the player's nickname.
+     * @param socketClientConnection of type SocketClientConnection - the class linking client to server via socket.
+     * @param gameHandler            of type GameHandler - GameHandler reference.
      */
     public VirtualClient(
             int clientID,
@@ -48,11 +47,11 @@ public class VirtualClient implements PropertyChangeListener {
      * package, called SerializedMessage, then sends the packaged answer to the transmission protocol,
      * located in the socket-client handler.
      *
-     * @see it.polimi.ingsw.Server.SocketClientConnection for more details.
      * @param serverAnswer of type Answer - the answer to be sent to the user.
+     * @see it.polimi.ingsw.Server.SocketClientConnection for more details.
      */
     public void send(Answer serverAnswer) {
-        if(socketClientConnection.isActive()) {
+        if (socketClientConnection.isActive()) {
             SerializedAnswer message = new SerializedAnswer();
             message.setServerAnswer(serverAnswer);
             socketClientConnection.sendSocketMessage(message);
@@ -72,31 +71,52 @@ public class VirtualClient implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        //FIXME
     }
 
+    /**
+     * Method getConnection returns the VirtualClient's SocketClientConnection instance.
+     */
     public SocketClientConnection getConnection() {
         return socketClientConnection;
     }
 
+    /**
+     * Method getNickname returns the VirtualClient's client nickname.
+     */
     public String getNickname() {
         return nickname;
     }
 
+    /**
+     * Method getNickname returns the VirtualClient's client ID.
+     */
     public int getClientID() {
         return clientID;
     }
 
-    public boolean isConnected(){
+    /**
+     * Method isConnected checks if a client is connected at the moment.
+     *
+     * @return true if the client is connected at the moment, false otherwise.
+     */
+    public boolean isConnected() {
         socketClientConnection.ping();
 //        send(0);
         return socketClientConnection.isActive();      // TODO check the correctness
     }
 
-    public void setSocketClientConnection(SocketClientConnection connection){
+    /**
+     * Method setSocketClientConnection sets a SocketClientConnection to the VirtualClient instance.
+     */
+    public void setSocketClientConnection(SocketClientConnection connection) {
         socketClientConnection = connection;
     }
 
+    /**
+     * Method getGameHandler returns the VirtualClient's GameHandler instance.
+     * @see GameHandler
+     */
     public GameHandler getGameHandler() {
         return gameHandler;
     }

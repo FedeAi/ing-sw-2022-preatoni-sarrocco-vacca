@@ -19,39 +19,47 @@ public class Server {
     private final SocketServer socketServer;
 
     /**
-     * This hashmap permits identifying a Virtual Client relying on his client ID, which was set at
-     * the join. The client has to be connected to the server.
+     * This map permits identifying a Virtual Client relying on his client ID, which was set at the join time.
+     * The client has to be connected to the server.
      */
     private final Map<Integer, VirtualClient> idMapClient;
 
     /**
-     * This hashmap permits finding client ID relying on his unique nickname. The client has to be
-     * connected to the server.
+     * This map permits finding client ID relying on his unique nickname.
+     * The client has to be connected to the server.
      */
     private final Map<String, Integer> nameMapId;
 
     /**
-     * This hashmap permits finding client nickname relying on his unique ID. The client has to be
-     * connected to the server.
+     * This map permits finding client nickname relying on his ID.
+     * The client has to be connected to the server.
      */
     private final Map<Integer, String> idMapName;
 
     /**
-     * This hashmap permits identifying a Virtual Client relying on his active connection with the
-     * server. The client has to be connected to the server.
+     * This map permits identifying a VirtualClient relying on his active connection with the server.
+     * The client has to be connected to the server.
      */
     private final Map<VirtualClient, SocketClientConnection> clientToConnection;
 
-    /** Unique Client ID reference, which is used in the ID generation method. */
+    /**
+     * Unique Client ID reference, which is used in the ID generation method.
+     */
     private int nextClientID;
 
-    /** Active lobby Game handler */
+    /**
+     * Active lobby Game handler
+     */
     private GameHandler currentGame;
 
-    /** List of clients waiting in the lobby. */
+    /**
+     * List of clients waiting in the lobby.
+     */
     private final List<SocketClientConnection> waiting = new ArrayList<>();
 
-    /** Number of players, decided by the first connected user. */
+    /**
+     * Number of players, decided by the first connected user.
+     */
     private int totalPlayers;
 
     /**
@@ -93,8 +101,8 @@ public class Server {
     }
 
     /**
-     * Method getGameByID returns the game handler by having the client ID. It's useful for getting
-     * the game handler from the socket handler.
+     * Method getGameByID returns the game handler by having the client ID.
+     * It's useful for getting the game handler from the socket handler.
      *
      * @param id of type int - the client ID.
      * @return GameHandler - the associated game handler.
@@ -105,7 +113,7 @@ public class Server {
 
     /**
      * Method setTotalPlayers sets the maximum number of player relying on the input provided by the
-     * first user who connects. He's is also called the "lobby host".
+     * first user who connects. He is also called the "lobby host".
      *
      * @param totalPlayers of type int - the number of players provided by the first user connected.
      * @throws OutOfBoundException when the input is not in the correct player range.
@@ -131,7 +139,7 @@ public class Server {
     }
 
     /**
-     * Method getNicknameByID returns the user nickname from the hashmap explained above.
+     * Method getNicknameByID returns the user nickname from the given user ID.
      *
      * @param id of type int - the id of the client.
      * @return String - the nickname of the associated player.
@@ -141,7 +149,7 @@ public class Server {
     }
 
     /**
-     * Method getIDByNickname returns the user ID from the nickname's hashmap explained above.
+     * Method getIDByNickname returns the user ID from the given user nickname.
      *
      * @param nickname of type String - the user's nickname.
      * @return int - his clientID inside the model class.
@@ -150,7 +158,13 @@ public class Server {
         return nameMapId.get(nickname);
     }
 
-    public boolean isNicknameTaken(String nickname){
+    /**
+     * Method isNicknameTaken checks if a nickname is already taken by another user.
+     *
+     * @param nickname the name to be checked.
+     * @return true if a player has the nickname, false otherwise.
+     */
+    public boolean isNicknameTaken(String nickname) {
         return !(nameMapId.get(nickname) == null);
     }
 
@@ -162,7 +176,7 @@ public class Server {
      * the players number has been reached; if true, starts the match.
      *
      * @param c of type SocketClientConnection - a single client connection, which is used for common
-     *     operations(like sending/receiving commands, etc).
+     *          operations(like sending/receiving commands, etc).
      * @throws InterruptedException when TimeUnit throws it.
      */
     public synchronized void lobby(SocketClientConnection c) throws InterruptedException {
@@ -199,7 +213,7 @@ public class Server {
                 Constants.getInfo() + "Unregistering client " + client.getNickname() + "...");
         waiting.remove(clientToConnection.get(client));
 
-        if(isGameEnded){
+        if (isGameEnded) {
             idMapClient.remove(clientID);
             nameMapId.remove(client.getNickname());
             idMapName.remove(client.getClientID());
@@ -214,19 +228,20 @@ public class Server {
      * inserting him in the registry hashmaps. If the nickname has already been chosen, it simply
      * ignores this step and notify the client about this fact, asking him to provide a new nickname.
      *
-     * @param nickname of type String - the nickname chosen by the client.
-     * @param socketClientHandler of type SocketClientConnection - the active connection between
-     *     server socket and client socket.
+     * @param nickname            the nickname chosen by the client.
+     * @param socketClientHandler the SocketClientConnection between server socket and client socket.
      * @return Integer - the client ID if everything goes fine, null otherwise.
      */
-     public synchronized Integer registerNewConnection(String nickname, SocketClientConnection socketClientHandler) {
+    public synchronized Integer registerNewConnection(String nickname, SocketClientConnection socketClientHandler) {
         Integer clientID = nameMapId.get(nickname);
 
-        if (clientID == null) { // Player has never connected to the server before.
+        if (clientID == null) {
+            // Player has never connected to the server before.
             if (waiting.isEmpty()) {
                 currentGame = new GameHandler(this);
             }
-            if (nameMapId.keySet().stream().anyMatch(nickname::equalsIgnoreCase)) { //disconnected case
+            if (nameMapId.keySet().stream().anyMatch(nickname::equalsIgnoreCase)) {
+                // Disconnection case
                 SerializedAnswer error = new SerializedAnswer();
                 error.setServerAnswer(new GameError(ErrorType.DUPLICATE_NICKNAME));
                 socketClientHandler.sendSocketMessage(error);
@@ -243,7 +258,7 @@ public class Server {
             VirtualClient client =
                     new VirtualClient(clientID, nickname, socketClientHandler, currentGame);
             if (totalPlayers != -1 && waiting.size() >= totalPlayers) {
-                //client.send(new GameError(ErrorType.FULLSERVER));
+                // FIXME client.send(new GameError(ErrorType.FULLSERVER));
                 return null;
             }
 
@@ -269,9 +284,16 @@ public class Server {
         return clientID;
     }
 
-    public Integer recoverConnection(String nickname, SocketClientConnection socketClientHandler){
+    /**
+     * Method recoverConnection lets a player recover his lost connection and reconnect to the game.
+     *
+     * @param nickname            the nickname of the player that has reconnected.
+     * @param socketClientHandler the player's SocketClientConnection instance.
+     * @return
+     */
+    public Integer recoverConnection(String nickname, SocketClientConnection socketClientHandler) {
         Integer clientID = nameMapId.get(nickname);
-        if(clientID != null) {
+        if (clientID != null) {
             VirtualClient client = idMapClient.get(clientID);
             if (client.isConnected()) {
                 SerializedAnswer ans = new SerializedAnswer();
@@ -284,7 +306,7 @@ public class Server {
                 client.getGameHandler().reEnterPlayer(nickname);
             }
         }
-       return clientID;
+        return clientID;
     }
 
     /**

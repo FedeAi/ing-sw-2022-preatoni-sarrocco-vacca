@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -88,7 +87,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        server.unregisterClient(this.getClientID(), server.getGameByID(clientID).isEnded() || !server.getGameByID(clientID).isStarted() ||server.getGameByID(clientID).isSetupPhase());
+        server.unregisterClient(this.getClientID(), server.getGameByID(clientID).isEnded() || !server.getGameByID(clientID).isStarted() || server.getGameByID(clientID).isSetupPhase());
     }
 
     /**
@@ -124,6 +123,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
             GameHandler game = server.getGameByID(clientID);
             String player = server.getNicknameByID(clientID);
             close();
+            // FIXME
 //            server.unregisterClient(clientID);
 //            if (game.isStarted()) {
 //                game.endGame(player);
@@ -135,9 +135,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
     }
 
     /**
-     * Method actionHandler handles an action by receiving a message from the client. The "Message"
-     * interface permits splitting the information into several types of messages. This method invokes
-     * another one relying on the implementation type of the message received.
+     * Method actionHandler handles an action by receiving a message from the client.
      *
      * @param command of type Message - the Message interface type command, which needs to be checked
      *                in order to perform an action.
@@ -149,6 +147,11 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         }
     }
 
+    /**
+     * Method actionHandler handles an action by parsing from what it's received an action from the client.
+     *
+     * @param action the generic action to be executed.
+     */
     public void actionHandler(Action action) {
         System.out.println("Debug: ACTION RECEIVED: " + action.actionType.name());
         Performable move;
@@ -181,7 +184,6 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         try {
             server.getGameByID(clientID).performAction(move);
         } catch (GameException | InvalidPlayerException | RoundOwnerException e) {
-            // FIXME game error or custom message?
             server.getClientByID(clientID).send(new GameError(e.getMessage()));
         }
     }
@@ -205,9 +207,9 @@ public class SocketClientConnection implements ClientConnection, Runnable {
                 Thread.currentThread().interrupt();
             }
 
-        }else{
+        } else {
             clientID = server.recoverConnection(command.getNickname(), this);
-            if(clientID!=null){
+            if (clientID != null) {
                 return;
             }
         }
@@ -216,7 +218,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
 
     /**
      * Method setPlayers is a setup method. It permits setting the number of the players in the match,
-     * which is decided by the first user connected to the server. It waits for a NumberOfPlayers
+     * which is decided by the first user connected to the server. It waits for a ReqPlayersMessage
      * Message type, then extracts the information about the number of players, passing it as a
      * parameter to the server function "setTotalPlayers".
      *
@@ -237,11 +239,11 @@ public class SocketClientConnection implements ClientConnection, Runnable {
                         boolean expertMode = (((SetupMessage) command).expertMode);
                         server.setTotalPlayers(playerNumber);
                         server.getGameByID(clientID).setPlayersNumber(playerNumber);
-                        server.getGameByID(clientID).setExportMode(expertMode);
+                        server.getGameByID(clientID).setExpertMode(expertMode);
                         server.getClientByID(this.clientID).send(new CustomMessage("Success: player number " + "set to " + playerNumber + ", game mode: " + (expertMode ? "expert" : "normal")));
                         server.getClientByID(this.clientID).send(new CustomMessage("Waiting for the other players..."));
                         break;
-                    // FIXME custom exception
+                        // FIXME custom exception
                     } catch (Exception e) {
                         server.getClientByID(this.clientID).send(new CustomMessage("Error: not a valid " + "input! Please provide a value of 2 or 3."));
                         server.getClientByID(this.clientID).send(new ReqPlayersMessage("Choose the number" + " of players!\n setup [2/3] [?expert]"));
@@ -273,6 +275,9 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         }
     }
 
+    /**
+     * Method ping allows the server to check if a client is still connected.
+     */
     public void ping() {
         try {
             outputStream.reset();

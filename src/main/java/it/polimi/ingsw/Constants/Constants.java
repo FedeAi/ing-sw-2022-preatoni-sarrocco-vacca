@@ -20,7 +20,7 @@ public class Constants {
     public static final int NUM_COINS = 200; // TODO MUST BE 20 ALSO THE PLAYERBALANCE
     public static final int INITIAL_PLAYER_BALANCE = 10;
     public static final int SCHOOL_LANE_SIZE = 10;
-    public static final int DELAY_WINNING_TIMER = 300;
+    public static final int DELAY_WINNING_TIMER = 120;
 
     public static int port = 8080;
     public static String address;

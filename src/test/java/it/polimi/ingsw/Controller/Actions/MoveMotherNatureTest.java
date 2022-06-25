@@ -168,7 +168,7 @@ class MoveMotherNatureTest {
      * then it moves MN by a single position and conquers the island next to the previously conquered one,
      * thus joining the two islands in a superIsland.
      */
-    @RepeatedTest(1000)
+    @RepeatedTest(10)
     @DisplayName("Previous SuperIsland creation")
     void previousSuperIsland() {
         // Simple action test
