@@ -142,12 +142,9 @@ class ActivateCardTest {
         }
         card.deactivate(gameManager.getRules(), game);
         game.setGameState(GameState.ACTION_MOVE_MOTHER);
-        /*
-        FIXME
         assertThrows(GameException.class, () -> {
             action.performMove(game, gameManager.getRules());
         });
-        */
     }
 
     @DisplayName("Card activation test")

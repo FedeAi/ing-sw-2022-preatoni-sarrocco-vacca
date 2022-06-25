@@ -40,7 +40,6 @@ class BaseRulesTest {
 
     @Test
     void getProfessorInfluenceBaseCase() {
-        // FIXME this test should be made in game
         for (String owner : game.getProfessors().values()) {
             assertNull(owner, "init of professors, all profs must not have an owner");
         }

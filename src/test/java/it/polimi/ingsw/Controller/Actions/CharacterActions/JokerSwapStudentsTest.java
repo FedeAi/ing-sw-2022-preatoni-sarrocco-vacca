@@ -102,7 +102,6 @@ class JokerSwapStudentsTest {
         });
     }
 
-    // FIXME IS THIS AN IMPOSSIBLE CASE ? this is the same for a lot of stuff
     @DisplayName("Max swaps test")
     @Test
     void maxSwaps() {

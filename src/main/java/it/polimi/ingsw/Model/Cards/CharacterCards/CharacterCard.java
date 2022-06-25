@@ -58,7 +58,7 @@ public abstract class CharacterCard extends Card {
      */
     public void deactivate(Rules rules, Game game) {
         isActive = false;
-        activatingPlayer = "";
+        // TODO PROBLEM: A PLAYER CAN ACTIVATED A CARD ONCE PER TURN!! THIS IS NOT SORTED activatingPlayer = "";
     }
 
     /**

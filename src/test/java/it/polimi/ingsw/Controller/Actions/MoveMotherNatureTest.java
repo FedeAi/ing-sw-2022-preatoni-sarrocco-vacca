@@ -168,7 +168,7 @@ class MoveMotherNatureTest {
      * then it moves MN by a single position and conquers the island next to the previously conquered one,
      * thus joining the two islands in a superIsland.
      */
-    @RepeatedTest(10)
+    @RepeatedTest(1000)
     @DisplayName("Previous SuperIsland creation")
     void previousSuperIsland() {
         // Simple action test
@@ -215,7 +215,6 @@ class MoveMotherNatureTest {
         } catch (Exception e) {
             fail(e.getMessage());
         }
-        // FIXME THIS SOMETIMES FAILS? MAYBE RELATED TO THE -1 CASE? (MAYBE NOT)
         assertTrue(game.getIslandContainer().get(game.getMotherNature().getPosition()) instanceof SuperIsland);
         assertEquals(game.getIslandContainer().size(), oldIslands - 2);
     }

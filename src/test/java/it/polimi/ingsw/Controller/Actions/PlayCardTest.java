@@ -10,6 +10,7 @@ import it.polimi.ingsw.Server.GameHandler;
 import it.polimi.ingsw.Server.Server;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -104,6 +105,8 @@ class PlayCardTest {
     @DisplayName("Card already played test")
     @Test
     void cardAlreadyPlayed() {
+        game.setPlayersActionPhase(List.of(p2, p1));
+        game.setPlanningOrder();
         try {
             action.performMove(game, gameManager.getRules());
         } catch (Exception e) {
@@ -111,13 +114,9 @@ class PlayCardTest {
         }
         game.setRoundOwner(p1);
         action = new PlayCard(p1.getNickname(), selection);
-       /*
-           FIXME THIS DOESN'T WORK BECAUSE OF THE NEW GETPLAYEDCARDS!
-            IN THIS TEST THE INITIAL PLAYERS AREN'T ORDERED!
-       assertThrows(GameException.class, () -> {
+        assertThrows(GameException.class, () -> {
             action.performMove(game, gameManager.getRules());
         });
-        */
     }
 
     @DisplayName("Basic playCard action test")
@@ -127,7 +126,6 @@ class PlayCardTest {
         List<AssistantCard> prevCards = new ArrayList<>(p3.getCards());
         try {
             action.performMove(game, gameManager.getRules());
-            ;
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -136,60 +134,11 @@ class PlayCardTest {
         assertEquals(prevCards.size(), p3.getCards().size() + 1);
         prevCards.remove(c);
         assertTrue(p3.getCards().containsAll(prevCards));
-        // FIXME SAME REASON AS ABOVE
-        /*
-            game.setRoundOwner(p2);
-            game.setPlanningOrder();
-            assertEquals(1, game.getPlayedCards().size());
-            assertTrue(game.getPlayedCards().contains(c));
-        */
+        game.setPlayersActionPhase(List.of(p3, p2, p1));
+        game.setPlanningOrder();
+        game.setRoundOwner(action.nextPlayer(game, gameManager.getRules()));
+        assertEquals(1, game.getPlayedCards().size());
+        assertTrue(game.getPlayedCards().contains(c));
+        action.nextState(game, gameManager.getRules());
     }
-
-    /* TODO MAYBE REMOVE THIS (I DON'T KNOW)
-    @Test
-    public void setActionOrder() {
-
-
-        GameManager gameM = new GameManager(new Game());
-
-        Player p1 = new Player("fede");
-        Player p2 = new Player("gianfranco");
-
-        gameM.addPlayer(p1);
-        gameM.addPlayer(p2);
-        gameM.initGame();
-
-        Game gameInstance = gameM.getGame();
-
-        gameInstance.setGameState(GameState.PLANNING_CHOOSE_CARD);
-
-        //p1 move
-        gameInstance.setRoundOwner(p1);
-        AssistantCard choice = p1.getCards().get(0); //value 1
-
-        Performable playCard1 = new PlayCard("fede", choice);
-        playCard1.performMove(gameInstance, gameM.getRules());
-        //end p1
-
-        //start p2 move
-        gameInstance.setRoundOwner(p2);
-        AssistantCard choice2 = p2.getCards().get(1); //value 2
-        Performable playCard2 = new PlayCard("gianfranco", choice2);
-        playCard2.performMove(gameInstance, gameM.getRules());
-        //end p2 move
-        //and planning phase
-
-
-        ArrayList<Player> expected = new ArrayList<>(); //list of player
-        expected.add(p1);
-        expected.add(p2);
-
-        gameInstance.setGameState(GameState.ACTION_MOVE_STUDENTS);
-
-        assertFalse(!expected.equals(gameInstance.getOrderedPlanningPlayers()));
-
-        //list of expected player should be equals
-
-
-    }*/
 }

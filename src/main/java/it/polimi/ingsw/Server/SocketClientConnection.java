@@ -173,7 +173,6 @@ public class SocketClientConnection implements ClientConnection, Runnable {
             case MUSHROOM_CHOOSE -> move = new MushroomChooseColor(nickname, action.color0);
             case PRINCESS_MOVE -> move = new PrincessMoveToEntry(nickname, action.color0);
             case THIEF_CHOOSE -> move = new ThiefChooseColor(nickname, action.color0);
-            // TODO CHECK THIS
             default -> {
                 server.getClientByID(clientID).send(new GameError(ErrorType.INVALID_MOVE, "Specified move is badly formatted."));
                 return;
