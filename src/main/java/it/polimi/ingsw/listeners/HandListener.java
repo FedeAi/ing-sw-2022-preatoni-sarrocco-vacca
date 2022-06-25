@@ -1,7 +1,7 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Model.Cards.AssistantCard;
-import it.polimi.ingsw.Server.Answer.modelUpdate.HandMessage;
+import it.polimi.ingsw.Server.answers.model.HandMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;

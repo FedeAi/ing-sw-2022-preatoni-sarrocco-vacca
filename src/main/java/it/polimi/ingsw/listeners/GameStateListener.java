@@ -1,7 +1,7 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Server.Answer.modelUpdate.GameStateMessage;
+import it.polimi.ingsw.Server.answers.model.GameStateMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;

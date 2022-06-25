@@ -1,18 +1,19 @@
-package it.polimi.ingsw.Server.Answer.modelUpdate;
+package it.polimi.ingsw.Server.answers.model;
 
 /**
- * MoveMessage class is a ModelMessage used for sending infos about a move action to the client.
+ * BalanceMessage class is type of ModelMessage used for sending updates of the player's balance.
  *
  * @author Alessandro Vacca
  * @see ModelMessage
  */
 public class BalanceMessage implements ModelMessage {
+
   private final int message;
 
   /**
-   * Constructor MoveMessage creates a new MoveMessage instance.
+   * Constructor BalanceMessage creates a new BalanceMessage instance.
    *
-   * @param clouds .................
+   * @param balance the player's updated balance.
    */
   public BalanceMessage(int balance) {
     this.message = balance;

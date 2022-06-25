@@ -1,7 +1,7 @@
 package it.polimi.ingsw.listeners;
 
 import it.polimi.ingsw.Constants.Magician;
-import it.polimi.ingsw.Server.Answer.modelUpdate.MagicianMessage;
+import it.polimi.ingsw.Server.answers.model.MagicianMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;

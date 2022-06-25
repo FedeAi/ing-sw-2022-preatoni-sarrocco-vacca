@@ -1,11 +1,11 @@
-package it.polimi.ingsw.Server.Answer;
+package it.polimi.ingsw.Server.answers;
 
 import java.io.Serializable;
 
 /**
- * Class SerializedAnswer is a Answer that can be serialized.
+ * Class SerializedAnswer is an Answer that can be serialized.
  *
- * @author GC30
+ * @author Federico Sarrocco
  * @see Serializable
  */
 public class SerializedAnswer implements Serializable {

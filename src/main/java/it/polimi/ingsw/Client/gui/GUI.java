@@ -2,9 +2,7 @@ package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Client.*;
 import it.polimi.ingsw.Client.gui.controllers.GUIController;
-import it.polimi.ingsw.Client.gui.controllers.LoaderController;
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Server.Answer.CustomMessage;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

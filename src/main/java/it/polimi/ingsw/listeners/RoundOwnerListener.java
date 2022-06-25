@@ -1,6 +1,6 @@
 package it.polimi.ingsw.listeners;
 
-import it.polimi.ingsw.Server.Answer.modelUpdate.RoundOwnerMessage;
+import it.polimi.ingsw.Server.answers.model.RoundOwnerMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 
 import java.beans.PropertyChangeEvent;

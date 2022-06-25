@@ -1,12 +1,10 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Server.Answer.Answer;
-import it.polimi.ingsw.Server.Answer.PingMessage;
-import it.polimi.ingsw.Server.Answer.SerializedAnswer;
+import it.polimi.ingsw.Server.answers.Answer;
+import it.polimi.ingsw.Server.answers.SerializedAnswer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 
 /**
  * Virtual client interface; this is a representation of the virtual instance of the client, which

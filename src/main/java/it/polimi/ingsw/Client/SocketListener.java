@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Server.Answer.SerializedAnswer;
+import it.polimi.ingsw.Server.answers.SerializedAnswer;
 
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;

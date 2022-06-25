@@ -1,10 +1,8 @@
 package it.polimi.ingsw.Client.gui.controllers;
 
 import it.polimi.ingsw.Client.ServerMessageHandler;
-import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Server.Answer.CustomMessage;
-import javafx.application.Platform;
+import it.polimi.ingsw.Server.answers.CustomMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 

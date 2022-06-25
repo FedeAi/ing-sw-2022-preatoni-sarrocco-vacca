@@ -1,20 +1,20 @@
-package it.polimi.ingsw.Server.Answer.modelUpdate;
+package it.polimi.ingsw.Server.answers.model;
 
 import it.polimi.ingsw.Model.Islands.IslandContainer;
 
 /**
- * IslandMessage class is a ModelMessage used for ........
+ * IslandsMessage class is type of ModelMessage used for sending updates of the game's islands.
  *
- * @author GC30
+ * @author Federico Sarrocco
  * @see ModelMessage
  */
 public class IslandsMessage implements ModelMessage {
     private final IslandContainer message;
 
     /**
-     * Constructor MoveMessage creates a new MoveMessage instance.
+     * Constructor IslandsMessage creates a new IslandsMessage instance.
      *
-     * @param islandContainer .................
+     * @param islandContainer the game's islands.
      */
     public IslandsMessage(IslandContainer islandContainer) {
         this.message = islandContainer;
@@ -30,6 +30,4 @@ public class IslandsMessage implements ModelMessage {
     public IslandContainer getMessage() {
         return message;
     }
-
-
 }

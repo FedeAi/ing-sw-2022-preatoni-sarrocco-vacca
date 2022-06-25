@@ -1,20 +1,23 @@
-package it.polimi.ingsw.Server.Answer.modelUpdate;
+package it.polimi.ingsw.Server.answers.model;
 
 import it.polimi.ingsw.Model.School;
 
 /**
- * MoveMessage class is a ModelMessage used for sending infos about a move action to the client.
+ * SchoolMessage class is a ModelMessage used for sending updates of the players' School.
  *
  * @author Alessandro Vacca
  * @see ModelMessage
  */
 public class SchoolMessage implements ModelMessage {
+
   private final School message;
   private final String player;
+
   /**
-   * Constructor MoveMessage creates a new MoveMessage instance.
+   * Constructor SchoolMessage creates a new SchoolMessage instance.
    *
-   * @param newSchool .................
+   * @param newSchool the updated player's school.
+   * @param player the name of the school owner.
    */
   public SchoolMessage(String player, School newSchool) {
     this.message = newSchool;
@@ -32,5 +35,8 @@ public class SchoolMessage implements ModelMessage {
     return message;
   }
 
+  /**
+   * Method getPlayer returns the current School owner.
+   */
   public String getPlayer(){return  player;}
 }

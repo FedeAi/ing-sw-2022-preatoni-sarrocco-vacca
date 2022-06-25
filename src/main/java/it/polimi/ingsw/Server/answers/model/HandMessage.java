@@ -1,11 +1,11 @@
-package it.polimi.ingsw.Server.Answer.modelUpdate;
+package it.polimi.ingsw.Server.answers.model;
 
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 
 import java.util.List;
 
 /**
- * HandMessage class is a ModelMessage used for sending infos about the new client's hand.
+ * HandMessage class is type of ModelMessage used for sending updates of player's hand.
  *
  * @author Federico Sarrocco, Alessandro Vacca
  * @see ModelMessage
@@ -16,7 +16,7 @@ public class HandMessage implements ModelMessage {
   /**
    * Constructor HandMessage creates a new HandMessage instance.
    *
-   * @param assistantCards .................
+   * @param assistantCards the player's assistant card list.
    */
   public HandMessage(List<AssistantCard> assistantCards) {
     this.message = assistantCards;

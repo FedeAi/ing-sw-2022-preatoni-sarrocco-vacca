@@ -8,10 +8,10 @@ import it.polimi.ingsw.Constants.CLIColors;
 import it.polimi.ingsw.Constants.Constants;
 import it.polimi.ingsw.Exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.Exceptions.InvalidNicknameException;
-import it.polimi.ingsw.Server.Answer.ConnectionMessage;
-import it.polimi.ingsw.Server.Answer.ErrorType;
-import it.polimi.ingsw.Server.Answer.GameError;
-import it.polimi.ingsw.Server.Answer.SerializedAnswer;
+import it.polimi.ingsw.Server.answers.ConnectionMessage;
+import it.polimi.ingsw.Constants.ErrorType;
+import it.polimi.ingsw.Server.answers.GameError;
+import it.polimi.ingsw.Server.answers.SerializedAnswer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

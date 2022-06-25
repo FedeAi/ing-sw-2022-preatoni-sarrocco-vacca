@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Server.Answer;
+package it.polimi.ingsw.Server.answers;
 
 import java.io.Serializable;
 

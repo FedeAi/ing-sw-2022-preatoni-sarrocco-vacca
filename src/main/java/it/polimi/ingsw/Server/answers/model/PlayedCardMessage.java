@@ -1,9 +1,9 @@
-package it.polimi.ingsw.Server.Answer.modelUpdate;
+package it.polimi.ingsw.Server.answers.model;
 
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 
 /**
- * PlayedCardMessage class is a ModelMessage used for sending infos about the cards that have been played to the client.
+ * PlayedCardMessage class is type of ModelMessage used for sending updates of the current cards that have been played.
  *
  * @author Federico Sarrocco, Alessandro Vacca
  * @see ModelMessage
@@ -13,11 +13,11 @@ public class PlayedCardMessage implements ModelMessage {
     private final String player;
 
     /**
-     * Constructor MoveMessage creates a new MoveMessage instance.
+     * Constructor PlayedCardMessage creates a new MoveMessage instance.
      *
-     * @param playedCard .................
+     * @param player  the name of the player that has played the card.
+     * @param message the card played.
      */
-
     public PlayedCardMessage(String player, AssistantCard message) {
         this.player = player;
         this.message = message;
@@ -34,6 +34,11 @@ public class PlayedCardMessage implements ModelMessage {
         return message;
     }
 
+    /**
+     * Method getPlayer returns the nickname of the player that has played the card.
+     *
+     * @return the nickname of the player.
+     */
     public String getPlayer() {
         return player;
     }

@@ -9,11 +9,11 @@ import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Constants.Printable;
 import it.polimi.ingsw.Model.Cards.AssistantCard;
 import it.polimi.ingsw.Model.School;
-import it.polimi.ingsw.Server.Answer.CustomMessage;
-import it.polimi.ingsw.Server.Answer.GameError;
-import it.polimi.ingsw.Server.Answer.ReqPlayersMessage;
-import it.polimi.ingsw.Server.Answer.WinMessage;
-import it.polimi.ingsw.Server.Answer.modelUpdate.PlayedCardMessage;
+import it.polimi.ingsw.Server.answers.CustomMessage;
+import it.polimi.ingsw.Server.answers.GameError;
+import it.polimi.ingsw.Server.answers.ReqPlayersMessage;
+import it.polimi.ingsw.Server.answers.WinMessage;
+import it.polimi.ingsw.Server.answers.model.PlayedCardMessage;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;

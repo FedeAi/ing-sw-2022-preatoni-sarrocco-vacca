@@ -4,8 +4,8 @@ import it.polimi.ingsw.Client.cli.CLI;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.Client.messages.turn.GameStartedMessage;
 import it.polimi.ingsw.Constants.GameState;
-import it.polimi.ingsw.Server.Answer.*;
-import it.polimi.ingsw.Server.Answer.modelUpdate.*;
+import it.polimi.ingsw.Server.answers.*;
+import it.polimi.ingsw.Server.answers.model.*;
 
 import java.beans.PropertyChangeSupport;
 

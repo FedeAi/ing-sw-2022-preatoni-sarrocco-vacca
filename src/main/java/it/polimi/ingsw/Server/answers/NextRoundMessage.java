@@ -1,5 +1,6 @@
-package it.polimi.ingsw.Server.Answer;
+package it.polimi.ingsw.Server.answers;
 
+//FIXME
 public class NextRoundMessage implements Answer {
 
     public NextRoundMessage() {}

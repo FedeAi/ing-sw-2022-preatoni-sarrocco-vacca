@@ -14,7 +14,7 @@ import it.polimi.ingsw.Model.Cards.CharacterCards.ReducedCharacterCard;
 import it.polimi.ingsw.Model.Cloud;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
 import it.polimi.ingsw.Model.School;
-import it.polimi.ingsw.Server.Answer.Answer;
+import it.polimi.ingsw.Server.answers.Answer;
 
 public class ModelView implements Serializable {
 

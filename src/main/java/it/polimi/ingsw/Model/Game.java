@@ -9,7 +9,7 @@ import it.polimi.ingsw.Constants.GameState;
 import it.polimi.ingsw.Constants.Magician;
 import it.polimi.ingsw.Model.Islands.Island;
 import it.polimi.ingsw.Model.Islands.IslandContainer;
-import it.polimi.ingsw.Server.Answer.modelUpdate.PlayersStatusMessage;
+import it.polimi.ingsw.Server.answers.model.PlayersStatusMessage;
 import it.polimi.ingsw.Server.VirtualClient;
 import it.polimi.ingsw.listeners.*;
 

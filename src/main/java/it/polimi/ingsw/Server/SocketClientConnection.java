@@ -9,7 +9,8 @@ import java.util.logging.Logger;
 
 import it.polimi.ingsw.Client.messages.*;
 import it.polimi.ingsw.Constants.Constants;
-import it.polimi.ingsw.Server.Answer.*;
+import it.polimi.ingsw.Constants.ErrorType;
+import it.polimi.ingsw.Server.answers.*;
 import it.polimi.ingsw.Controller.Actions.*;
 import it.polimi.ingsw.Controller.Actions.CharacterActions.*;
 import it.polimi.ingsw.Exceptions.GameException;

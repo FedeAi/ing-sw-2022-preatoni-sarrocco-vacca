@@ -1,22 +1,22 @@
-package it.polimi.ingsw.Server.Answer.modelUpdate;
+package it.polimi.ingsw.Server.answers.model;
 
 /**
- * MoveMessage class is a ModelMessage used for sending infos about a move action to the client.
+ * RoundOwnerMessage class is a ModelMessage used for sending updates of the current round owner.
  *
- * @author Federico Sarrocco
+ * @author Federico Sarrocco, Alessandro Vacca.
  * @see ModelMessage
  */
-
 public class RoundOwnerMessage implements ModelMessage {
+
   private final String message;
 
   /**
    * Constructor RoundOwnerMessage creates a new RoundOwnerMessage instance.
    *
-   * @param turnOwner .................
+   * @param roundOwner the new round owner.
    */
-  public RoundOwnerMessage(String turnOwner) {
-    this.message = turnOwner;
+  public RoundOwnerMessage(String roundOwner) {
+    this.message = roundOwner;
   }
 
   /**

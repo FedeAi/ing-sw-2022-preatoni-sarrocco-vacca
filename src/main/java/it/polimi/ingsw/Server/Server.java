@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Constants.Constants;
-import it.polimi.ingsw.Server.Answer.ErrorType;
+import it.polimi.ingsw.Constants.ErrorType;
 import it.polimi.ingsw.Exceptions.OutOfBoundException;
-import it.polimi.ingsw.Server.Answer.*;
+import it.polimi.ingsw.Server.answers.*;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
