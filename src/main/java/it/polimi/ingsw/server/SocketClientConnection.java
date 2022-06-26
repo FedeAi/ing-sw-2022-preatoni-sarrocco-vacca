@@ -79,7 +79,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * streams, then invoking the server method called "unregisterClient", which will remove the
      * active virtual client from the list.
      *
-     * @see it.polimi.ingsw.server.Server#unregisterClient for more details.
+     * @see it.polimi.ingsw.server.Server#unregisterClient for more details. FIXME
      */
     public void close() {
         active = false;
@@ -88,7 +88,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        server.unregisterClient(this.getClientID(), server.getGameByID(clientID).isEnded() || !server.getGameByID(clientID).isStarted() || server.getGameByID(clientID).isSetupPhase());
+        server.getGameByID(clientID).unregisterPlayer(clientID);
     }
 
     /**

@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.server.answers.*;
 
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -150,6 +151,11 @@ public class GameHandler {
         return GameState.SETUP_CHOOSE_MAGICIAN.equals(game.getGameState());
     }
 
+    // TODO
+    public List<Player> getActivePlayers(){
+        return game.getActivePlayers();
+    }
+
     /**
      * Method setEnded ends a currently not ended game to the ended status.
      */
@@ -194,10 +200,15 @@ public class GameHandler {
      * @see GameHandler#reEnterPlayer(String)
      */
     public void endGame(String leftNickname) {
+        stopWinningTimer();
         sendAll(new ConnectionMessage(PLAYER + " " + leftNickname + " left the game, the match will now end." +
                 "\nThanks for playing!", false));
+
         while (!game.getActivePlayers().isEmpty()) {
-            server.getClientByID(game.getActivePlayers().get(0).getID()).getConnection().close();
+            server.getClientByID(game.getPlayers().get(0).getID()).getConnection().close();
+        }
+        for(Player p : game.getPlayers()){
+            server.unregisterClient(p.getID());
         }
     }
 
@@ -205,12 +216,13 @@ public class GameHandler {
      * Method unregisterPlayer lets a player leave the game. If the game is set to the setup phase, the game then ends.
      *
      * @param id          the ID of the player that is leaving.
-     * @param isGameEnded the boolean flag that represent if a game is ended.
      */
-    public synchronized void unregisterPlayer(int id, boolean isGameEnded) {
+    public synchronized void unregisterPlayer(int id) {
+        boolean isGameEnded = isEnded() || !isStarted() || isSetupPhase() || getActivePlayers().size() == 1
+                || game.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN;
         game.removeListeners(server.getClientByID(id));
         game.setPlayerConnected(id, false);
-        if (game.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN || isGameEnded) {
+        if (isGameEnded) {
             endGame(server.getNicknameByID(id));
         } else {
             controller.handleNewRoundOwnerOnDisconnect(server.getNicknameByID(id));
@@ -237,9 +249,11 @@ public class GameHandler {
             TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    sendAll(new CustomMessage("You WON, you are the only player and are passed " + Constants.DELAY_WINNING_TIMER + " seconds"));
-                    sendAll(new WinMessage(game.getPlayers().stream().filter(Player::isConnected).findFirst().get().getNickname()));
-                    endGame();
+                    if (game.getActivePlayers().size() > 0) {
+                        sendAll(new CustomMessage("You WON, you are the only player and are passed " + Constants.DELAY_WINNING_TIMER + " seconds"));
+                        sendAll(new WinMessage(game.getPlayers().stream().filter(Player::isConnected).findFirst().get().getNickname()));
+                        endGame();
+                    }
                 }
             };
             timer.schedule(timerTask, Constants.DELAY_WINNING_TIMER * 1000);
