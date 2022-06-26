@@ -14,17 +14,22 @@ import java.net.URL;
 import java.util.*;
 import java.util.List;
 
+/**
+ * MagiciansController class represents the Magician selection scene logic.
+ */
 public class MagiciansController extends GUIController {
 
     private final EnumMap<Magician, Image> magiciansImage = new EnumMap<>(Magician.class);
     private final EnumMap<Magician, Pane> viewMap = new EnumMap<>(Magician.class);
 
     @FXML
-    Label description; //wizard, king, witch and sage label
+    Label description; // Wizard, king, witch and sage label
     @FXML
     Pane Wizard, King, Witch, Sage;
 
-
+    /**
+     * Method initialize loads the magician assets and creates the image map.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         for (Magician m : Magician.values()) {
@@ -37,11 +42,21 @@ public class MagiciansController extends GUIController {
         description.setFont(font);
     }
 
+    /**
+     * Method init is called at the start of the scene.¬
+     */
     @Override
     public void init() {
         showMagicians();
     }
 
+    /**
+     * Method selectedMagician is called when a user selects a magician.
+     * It formats the message for the server and forwards it.
+     * It also changes the scene to the LOADING one.
+     *
+     * @param mouseEvent the MouseEvent.
+     */
     @FXML
     public void selectedMagician(MouseEvent mouseEvent) {
         ImageView selection = (ImageView) mouseEvent.getSource();
@@ -54,6 +69,9 @@ public class MagiciansController extends GUIController {
         gui.changeScene(GUI.LOADER);
     }
 
+    /**
+     * Method showMagicians shows the remaining magicians on the scene.
+     */
     public void showMagicians() {
         List<Magician> availableMagis = Magician.orderMagicians(gui.getModelView().getAvailableMagicians());
         for (Magician m : availableMagis) {
@@ -70,6 +88,11 @@ public class MagiciansController extends GUIController {
         }
     }
 
+    /**
+     * Method showDescription shows the Magician's description when a user hovers over it.
+     *
+     * @param mouseEvent the MouseEvent to be checked for hovering condition.
+     */
     @FXML
     public void showDescription(MouseEvent mouseEvent) {
         ImageView selection = (ImageView) mouseEvent.getSource();

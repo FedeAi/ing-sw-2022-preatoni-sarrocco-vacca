@@ -12,22 +12,27 @@ import java.util.ResourceBundle;
 
 import static java.lang.System.exit;
 
+/**
+ * MenuController represents the Main Menu scene logic.
+ */
 public class MenuController extends GUIController {
 
     /**
-     * Method play run the login.fxml (change of the scene) when the "Play" button is clicked.
+     * Method play changes to scene to the LOGIN scene  when the "Play" button is clicked.
      */
     @FXML
     public void play() {
         gui.changeScene(GUI.SETUP);
     }
+
     /**
-     * Method about show our github when the label that contains the names is clicked
+     * Method about show the project's github repo when the label that contains the names is clicked.
      */
     @FXML
     public void about() throws URISyntaxException, IOException {
         Desktop.getDesktop().browse(new URI("https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca"));
     }
+
     /**
      * Method quit kills the application when the "Exit" button is clicked.
      */
@@ -36,6 +41,9 @@ public class MenuController extends GUIController {
         exit(1);
     }
 
+    /**
+     * Method initialize is not implemented in the main menu, as every resource is statically defined in the FXML file.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

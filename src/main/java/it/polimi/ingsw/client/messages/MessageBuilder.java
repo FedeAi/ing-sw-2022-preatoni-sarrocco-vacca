@@ -7,38 +7,45 @@ import it.polimi.ingsw.constants.CLIColors;
 
 
 /**
- * MessageBuilder class is useful to build the action (or the message) that client  want to do
+ * MessageBuilder class creates the Message or Action selected by the Client.
  *
  * @author Davide Preatoni, Federico Sarrocco
  */
 public class MessageBuilder {
 
     private ModelView modelView;
-    private final String PLAY_CARD_ERROR = "syntax playcard #card (ex: playcard 5) ";
-    private final String SETUP_ERROR = "syntax setup error: setup #player #mod (ex: setup 2 expert)";
-    private final String MOVE_MOTHER_ERROR = "syntax move mother nature error: movemother #island (ex: movemother 2)";
-    private final String CHOOSE_CLOUD_ERROR = "syntax cloud error: cloud #cloud (ex: cloud 2)";
-    private final String MOVE_STUDENT_ISLAND_ERROR = "syntax students to island error: studentsisland color #island (ex studentsisland red 3)";
-    private final String MOVE_STUDENT_HALL_ERROR = "syntax students to island error: studentshall color #island (ex: studentshall blue 1)";
-    private final String ACTIVATE_CARD_ERROR = "syntax activate error: activate #card (ex: activate 1)";
-    private final String DEACTIVATE_CARD_ERROR = "syntax deactivate error: deactivate #card (ex:deactivate 2)";
-    private final String GRANDMA_ERROR = "syntax grandma error: grandma #island (ex: grandma 2)";
-    private final String HERALD_ERROR = "syntax herlad error: herald #island (ex: herald 3)";
-    private final String JOKER_ERROR = "syntax joker error: joker color color (ex: joker blue red) ";
-    private final String MINSTREL_ERROR = "syntax minstrel error: minstrel color color (ex: minstrel blue red) ";
-    private final String MONK_ERROR = "syntax monk error: monk color color (ex: monk blue red) ";
-    private final String MUSHROOM_ERROR = "syntax mushroom error: mushroom color (ex: mushroom blue) ";
-    private final String PRINCESS_ERROR = "syntax princess error: princess color (ex: princess yellow) ";
-    private final String THIEF_ERROR = "syntax thief error: thief color (ex: thief green) ";
-    private final String MAGICIAN_ERROR = "syntax magician error: MAGICIAN type (ex: magician king) ";
+    private final String PLAY_CARD_ERROR = "Wrong PlayCard syntax!\nValid syntax: playcard #card (e.g. playcard 5)";
+    private final String SETUP_ERROR = "Wrong Setup syntax!\nValid syntax: setup #players ?mode (e.g. setup 2 expert)";
+    private final String MOVE_MOTHER_ERROR = "Wrong MoveMotherNature syntax!\nValid syntax: movemother #island (e.g. movemother 2)";
+    private final String CHOOSE_CLOUD_ERROR = "Wrong ChooseCloud syntax!\nValid syntax: cloud #index (ex: cloud 2)";
+    private final String MOVE_STUDENT_ISLAND_ERROR = "Wrong MoveStudentToIsland syntax!\nValid syntax: studentisland color #island (e.g. studentisland red 3)";
+    private final String MOVE_STUDENT_HALL_ERROR = "Wrong MoveStudentToHall syntax!\nValid syntax: studenthall color (e.g. studentshall blue)";
+    private final String ACTIVATE_CARD_ERROR = "Wrong ActivateCard syntax!\nValid syntax: activate #card (e.g. activate 1)";
+    private final String DEACTIVATE_CARD_ERROR = "Wrong DeactivateCard syntax!\nValid syntax: deactivate #card (e.g. deactivate 2)";
+    private final String GRANDMA_ERROR = "Wrong GrandmaBlockIsland syntax!\nValid syntax: grandma #island (e.g. grandma 2)";
+    private final String HERALD_ERROR = "Wrong HeraldChooseIsland syntax!\nValid syntax: herald #island (e.g. herald 3)";
+    private final String JOKER_ERROR = "Wrong JokerSwapStudents syntax!\nValid syntax: joker color color (e.g. joker blue red)";
+    private final String MINSTREL_ERROR = "Wrong MinstrelSwapStudents syntax!\nValid syntax: minstrel color color (e.g. minstrel blue red) ";
+    private final String MONK_ERROR = "Wrong MonkMoveToIsland syntax!\nValid syntax: monk color color (e.g. monk blue red)";
+    private final String MUSHROOM_ERROR = "Wrong MushroomChooseColor syntax!\nValid syntax: mushroom color (e.g. mushroom blue)";
+    private final String PRINCESS_ERROR = "Wrong PrincessMoveToEntry syntax!\nValid syntax: princess color (e.g. princess yellow)";
+    private final String THIEF_ERROR = "Wrong ThiefChooseColor syntax!\nValid syntax: thief color (e.g. thief green)";
+    private final String MAGICIAN_ERROR = "Wrong ChooseMagician syntax!\nValid syntax: magician type (e.g. magician king)";
 
+    /**
+     * Constructor MessageBuilder creates a new MessageBuilder instance.
+     *
+     * @param modelView the Client's model for visualization.
+     */
     public MessageBuilder(ModelView modelView) {
         this.modelView = modelView;
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method playCard creates a PlayCard type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action playCard(String[] in) {
         try {
@@ -50,8 +57,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method chooseMagician creates a ChooseMagician type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action chooseMagician(String[] in) {
         try {
@@ -68,8 +77,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method moveMother creates a MoveMotherNature type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action moveMother(String[] in) {
         try {
@@ -81,8 +92,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method chooseCloud creates a ChooseCloud type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action chooseCloud(String[] in) {
         try {
@@ -94,8 +107,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method moveStudentIsland creates a MoveStudentToIsland type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action moveStudentIsland(String[] in) {
         try {
@@ -107,8 +122,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method moveStudentHall creates a MoveStudentToHall type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action moveStudentHall(String[] in) {
         try {
@@ -120,8 +137,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method activateCard creates a ActivateCard type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action activateCard(String[] in) {
         try {
@@ -135,8 +154,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method deactivateCard creates a DeactivateCard type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action deactivateCard(String[] in) {
         try {
@@ -148,8 +169,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method setupMessage creates a SetupMessage type of Message.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Message if successful, null otherwise.
      */
     public Message setupMessage(String[] in) {
         try {
@@ -165,8 +188,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method grandmaBlock creates a GrandmaBlockIsland type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action grandmaBlock(String[] in) {
         try {
@@ -178,8 +203,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method heraldChoose creates a HeraldChooseIsland type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action heraldChoose(String[] in) {
         try {
@@ -191,8 +218,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method jokerSwap creates a JokerSwapStudents type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action jokerSwap(String[] in) { //FIXME ??
         try {
@@ -204,8 +233,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method minstrelSwap creates a MinstrelSwapStudents type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action minstrelSwap(String[] in) {
         try {
@@ -217,8 +248,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method monkMove creates a MonkMoveToIsland type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action monkMove(String[] in) {
         try {
@@ -230,8 +263,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method mushroomChoose creates a MushroomChooseColor type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action mushroomChoose(String[] in) {
         try {
@@ -243,8 +278,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method princessMove creates a PrincessMoveToHall type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action princessMove(String[] in) {
         try {
@@ -256,8 +293,10 @@ public class MessageBuilder {
     }
 
     /**
-     * @param in is the command write by CLI from the user.
-     * @return the  appropriate action built
+     * Method thiefChoose creates a ThiefChooseColor type of Action.
+     *
+     * @param in is the user written action in the terminal.
+     * @return The created Action if successful, null otherwise.
      */
     public Action thiefChoose(String[] in) {
         try {
@@ -269,7 +308,8 @@ public class MessageBuilder {
     }
 
     /**
-     * 'quit' is used to close the connection
+     * Method quit creates a new Disconnect type of Message.
+     * @return the Disconnect message.
      */
     public Message quit() {
         System.err.println("Disconnected from the server.");

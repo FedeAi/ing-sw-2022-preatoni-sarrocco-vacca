@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards.characters;
 
 import it.polimi.ingsw.constants.Character;
+import it.polimi.ingsw.controller.actions.characters.PrincessMoveToHall;
 import it.polimi.ingsw.controller.rules.Rules;
 import it.polimi.ingsw.model.Bag;
 import it.polimi.ingsw.constants.Color;
@@ -14,7 +15,7 @@ import java.util.Map;
 /**
  * Princess class is model representation of the Princess character card.
  *
- * @see it.polimi.ingsw.controller.actions.characters.PrincessMoveToEntry
+ * @see PrincessMoveToHall
  */
 public class Princess extends CharacterCard {
 

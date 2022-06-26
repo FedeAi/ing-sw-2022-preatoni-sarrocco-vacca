@@ -22,7 +22,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PrincessMoveToEntryTest {
+public class PrincessMoveToHallTest {
 
     private Performable action;
     private Game game;
@@ -60,7 +60,7 @@ public class PrincessMoveToEntryTest {
                 break;
             }
         }
-        action = new PrincessMoveToEntry(p1.getNickname(), selectionColor);
+        action = new PrincessMoveToHall(p1.getNickname(), selectionColor);
         card.activate(gameManager.getRules(), game);
     }
 

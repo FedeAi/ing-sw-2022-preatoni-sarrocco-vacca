@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This class translates JavaFx events into well formatted comands to be passed to InputToMessage
+ * EventsToActions class translates JavaFx events into well formatted commands to be passed to the InputToMessage class.
  *
  * @see it.polimi.ingsw.client.InputToMessage
  */
@@ -20,10 +20,21 @@ public class EventsToActions implements PropertyChangeListener {
     PropertyChangeEvent prevEvt = null;
     GUI gui;
 
+    /**
+     * Constructor EventsToActions creates a new EventsToActions instance.
+     *
+     * @param gui the current GUI reference.
+     */
     public EventsToActions(GUI gui) {
         this.gui = gui;
     }
 
+    /**
+     * Method propertyChange is called when an action on the GUI is received.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         currEvt = evt;
@@ -31,6 +42,9 @@ public class EventsToActions implements PropertyChangeListener {
         prevEvt = evt;
     }
 
+    /**
+     * Method onEventReceived processes the GUI action into the actual CLI commands.
+     */
     private void onEventReceived() {
         System.out.println(currEvt.getPropertyName());
         String action = "";
@@ -69,22 +83,18 @@ public class EventsToActions implements PropertyChangeListener {
                     }
                 }
             }
-
             if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)) {
                 action = handleCharacterCardsEvents();
             }
             if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_LISTENER)) {
                 int cardIndex = (int) currEvt.getNewValue();
-                if(gui.getModelView().getCharacterCards().get(cardIndex).isActive){
+                if (gui.getModelView().getCharacterCards().get(cardIndex).isActive) {
                     action = "DEACTIVATE " + cardIndex;
-                }else{
+                } else {
                     action = "ACTIVATE " + cardIndex;
                 }
 
             }
-
-
-
             if (!action.equals("")) {
                 final String actionToSend = action;
                 Platform.runLater(() -> {
@@ -97,31 +107,33 @@ public class EventsToActions implements PropertyChangeListener {
         }
     }
 
-    private String handleCharacterCardsEvents(){
+    /**
+     * Method handleCharacterCardsEvents processes the characterCards events.
+     * @return the characterCard action's command.
+     */
+    private String handleCharacterCardsEvents() {
         List<Character> activeCards = gui.getModelView().getCharacterCards().stream()
                 .filter(c -> c.isActive).map(c -> c.type).toList();
-        if(Objects.equals(prevEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)
-                && Objects.equals(currEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)){
-            if(activeCards.contains(Character.JOKER)){
+        if (Objects.equals(prevEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)
+                && Objects.equals(currEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)) {
+            if (activeCards.contains(Character.JOKER)) {
                 return "JOKER " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
             }
         }
-        if(Objects.equals(prevEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)
-                && Objects.equals(currEvt.getPropertyName(), BoardController.SCHOOL_HALL_LISTENER)){
-            if(activeCards.contains(Character.MINSTREL)){
+        if (Objects.equals(prevEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)
+                && Objects.equals(currEvt.getPropertyName(), BoardController.SCHOOL_HALL_LISTENER)) {
+            if (activeCards.contains(Character.MINSTREL)) {
                 return "MINSTREL " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
             }
         }
-        if(Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)){
-            if(activeCards.contains(Character.MUSHROOM)){
+        if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)) {
+            if (activeCards.contains(Character.MUSHROOM)) {
                 return "MUSHROOM " + currEvt.getNewValue().toString();
             }
-            if(activeCards.contains(Character.PRINCESS)){
+            if (activeCards.contains(Character.PRINCESS)) {
                 return "PRINCESS " + currEvt.getNewValue().toString();
             }
         }
         return "";
     }
 }
-
-

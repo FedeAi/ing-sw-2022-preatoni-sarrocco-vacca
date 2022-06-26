@@ -34,6 +34,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.List;
 
+/**
+ * BoardController class represents the Board scene logic.
+ */
 public class BoardController extends GUIController implements PropertyChangeListener {
 
     public static final String ENTRY_STUDENT_LISTENER = "selectSchoolStudent";
@@ -121,6 +124,9 @@ public class BoardController extends GUIController implements PropertyChangeList
     String playerSchool = ""; // player's school name
     boolean initCompleted = false;
 
+    /**
+     * Method initialize creates all the GUI elements list and maps and loads the assets.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         islandPanes.addAll(List.of(island0, island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11));
@@ -163,11 +169,13 @@ public class BoardController extends GUIController implements PropertyChangeList
         loadAssets();
     }
 
+    /**
+     * Method init initializes all the GUI elements.
+     */
     @Override
     public void init() {
         showChangeSchoolButtons();
-
-        //need the ModelView to upload the right kind of cloud ( in initialize I can't check)
+        // Clouds are handled here because the numOfClouds is only available after the Server communicates it.
         if (gui.getModelView().getClouds().size() == 2) {
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_2p.png")));
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_2p.png")));
@@ -182,8 +190,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             updateCharacters();
             showBalance();
         }
-
-        showClouds(); // have to be later of the upload image cloud
+        showClouds();
         updateIslands();
         playerSchool = gui.getModelView().getPlayerName();
         updateSchool();
@@ -194,6 +201,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         changeSupport.addPropertyChangeListener(new EventsToActions(gui));
     }
 
+    /**
+     * Method loadAssets loads the game resources.
+     */
     private void loadAssets() {
         islandImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/island1.png")));
         islandImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/island2.png")));
@@ -223,6 +233,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method updateIslands sets the updated islands on the GUI.
+     */
     public void updateIslands() {
         List<Island> islands = gui.getModelView().getIslandContainer().getIslands();
 
@@ -251,6 +264,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method showClouds sets all the GUI clouds.
+     */
     public void showClouds() {
         int nCloud = gui.getModelView().getClouds().size();
         // empty all clouds panes
@@ -262,8 +278,8 @@ public class BoardController extends GUIController implements PropertyChangeList
             backCloud.setImage(cloudImgs.get(i));
             backCloud.fitWidthProperty().bind(cloudsPane.get(i).widthProperty());
             backCloud.fitHeightProperty().bind(cloudsPane.get(i).heightProperty());
-            cloudsPane.get(i).setOnMouseEntered(this::OnSelectScaleColor);
-            cloudsPane.get(i).setOnMouseExited(this::OnSelectScaleColor);
+            cloudsPane.get(i).setOnMouseEntered(this::onSelectScaleColor);
+            cloudsPane.get(i).setOnMouseExited(this::onSelectScaleColor);
             backCloud.setSmooth(true);
             backCloud.setCache(true);
             int index = i;
@@ -275,6 +291,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         updateClouds();
     }
 
+    /**
+     * Method updateHand sets the updated hand on the GUI.
+     */
     private void updateHand() {
         List<AssistantCard> cards = gui.getModelView().getHand();
         cardContainer.getChildren().clear();
@@ -284,11 +303,11 @@ public class BoardController extends GUIController implements PropertyChangeList
             ImageView cardImg = buildCard(63, 92, cardImgs.get(assistantCard.getValue() - 1));
             cardImg.setOnMouseEntered((evt) -> {
                 cardImg.setTranslateY(-50);
-                OnSelectScaleColor(evt);
+                onSelectScaleColor(evt);
             });
             cardImg.setOnMouseExited((evt) -> {
                 cardImg.setTranslateY(0);
-                OnSelectScaleColor(evt);
+                onSelectScaleColor(evt);
 
             });
             cardImg.setOnMouseReleased((e) -> {
@@ -299,6 +318,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method updatePlayedCards sets the updated playedCards on the GUI.
+     */
     private void updatePlayedCards() {
         Map<String, AssistantCard> map = gui.getModelView().getPlayedCards();
         playedCardContainer.getChildren().clear();
@@ -315,6 +337,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method showPlayers sets the player's selected magician and nickname.
+     */
     private void showPlayers() {
         List<String> players = gui.getModelView().getPlayers();
         for (int i = 0; i < players.size(); i++) {
@@ -325,6 +350,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         updatePlayers();
     }
 
+    /**
+     * Method updatePlayers sets the updated player info on the GUI.
+     */
     private void updatePlayers() {
         Map<String, Magician> map = gui.getModelView().getPlayerMapMagician();
         List<String> players = gui.getModelView().getPlayers();
@@ -360,6 +388,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method showChangeSchoolButtons creates the GUI buttons for showing other players' schools.
+     */
     private void showChangeSchoolButtons() {
         List<Button> buttons = gui.getModelView().getPlayers().stream().filter(player -> !Objects.equals(player, gui.getModelView().getPlayerName()))
                 .map(p -> {
@@ -380,6 +411,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method updateClouds sets the updated clouds data on the GUI.
+     */
     private void updateClouds() {
         List<Cloud> clouds = gui.getModelView().getClouds();
         for (int j = 0; j < clouds.size(); j++) {
@@ -403,7 +437,14 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
-    private Node buildIsland(Island island, int index, boolean has_mother) {
+    /**
+     * Method buildIsland creates the updated island to be set on the GUI.
+     *
+     * @param island    the Model's island reference.
+     * @param index     the island's index.
+     * @param hasMother the flag determines if motherNature is present on the island
+     */
+    private Node buildIsland(Island island, int index, boolean hasMother) {
         ImageView mother = null;
         StackPane pane = new StackPane();
         pane.setAlignment(Pos.CENTER);
@@ -439,7 +480,7 @@ public class BoardController extends GUIController implements PropertyChangeList
                 students.getChildren().add(hBox);
             }
         }
-        // tower
+        // Towers
         HBox tower = new HBox();
         tower.setAlignment(Pos.CENTER);
         int numTower = island.getNumTower();
@@ -457,8 +498,8 @@ public class BoardController extends GUIController implements PropertyChangeList
             background.setScaleX(1.5);
             background.setScaleY(1.5);
         }
-        // mother nature
-        if (has_mother) {
+        // Mother nature handling
+        if (hasMother) {
             mother = new ImageView(motherImg);
             mother.setFitWidth(45);
             mother.setPreserveRatio(true);
@@ -471,20 +512,23 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
         hContainer.getChildren().add(students);
         hContainer.getChildren().add(secondColumn);
-        // add elements to the pane
+        // Add elements to the pane
         pane.getChildren().add(background);
         pane.getChildren().add(hContainer);
         pane.setOnMouseReleased((e) -> changeSupport.firePropertyChange(SELECT_ISLAND_LISTENER, null, index));
-        pane.setOnMouseEntered(this::OnSelectScaleColor);
-        pane.setOnMouseExited(this::OnSelectScaleColor);
+        pane.setOnMouseEntered(this::onSelectScaleColor);
+        pane.setOnMouseExited(this::onSelectScaleColor);
         return pane;
     }
 
+    /**
+     * Method updateSchool sets the updated school data on the GUI.
+     */
     public void updateSchool() {
         School school = gui.getModelView().getPlayerMapSchool().get(playerSchool);
         if (school == null)
             return;
-        // entry students
+        // Entry students
         List<Color> entryStuds = school.getStudentsEntryList();
         assert entryStuds.size() <= studentEntryPanes.size();
         for (int i = 0; i < studentEntryPanes.size(); i++) {
@@ -497,14 +541,14 @@ public class BoardController extends GUIController implements PropertyChangeList
                 student.setSmooth(true);
                 student.setCache(true);
                 Pane pane = studentEntryPanes.get(i);
-                pane.setOnMouseEntered(this::OnSelectScaleColor);
-                pane.setOnMouseExited(this::OnSelectScaleColor);
+                pane.setOnMouseEntered(this::onSelectScaleColor);
+                pane.setOnMouseExited(this::onSelectScaleColor);
                 pane.setOnMouseClicked((e) -> changeSupport.firePropertyChange(ENTRY_STUDENT_LISTENER, null, studentC));
                 pane.getChildren().add(student);
             }
         }
-        // hall students
-        // first remove all students in the lane
+        // Hall students
+        // First remove all students in the lane
         colorToHallStudents.forEach((key, value) -> value.forEach(
                 pane -> pane.getChildren().clear()
         ));
@@ -513,7 +557,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         for (Map.Entry<Color, Integer> entry : hallStuds.entrySet()) {
             assert entry.getValue() <= colorToHallStudents.get(entry.getKey()).size();
             if (entry.getValue() > 0) {
-                // add students to the first entry.getValue positions
+                // Add students to the first entry.getValue positions
                 colorToHallStudents.get(entry.getKey()).subList(0, entry.getValue()).forEach(pane -> {
                     ImageView student = new ImageView(studentImgs.get(entry.getKey()));
                     student.fitWidthProperty().bind(pane.widthProperty());
@@ -527,6 +571,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method updateProfessors sets the updated professor data on the GUI.
+     */
     private void updateProfessors() {
         // PROFESSORS
         List<Color> profs = getProfsFromNickname(gui.getModelView().getProfessors(), playerSchool);
@@ -541,6 +588,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method showBalance creates the GUI element for showing the player's balance.
+     */
     private void showBalance() {
         ImageView coin = new ImageView(coinImg);
         coin.setCache(true);
@@ -550,6 +600,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         updateBalance();
     }
 
+    /**
+     * Method updateBalance sets the updated balance data on the GUI.
+     */
     private void updateBalance() {
         if (gui.getModelView().getExpert()) {
             int coins = gui.getModelView().getBalance();
@@ -558,6 +611,13 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method buildCard is used for creating the AssitantCard element on the GUI.
+     *
+     * @param width  the Node's width.
+     * @param height the Node's height.
+     * @param img    the AssistantCard's asset.
+     */
     private ImageView buildCard(double width, double height, Image img) {
         //Background character
         Rectangle rectangle = new Rectangle(width, height);
@@ -574,6 +634,9 @@ public class BoardController extends GUIController implements PropertyChangeList
         return character;
     }
 
+    /**
+     * Method updateCharacters sets the updated characters' data on the GUI.
+     */
     private void updateCharacters() {
         characterContainer.getChildren().clear();
         List<ReducedCharacterCard> reducedCards = gui.getModelView().getCharacterCards();
@@ -582,13 +645,13 @@ public class BoardController extends GUIController implements PropertyChangeList
             StackPane s = new StackPane();
             s.setAlignment(Pos.CENTER);
 
-            //Background character
+            // Background character
             ImageView character = buildCard(80, 120, charactersImages.get(c.type));
             character.setImage(charactersImages.get(c.type));
 
             VBox content = new VBox();
             content.setAlignment(Pos.CENTER);
-            //Students
+            // Students
             FlowPane students = new FlowPane();
             students.setVgap(4);
             students.setHgap(4);
@@ -623,11 +686,24 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    /**
+     * Method getProfsFromNickname returns the professor of a given player.
+     *
+     * @param profs  the game professor ownership map.
+     * @param player the nickname of the player.
+     * @return the professor owner by the player.
+     */
     private List<Color> getProfsFromNickname(Map<Color, String> profs, String player) {
         return profs.entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), player)).map(Map.Entry::getKey).toList();
     }
-    // CONTROLLER METHODS ( methods called directly from the fxml )
 
+    // CONTROLLER METHODS (methods called directly from the fxml)
+
+    /**
+     * Method changeSchool changes the current school to another player's.
+     *
+     * @param event the MouseEvent instance.
+     */
     public void changeSchool(MouseEvent event) {
         Button btn = (Button) event.getSource();
         String id = btn.getId();
@@ -643,7 +719,12 @@ public class BoardController extends GUIController implements PropertyChangeList
         updateProfessors();
     }
 
-    public void OnSelectScaleColor(MouseEvent evt) {
+    /**
+     * Method onSelectScaleColor changes an element's color when it is selected.
+     *
+     * @param evt the MouseEvent instance.
+     */
+    public void onSelectScaleColor(MouseEvent evt) {
         if (evt.getSource() instanceof Pane) {
             Pane pane = (Pane) evt.getSource();
             if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
@@ -670,7 +751,12 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
-
+    /**
+     * Method propertyChange triggers GUI updates when model updates are received from the server.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         GameState state = gui.getModelView().getGameState();

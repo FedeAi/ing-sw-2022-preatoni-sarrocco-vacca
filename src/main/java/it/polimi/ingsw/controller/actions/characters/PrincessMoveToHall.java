@@ -22,7 +22,7 @@ import java.util.Optional;
  *
  * @see Princess
  */
-public class PrincessMoveToEntry extends Performable {
+public class PrincessMoveToHall extends Performable {
 
     private final Color student;
 
@@ -33,7 +33,7 @@ public class PrincessMoveToEntry extends Performable {
      * @param player  the nickname of the action owner.
      * @param student the student to move to the player's school hall.
      */
-    public PrincessMoveToEntry(String player, Color student) {
+    public PrincessMoveToHall(String player, Color student) {
         super(player);
         this.student = student;
     }

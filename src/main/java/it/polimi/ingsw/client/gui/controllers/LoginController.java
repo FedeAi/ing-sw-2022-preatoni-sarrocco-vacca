@@ -17,6 +17,9 @@ import javafx.scene.input.KeyEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * LoginController class represents the Login scene logic.
+ */
 public class LoginController extends GUIController {
 
     @FXML
@@ -24,10 +27,13 @@ public class LoginController extends GUIController {
     @FXML
     private Label error;
 
+    /**
+     * Method init handles when the Enter button is pressed.
+     * When the Enter key is pressed, the Controller sends a LoginMessage to the Server.
+     */
     @Override
     public void init() {
-        // handle enter pressed
-        // send when
+        // handle Enter key pressing
         gui.getScene(GUI.LOGIN).addEventFilter(KeyEvent.ANY, (keyEvent) -> {
             if (keyEvent.getCode().equals(KeyCode.ENTER)) {
                 join();
@@ -36,7 +42,9 @@ public class LoginController extends GUIController {
     }
 
     /**
-     * Method join changes the stage scene into loading.fxml when the button "Play" is pressed.
+     * Method join is called after a user has selected the server IP, port and his nickname.
+     * It then forwards the information to the Server,
+     * and it also changes the stage scene into the LOADING one.
      */
     @FXML
     public void join() {
@@ -86,6 +94,10 @@ public class LoginController extends GUIController {
         }
     }
 
+    /**
+     * Method clean is called when a user clicks the clean button on the scene.
+     * It clears the text fields of the scene.
+     */
     @FXML
     public void clean() {
         String clean = "";
@@ -94,6 +106,9 @@ public class LoginController extends GUIController {
         port.setText(clean);
     }
 
+    /**
+     * Method initialize initializes the scene's fonts.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         username.setFont(font);
