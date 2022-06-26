@@ -81,7 +81,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      *
      * @see it.polimi.ingsw.server.Server#unregisterClient for more details. FIXME
      */
-    public void close() {
+    public synchronized void close() {
         active = false;
         try {
             socket.close();
@@ -117,18 +117,25 @@ public class SocketClientConnection implements ClientConnection, Runnable {
     @Override
     public void run() {
         try {
+            // ping thread
+            new Thread(() ->{
+                while(isActive()){
+                    try {
+                        Thread.sleep(5000);
+                        ping();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }).start();
+
+
+            // read reading loop
             while (isActive()) {
                 readFromStream();
             }
         } catch (IOException e) {
-            GameHandler game = server.getGameByID(clientID);
-            String player = server.getNicknameByID(clientID);
             close();
-            // FIXME
-//            server.unregisterClient(clientID);
-//            if (game.isStarted()) {
-//                game.endGame(player);
-//            }
             System.err.println(Constants.getInfo() + e.getMessage());
         } catch (ClassNotFoundException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
