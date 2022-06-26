@@ -252,9 +252,9 @@ public class ModelView implements Serializable {
      * @return The list of available magicians.
      */
     public List<Magician> getAvailableMagicians() {
-        return mapMagicianPlayer.entrySet()
+        return Magician.orderMagicians(mapMagicianPlayer.entrySet()
                 .stream().filter(magicianStringEntry -> Objects.equals(magicianStringEntry.getValue(), "")).
-                map(e -> e.getKey()).toList();
+                map(e -> e.getKey()).toList());
     }
 
     /**

@@ -499,9 +499,10 @@ public class Game {
      */
     public List<Magician> getAvailableMagicians() {
         // Filter the magicians based on the magicians present in the Magician - Player map
-        return mapMagicianToPlayer.entrySet().stream().filter(
+
+        return Magician.orderMagicians(mapMagicianToPlayer.entrySet().stream().filter(
                         magicianStringEntry -> Objects.equals(magicianStringEntry.getValue(), "")).
-                map(Map.Entry::getKey).toList();
+                map(Map.Entry::getKey).toList());
     }
 
     /**

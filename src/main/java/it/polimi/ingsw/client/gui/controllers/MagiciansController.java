@@ -73,7 +73,7 @@ public class MagiciansController extends GUIController {
      * Method showMagicians shows the remaining magicians on the scene.
      */
     public void showMagicians() {
-        List<Magician> availableMagis = Magician.orderMagicians(gui.getModelView().getAvailableMagicians());
+        List<Magician> availableMagis = gui.getModelView().getAvailableMagicians();
         for (Magician m : availableMagis) {
             ImageView view = new ImageView(magiciansImage.get(m));
             view.setFitHeight(404);
