@@ -21,6 +21,7 @@ public class Constants {
     public static final int INITIAL_PLAYER_BALANCE = 10;
     public static final int SCHOOL_LANE_SIZE = 10;
     public static final int DELAY_WINNING_TIMER = 120;
+    public static final int PING_TIMEOUT_MS = 5000;
 
     public static int port = 8080;
     public static String address;

@@ -93,6 +93,8 @@ public class ServerMessageHandler {
             view.firePropertyChange(CUSTOM_MESSAGE_LISTENER, null, answer);
         } else if (answer instanceof WinMessage) {
             view.firePropertyChange(WIN_MESSAGE_LISTER, null, answer);
+        }else if (answer instanceof PingMessage) {
+            view.firePropertyChange("action", null, "PONG");
         }
     }
 

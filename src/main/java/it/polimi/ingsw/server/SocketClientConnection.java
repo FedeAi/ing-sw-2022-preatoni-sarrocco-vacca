@@ -32,6 +32,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
     private ObjectOutputStream outputStream;
     private Integer clientID;
     private boolean active;
+    private boolean pongReceived;
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     /**
@@ -98,15 +99,18 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * @throws IOException            when the client is not online anymore.
      * @throws ClassNotFoundException when the serializable object is not part of any class.
      */
-    public synchronized void readFromStream() throws IOException, ClassNotFoundException {    // TODO
+    public void readFromStream() throws IOException, ClassNotFoundException {    // TODO
         SerializedMessage input = (SerializedMessage) inputStream.readObject();
-        if (input.message != null) {
-            Message command = input.message;
-            actionHandler(command);
-        } else if (input.action != null) {
-            Action action = input.action;
-            actionHandler(action);
+        synchronized (this){
+            if (input.message != null) {
+                Message command = input.message;
+                actionHandler(command);
+            } else if (input.action != null) {
+                Action action = input.action;
+                actionHandler(action);
+            }
         }
+
     }
 
     /**
@@ -121,9 +125,12 @@ public class SocketClientConnection implements ClientConnection, Runnable {
             new Thread(() ->{
                 while(isActive()){
                     try {
-                        Thread.sleep(5000);
-                        if(isActive())
+                        boolean gameStarted = clientID != null && server.getGameByID(clientID) != null && server.getGameByID(clientID).isStarted();
+                        if(gameStarted)
                             ping();
+                        Thread.sleep(Constants.PING_TIMEOUT_MS);
+                        if(gameStarted && isActive())
+                            checkPong();
 
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
@@ -154,6 +161,9 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         System.out.println("Debug: MESSAGE RECEIVED: " + command.getClass().getName());
         if (command instanceof LoginMessage) {
             setupConnection((LoginMessage) command);
+        }
+        else if (command instanceof PongMessage) {
+            pongReceived = true;
         }
     }
 
@@ -292,6 +302,17 @@ public class SocketClientConnection implements ClientConnection, Runnable {
         SerializedAnswer answer = new SerializedAnswer();
         answer.setServerAnswer(new PingMessage());
         sendSocketMessage(answer);
+    }
+
+    /**
+     * Method checkPong closes the connection if a pong response has not been received
+     */
+    private synchronized void checkPong(){
+        if(pongReceived)
+            pongReceived = false;
+        else{
+            close();
+        }
     }
 
     /**

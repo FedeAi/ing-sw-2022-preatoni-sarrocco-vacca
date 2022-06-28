@@ -108,6 +108,8 @@ public class Server {
      * @return GameHandler - the associated game handler.
      */
     public GameHandler getGameByID(int id) {
+        if(idMapClient.get(id) == null)
+            return null;
         return idMapClient.get(id).getGameHandler();
     }
 

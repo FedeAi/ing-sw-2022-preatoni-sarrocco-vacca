@@ -199,13 +199,13 @@ public class GameHandler {
      * @param leftNickname the name of the player that has left.
      * @see GameHandler#reEnterPlayer(String)
      */
-    public void endGame(String leftNickname) {
+    public synchronized void endGame(String leftNickname) { // TODO check synchronized
         stopWinningTimer();
         sendAll(new ConnectionMessage(PLAYER + " " + leftNickname + " left the game, the match will now end." +
                 "\nThanks for playing!", false));
 
         while (!game.getActivePlayers().isEmpty()) {
-            server.getClientByID(game.getPlayers().get(0).getID()).getConnection().close();
+            server.getClientByID(game.getActivePlayers().get(0).getID()).getConnection().close();
         }
         for(Player p : game.getPlayers()){
             server.unregisterClient(p.getID());
@@ -218,10 +218,10 @@ public class GameHandler {
      * @param id          the ID of the player that is leaving.
      */
     public synchronized void unregisterPlayer(int id) {
-        boolean isGameEnded = isEnded() || !isStarted() || isSetupPhase() || getActivePlayers().size() == 1
+        game.setPlayerConnected(id, false);
+        boolean isGameEnded = isEnded() || !isStarted() || isSetupPhase() || getActivePlayers().size() == 0
                 || game.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN;
         game.removeListeners(server.getClientByID(id));
-        game.setPlayerConnected(id, false);
         if (isGameEnded) {
             endGame(server.getNicknameByID(id));
         } else {
