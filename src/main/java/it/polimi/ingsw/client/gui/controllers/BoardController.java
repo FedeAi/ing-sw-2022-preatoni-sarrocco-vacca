@@ -97,6 +97,8 @@ public class BoardController extends GUIController implements PropertyChangeList
     HBox balanceContainer;
     @FXML
     Label status;
+    @FXML
+    HBox towers;
 
     private final ArrayList<Image> cloudImgs = new ArrayList<>();
     private final ArrayList<Pane> cloudsPane = new ArrayList<>();
@@ -152,7 +154,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
         //fill cloudToStudents
         cloudStudents.add(List.of(studentCloud1, studentCloud2, studentCloud3, studentCloud4));
-        //cloudStudents.add(List.of(studentCloud9, studentCloud10, studentCloud11, studentCloud12));
         cloudStudents.add(List.of(studentCloud5, studentCloud6, studentCloud7, studentCloud8));
         cloudStudents.add(List.of(studentCloud9, studentCloud10, studentCloud11, studentCloud12));
 
@@ -572,6 +573,17 @@ public class BoardController extends GUIController implements PropertyChangeList
                 });
             }
         }
+        towers.getChildren().clear();
+        Label numTowers = new Label();
+        numTowers.setText(": " + school.getNumTowers());
+        numTowers.setStyle("-fx-font-size: 30");
+        ImageView tower = new ImageView(towerImgs.get(school.getTowerColor()));
+        tower.setCache(true);
+        tower.setFitHeight(50);
+        tower.setFitWidth(50);
+        towers.getChildren().add(0, tower);
+        towers.getChildren().add(1, numTowers);
+        towers.setAlignment(Pos.CENTER);
     }
 
     /**
@@ -709,11 +721,14 @@ public class BoardController extends GUIController implements PropertyChangeList
                 case ACTION_CHOOSE_CLOUD -> s = "Please select a cloud.";
                 case GRANDMA_BLOCK_ISLAND -> s = "Please select an island to block.";
                 case HERALD_ACTIVE -> s = "Please select an island to calculate the influence on.";
-                case JOKER_SWAP_STUDENTS -> s = "Please swap a maximum of 3 students between the card and your school's entry.";
-                case MINSTREL_SWAP_STUDENTS -> s = "Please swap a maximum of 2 students between your school's entry and hall.";
+                case JOKER_SWAP_STUDENTS ->
+                        s = "Please swap a maximum of 3 students between the card and your school's entry.";
+                case MINSTREL_SWAP_STUDENTS ->
+                        s = "Please swap a maximum of 2 students between your school's entry and hall.";
                 case MONK_MOVE_STUDENT -> s = "Please move a student from the card to an island.";
                 case MUSHROOM_CHOOSE_COLOR -> s = "Please select a color to disable the influence calculation on.";
-                case PRINCESS_MOVE_STUDENT -> s = "Please select a student from the card to be moved to your school's hall.";
+                case PRINCESS_MOVE_STUDENT ->
+                        s = "Please select a student from the card to be moved to your school's hall.";
                 case THIEF_CHOOSE_COLOR -> s = "Please select a color to steal a maximum of 3 from each player's hall.";
             }
         } else {

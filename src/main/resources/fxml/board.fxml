@@ -99,6 +99,7 @@
                         <Pane fx:id="yellowLane" layoutX="144.5" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
                         <Pane fx:id="pinkLane" layoutX="202.0" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
                         <Pane fx:id="blueLane" layoutX="259.0" layoutY="274.0" prefHeight="378.0" prefWidth="45.5" />
+                        <HBox fx:id="towers" layoutX="55.0" layoutY="118.0" />
                      </children>
                   </AnchorPane>
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" StackPane.alignment="TOP_CENTER">
