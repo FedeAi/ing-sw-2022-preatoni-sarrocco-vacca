@@ -99,6 +99,7 @@
                         <Pane fx:id="yellowLane" layoutX="144.5" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
                         <Pane fx:id="pinkLane" layoutX="202.0" layoutY="274.0" prefHeight="378.0" prefWidth="56.5" />
                         <Pane fx:id="blueLane" layoutX="259.0" layoutY="274.0" prefHeight="378.0" prefWidth="45.5" />
+                        <HBox fx:id="towers" layoutX="55.0" layoutY="118.0" />
                      </children>
                   </AnchorPane>
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" StackPane.alignment="TOP_CENTER">
@@ -125,6 +126,11 @@
    <center>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
          <children>
+            <Label fx:id="status" text="Player ale is choosing his COLOR" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets top="15.0" />
+               </StackPane.margin>
+            </Label>
             <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" pickOnBounds="false" prefHeight="720.0" prefWidth="720.0" stylesheets="@../css/board.css">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
