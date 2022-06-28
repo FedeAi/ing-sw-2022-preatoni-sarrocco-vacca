@@ -6,6 +6,7 @@ import it.polimi.ingsw.constants.Character;
 import it.polimi.ingsw.constants.GameState;
 import it.polimi.ingsw.constants.Magician;
 import it.polimi.ingsw.constants.TowerColor;
+import it.polimi.ingsw.controller.rules.Rules;
 import it.polimi.ingsw.model.cards.AssistantCard;
 import it.polimi.ingsw.model.cards.characters.ReducedCharacterCard;
 import it.polimi.ingsw.model.Cloud;
@@ -40,9 +41,9 @@ import java.util.List;
 public class BoardController extends GUIController implements PropertyChangeListener {
 
     public static final String ENTRY_STUDENT_LISTENER = "selectSchoolStudent";
-    public static final String SCHOOL_HALL_LISTENER = "selectSchoolHall"; //ciao, Bella, mi senti?
-    public static final String SELECT_ISLAND_LISTENER = "selectIsland"; //ciao, Bella, mi senti?
-    public static final String SELECT_ASSISTANT_CARD_LISTENER = "selectAssistantCard"; //ciao, Bella, mi senti?
+    public static final String SCHOOL_HALL_LISTENER = "selectSchoolHall";
+    public static final String SELECT_ISLAND_LISTENER = "selectIsland";
+    public static final String SELECT_ASSISTANT_CARD_LISTENER = "selectAssistantCard";
     public static final String CLOUD_LISTENER = "selectCloud";
     public static final String CHARACTER_LISTENER = "character";
     public static final String CHARACTER_STUDENT_LISTENER = "characterStudent";
@@ -94,6 +95,8 @@ public class BoardController extends GUIController implements PropertyChangeList
     Label balance;
     @FXML
     HBox balanceContainer;
+    @FXML
+    Label status;
 
     private final ArrayList<Image> cloudImgs = new ArrayList<>();
     private final ArrayList<Pane> cloudsPane = new ArrayList<>();
@@ -130,7 +133,6 @@ public class BoardController extends GUIController implements PropertyChangeList
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         islandPanes.addAll(List.of(island0, island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11));
-        //cloudsPane.addAll(List.of(cloud0, cloud2, cloud1));
         cloudsPane.addAll(List.of(cloud0, cloud1, cloud2));
         studentEntryPanes.addAll(List.of(entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9));
         // fill colorToHallStudents Map
@@ -197,6 +199,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         updateProfessors();
         updateHand();
         showPlayers();
+        updateStatus();
         initCompleted = true;
         changeSupport.addPropertyChangeListener(new EventsToActions(gui));
     }
@@ -686,6 +689,48 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    public void updateStatus() {
+        GameState currentState = gui.getModelView().getGameState();
+        String s = "";
+        String nickname = gui.getModelView().getPlayerName();
+        if (gui.getModelView().amIRoundOwner()) {
+            switch (currentState) {
+                case PLANNING_CHOOSE_CARD -> s = "Please select a card.";
+                case ACTION_MOVE_STUDENTS -> {
+                    int currentEntry = gui.getModelView().getPlayerMapSchool().get(nickname).getStudentsEntryList().size();
+                    int maxStudents = Rules.getStudentsPerTurn(gui.getModelView().getPlayers().size());
+                    int diff = Rules.getEntrySize(gui.getModelView().getPlayers().size()) - currentEntry;
+                    s = "Please move your students. You have moved "
+                            + diff + " out of " + maxStudents + " students this turn.";
+                }
+                case ACTION_MOVE_MOTHER ->
+                        s = "Please select and island to move mother nature to. Available movement is from 1 to " +
+                                gui.getModelView().getPlayedCards().get(nickname).getMaxMoves();
+                case ACTION_CHOOSE_CLOUD -> s = "Please select a cloud.";
+                case GRANDMA_BLOCK_ISLAND -> s = "Please select an island to block.";
+                case HERALD_ACTIVE -> s = "Please select an island to calculate the influence on.";
+                case JOKER_SWAP_STUDENTS -> s = "Please swap a maximum of 3 students between the card and your school's entry.";
+                case MINSTREL_SWAP_STUDENTS -> s = "Please swap a maximum of 2 students between your school's entry and hall.";
+                case MONK_MOVE_STUDENT -> s = "Please move a student from the card to an island.";
+                case MUSHROOM_CHOOSE_COLOR -> s = "Please select a color to disable the influence calculation on.";
+                case PRINCESS_MOVE_STUDENT -> s = "Please select a student from the card to be moved to your school's hall.";
+                case THIEF_CHOOSE_COLOR -> s = "Please select a color to steal a maximum of 3 from each player's hall.";
+            }
+        } else {
+            nickname = gui.getModelView().getRoundOwner();
+            s = "Player " + nickname;
+            switch (currentState) {
+                case PLANNING_CHOOSE_CARD -> s = s + " is selecting his card.";
+                case ACTION_MOVE_STUDENTS -> s = s + " is moving his students.";
+                case ACTION_MOVE_MOTHER -> s = s + " is moving mother nature.";
+                case ACTION_CHOOSE_CLOUD -> s = s + " is selecting a cloud.";
+                default -> s = s + " is playing.";
+            }
+        }
+        status.setStyle("-fx-font-size: 20");
+        status.setText(s);
+    }
+
     /**
      * Method getProfsFromNickname returns the professor of a given player.
      *
@@ -762,6 +807,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         GameState state = gui.getModelView().getGameState();
         if (state != GameState.GAME_ROOM && state != GameState.SETUP_CHOOSE_MAGICIAN && initCompleted) {
             switch (evt.getPropertyName()) {
+                case ServerMessageHandler.GAME_STATE_LISTENER -> updateStatus();
                 case ServerMessageHandler.BALANCE_LISTENER -> updateBalance();
                 case ServerMessageHandler.CLOUDS_LISTENER -> updateClouds();
                 case ServerMessageHandler.HAND_LISTENER -> updateHand();
