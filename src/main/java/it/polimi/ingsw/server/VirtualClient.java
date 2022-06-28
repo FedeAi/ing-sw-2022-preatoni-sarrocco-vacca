@@ -98,7 +98,7 @@ public class VirtualClient implements PropertyChangeListener {
      * @return true if the client is connected at the moment, false otherwise.
      */
     public boolean isConnected() {
-        socketClientConnection.ping();
+//        socketClientConnection.ping();
 //        send(0);
         return socketClientConnection.isActive();      // TODO check the correctness
     }

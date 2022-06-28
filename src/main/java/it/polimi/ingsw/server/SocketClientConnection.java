@@ -122,7 +122,9 @@ public class SocketClientConnection implements ClientConnection, Runnable {
                 while(isActive()){
                     try {
                         Thread.sleep(5000);
-                        ping();
+                        if(isActive())
+                            ping();
+
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -287,16 +289,9 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * Method ping allows the server to check if a client is still connected.
      */
     public void ping() {
-        try {
-            outputStream.reset();
-            SerializedAnswer answer = new SerializedAnswer();
-            answer.setServerAnswer(new PingMessage());
-            outputStream.writeObject(answer);
-            outputStream.flush();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            close();
-        }
+        SerializedAnswer answer = new SerializedAnswer();
+        answer.setServerAnswer(new PingMessage());
+        sendSocketMessage(answer);
     }
 
     /**
