@@ -250,6 +250,12 @@ public class GUI extends Application implements UI {
                 String winner = ((WinMessage) evt.getNewValue()).getMessage();
                 ((WinnerController) getControllerFromName(END)).printWinner(winner);
             }
+            case SocketListener.CONNECTION_CLOSE_LISTENER -> {
+                Platform.runLater(() -> changeScene(END));
+                String msg = ((WinMessage) evt.getNewValue()).getMessage();
+                ((WinnerController) getControllerFromName(END)).printMsg(msg);
+
+            }
         }
     }
 }

@@ -22,6 +22,9 @@ public class SocketListener implements Runnable {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final ObjectInputStream inputStream;
 
+    public static final String CONNECTION_CLOSE_LISTENER = "connectionClosed";
+
+
     /**
      * Constructor SocketListener creates a new SocketListener instance.
      *
@@ -68,7 +71,7 @@ public class SocketListener implements Runnable {
                         .getGui()
                         .propertyChange(
                                 new PropertyChangeEvent(
-                                        this, "connectionClosed", null, modelView.getServerAnswer().getMessage()));
+                                        this, CONNECTION_CLOSE_LISTENER, null, modelView.getServerAnswer().getMessage()));
             } else {
                 System.exit(0);
             }

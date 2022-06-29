@@ -50,11 +50,11 @@ public class WinnerController extends GUIController {
     }
 
     /**
-     * Method printEnd prints when a game ends before starting. It prints the nickname of the player that has left the game.
+     * Method printMsg prints a message from the server.
      *
-     * @param player the nickname of the player that has left the game.
+     * @param msg the message to show.
      */
-    public void printEnd(String player) {
-        display.setText("Player" + player + " has left the game. The game has ended.");
+    public void printMsg(String msg) {
+        display.setText(msg);
     }
 }
