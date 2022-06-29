@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -282,7 +283,7 @@
                   </Pane>
                   <Pane fx:id="cloud2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
-                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../graphics/board/cloud_3p.png" />
                            </image>
@@ -367,6 +368,7 @@
                   <Label fx:id="balance" />
                </children>
             </HBox>
+            <ProgressBar fx:id="progressBar" prefHeight="50.0" prefWidth="674.0" style="-fx-padding: 8;" visible="false" />
          </children>
       </StackPane>
    </center>

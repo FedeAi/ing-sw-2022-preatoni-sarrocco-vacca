@@ -791,11 +791,11 @@ public class BoardController extends GUIController implements PropertyChangeList
         if (evt.getSource() instanceof Pane) {
             Pane pane = (Pane) evt.getSource();
             if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                pane.setStyle("-fx-opacity: 0.8; -fx-effect: dropshadow(three-pass-box, rgba(59,52,218,0.8), 20, 0, 0, 0);");
+                pane.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8)));  // Shadow
                 pane.setScaleX(1.25);
                 pane.setScaleY(1.25);
             } else {
-                pane.setStyle("-fx-opacity: 1");
+                pane.setEffect(null);
                 pane.setScaleX(1);
                 pane.setScaleY(1);
             }
@@ -803,11 +803,12 @@ public class BoardController extends GUIController implements PropertyChangeList
         } else if (evt.getSource() instanceof ImageView) {
             ImageView view = (ImageView) evt.getSource();
             if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                view.setStyle("-fx-opacity: 0.8; -fx-border-radius:50%; dropshadow(three-pass-box, rgba(26,17,255,0.8), 10, 0, 0, 0);");
+
+                view.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8)));  // Shadow
                 view.setScaleX(1.25);
                 view.setScaleY(1.25);
             } else {
-                view.setStyle("-fx-opacity: 1");
+                view.setEffect(null);
                 view.setScaleX(1);
                 view.setScaleY(1);
             }

@@ -153,6 +153,7 @@ public class CLI implements UI {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        listeners.firePropertyChange(evt);
         switch (evt.getPropertyName()) {
             case ServerMessageHandler.GAME_ERROR_LISTENER ->
                     System.out.println(CLIColors.ANSI_RED + ((GameError) evt.getNewValue()).getMessage() + CLIColors.RESET);
