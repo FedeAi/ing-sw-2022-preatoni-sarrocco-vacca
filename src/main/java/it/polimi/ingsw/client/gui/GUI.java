@@ -223,14 +223,7 @@ public class GUI extends Application implements UI {
             case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> Platform.runLater(() -> {
                 changeScene(MAGIs);
             });
-            case ServerMessageHandler.PLAYERS_REJOIN_LISTENER -> {
-                if (((List<String>) evt.getNewValue()).contains(getModelView().getPlayerName())) {
-                    // Rejoin an existing game.
-                    Platform.runLater(() -> {
-                        changeScene(BOARD);
-                    });
-                }
-            }
+
             // Magician selection scene
             case ServerMessageHandler.GAME_STATE_LISTENER -> {
                 if (modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()) {
@@ -238,11 +231,16 @@ public class GUI extends Application implements UI {
                         changeScene(MAGIs);
                     });
                 }
+
                 // Starts the main game board
-                if (modelView.getGameState() == GameState.PLANNING_CHOOSE_CARD && modelView.getPrevGameState() == GameState.SETUP_CHOOSE_MAGICIAN) {
-                    Platform.runLater(() -> {
-                        changeScene(BOARD);
-                    });
+                // If a players change is detected, and we are in game phase
+                if (!GameState.getSetupStates().contains(modelView.getGameState())) {
+                    // if not in BOARD scene --> we are in waiting to be re-admitted
+                    if(currentScene != nameMapScene.get(BOARD)){
+                        Platform.runLater(() -> {
+                            changeScene(BOARD);
+                        });
+                    }
                 }
             }
             case ServerMessageHandler.WIN_MESSAGE_LISTENER -> {
@@ -252,7 +250,7 @@ public class GUI extends Application implements UI {
             }
             case SocketListener.CONNECTION_CLOSE_LISTENER -> {
                 Platform.runLater(() -> changeScene(END));
-                String msg = ((WinMessage) evt.getNewValue()).getMessage();
+                String msg = "Connection closed by the server. Quitting...";
                 ((WinnerController) getControllerFromName(END)).printMsg(msg);
 
             }

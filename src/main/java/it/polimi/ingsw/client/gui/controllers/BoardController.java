@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.ServerMessageHandler;
+import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.constants.Color;
 import it.polimi.ingsw.constants.Character;
 import it.polimi.ingsw.constants.GameState;
@@ -17,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -51,7 +53,11 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     @FXML
     Pane island0, island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11;
+    @FXML
+    GridPane islandGridPane;
 
+    @FXML
+    StackPane schoolPane;
     // entry students (school)
     @FXML
     Pane entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9;
@@ -99,6 +105,9 @@ public class BoardController extends GUIController implements PropertyChangeList
     Label status;
     @FXML
     HBox towers;
+
+    @FXML
+    ProgressBar progressBar;
 
     private final ArrayList<Image> cloudImgs = new ArrayList<>();
     private final ArrayList<Pane> cloudsPane = new ArrayList<>();
@@ -704,6 +713,21 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
+    private void updateProgressBar(){
+        if((gui.getModelView().getConnectedPlayers().size() == 1) ||
+            (!gui.getModelView().getConnectedPlayers().contains(gui.getModelView().getPlayerName())))
+        {
+            progressBar.setVisible(true);
+            islandGridPane.setOpacity(0.5);
+            schoolPane.setOpacity(0.5);
+        }
+        else{
+            progressBar.setVisible(false);
+            islandGridPane.setOpacity(1);
+            schoolPane.setOpacity(1);
+        }
+    }
+
     public void updateStatus() {
         GameState currentState = gui.getModelView().getGameState();
         String s = "";
@@ -835,9 +859,11 @@ public class BoardController extends GUIController implements PropertyChangeList
                 case ServerMessageHandler.PROFS_LISTENER -> updateProfessors();
                 case ServerMessageHandler.PLAYED_CARD_LISTENER -> updatePlayedCards();
                 case ServerMessageHandler.CHARACTERS_LISTENER -> updateCharacters();
-                case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER, ServerMessageHandler.PLAYERS_STATUS_LISTENER ->
-                        updatePlayers();
+                case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER, ServerMessageHandler.PLAYERS_STATUS_LISTENER -> {
+                    updatePlayers();
+                }
             }
+            updateProgressBar();
         }
     }
 }

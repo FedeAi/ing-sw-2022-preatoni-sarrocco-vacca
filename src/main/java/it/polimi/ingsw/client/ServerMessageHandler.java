@@ -147,8 +147,9 @@ public class ServerMessageHandler {
         } else if (answer instanceof PlayersStatusMessage message) {
             modelView.setConnectedPlayers(message.getConnectedPlayers());
             modelView.setPlayers(message.getPlayers());
-            if (message.getRejoiningPlayers().size() > 0)
+            if (message.getRejoiningPlayers().size() > 0){
                 view.firePropertyChange(PLAYERS_REJOIN_LISTENER, null, message.getRejoiningPlayers());
+            }
             view.firePropertyChange(PLAYERS_STATUS_LISTENER, null, message);
         }
     }

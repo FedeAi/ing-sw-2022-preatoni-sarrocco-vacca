@@ -1,19 +1,14 @@
 package it.polimi.ingsw.constants;
 
+import java.util.List;
+
 /**
  * Class GameState represents all the possibile internal game states.
  */
 public enum GameState {
     GAME_ROOM,
     INITIAL_FIRE_COMPLETED,
-    // FIXME THESE ARENT USED (?)
-    GAME_STARTED,
-    GAME_ENDED,
-    ROUND_STARTED,
 
-    ROUND_ENDED,
-    TURN_STARTED,
-    TURN_ENDED,
     /* initial magician selection phase */
     SETUP_CHOOSE_MAGICIAN,
 
@@ -33,5 +28,9 @@ public enum GameState {
     MONK_MOVE_STUDENT,
     GRANDMA_BLOCK_ISLAND,
     MINSTREL_SWAP_STUDENTS,
-    THIEF_CHOOSE_COLOR,
+    THIEF_CHOOSE_COLOR;
+
+    public static List<GameState> getSetupStates(){
+        return List.of(GAME_ROOM, INITIAL_FIRE_COMPLETED, SETUP_CHOOSE_MAGICIAN);
+    }
 }
