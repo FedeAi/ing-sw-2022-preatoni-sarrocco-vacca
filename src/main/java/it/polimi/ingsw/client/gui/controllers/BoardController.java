@@ -170,6 +170,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         playerRoundOwners.addAll(List.of(roundOwner0, roundOwner1, roundOwner2));
 
         loadAssets();
+        status.setFont(font);
     }
 
     /**
@@ -575,6 +576,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
         towers.getChildren().clear();
         Label numTowers = new Label();
+        numTowers.setFont(font);
         numTowers.setText(": " + school.getNumTowers());
         numTowers.setStyle("-fx-font-size: 30");
         ImageView tower = new ImageView(towerImgs.get(school.getTowerColor()));
@@ -742,7 +744,7 @@ public class BoardController extends GUIController implements PropertyChangeList
                 default -> s = s + " is playing.";
             }
         }
-        status.setStyle("-fx-font-size: 20");
+        status.setFont(font);
         status.setText(s);
     }
 

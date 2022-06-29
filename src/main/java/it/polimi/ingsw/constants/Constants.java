@@ -104,7 +104,7 @@ public class Constants {
     public static boolean validateIP(String ip) {
         boolean validate = false;
         ip = ip.toLowerCase();
-        Pattern p = Pattern.compile("\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){3}\\b"); //pattern for validate the ip address
+        Pattern p = Pattern.compile("^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\\.(?!$)|$)){4}$"); //pattern for validate the ip address
         Matcher m = p.matcher(ip);
         if (m.matches() || ip.equals("localhost")) {
             validate = true;

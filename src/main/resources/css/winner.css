@@ -1,0 +1,28 @@
+.backgroundWinning{
+    -fx-background-image: url("../graphics/backgrounds/skyforLoadandWin.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+.winner{
+    -fx-font-size: 40 px;
+    -fx-font-weight: bold;
+    -fx-font-family: Papyrus;
+}
+.button{
+    -fx-background-image: url("../graphics/perg2.png");
+    -fx-background-size: stretch;
+    -fx-background-color: transparent;
+    -fx-font-family: Papyrus;
+    -fx-font-size: 24px;
+}
+.button:hover{
+    -fx-opacity: 0.9;
+}
+.button:pressed{
+    -fx-background-image: url("../graphics/perg_clicked.png");
+    -fx-background-size: stretch;
+    -fx-background-color: transparent;
+    -fx-font-family: Papyrus;
+    -fx-font-size: 24px;
+}
