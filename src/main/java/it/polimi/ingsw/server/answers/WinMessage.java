@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.answers;
 
 /**
- * Class ReqPlayersMessage is a type of Answer used for sending the game winner to all the players.
+ * Class WinMessage is a type of Answer used for sending the game winner to all the players.
  */
 public class WinMessage implements Answer {
     String message;
@@ -16,7 +16,7 @@ public class WinMessage implements Answer {
     }
 
     /**
-     * Method getMessage returns the ReqPlayersMessage's message.
+     * Method getMessage returns the nickname of the winner.
      */
     @Override
     public String getMessage() {

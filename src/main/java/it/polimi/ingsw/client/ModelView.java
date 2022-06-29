@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import it.polimi.ingsw.client.cli.CLI;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.constants.Color;
+import it.polimi.ingsw.constants.Constants;
 import it.polimi.ingsw.constants.GameState;
 import it.polimi.ingsw.constants.Magician;
 import it.polimi.ingsw.model.cards.AssistantCard;
@@ -460,21 +461,5 @@ public class ModelView implements Serializable {
      */
     public boolean amIRoundOwner() {
         return Objects.equals(roundOwner, playerName);
-    }
-
-    /**
-     * Method clear regenerates the modelView instance after the game end.
-     */
-    public void clear() {
-        this.playedCards = new HashMap<String, AssistantCard>();
-        this.playerMapSchool = new HashMap<String, School>();
-        this.connectedPlayers = new ArrayList<>();
-        playerName = null;
-        roundOwner = null;
-        professors = new HashMap<>();
-        playerMapMagician = new HashMap<>();
-        mapMagicianPlayer = new HashMap<>();
-        expert = false;
-        gameState = GameState.GAME_ROOM;
     }
 }

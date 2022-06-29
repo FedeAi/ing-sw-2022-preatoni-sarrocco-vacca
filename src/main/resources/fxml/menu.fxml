@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <StackPane prefHeight="598.0" prefWidth="1037.0" styleClass="mainMenu" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.MenuController">
    <children>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
@@ -32,7 +31,7 @@
             <Image url="@../graphics/Cranio_logo.png" />
          </image>
       </ImageView>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" styleClass="nomi" stylesheets="@../css/menu.css" StackPane.alignment="BOTTOM_LEFT">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#about" styleClass="nomi" stylesheets="@../css/menu.css" StackPane.alignment="BOTTOM_LEFT">
          <children>
             <Label text="Davide Preatoni">
                <HBox.margin>

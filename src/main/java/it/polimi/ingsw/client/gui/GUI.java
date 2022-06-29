@@ -2,7 +2,9 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.*;
 import it.polimi.ingsw.client.gui.controllers.GUIController;
+import it.polimi.ingsw.client.gui.controllers.WinnerController;
 import it.polimi.ingsw.constants.GameState;
+import it.polimi.ingsw.server.answers.WinMessage;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -245,7 +247,8 @@ public class GUI extends Application implements UI {
             }
             case ServerMessageHandler.WIN_MESSAGE_LISTENER -> {
                 Platform.runLater(() -> changeScene(END));
-                modelView.clear();
+                String winner = ((WinMessage) evt.getNewValue()).getMessage();
+                ((WinnerController) getControllerFromName(END)).printWinner(winner);
             }
         }
     }

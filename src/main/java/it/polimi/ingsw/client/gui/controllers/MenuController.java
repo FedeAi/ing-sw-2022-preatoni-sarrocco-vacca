@@ -22,11 +22,11 @@ public class MenuController extends GUIController {
      */
     @FXML
     public void play() {
-        gui.changeScene(GUI.SETUP);
+        gui.changeScene(GUI.LOGIN);
     }
 
     /**
-     * Method about show the project's github repo when the label that contains the names is clicked.
+     * Method about shows the project's GitHub repo when the label that contains the names is clicked.
      */
     @FXML
     public void about() throws URISyntaxException, IOException {
@@ -46,6 +46,5 @@ public class MenuController extends GUIController {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 }
