@@ -168,7 +168,7 @@ public class CLI implements UI {
                 PlayedCardMessage msg = (PlayedCardMessage) evt.getNewValue();
                 System.out.println(CLIColors.ANSI_GREEN + "\t" + msg.getPlayer() + " played: " + msg.getMessage() + CLIColors.RESET);
             }
-            case ServerMessageHandler.WIN_MESSAGE_LISTER -> {
+            case ServerMessageHandler.WIN_MESSAGE_LISTENER -> {
                 WinMessage msg = (WinMessage) evt.getNewValue();
                 printWinner(msg.getMessage());
             }

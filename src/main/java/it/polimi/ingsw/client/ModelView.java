@@ -461,4 +461,20 @@ public class ModelView implements Serializable {
     public boolean amIRoundOwner() {
         return Objects.equals(roundOwner, playerName);
     }
+
+    /**
+     * Method clear regenerates the modelView instance after the game end.
+     */
+    public void clear() {
+        this.playedCards = new HashMap<String, AssistantCard>();
+        this.playerMapSchool = new HashMap<String, School>();
+        this.connectedPlayers = new ArrayList<>();
+        playerName = null;
+        roundOwner = null;
+        professors = new HashMap<>();
+        playerMapMagician = new HashMap<>();
+        mapMagicianPlayer = new HashMap<>();
+        expert = false;
+        gameState = GameState.GAME_ROOM;
+    }
 }

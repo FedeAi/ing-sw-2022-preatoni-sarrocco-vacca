@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.gui.controllers;
 
+import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.server.answers.WinMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,7 +10,11 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * WinnerController class represents the Game end scene logic.
+ */
 public class WinnerController extends GUIController {
+
     @FXML
     Label display;
     @FXML
@@ -18,16 +24,19 @@ public class WinnerController extends GUIController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         display.setText("");
         display.setFont(font);
-
     }
-//TODO button function
 
-//    @FXML
-//    public void backMenu() {
-//
-//    }
-//    @FXML
-//    public void close(){
-//
-//    }
+    @FXML
+    public void backMenu() {
+        gui.changeScene(GUI.MENU);
+    }
+
+    @FXML
+    public void close() {
+        gui.stop();
+    }
+
+    public void printMessage() {
+        display.setText("");
+    }
 }

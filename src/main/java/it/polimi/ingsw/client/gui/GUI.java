@@ -38,6 +38,7 @@ public class GUI extends Application implements UI {
     public static final String LOGIN = "login.fxml";
     public static final String MAGIs = "magicians.fxml";
     public static final String SETUP = "setup.fxml";
+    public static final String END = "winner.fxml";
 
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final ModelView modelView;
@@ -105,7 +106,7 @@ public class GUI extends Application implements UI {
      * Method setup creates the Scene map and sets the Main Menu scene.
      */
     public void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, LOGIN, BOARD, LOADER, SETUP, MAGIs));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(MENU, LOGIN, BOARD, LOADER, SETUP, MAGIs, END));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -241,6 +242,10 @@ public class GUI extends Application implements UI {
                         changeScene(BOARD);
                     });
                 }
+            }
+            case ServerMessageHandler.WIN_MESSAGE_LISTENER -> {
+                Platform.runLater(() -> changeScene(END));
+                modelView.clear();
             }
         }
     }

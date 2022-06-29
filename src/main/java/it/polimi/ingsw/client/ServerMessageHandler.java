@@ -21,7 +21,7 @@ public class ServerMessageHandler {
     public static final String GAME_ERROR_LISTENER = "gameError";
     public static final String REQ_PLAYERS_LISTENER = "reqPlayers";
     public static final String CUSTOM_MESSAGE_LISTENER = "customMessage";
-    public static final String WIN_MESSAGE_LISTER = "winMessage";
+    public static final String WIN_MESSAGE_LISTENER = "winMessage";
     public static final String NEXT_ROUNDOWNER_LISTENER = "roundOwner";
     public static final String REQ_MAGICIAN_LISTENER = "reqMagicians";
     public static final String GAME_STATE_LISTENER = "stateChange";
@@ -92,7 +92,7 @@ public class ServerMessageHandler {
         } else if (answer instanceof CustomMessage) {
             view.firePropertyChange(CUSTOM_MESSAGE_LISTENER, null, answer);
         } else if (answer instanceof WinMessage) {
-            view.firePropertyChange(WIN_MESSAGE_LISTER, null, answer);
+            view.firePropertyChange(WIN_MESSAGE_LISTENER, null, answer);
         }else if (answer instanceof PingMessage) {
             view.firePropertyChange("action", null, "PONG");
         }
