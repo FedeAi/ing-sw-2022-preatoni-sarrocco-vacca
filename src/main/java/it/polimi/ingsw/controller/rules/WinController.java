@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller.rules;
 
 import it.polimi.ingsw.constants.Color;
+import it.polimi.ingsw.constants.Constants;
+import it.polimi.ingsw.constants.GameState;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.islands.IslandContainer;
 import it.polimi.ingsw.model.Player;
@@ -19,17 +21,21 @@ public class WinController {
      * @param game the game model reference.
      */
     public static String check(Game game) {
+
         for (Player p : game.getPlayers()) {
-            if (p.getSchool().getNumTowers() <= 0) {
+            if (p.getSchool().getNumTowers() <= 0) {  //first way to win has finished the tower
                 return p.getNickname();
             }
-            if (p.getCards().isEmpty()) {
-                winner(game);
+            //another way to win has finished the cards but i should wait the end of the turn
+            if (p.getCards().isEmpty() && game.getGameState() == GameState.PLANNING_CHOOSE_CARD) {
+                return winner(game);
             }
         }
-        if (game.getIslandContainer().size() <= 3) {
+        //another way to win has finished the cards but i should wait the end of the turn
+        if (game.getIslandContainer().size() <= 3 && game.getGameState() == GameState.PLANNING_CHOOSE_CARD) {
             return winner(game);
         }
+        //the last fpr the win is has finished the available student in the bag
         if (game.getBag().getStudents().isEmpty()) {
             return winner(game);
         }

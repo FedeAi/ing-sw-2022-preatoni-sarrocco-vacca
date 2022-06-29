@@ -49,7 +49,7 @@ public class LoginController extends GUIController {
     @FXML
     public void join() {
         ip.setText("localhost");
-        port.setText("8082");
+        port.setText("8081");
         if (username.getText().equals("") || ip.getText().equals("") || port.getText().equals("")) {
             error.setText("Error: missing parameters!");
             sleepAndExec(() -> error.setText(""));

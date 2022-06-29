@@ -188,6 +188,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_3p.png")));
             cloudImgs.add(new Image(getClass().getResourceAsStream("/graphics/board/cloud_3p.png")));
         }
+
         blockImg = new Image(getClass().getResourceAsStream(("/graphics/characters/deny_island_icon.png")));
         if (gui.getModelView().getExpert()) {
             coinImg = new Image(getClass().getResourceAsStream("/graphics/board/coin.png"));
@@ -277,12 +278,12 @@ public class BoardController extends GUIController implements PropertyChangeList
         // empty all clouds panes
         assert nCloud <= cloudsPane.size();
         for (int i = 0; i < nCloud; i++) {
-            cloudsPane.get(i).setPrefHeight(Control.USE_COMPUTED_SIZE);
-            cloudsPane.get(i).setPrefWidth(Control.USE_COMPUTED_SIZE);
+            cloudsPane.get(i).setPrefHeight(100);
+            cloudsPane.get(i).setPrefWidth(100);
             ImageView backCloud = new ImageView();
             backCloud.setImage(cloudImgs.get(i));
-            backCloud.fitWidthProperty().bind(cloudsPane.get(i).widthProperty());
-            backCloud.fitHeightProperty().bind(cloudsPane.get(i).heightProperty());
+            backCloud.setFitHeight(100);
+            backCloud.setFitWidth(100);
             cloudsPane.get(i).setOnMouseEntered(this::onSelectScaleColor);
             cloudsPane.get(i).setOnMouseExited(this::onSelectScaleColor);
             backCloud.setSmooth(true);

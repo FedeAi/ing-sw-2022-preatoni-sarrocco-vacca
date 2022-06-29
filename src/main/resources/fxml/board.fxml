@@ -267,43 +267,43 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Pane fx:id="cloud0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Pane fx:id="cloud0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
-                        <Pane fx:id="studentCloud1" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud2" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud3" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud4" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../graphics/board/cloud_3p.png" />
                            </image>
                         </ImageView>
+                        <Pane fx:id="studentCloud1" layoutX="7.0" layoutY="8.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="studentCloud2" layoutX="58.0" layoutY="8.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="studentCloud3" layoutX="6.0" layoutY="58.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="studentCloud4" layoutX="58.0" layoutY="58.0" prefHeight="35.0" prefWidth="35.0" />
                      </children>
                   </Pane>
-                  <Pane fx:id="cloud2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Pane fx:id="cloud2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
-                        <Pane fx:id="studentCloud9" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud10" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud11" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud12" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../graphics/board/cloud_2p.png" />
+                              <Image url="@../graphics/board/cloud_3p.png" />
                            </image>
                         </ImageView>
+                        <Pane fx:id="studentCloud9" layoutX="7.0" layoutY="8.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="studentCloud10" layoutX="58.0" layoutY="8.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="studentCloud11" layoutX="6.0" layoutY="58.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="studentCloud12" layoutX="58.0" layoutY="58.0" prefHeight="35.0" prefWidth="35.0" />
                      </children>
                   </Pane>
-                  <Pane fx:id="cloud1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Pane fx:id="cloud1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
-                        <Pane fx:id="studentCloud5" layoutX="18.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud6" layoutX="91.0" layoutY="18.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud7" layoutX="18.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
-                        <Pane fx:id="studentCloud8" layoutX="91.0" layoutY="95.0" prefHeight="40.0" prefWidth="40.0" />
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../graphics/board/cloud3.png" />
+                              <Image url="@../graphics/board/cloud_3p.png" />
                            </image>
                         </ImageView>
+                        <Pane fx:id="studentCloud5" layoutX="7.0" layoutY="8.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="studentCloud6" layoutX="58.0" layoutY="8.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="studentCloud7" layoutX="6.0" layoutY="58.0" prefHeight="35.0" prefWidth="35.0" />
+                        <Pane fx:id="studentCloud8" layoutX="58.0" layoutY="58.0" prefHeight="35.0" prefWidth="35.0" />
                      </children>
                   </Pane>
                </children>
