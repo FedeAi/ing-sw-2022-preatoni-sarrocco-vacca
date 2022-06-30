@@ -138,6 +138,9 @@ public class EventsToActions implements PropertyChangeListener {
             if (activeCards.contains(Character.PRINCESS)) {
                 return "PRINCESS " + currEvt.getNewValue().toString();
             }
+            if (activeCards.contains(Character.THIEF)) {
+                return "THIEF " + currEvt.getNewValue().toString();
+            }
         }
 
         if (Objects.equals(currEvt.getPropertyName(), BoardController.SELECT_ISLAND_LISTENER)) {
