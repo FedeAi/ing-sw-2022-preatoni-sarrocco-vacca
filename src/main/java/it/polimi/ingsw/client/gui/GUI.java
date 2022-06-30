@@ -240,7 +240,7 @@ public class GUI extends Application implements UI {
                 // If a players change is detected, and we are in game phase
                 if (!GameState.getSetupStates().contains(modelView.getGameState()) && !modelView.getGameState().equals(GameState.GAME_ENDED)) {
                     // if not in BOARD scene --> we are in waiting to be re-admitted
-                    if (currentScene != nameMapScene.get(BOARD) || currentScene != nameMapScene.get(END)) {
+                    if (currentScene != nameMapScene.get(BOARD) && currentScene != nameMapScene.get(END)) {
                         Platform.runLater(() -> {
                             changeScene(BOARD);
                         });
