@@ -83,9 +83,7 @@ public class EventsToActions implements PropertyChangeListener {
                     }
                 }
             }
-            if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)) {
-                action = handleCharacterCardsEvents();
-            }
+
             if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_LISTENER)) {
                 int cardIndex = (int) currEvt.getNewValue();
                 if (gui.getModelView().getCharacterCards().get(cardIndex).isActive) {
@@ -95,6 +93,10 @@ public class EventsToActions implements PropertyChangeListener {
                 }
 
             }
+
+            if(!handleCharacterCardsEvents().equals(""))
+                action = handleCharacterCardsEvents();
+
             if (!action.equals("")) {
                 final String actionToSend = action;
                 Platform.runLater(() -> {
@@ -114,24 +116,33 @@ public class EventsToActions implements PropertyChangeListener {
     private String handleCharacterCardsEvents() {
         List<Character> activeCards = gui.getModelView().getCharacterCards().stream()
                 .filter(c -> c.isActive).map(c -> c.type).toList();
-        if (Objects.equals(prevEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)
-                && Objects.equals(currEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)) {
-            if (activeCards.contains(Character.JOKER)) {
-                return "JOKER " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
+        if(prevEvt !=null){
+            if (Objects.equals(prevEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)
+                    && Objects.equals(currEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)) {
+                if (activeCards.contains(Character.JOKER)) {
+                    return "JOKER " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
+                }
+            }
+            if (Objects.equals(prevEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)
+                    && Objects.equals(currEvt.getPropertyName(), BoardController.SCHOOL_HALL_LISTENER)) {
+                if (activeCards.contains(Character.MINSTREL)) {
+                    return "MINSTREL " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
+                }
             }
         }
-        if (Objects.equals(prevEvt.getPropertyName(), BoardController.ENTRY_STUDENT_LISTENER)
-                && Objects.equals(currEvt.getPropertyName(), BoardController.SCHOOL_HALL_LISTENER)) {
-            if (activeCards.contains(Character.MINSTREL)) {
-                return "MINSTREL " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
-            }
-        }
+
         if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)) {
             if (activeCards.contains(Character.MUSHROOM)) {
                 return "MUSHROOM " + currEvt.getNewValue().toString();
             }
             if (activeCards.contains(Character.PRINCESS)) {
                 return "PRINCESS " + currEvt.getNewValue().toString();
+            }
+        }
+
+        if (Objects.equals(currEvt.getPropertyName(), BoardController.SELECT_ISLAND_LISTENER)) {
+            if (activeCards.contains(Character.GRANDMA)) {
+                return "GRANDMA " + currEvt.getNewValue().toString();
             }
         }
         return "";
