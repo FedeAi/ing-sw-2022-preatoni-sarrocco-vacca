@@ -460,7 +460,8 @@ public class BoardController extends GUIController implements PropertyChangeList
      * @param hasMother the flag determines if motherNature is present on the island
      */
     private Node buildIsland(Island island, int index, boolean hasMother) {
-        ImageView mother = null;
+        ImageView motherImgV = null;
+        ImageView blockedImgV = null;
         StackPane pane = new StackPane();
         pane.setAlignment(Pos.CENTER);
         // island background
@@ -482,10 +483,10 @@ public class BoardController extends GUIController implements PropertyChangeList
                 HBox hBox = new HBox();
                 hBox.setAlignment(Pos.CENTER);
                 // student image
-                ImageView studImg = new ImageView(entry.getValue());
-                studImg.setFitWidth(15);
-                studImg.setPreserveRatio(true);
-                hBox.getChildren().add(studImg);
+                ImageView studImgV = new ImageView(entry.getValue());
+                studImgV.setFitWidth(15);
+                studImgV.setPreserveRatio(true);
+                hBox.getChildren().add(studImgV);
                 // student label
                 Label label = new Label();
                 Font font = new Font("System Bold", 10);
@@ -501,13 +502,13 @@ public class BoardController extends GUIController implements PropertyChangeList
         int numTower = island.getNumTower();
         if (numTower > 0) {
             TowerColor color = gui.getModelView().getPlayerMapSchool().get(island.getOwner()).getTowerColor();
-            ImageView towerImg = new ImageView(towerImgs.get(color));
-            towerImg.setFitWidth(30);
-            towerImg.setPreserveRatio(true);
+            ImageView towerImgV = new ImageView(towerImgs.get(color));
+            towerImgV.setFitWidth(30);
+            towerImgV.setPreserveRatio(true);
             Label label = new Label(String.valueOf(numTower));
             Font font = new Font("System Bold", 12);
             label.setFont(font);
-            tower.getChildren().addAll(towerImg, label);
+            tower.getChildren().addAll(towerImgV, label);
         }
         if (island instanceof SuperIsland) {
             background.setScaleX(1.5);
@@ -515,20 +516,34 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
         // Mother nature handling
         if (hasMother) {
-            mother = new ImageView(motherImg);
-            mother.setFitWidth(45);
-            mother.setPreserveRatio(true);
+            motherImgV = new ImageView(this.motherImg);
+            motherImgV.setFitWidth(45);
+            motherImgV.setPreserveRatio(true);
         }
         VBox secondColumn = new VBox();
         secondColumn.setAlignment(Pos.CENTER);
         secondColumn.getChildren().add(tower);
-        if (mother != null) {
-            secondColumn.getChildren().add(mother);
+        if (motherImgV != null) {
+            secondColumn.getChildren().add(motherImgV);
         }
         hContainer.getChildren().add(students);
         hContainer.getChildren().add(secondColumn);
+
+        // blocked island
+        if(island.isBlocked()){
+            blockedImgV = new ImageView();
+            blockedImgV.setImage(blockImg);
+            blockedImgV.fitWidthProperty().bind(islandPanes.get(index).widthProperty());
+            blockedImgV.fitHeightProperty().bind(islandPanes.get(index).heightProperty());
+            blockedImgV.setSmooth(true);
+            blockedImgV.setCache(true);
+
+        }
         // Add elements to the pane
         pane.getChildren().add(background);
+        if(blockedImgV != null){
+            pane.getChildren().add(blockedImgV);
+        }
         pane.getChildren().add(hContainer);
         pane.setOnMouseReleased((e) -> changeSupport.firePropertyChange(SELECT_ISLAND_LISTENER, null, index));
         pane.setOnMouseEntered(this::onSelectScaleColor);
