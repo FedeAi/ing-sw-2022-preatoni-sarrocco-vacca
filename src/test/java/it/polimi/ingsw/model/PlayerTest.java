@@ -2,9 +2,11 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.AssistantCard;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 class PlayerTest {
-    @org.junit.jupiter.api.Test
+
+    @Test
     public void HandTest() {
         String path = "";
 

@@ -71,7 +71,9 @@ public class Princess extends CharacterCard {
     @Override
     public void deactivate(Rules rules, Game game) {
         super.deactivate(rules, game);
-        game.setGameState(previousState);
+        if (game.getGameState().equals(GameState.PRINCESS_MOVE_STUDENT)) {
+            game.setGameState(previousState);
+        }
     }
 
     /**

@@ -48,7 +48,9 @@ public class Minstrel extends CharacterCard {
     @Override
     public void deactivate(Rules rules, Game game) {
         super.deactivate(rules, game);
-        game.setGameState(previousState);
+        if (game.getGameState().equals(GameState.MINSTREL_SWAP_STUDENTS)) {
+            game.setGameState(previousState);
+        }
     }
 
     /**

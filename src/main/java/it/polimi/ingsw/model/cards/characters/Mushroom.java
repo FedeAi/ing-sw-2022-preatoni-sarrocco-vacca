@@ -53,7 +53,9 @@ public class Mushroom extends CharacterCard {
     @Override
     public void deactivate(Rules rules, Game game) {
         super.deactivate(rules, game);
-        game.setGameState(previousState);
+        if (game.getGameState().equals(GameState.MUSHROOM_CHOOSE_COLOR)) {
+            game.setGameState(previousState);
+        }
         rules.setDynamicRules(new BaseRules());
         setStudent(null);
     }

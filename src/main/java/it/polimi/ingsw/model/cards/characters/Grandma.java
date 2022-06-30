@@ -47,7 +47,9 @@ public class Grandma extends CharacterCard {
     @Override
     public void deactivate(Rules rules, Game game) {
         super.deactivate(rules, game);
-        game.setGameState(previousState);
+        if (game.getGameState().equals(GameState.GRANDMA_BLOCK_ISLAND)) {
+            game.setGameState(previousState);
+        }
     }
 
     /**
