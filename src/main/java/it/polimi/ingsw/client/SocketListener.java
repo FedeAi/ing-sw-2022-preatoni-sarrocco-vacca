@@ -82,12 +82,13 @@ public class SocketListener implements Runnable {
                     try {
                         socket.close();
                         close();
+                        System.out.println("CLOSING THE CLIENT: NOT RECEIVING PING MSGs");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
             };
-            pingWaitingTimer.schedule(timerTask, (int) (Constants.PING_TIMEOUT_MS * 1.5));
+            pingWaitingTimer.schedule(timerTask, (int) (Constants.PING_TIMEOUT_MS * 2));
         }
     }
 

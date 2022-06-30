@@ -158,7 +158,8 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      *                in order to perform an action.
      */
     public void actionHandler(Message command) {
-        System.out.println("Debug: MESSAGE RECEIVED: " + command.getClass().getName());
+        if(!(command instanceof PongMessage))
+            System.out.println("Debug: MESSAGE RECEIVED: " + command.getClass().getName());
         if (command instanceof LoginMessage) {
             setupConnection((LoginMessage) command);
         }
@@ -285,7 +286,8 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      */
     public void sendSocketMessage(SerializedAnswer serverAnswer) {
         try {
-            System.out.println(serverAnswer.getServerAnswer().getClass());
+            if(!(serverAnswer.getServerAnswer() instanceof PingMessage))
+                System.out.println(serverAnswer.getServerAnswer().getClass());
             outputStream.reset();
             outputStream.writeObject(serverAnswer);
             outputStream.flush();
