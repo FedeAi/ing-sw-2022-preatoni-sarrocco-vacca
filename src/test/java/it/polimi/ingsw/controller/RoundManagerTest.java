@@ -14,6 +14,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Method RoundManagerTest tests the RoundManager class.
+ *
+ * @see RoundManager
+ */
 class RoundManagerTest {
 
     GameManager gameManager;
@@ -22,6 +27,9 @@ class RoundManagerTest {
     Performable action;
     Player secondOwner, finalOwner;
 
+    /**
+     * Method init initializes the values needed for the test.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -36,6 +44,9 @@ class RoundManagerTest {
         game.setRoundOwner(p1);
     }
 
+    /**
+     * Method checkPlayerActionOrder checks to player order after different actions.
+     */
     @Test
     @DisplayName("Check player action order")
     void checkPlayerActionOrder() {
@@ -99,7 +110,9 @@ class RoundManagerTest {
         game.setRoundOwner(p2);
     }
 
-
+    /**
+     * Method handleStateChange checks if the state is correctly updated after an action.
+     */
     @Test
     @DisplayName("Basic state of game test")
     void handleStateChange() {

@@ -32,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * @see GrandmaBlockIsland
  * @see MoveMotherNature
  */
-
 class GrandmaBlockIslandTest {
 
     GameManager gameManager;
@@ -42,7 +41,6 @@ class GrandmaBlockIslandTest {
     Grandma grandma;
     List<CharacterCard> cardList;
     int selectedIsland;
-
 
     /**
      * Method init initializes values.
@@ -69,6 +67,10 @@ class GrandmaBlockIslandTest {
         action = new GrandmaBlockIsland(p1.getNickname(), selectedIsland);
     }
 
+    /**
+     * Method wrongState tests if an action is created with the wrong state set.
+     * GrandmaBlockIsland action can only be performed in the Grandma state.
+     */
     @Test
     @DisplayName("Wrong state test")
     void wrongState() {
@@ -79,6 +81,9 @@ class GrandmaBlockIslandTest {
         });
     }
 
+    /**
+     * Method wrongIndex tests if an action is created with an invalid index.
+     */
     @Test
     @DisplayName("Wrong islandIndex")
     void wrongIndex() {
@@ -96,6 +101,9 @@ class GrandmaBlockIslandTest {
         });
     }
 
+    /**
+     * Method alreadyBlocked tests if the chosen island has already been blocked.
+     */
     @Test
     @DisplayName("Already blocked island")
     void alreadyBlocked() {
@@ -112,6 +120,9 @@ class GrandmaBlockIslandTest {
         });
     }
 
+    /**
+     * Method noGrandmas tests if there are no Grandmas in the current Game.
+     */
     @Test
     @DisplayName("No grandmas in the game test")
     void noGrandmas() {
@@ -122,6 +133,9 @@ class GrandmaBlockIslandTest {
         });
     }
 
+    /**
+     * Method grandmaInactive tests if grandma is not active.
+     */
     @Test
     @DisplayName("No active grandmas test")
     void grandmaInactive() {
@@ -133,6 +147,9 @@ class GrandmaBlockIslandTest {
         });
     }
 
+    /**
+     * Method blockingUnavailable tests if there are no blockingCards left.
+     */
     @Test
     @DisplayName("No blockingCards left")
     void blockingUnavailable() {
@@ -145,6 +162,10 @@ class GrandmaBlockIslandTest {
         });
     }
 
+    /**
+     * Method grandmaSelection tests a valid GrandmaBlockIsland action,
+     * checking if the chosen island is blocked after the action.
+     */
     @Test
     @DisplayName("Grandma blocking selection")
     void grandmaSelection() {
@@ -158,6 +179,9 @@ class GrandmaBlockIslandTest {
         assertTrue(game.getIslandContainer().get(selectedIsland).isBlocked());
     }
 
+    /**
+     * Method influenceBlocked checks that if an island is blocked the influence doesn't get calculated.
+     */
     @Test
     @DisplayName("Checks if the island is blocked")
     void influenceBlocked() {

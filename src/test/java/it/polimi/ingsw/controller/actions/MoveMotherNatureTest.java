@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Alessandro Vacca
  * @see MoveMotherNature
  */
-
 class MoveMotherNatureTest {
 
     GameManager gameManager;
@@ -38,7 +37,7 @@ class MoveMotherNatureTest {
 
 
     /**
-     * Method init initializes values.
+     * Method init initializes the values needed for the test.
      */
     @BeforeEach
     void init() {
@@ -58,6 +57,9 @@ class MoveMotherNatureTest {
         action = new MoveMotherNature(p3.getNickname(), movement);
     }
 
+    /**
+     * Method wrongNickname tests if an action is created with a wrong player nickname.
+     */
     @Test
     @DisplayName("Wrong nickname test")
     void wrongNicknameTest() {
@@ -69,6 +71,9 @@ class MoveMotherNatureTest {
         });
     }
 
+    /**
+     * Method wrongRoundOwner tests if an action is created with a player which is not the current round owner.
+     */
     @Test
     @DisplayName("Wrong roundOwner test")
     void wrongRoundOwnerTest() {
@@ -80,6 +85,10 @@ class MoveMotherNatureTest {
         });
     }
 
+    /**
+     * Method wrongState tests if an action is created the wrong state set.
+     * MoveMotherNature action can only be performed in the MoveMother state.
+     */
     @Test
     @DisplayName("Wrong state set test")
     void wrongStateTest() {
@@ -90,6 +99,10 @@ class MoveMotherNatureTest {
         });
     }
 
+    /**
+     * Method notEnoughMovementTest tests that an action cannot be performed
+     * if the movement index selected is not covered by the AssistantCard played.
+     */
     @Test
     @DisplayName("playedCard doesn't have enough movement")
     void notEnoughMovementTest() {
@@ -102,6 +115,9 @@ class MoveMotherNatureTest {
         });
     }
 
+    /**
+     * Method movementNotZeroTest tests that the action cannot be performed if the selected movement is zero.
+     */
     @Test
     @DisplayName("Movement not zero")
     void movementNotZeroTest() {
@@ -116,8 +132,11 @@ class MoveMotherNatureTest {
         });
     }
 
+    /**
+     * Method moveMN performs a basic MoveMotherNature action.
+     */
     @Test
-    @DisplayName("Basic canPerform test")
+    @DisplayName("Basic moveMotherNature test")
     void moveMN() {
         // Normal use case
         final int newCardValue = 5;
@@ -129,7 +148,7 @@ class MoveMotherNatureTest {
     }
 
     /**
-     * Method singleIslandConquer test verifies that after you move motherNature to a certain island
+     * Method singleIslandConquer verifies that after you move motherNature to a certain island
      * and provided you have enough influence, you actually conquer the island.
      */
     @RepeatedTest(30)
@@ -164,7 +183,7 @@ class MoveMotherNatureTest {
 
 
     /**
-     * The method previousSuperIsland creates the superIsland by first conquering a certain island,
+     * Method previousSuperIsland creates the superIsland by first conquering a certain island,
      * then it moves MN by a single position and conquers the island next to the previously conquered one,
      * thus joining the two islands in a superIsland.
      */
@@ -220,11 +239,10 @@ class MoveMotherNatureTest {
     }
 
     /**
-     * The method nextSuperIsland creates the superIsland by first conquering a certain island,
+     * Method nextSuperIsland creates the superIsland by first conquering a certain island,
      * then it moves MN by 11 positions (the full game board) and conquers the island
      * before the previously conquered one, thus joining the two islands in a superIsland.
      */
-
     @RepeatedTest(10)
     @DisplayName("Next SuperIsland creation")
     void nextSuperIsland() {
@@ -267,9 +285,9 @@ class MoveMotherNatureTest {
         try {
             action = new MoveMotherNature(p3.getNickname(), 2);
             action.performMove(game, gameManager.getRules());
-            action = new MoveMotherNature(p3.getNickname(), movement/2 - 1);
+            action = new MoveMotherNature(p3.getNickname(), movement / 2 - 1);
             action.performMove(game, gameManager.getRules());
-            action = new MoveMotherNature(p3.getNickname(), movement - movement/2 - 1);
+            action = new MoveMotherNature(p3.getNickname(), movement - movement / 2 - 1);
             action.performMove(game, gameManager.getRules());
         } catch (Exception e) {
             fail(e.getMessage());

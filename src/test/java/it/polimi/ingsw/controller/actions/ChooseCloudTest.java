@@ -18,6 +18,11 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * ActivateCardTest tests the ActivateCard action.
+ *
+ * @see ChooseCloud
+ */
 class ChooseCloudTest {
 
     GameManager gameManager;
@@ -27,6 +32,9 @@ class ChooseCloudTest {
     Random r;
     int selection;
 
+    /**
+     * Method init initializes the values needed for the test.
+     */
     @BeforeEach
     private void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -43,6 +51,10 @@ class ChooseCloudTest {
         action = new ChooseCloud(p2.getNickname(), selection);
     }
 
+    /**
+     * Method wrongState tests if an action is created the wrong state set.
+     * The ChooseCloud action can only be executed in the ChooseCloud state.
+     */
     @DisplayName("Wrong state test")
     @Test
     void wrongState() {
@@ -52,6 +64,9 @@ class ChooseCloudTest {
         });
     }
 
+    /**
+     * Method wrongIndex tests if an action is created with an invalid cloud index.
+     */
     @DisplayName("Wrong cloud index test")
     @Test
     void wrongIndex() {
@@ -67,6 +82,9 @@ class ChooseCloudTest {
         });
     }
 
+    /**
+     * Method emptyCloud tests that an empty cloud cannot be selected.
+     */
     @DisplayName("Cloud empty test")
     @Test
     void emptyCloud() {
@@ -76,12 +94,14 @@ class ChooseCloudTest {
         });
     }
 
+    /**
+     * Method chooseCloud tests the action, checking if the students have moved from the cloud to the player's entry.
+     */
     @DisplayName("Cloud selection test")
     @Test
     void chooseCloud() {
         int studentsPerTurn = Rules.getStudentsPerTurn(game.numPlayers());
         Map<Color, Integer> prevEntry = new EnumMap<>(p2.getSchool().getStudentsEntry());
-        // Cloud cloud = game.getClouds().get(selection);
         try {
             action.performMove(game, gameManager.getRules());
         } catch (Exception e) {
@@ -92,6 +112,5 @@ class ChooseCloudTest {
         int postPlayerStudents = postEntry.values().stream().reduce(0, Integer::sum);
 
         assertEquals(previousPlayerStudents + studentsPerTurn, postPlayerStudents, "The correct number of student has been added");
-        //assertTrue(cloud.isEmpty(), "after having picked students the cloud must be empty"); // Not true if the current player is the last one (refill)
     }
 }

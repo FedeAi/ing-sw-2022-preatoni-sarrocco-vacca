@@ -18,6 +18,11 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * PlayCardTest class tests the PlayCard action.
+ *
+ * @see PlayCard
+ */
 class PlayCardTest {
 
     GameManager gameManager;
@@ -27,6 +32,9 @@ class PlayCardTest {
     Random r;
     int selection;
 
+    /**
+     * Method init initializes the values needed for the test.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -45,6 +53,9 @@ class PlayCardTest {
         action = new PlayCard(p3.getNickname(), selection);
     }
 
+    /**
+     * Method nullPlayer tests if an action is created with a wrong player nickname.
+     */
     @DisplayName("Invalid player test")
     @Test
     void nullPlayer() {
@@ -54,17 +65,13 @@ class PlayCardTest {
         });
     }
 
-    @DisplayName("Check if playcard is performable")
-    @Test
-    void canPlayCard() {
-        assertDoesNotThrow(() -> {
-            action.performMove(game, gameManager.getRules());
-        });
-    }
-
+    /**
+     * Method wrongState tests if an action is created the wrong state set.
+     * PlayCard action can only be performed in the PlayCard state.
+     */
     @Test
     @DisplayName("Wrong state set test")
-    void wrongStateTest() {
+    void wrongState() {
         // checks if the game is set to the correct game state
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         assertThrows(WrongStateException.class, () -> {
@@ -72,9 +79,12 @@ class PlayCardTest {
         });
     }
 
+    /**
+     * Method wrongRoundOwner tests if an action is created with a player which is not the current round owner.
+     */
     @Test
     @DisplayName("Wrong roundOwner test")
-    void wrongRoundOwnerTest() {
+    void wrongRoundOwner() {
         // checking if the player argument is the actual round owner
         // p3 is the actual round owner, while I try to pass p1
         action = new PlayCard(p1.getNickname(), selection);
@@ -88,9 +98,12 @@ class PlayCardTest {
         });
     }
 
+    /**
+     * Method wrongSelection tests if an action is created with an invalid index.
+     */
     @DisplayName("Wrong card selection test")
     @Test
-    void wrongSelectionTest() {
+    void wrongSelection() {
         game.playCard(p3, p3.getCards().get(selection - 1));
         assertThrows(GameException.class, () -> {
             action.performMove(game, gameManager.getRules());
@@ -101,6 +114,10 @@ class PlayCardTest {
         });
     }
 
+    /**
+     * Method cardAlreadyPlayed tests that a card cannot be played
+     * if another card with that value has already been played.
+     */
     @DisplayName("Card already played test")
     @Test
     void cardAlreadyPlayed() {
@@ -118,6 +135,10 @@ class PlayCardTest {
         });
     }
 
+    /**
+     * Method playCard tests a basic PlayCard action,
+     * checking if a card has been played after.
+     */
     @DisplayName("Basic playCard action test")
     @Test
     void playCard() {

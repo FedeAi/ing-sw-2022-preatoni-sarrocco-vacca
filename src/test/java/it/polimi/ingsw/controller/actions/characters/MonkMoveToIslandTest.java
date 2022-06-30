@@ -23,6 +23,11 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Method MonkMoveToIslandTest tests the MonkMoveToIsland action.
+ *
+ * @see MonkMoveToIsland
+ */
 class MonkMoveToIslandTest {
 
     Performable action;
@@ -36,6 +41,9 @@ class MonkMoveToIslandTest {
     Color selection;
     int selectionValue;
 
+    /**
+     * Method init initializes values.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -66,6 +74,10 @@ class MonkMoveToIslandTest {
         action = new MonkMoveToIsland(p1.getNickname(), selection, index);
     }
 
+    /**
+     * Method wrongState tests if an action is created with the wrong state set.
+     * MonkMoveToIsland action can only be performed in the Monk state.
+     */
     @DisplayName("Wrong state test")
     @Test
     void wrongState() {
@@ -75,6 +87,9 @@ class MonkMoveToIslandTest {
         });
     }
 
+    /**
+     * Method wrongIndex tests if an action is created with an invalid index.
+     */
     @DisplayName("Wrong island index test")
     @Test
     void wrongIndex() {
@@ -93,6 +108,9 @@ class MonkMoveToIslandTest {
         });
     }
 
+    /**
+     * Method noMonks tests if there are no Monks in the current Game.
+     */
     @DisplayName("No monks in the current game test")
     @Test
     void noMonks() {
@@ -107,9 +125,12 @@ class MonkMoveToIslandTest {
         });
     }
 
+    /**
+     * Method noActives checks if there are no active character cards.
+     */
     @DisplayName("No active characters test")
     @Test
-    void noActiveCards() {
+    void noActives() {
         game.setGameState(GameState.MONK_MOVE_STUDENT);
         cardList.add(card);
         game.initCharacterCards(cardList);
@@ -119,6 +140,9 @@ class MonkMoveToIslandTest {
         });
     }
 
+    /**
+     * Method noStudent checks if the Monk has no students of that color.
+     */
     @DisplayName("Monk doesn't have the specified student test")
     @Test
     void noStudent() {
@@ -139,6 +163,10 @@ class MonkMoveToIslandTest {
         });
     }
 
+    /**
+     * Method monkCard tests a valid MonkMoveToIsland action,
+     * checking if the student has been moved to the selected island after the action.
+     */
     @DisplayName("Monk move student to island test")
     @Test
     void monkCard() {

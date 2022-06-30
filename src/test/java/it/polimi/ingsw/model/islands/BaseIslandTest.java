@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.islands;
 
 import it.polimi.ingsw.constants.Color;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -8,62 +9,27 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 class BaseIslandTest {
 
-    //    private GameManager initGameManager(new Game()){
-//        GameManager gameManager = new GameManager(new Game());
-//        Player p1 = new Player("Marula");
-//        Player p2 = new Player("Albano");
-//        gameManager.addPlayer(p1);
-//        gameManager.addPlayer(p2);
-//        gameManager.initGame();
-//        return gameManager;
-//    }
+    /**
+     * Method newOwnerTest tests if a new island owner is correctly set and the number of towers is updated.
+     */
     @Test
-    void getStudents() {
-        List<Color> students = new ArrayList<>();
-        students.add(Color.BLUE);
-        students.add(Color.BLUE);
-        students.add(Color.BLUE);
-        students.add(Color.YELLOW);
-        students.add(Color.YELLOW);
-
-        BaseIsland baseIsland = new BaseIsland();
-        for (Color student : students) {
-            baseIsland.addStudent(student);
-        }
-        assertEquals(3, baseIsland.getStudents().get(Color.BLUE));
-        assertEquals(2, baseIsland.getStudents().get(Color.YELLOW));
-        assertEquals(0, baseIsland.getStudents().getOrDefault(Color.GREEN, 0));
-        assertEquals(0, baseIsland.getStudents().getOrDefault(Color.PINK, 0));
-
-    }
-
-    @Test
-    void getOwner() {
-        BaseIsland baseIsland = new BaseIsland();
-        baseIsland.setOwner("Albano");
-        assertEquals("Albano", baseIsland.getOwner());
-    }
-
-    @Test
-    void getNumTower() {
+    @DisplayName("Island conquer test")
+    void newOwnerTest() {
         BaseIsland baseIsland = new BaseIsland();
         assertEquals(0, baseIsland.getNumTower());
         baseIsland.setOwner("Albano");
+        assertEquals("Albano", baseIsland.getOwner());
         assertEquals(1, baseIsland.getNumTower());
     }
 
+    /**
+     * Method addStudentTest tests the correct student addition to an island.
+     */
     @Test
-    void setOwner() {
-        BaseIsland baseIsland = new BaseIsland();
-        baseIsland.setOwner("Albano");
-        assertEquals("Albano", baseIsland.getOwner());
-    }
-
-    @Test
-    void addStudent() {
+    @DisplayName("Add student to an island test")
+    void addStudentTest() {
         List<Color> blueStudents = new ArrayList<>();
         List<Color> yellowStudents = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -72,7 +38,6 @@ class BaseIslandTest {
         for (int i = 0; i < 5; i++) {
             yellowStudents.add(Color.YELLOW);
         }
-
         BaseIsland baseIsland = new BaseIsland();
         for (int i = 0; i < blueStudents.size(); i++) {
             Color student = blueStudents.get(i);

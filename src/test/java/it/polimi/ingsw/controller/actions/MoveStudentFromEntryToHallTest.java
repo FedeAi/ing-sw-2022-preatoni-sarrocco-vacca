@@ -20,6 +20,11 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * MoveStudentFromEntryToHallTest class tests the MoveStudentFromEntryToHall action.
+ *
+ * @see MoveStudentFromEntryToHall
+ */
 class MoveStudentFromEntryToHallTest {
 
     GameManager gameManager;
@@ -29,6 +34,9 @@ class MoveStudentFromEntryToHallTest {
     Performable action;
     Color student;
 
+    /**
+     * Method init initializes the values needed for the test.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -44,6 +52,10 @@ class MoveStudentFromEntryToHallTest {
         action = new MoveStudentFromEntryToHall(p2.getNickname(), student);
     }
 
+    /**
+     * Method wrongState tests if an action is created the wrong state set.
+     * MoveStudentFromEntryToHall action can only be performed in the MoveStudents state.
+     */
     @DisplayName("Wrong state test")
     @Test
     void wrongState() {
@@ -53,6 +65,9 @@ class MoveStudentFromEntryToHallTest {
         });
     }
 
+    /**
+     * Method maxStudentsMoved checks if a player has moved his allowed students per turn.
+     */
     @DisplayName("Max students moved test")
     @Test
     void maxStudentsMoved() {
@@ -65,6 +80,10 @@ class MoveStudentFromEntryToHallTest {
         });
     }
 
+    /**
+     * Method moveToHall tests a basic MoveStudentFromEntryToHall action,
+     * checking if a student is moved from the entry to the hall.
+     */
     @DisplayName("Move student to hall test")
     @Test
     void moveToHall() {
@@ -95,10 +114,13 @@ class MoveStudentFromEntryToHallTest {
         }
     }
 
-    // check that professor is gained after a move
+    /**
+     * Method professorConquer checks that a professor is gained after an action.
+     */
     @DisplayName("Gain professor test")
     @Test
     void professorConquer() {
+        // Checks that professor is gained after a move
         try {
             action.performMove(game, gameManager.getRules());
         } catch (Exception e) {
@@ -107,6 +129,10 @@ class MoveStudentFromEntryToHallTest {
         assertEquals(game.getProfessors().get(student), p2.getNickname(), "check that professor is gained after having the max influence");
     }
 
+    /**
+     * Method fullHall checks that an action cannot be performed
+     * if the player's hall is full (for the selected color).
+     */
     @DisplayName("Max color in hall test")
     @Test
     void fullHall() {
@@ -118,17 +144,25 @@ class MoveStudentFromEntryToHallTest {
         });
     }
 
+    /**
+     * Method noStudents checks that an action cannot be performed
+     * if the player's entry is empty (for the selected color).
+     */
     @DisplayName("No students of the chosen color test")
     @Test
     void noStudents() {
         int n = p2.getSchool().getStudentsEntry().get(student);
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             p2.getSchool().removeStudentFromEntry(student);
         }
         assertThrows(GameException.class, () -> {
             action.performMove(game, gameManager.getRules());
         });
     }
+
+    /**
+     * Method nextState tests that only after 3 moves (2 player mode) the state is changed.
+     */
     @DisplayName("Next state test")
     @Test
     void nextState() {
@@ -155,8 +189,14 @@ class MoveStudentFromEntryToHallTest {
         assertEquals(action.nextState(game, gameManager.getRules()), GameState.ACTION_MOVE_MOTHER);
     }
 
+    /**
+     * Method getStudentFromEntry returns the first student of the player's entry.
+     *
+     * @param p the Player reference.
+     * @return The first student of the entry.
+     */
     private Color getStudentFromEntry(Player p) {
-        // get a student of the player Entry
+        // Get the first student of the player Entry
         return p.getSchool().getStudentsEntry().entrySet().stream().filter((s) -> s.getValue() > 0).findFirst().get().getKey();
     }
 }

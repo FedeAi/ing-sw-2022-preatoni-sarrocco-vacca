@@ -22,6 +22,11 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Method JokerSwapStudentsTest tests the JokerSwapStudents action.
+ *
+ * @see JokerSwapStudents
+ */
 class JokerSwapStudentsTest {
 
     Performable action;
@@ -33,6 +38,9 @@ class JokerSwapStudentsTest {
     Joker card;
     LinkedList<CharacterCard> cardList;
 
+    /**
+     * Method init initializes values.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -68,6 +76,10 @@ class JokerSwapStudentsTest {
         action = new JokerSwapStudents(p1.getNickname(), studentCard, studentEntry);
     }
 
+    /**
+     * Method wrongState tests if an action is created with the wrong state set.
+     * JokerSwapStudents action can only be performed in the Joker state.
+     */
     @DisplayName("Wrong state test")
     @Test
     void wrongState() {
@@ -77,6 +89,9 @@ class JokerSwapStudentsTest {
         });
     }
 
+    /**
+     * Method noActives checks if there are no active character cards.
+     */
     @DisplayName("No active cards test")
     @Test
     void noActives() {
@@ -87,6 +102,9 @@ class JokerSwapStudentsTest {
         });
     }
 
+    /**
+     * Method noJokers checks if there are no Jokers in the current game.
+     */
     @DisplayName("No active jokers test")
     @Test
     void noJokers() {
@@ -102,6 +120,9 @@ class JokerSwapStudentsTest {
         });
     }
 
+    /**
+     * Method maxSwaps checks if a player has already done his maximum swaps.
+     */
     @DisplayName("Max swaps test")
     @Test
     void maxSwaps() {
@@ -122,12 +143,15 @@ class JokerSwapStudentsTest {
         });
     }
 
+    /**
+     * Method jokerCard tests a valid JokerSwapStudents action,
+     * checking if the students have been swapped after the action.
+     */
     @DisplayName("Joker swap students test")
     @Test
     void jokerCard() {
         Map<Color, Integer> entry = p1.getSchool().getStudentsEntry();
         int initialStudents = entry.getOrDefault(studentCard, 0);
-
         cardList.add(card);
         game.initCharacterCards(cardList);
         card.activate(gameManager.getRules(), game);

@@ -23,6 +23,12 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Method MinstrelSwapStudentsTest tests the MinstrelSwapStudents action.
+ *
+ * @author Alessandro Vacca
+ * @see MinstrelSwapStudents
+ */
 class MinstrelSwapStudentsTest {
 
     Performable action;
@@ -33,6 +39,9 @@ class MinstrelSwapStudentsTest {
     Minstrel card;
     LinkedList<CharacterCard> cardList;
 
+    /**
+     * Method init initializes values.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -66,6 +75,10 @@ class MinstrelSwapStudentsTest {
         card.activate(gameManager.getRules(), game);
     }
 
+    /**
+     * Method wrongState tests if an action is created with the wrong state set.
+     * MinstrelSwapStudents action can only be performed in the Minstrel state.
+     */
     @Test
     @DisplayName("Wrong state test")
     void wrongState() {
@@ -76,6 +89,9 @@ class MinstrelSwapStudentsTest {
         });
     }
 
+    /**
+     * Method noMinstrels checks if there are no Minstrels in the current game.
+     */
     @DisplayName("No active minstrels test")
     @Test
     void noMinstrels() {
@@ -85,6 +101,9 @@ class MinstrelSwapStudentsTest {
         });
     }
 
+    /**
+     * Method noColorEntry tests if a player selects an entry color that he doesn't have.
+     */
     @DisplayName("Selected student not in the entry test")
     @Test
     void noColorEntry() {
@@ -96,6 +115,9 @@ class MinstrelSwapStudentsTest {
         });
     }
 
+    /**
+     * Method noColorHall tests if a player selects a hall color that he doesn't have.
+     */
     @DisplayName("Selected student not in the hall test")
     @Test
     void noColorHall() {
@@ -106,6 +128,9 @@ class MinstrelSwapStudentsTest {
         });
     }
 
+    /**
+     * Method maxHall tests if a player selects a hall color and his hall is full.
+     */
     @DisplayName("Max color in the hall test")
     @Test
     void maxHall() {
@@ -117,6 +142,10 @@ class MinstrelSwapStudentsTest {
         });
     }
 
+    /**
+     * Method minstrelCard tests a valid MinstrelSwapStudents action,
+     * checking if the students have been swapped after the action.
+     */
     @DisplayName("Minstrel swap student test")
     @Test
     void minstrelCard() {

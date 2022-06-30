@@ -67,6 +67,10 @@ class MushroomChooseColorTest {
         action = new MushroomChooseColor(p1.getNickname(), student);
     }
 
+    /**
+     * Method wrongState tests if an action is created with the wrong state set.
+     * MushroomChooseColor action can only be performed in the Mushroom state.
+     */
     @Test
     @DisplayName("Wrong state")
     void wrongState() {
@@ -76,10 +80,13 @@ class MushroomChooseColorTest {
         });
     }
 
+    /**
+     * Method noMushrooms checks if there are no Mushrooms in the current game.
+     */
     @DisplayName("No active mushrooms test")
     @Test
     void noMushrooms() {
-        // We now have a card present, but not the JOKER
+        // We now have a card present, but not the MUSHROOM
         // It's important also to not have a card that changes the game state
         card.activate(gameManager.getRules(), game);
         CharacterCard tempCard = new Knight("");
@@ -92,6 +99,9 @@ class MushroomChooseColorTest {
         });
     }
 
+    /**
+     * Method noActives checks if there are no active character cards.
+     */
     @DisplayName("No active cards test")
     @Test
     void noActives() {
@@ -105,6 +115,10 @@ class MushroomChooseColorTest {
         });
     }
 
+    /**
+     * Method mushroomCard tests a valid MushroomChooseCloud action,
+     * checking if the influence calculation has been disabled on the selected color after the action.
+     */
     @DisplayName("Mushroom color selection test")
     @Test
     void mushroomCard() {

@@ -1,15 +1,27 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.constants.Color;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Method BagTest tests the Bag class.
+ *
+ * @see Bag
+ */
 public class BagTest {
 
+    /**
+     * Method bagCreation tests that the Bag is initialized correctly.
+     *
+     * @see Bag#Bag(int)
+     */
     @Test
+    @DisplayName("Bag creation test")
     public void bagCreation() {
         int numStudents = 5 * Color.values().length;
         Bag myBag = new Bag(numStudents);
@@ -21,7 +33,13 @@ public class BagTest {
         }
     }
 
+    /**
+     * Method extract tests that the Bag correctly extracts and removes students.
+     *
+     * @see Bag#extract(int)
+     */
     @Test
+    @DisplayName("Bag multiple extraction test")
     public void extract() {
         int numStudents = 5 * Color.values().length;
         Bag myBag = new Bag(numStudents);
@@ -31,18 +49,27 @@ public class BagTest {
         assertEquals(myBag.getStudents().size(), initialSize - 8, "control bag dim");
     }
 
+    /**
+     * Method extract tests that the Bag correctly extracts and removes a single student.
+     *
+     * @see Bag#extract()
+     */
     @Test
-    //corner case of extract(), so doesn't change the logic test
+    @DisplayName("Bag single extraction test")
     public void extractOne() {
         // Point out that num students, 1 for each color
         int numStudents = Color.values().length;
         Bag myBag = new Bag(numStudents);
         int initialSize = myBag.getStudents().size();
-        Color out = myBag.extract();
+        myBag.extract();
         assertEquals(myBag.getStudents().size(), initialSize - 1, "control bag dim");
     }
 
+    /**
+     * Method extendBag checks if a Bag is correctly extended.
+     */
     @Test
+    @DisplayName("Bag extension test")
     public void extendBag() {
         int extensionSize = Color.values().length;
         int numStudents = Color.values().length;

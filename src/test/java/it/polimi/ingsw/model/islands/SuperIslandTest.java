@@ -1,17 +1,26 @@
 package it.polimi.ingsw.model.islands;
 
 import it.polimi.ingsw.constants.Color;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * SuperIslandTest class tests the SuperIsland class.
+ */
 class SuperIslandTest {
+
     private static final Random RANDOM = new Random();
 
+    /**
+     * Method randomInitBaseIsland creates and returns a new BaseIsland instance with random students.
+     *
+     * @return The reference to the created BaseIsland.
+     */
     private BaseIsland randomInitBaseIsland() {
         BaseIsland baseIsland = new BaseIsland();
         for (int i = 0; i < RANDOM.nextInt(100); i++) {
@@ -20,15 +29,11 @@ class SuperIslandTest {
         return baseIsland;
     }
 
-    private SuperIsland randomInitSuperIsland() {
-        List<Island> islandList = new ArrayList<>();
-        for (int i = 0; i < RANDOM.nextInt(5); i++) {
-            islandList.add(randomInitBaseIsland());
-        }
-        return new SuperIsland(islandList);
-    }
-
+    /**
+     * Method constructor tests the creation of new SuperIsland instances.
+     */
     @Test
+    @DisplayName("SuperIsland creation test")
     void constructor() {
         // Testing the different possibility to build a super island
         BaseIsland baseIslandA = randomInitBaseIsland();
@@ -48,8 +53,12 @@ class SuperIslandTest {
         assertTrue(s3.getBaseIslands().containsAll(List.of(baseIslandA, baseIslandB, baseIslandC)));
     }
 
+    /**
+     * Method addStudents tests the addition of students to different SuperIsland instances.
+     */
     @Test
-    void getStudents() {
+    @DisplayName("SuperIsland student add test")
+    void addStudents() {
         BaseIsland baseIslandA = randomInitBaseIsland();
         BaseIsland baseIslandB = randomInitBaseIsland();
         BaseIsland baseIslandC = randomInitBaseIsland();
@@ -65,21 +74,29 @@ class SuperIslandTest {
         totalYellowStudents += baseIslandC.getStudents().getOrDefault(Color.YELLOW, 0);
         assertEquals(totalBluStudents, s2.getStudents().getOrDefault(Color.BLUE, 0));
         assertEquals(totalYellowStudents, s2.getStudents().getOrDefault(Color.YELLOW, 0));
-
     }
 
+    /**
+     * Method changeOwner tests the change of ownership of a SuperIsland.
+     */
     @Test
-    void getOwner() {
+    @DisplayName("SuperIsland test change of owner")
+    void changeOwner() {
         BaseIsland baseIslandA = randomInitBaseIsland();
         baseIslandA.setOwner("ErColosseo");
         BaseIsland baseIslandB = randomInitBaseIsland();
         SuperIsland s1 = new SuperIsland(List.of(baseIslandA, baseIslandB));
         assertEquals("ErColosseo", s1.getOwner());
+        s1.setOwner("Franco");
+        assertEquals("Franco", s1.getOwner());
     }
 
-
+    /**
+     * Method superIslandTowers tests the number of towers returned by a SuperIsland.
+     */
     @Test
-    void getNumTower() {
+    @DisplayName("SuperIsland number of towers test")
+    void superIslandTowers() {
         BaseIsland baseIslandA = randomInitBaseIsland();
         BaseIsland baseIslandB = randomInitBaseIsland();
         BaseIsland baseIslandC = randomInitBaseIsland();
@@ -95,33 +112,5 @@ class SuperIslandTest {
 
         assertEquals(2, s1.getNumTower());
         assertEquals(4, s2.getNumTower());
-    }
-
-    @Test
-    void setOwner() {
-        BaseIsland baseIslandA = randomInitBaseIsland();
-        BaseIsland baseIslandB = randomInitBaseIsland();
-        BaseIsland baseIslandC = randomInitBaseIsland();
-        BaseIsland baseIslandD = randomInitBaseIsland();
-        SuperIsland s1 = new SuperIsland(List.of(baseIslandA, baseIslandB));
-        SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC, baseIslandD));
-
-        s2.setOwner("Giampiero");
-        assertEquals("Giampiero", s2.getOwner());
-        assertEquals("Giampiero", baseIslandB.getOwner());
-    }
-
-    @Test
-    void addStudent() {
-        BaseIsland baseIslandA = randomInitBaseIsland();
-        BaseIsland baseIslandB = randomInitBaseIsland();
-        BaseIsland baseIslandC = randomInitBaseIsland();
-        BaseIsland baseIslandD = randomInitBaseIsland();
-        SuperIsland s1 = new SuperIsland(List.of(baseIslandA, baseIslandB));
-        SuperIsland s2 = new SuperIsland(List.of(s1, baseIslandC, baseIslandD));
-        Color student = Color.YELLOW;
-        int numYellowStudents = s2.getStudents().getOrDefault(student, 0);
-        s2.addStudent(student);
-        assertEquals(numYellowStudents + 1, s2.getStudents().getOrDefault(student, 0));
     }
 }
