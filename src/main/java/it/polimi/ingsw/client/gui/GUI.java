@@ -4,9 +4,13 @@ import it.polimi.ingsw.client.*;
 import it.polimi.ingsw.client.gui.controllers.GUIController;
 import it.polimi.ingsw.client.gui.controllers.WinnerController;
 import it.polimi.ingsw.constants.GameState;
+import it.polimi.ingsw.exceptions.DuplicateNicknameException;
+import it.polimi.ingsw.exceptions.InvalidNicknameException;
 import it.polimi.ingsw.server.answers.WinMessage;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -63,7 +67,6 @@ public class GUI extends Application implements UI {
      */
     public GUI() {
         modelView = new ModelView(this);
-//        modelView = (new ModelView(this)).readFromFile();
         serverMessageHandler = new ServerMessageHandler(this, modelView);
         activeGame = true;
     }
@@ -101,6 +104,7 @@ public class GUI extends Application implements UI {
      */
     @Override
     public void stop() {
+        Platform.exit();
         System.exit(0);
     }
 
@@ -252,13 +256,14 @@ public class GUI extends Application implements UI {
 
             }
             case SocketListener.CONNECTION_CLOSE_LISTENER -> {
-                Platform.runLater(() -> {
-                    changeScene(END);
-                    String msg = "Connection closed by the server. Quitting...";
-                    ((WinnerController) getControllerFromName(END)).printMsg(msg);
-                });
+                if(!modelView.getGameState().equals(GameState.GAME_ENDED)){
+                    Platform.runLater(() -> {
+                        String msg = "Connection closed, network not stable. Trying to reconnect...";
+                        ((WinnerController) getControllerFromName(END)).printMsg(msg);
+                        changeScene(END);
 
-
+                    });
+                }
             }
         }
     }

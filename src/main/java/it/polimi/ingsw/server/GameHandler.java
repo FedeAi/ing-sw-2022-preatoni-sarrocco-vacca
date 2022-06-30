@@ -187,6 +187,7 @@ public class GameHandler {
      */
     public void endGame() {
         setEnded();
+        game.setGameState(GameState.GAME_ENDED);
         while (!game.getActivePlayers().isEmpty()) {
             server.getClientByID(game.getActivePlayers().get(0).getID()).getConnection().close();
         }

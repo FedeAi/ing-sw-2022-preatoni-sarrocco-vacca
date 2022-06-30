@@ -28,7 +28,9 @@ public enum GameState {
     MONK_MOVE_STUDENT,
     GRANDMA_BLOCK_ISLAND,
     MINSTREL_SWAP_STUDENTS,
-    THIEF_CHOOSE_COLOR;
+    THIEF_CHOOSE_COLOR,
+
+    GAME_ENDED;
 
     public static List<GameState> getSetupStates(){
         return List.of(GAME_ROOM, INITIAL_FIRE_COMPLETED, SETUP_CHOOSE_MAGICIAN);
