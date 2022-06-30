@@ -258,7 +258,7 @@ public class GUI extends Application implements UI {
             case SocketListener.CONNECTION_CLOSE_LISTENER -> {
                 if(!modelView.getGameState().equals(GameState.GAME_ENDED)){
                     Platform.runLater(() -> {
-                        String msg = "Connection closed, network not stable. Trying to reconnect...";
+                        String msg = "Connection closed, network not stable.";
                         ((WinnerController) getControllerFromName(END)).printMsg(msg);
                         changeScene(END);
 

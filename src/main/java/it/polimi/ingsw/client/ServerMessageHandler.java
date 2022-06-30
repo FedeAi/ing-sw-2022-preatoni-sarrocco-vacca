@@ -77,7 +77,8 @@ public class ServerMessageHandler {
      */
     public void answerHandler() {
         Answer answer = modelView.getServerAnswer();
-        System.out.println(answer.getClass().getSimpleName());
+        if(!(answer instanceof PingMessage))
+            System.out.println(answer.getClass().getSimpleName());
         if (answer instanceof ConnectionMessage connectionMessage) {
             System.out.println(connectionMessage.getMessage());
         } else if (answer instanceof ReqPlayersMessage) {
@@ -89,6 +90,7 @@ public class ServerMessageHandler {
             view.firePropertyChange(GENERERIC_MODEL_UPDATE_LISTENER, null, answer);
         } else if (answer instanceof GameError) {
             view.firePropertyChange(GAME_ERROR_LISTENER, null, answer);
+            System.out.println(((GameError) answer).getMessage());
         } else if (answer instanceof CustomMessage) {
             view.firePropertyChange(CUSTOM_MESSAGE_LISTENER, null, answer);
         } else if (answer instanceof WinMessage) {

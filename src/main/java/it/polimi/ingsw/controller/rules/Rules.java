@@ -51,7 +51,7 @@ public class Rules {
      */
     public static int getTowersPerPlayer(int numPlayers) {
         return switch (numPlayers) {
-            case 2 -> 1;
+            case 2 -> 8;
             case 3 -> 6;
             default -> 8;
         };

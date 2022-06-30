@@ -15,6 +15,7 @@ import it.polimi.ingsw.model.islands.Island;
 import it.polimi.ingsw.model.islands.SuperIsland;
 import it.polimi.ingsw.model.School;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
@@ -344,11 +345,17 @@ public class BoardController extends GUIController implements PropertyChangeList
             StackPane s = new StackPane();
             ImageView playedCard = buildCard(80, 120, cardImgs.get(entry.getValue().getValue() - 1));
             s.getChildren().add(playedCard);
+
+            // avatar on played card
             ImageView player = new ImageView();
             player.setImage(avatarImgs.get(gui.getModelView().getPlayerMapMagician().get(entry.getKey())));
-            player.setFitWidth(20);
-            player.setFitHeight(20);
-            s.getChildren().add(player);
+            player.setFitWidth(60);
+            player.setFitHeight(60);
+            StackPane pane = new StackPane();
+            pane.getChildren().add(player);
+            pane.setAlignment(Pos.TOP_CENTER);
+            pane.setTranslateY(-15);
+            s.getChildren().add(pane);
             playedCardContainer.getChildren().add(s);
         }
     }
@@ -609,6 +616,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         tower.setCache(true);
         tower.setFitHeight(50);
         tower.setFitWidth(50);
+        tower.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8)));  // Shadow
         towers.getChildren().add(0, tower);
         towers.getChildren().add(1, numTowers);
         towers.setAlignment(Pos.CENTER);

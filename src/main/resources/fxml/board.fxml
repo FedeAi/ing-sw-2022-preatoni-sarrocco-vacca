@@ -127,11 +127,6 @@
    <center>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="status" text="Player ale is choosing his COLOR" StackPane.alignment="TOP_CENTER">
-               <StackPane.margin>
-                  <Insets top="15.0" />
-               </StackPane.margin>
-            </Label>
             <GridPane fx:id="islandGridPane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" pickOnBounds="false" prefHeight="720.0" prefWidth="720.0" stylesheets="@../css/board.css">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -369,6 +364,7 @@
                </children>
             </HBox>
             <ProgressBar fx:id="progressBar" prefHeight="50.0" prefWidth="674.0" style="-fx-padding: 8;" visible="false" />
+            <Label fx:id="status" alignment="CENTER" prefHeight="96.0" prefWidth="251.0" text="Player ale is choosing his Color this choice is very hard" textAlignment="CENTER" textOverrun="CLIP" translateY="-150.0" wrapText="true" StackPane.alignment="CENTER" />
          </children>
       </StackPane>
    </center>
