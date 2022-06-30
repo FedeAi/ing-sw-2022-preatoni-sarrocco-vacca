@@ -654,26 +654,26 @@ public class BoardController extends GUIController implements PropertyChangeList
     }
 
     /**
-     * Method buildCard is used for creating the AssitantCard element on the GUI.
+     * Method buildCard is used for creating a Card element on the GUI.
      *
      * @param width  the Node's width.
      * @param height the Node's height.
      * @param img    the AssistantCard's asset.
      */
     private ImageView buildCard(double width, double height, Image img) {
-        //Background character
+        //Card background
         Rectangle rectangle = new Rectangle(width, height);
         rectangle.setArcWidth(20.0);   // Corner radius
         rectangle.setArcHeight(20.0);
         rectangle.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(0, 0, 0, 0.8)));  // Shadow
 
-        ImageView character = new ImageView();
-        character.setImage(img);
-        character.setFitWidth(width);
-        character.setFitHeight(height);
-        character.setClip(rectangle);
-        character.setCache(true);
-        return character;
+        ImageView card = new ImageView();
+        card.setImage(img);
+        card.setFitWidth(width);
+        card.setFitHeight(height);
+        card.setClip(rectangle);
+        card.setCache(true);
+        return card;
     }
 
     /**
@@ -708,6 +708,29 @@ public class BoardController extends GUIController implements PropertyChangeList
             });
             content.getChildren().add(students);
 
+
+            // blocking card
+            FlowPane blockingCards = new FlowPane();
+            blockingCards.setVgap(4);
+            blockingCards.setHgap(4);
+            blockingCards.setAlignment(Pos.CENTER);
+            if(c.blockingCards >0){
+                for(int j = 0; j< c.blockingCards; j ++){
+                    ImageView blockImgV = new ImageView(blockImg);
+                    blockImgV.setFitWidth(40);
+                    blockImgV.setFitHeight(40);
+                    blockingCards.getChildren().add(blockImgV);
+                }
+                content.getChildren().add(blockingCards);
+            }
+
+            // Active
+            if(c.isActive){
+                character.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8)));  // Shadow
+                character.setScaleX(1.25);
+                character.setScaleY(1.25);
+            }
+
             // Activated
             if (c.activatedOnce) {
                 ImageView coin = new ImageView(coinImg);
@@ -716,7 +739,6 @@ public class BoardController extends GUIController implements PropertyChangeList
                 content.getChildren().add(coin);
             }
 
-            // Blocking cards
             s.getChildren().add(character);
             s.getChildren().add(content);
 
