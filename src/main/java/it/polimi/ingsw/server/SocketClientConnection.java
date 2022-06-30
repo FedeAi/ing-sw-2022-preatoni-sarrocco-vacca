@@ -33,6 +33,8 @@ public class SocketClientConnection implements ClientConnection, Runnable {
     private Integer clientID;
     private boolean active;
     private boolean pongReceived;
+    private final Object outputStreamLock = new Object();
+
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     /**
@@ -285,15 +287,17 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * @param serverAnswer of type SerializedAnswer - the serialized server answer (interface Answer).
      */
     public void sendSocketMessage(SerializedAnswer serverAnswer) {
-        try {
-            if(!(serverAnswer.getServerAnswer() instanceof PingMessage))
-                System.out.println(serverAnswer.getServerAnswer().getClass());
-            outputStream.reset();
-            outputStream.writeObject(serverAnswer);
-            outputStream.flush();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            close();
+        synchronized(outputStreamLock) {
+            try {
+                if (!(serverAnswer.getServerAnswer() instanceof PingMessage))
+                    System.out.println(serverAnswer.getServerAnswer().getClass());
+                outputStream.reset();
+                outputStream.writeObject(serverAnswer);
+                outputStream.flush();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                close();
+            }
         }
     }
 
