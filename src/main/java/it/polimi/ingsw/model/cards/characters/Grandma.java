@@ -53,9 +53,9 @@ public class Grandma extends CharacterCard {
     }
 
     /**
-     * Method moveBlockingCard removes a blocking card from the Grandma card.
+     * Method removeBlockingCard removes a blocking card from the Grandma card.
      */
-    public void moveBlockingCard() {
+    public void removeBlockingCard() {
         if (blockingCards > 0) {
             blockingCards--;
         }

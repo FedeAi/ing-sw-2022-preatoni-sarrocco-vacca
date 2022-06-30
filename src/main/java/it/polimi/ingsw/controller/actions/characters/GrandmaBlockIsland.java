@@ -101,7 +101,7 @@ public class GrandmaBlockIsland extends Performable {
         // Redundant card presence check, then we execute the action
         if (game.getActiveCharacter(Grandma.class).isPresent()) {
             Grandma grandma = (Grandma) game.getActiveCharacter(Grandma.class).get();
-            grandma.moveBlockingCard();
+            game.removeBlockingCardToGrandma(grandma);
             game.setIslandBlock(islandIndex, true);
             game.deactivateCharacterCard(game.getCharacterCards().indexOf(grandma), rules);
         }

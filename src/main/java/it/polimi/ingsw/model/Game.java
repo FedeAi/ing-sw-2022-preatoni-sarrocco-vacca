@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.cards.characters.CharacterCard;
 import it.polimi.ingsw.constants.Color;
 import it.polimi.ingsw.constants.GameState;
 import it.polimi.ingsw.constants.Magician;
+import it.polimi.ingsw.model.cards.characters.Grandma;
 import it.polimi.ingsw.model.islands.Island;
 import it.polimi.ingsw.model.islands.IslandContainer;
 import it.polimi.ingsw.server.answers.model.PlayersStatusMessage;
@@ -619,6 +620,24 @@ public class Game {
      */
     public void deactivateCharacterCard(int card, Rules rules) {
         characterCards.get(card).deactivate(rules, this);
+        listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
+    }
+
+    /**
+     * Method addBlockingCardsToGrandma increase the number of blocking cards in the grandma character
+     * @param grandma
+     */
+    public void addBlockingCardsToGrandma(Grandma grandma){
+        grandma.addBlockingCard();
+        listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
+    }
+
+    /**
+     * Method addBlockingCardsToGrandma increase the number of blocking cards in the grandma character
+     * @param grandma
+     */
+    public void removeBlockingCardToGrandma(Grandma grandma){
+        grandma.removeBlockingCard();
         listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
     }
 

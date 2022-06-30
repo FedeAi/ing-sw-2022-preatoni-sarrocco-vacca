@@ -115,8 +115,7 @@ public class MoveMotherNature extends Performable {
             if (card.isEmpty()) {
                 return;
             }
-            Grandma grandma = (Grandma) card.get();
-            grandma.addBlockingCard();
+            game.addBlockingCardsToGrandma((Grandma) card.get());
         }
     }
 

@@ -138,7 +138,7 @@ class GrandmaBlockIslandTest {
     void blockingUnavailable() {
         // We now empty the grandma card
         while (grandma.getBlockingCards() != 0) {
-            grandma.moveBlockingCard();
+            grandma.removeBlockingCard();
         }
         assertThrows(GameException.class, () -> {
             action.performMove(game, gameManager.getRules());
