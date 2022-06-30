@@ -1,8 +1,8 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.client.cli.CLI;
-import it.polimi.ingsw.client.gui.GUI;
-import it.polimi.ingsw.server.Server;
+import it.polimi.ingsw.ClientServer.client.cli.CLI;
+import it.polimi.ingsw.ClientServer.client.gui.GUI;
+import it.polimi.ingsw.ClientServer.server.Server;
 
 import java.util.Scanner;
 
@@ -20,6 +20,7 @@ public class Eriantys {
         System.out.println("0 - Server");
         System.out.println("1 - Client with CLI interface");
         System.out.println("2 - Client with GUI interface");
+
         System.out.print(">");
         Scanner scanner = new Scanner(System.in);
         int selection = 0;
@@ -35,7 +36,13 @@ public class Eriantys {
             case 2 -> GUI.main(null);
             default -> {
                 System.err.println("Wrong selection. Exiting...");
-                System.exit(1);
+                try {
+                    Thread.sleep(10000);
+                    CLI.clearScreen();
+                } catch (Exception e) {
+                    System.exit(1);
+                }
+                main(null);
             }
         }
     }
