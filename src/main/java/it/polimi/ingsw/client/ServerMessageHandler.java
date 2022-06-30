@@ -140,6 +140,7 @@ public class ServerMessageHandler {
         } else if (answer instanceof GameStateMessage message) {
             GameState previousState = modelView.getGameState();
             modelView.setGameState(message.getMessage());
+            System.out.println("GAME STATE: " + modelView.getGameState());
             view.firePropertyChange(GAME_STATE_LISTENER, null, message.getMessage()); // todo remove previousstate to trigger (also in game model)
         } else if (answer instanceof ModeMessage message) {
             modelView.setExpert(message.getMessage());
