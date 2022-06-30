@@ -703,7 +703,10 @@ public class BoardController extends GUIController implements PropertyChangeList
                 student.setImage(studentImgs.get(color));
                 student.setFitWidth(22);
                 student.setFitHeight(22);
-                student.setOnMouseReleased((e) -> changeSupport.firePropertyChange(CHARACTER_STUDENT_LISTENER, null, color));
+                student.setOnMouseReleased((e) -> {
+                    changeSupport.firePropertyChange(CHARACTER_STUDENT_LISTENER, null, color);
+                    e.consume();
+                });
                 students.getChildren().add(student);
             });
             content.getChildren().add(students);

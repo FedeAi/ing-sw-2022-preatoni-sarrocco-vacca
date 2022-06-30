@@ -244,14 +244,20 @@ public class GUI extends Application implements UI {
                 }
             }
             case ServerMessageHandler.WIN_MESSAGE_LISTENER -> {
-                Platform.runLater(() -> changeScene(END));
-                String winner = ((WinMessage) evt.getNewValue()).getMessage();
-                ((WinnerController) getControllerFromName(END)).printWinner(winner);
+                Platform.runLater(() -> {
+                    changeScene(END);
+                    String winner = ((WinMessage) evt.getNewValue()).getMessage();
+                    ((WinnerController) getControllerFromName(END)).printWinner(winner);
+                });
+
             }
             case SocketListener.CONNECTION_CLOSE_LISTENER -> {
-                Platform.runLater(() -> changeScene(END));
-                String msg = "Connection closed by the server. Quitting...";
-                ((WinnerController) getControllerFromName(END)).printMsg(msg);
+                Platform.runLater(() -> {
+                    changeScene(END);
+                    String msg = "Connection closed by the server. Quitting...";
+                    ((WinnerController) getControllerFromName(END)).printMsg(msg);
+                });
+
 
             }
         }

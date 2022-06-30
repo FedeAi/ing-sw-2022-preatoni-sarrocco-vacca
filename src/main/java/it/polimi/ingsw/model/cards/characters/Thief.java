@@ -1,9 +1,13 @@
 package it.polimi.ingsw.model.cards.characters;
 
 import it.polimi.ingsw.constants.Character;
+import it.polimi.ingsw.constants.Color;
 import it.polimi.ingsw.controller.rules.Rules;
 import it.polimi.ingsw.constants.GameState;
 import it.polimi.ingsw.model.Game;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Thief class is model representation of the Thief character card.
@@ -46,5 +50,13 @@ public class Thief extends CharacterCard {
     public void deactivate(Rules rules, Game game) {
         super.deactivate(rules, game);
         game.setGameState(previousState);
+    }
+
+    /**
+     * Method getStudents returns a list of all colors, in order to make them selectable in the client.
+     */
+    @Override
+    public List<Color> getStudents() {
+        return new ArrayList<>(List.of(Color.values()));
     }
 }
