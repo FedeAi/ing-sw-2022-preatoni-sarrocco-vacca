@@ -66,7 +66,7 @@ public class Rules {
      */
     public static boolean checkCoin(int position) {
         return switch (position) {
-            case 2, 5, 8 -> true;
+            case 3, 6, 9 -> true;
             default -> false;
         };
     }

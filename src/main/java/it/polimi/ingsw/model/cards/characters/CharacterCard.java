@@ -98,6 +98,13 @@ public abstract class CharacterCard extends Card {
     }
 
     /**
+     * Method resetActivatingPlayer resets the card's activator.
+     */
+    public void resetActivatingPlayer() {
+        activatingPlayer = "";
+    }
+
+    /**
      * Method getActivatingPlayer returns the player that has activated the card at the moment.
      * @return the username of the player.
      */
