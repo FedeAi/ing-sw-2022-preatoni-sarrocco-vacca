@@ -94,6 +94,7 @@ public class Player implements PropertyChangeListener {
         listeners.firePropertyChange(HAND_LISTENER, null, cards);
         listeners.firePropertyChange(SCHOOL_LISTENER, null, school);
         listeners.firePropertyChange(BALANCE_LISTENER, null, balance);
+        listeners.firePropertyChange(PLAYED_CARD_LISTENER, null, playedCard);
     }
 
     /**

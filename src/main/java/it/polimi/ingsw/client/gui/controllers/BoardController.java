@@ -212,6 +212,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         updateHand();
         showPlayers();
         updateStatus();
+        updatePlayedCards();
         initCompleted = true;
         changeSupport.addPropertyChangeListener(new EventsToActions(gui));
     }
