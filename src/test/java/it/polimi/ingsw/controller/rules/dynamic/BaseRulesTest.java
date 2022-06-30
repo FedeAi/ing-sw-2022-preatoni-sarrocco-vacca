@@ -80,7 +80,7 @@ class BaseRulesTest {
     @Test
     @DisplayName("MotherNature maxMoves test")
     void computeMotherMaxMoves() {
-        AssistantCard card = new AssistantCard("sss", 8);
+        AssistantCard card = new AssistantCard(8);
         assertEquals(baseRules.computeMotherMaxMoves(card), card.getMaxMoves());
     }
 

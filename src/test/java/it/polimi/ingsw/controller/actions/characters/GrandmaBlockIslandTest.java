@@ -59,7 +59,7 @@ class GrandmaBlockIslandTest {
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         game.setRoundOwner(p1);
         selectedIsland = game.getIslandContainer().correctIndex(1, game.getMotherNature().getPosition());
-        grandma = new Grandma("");
+        grandma = new Grandma();
         cardList = new ArrayList<>();
         cardList.add(grandma);
         game.initCharacterCards(cardList);
@@ -206,7 +206,7 @@ class GrandmaBlockIslandTest {
         }
         game.setGameState(GameState.ACTION_MOVE_MOTHER);
         int movement = 1;
-        p1.setAndRemovePlayedCard(new AssistantCard("", 10));
+        p1.setAndRemovePlayedCard(new AssistantCard(10));
         action = new MoveMotherNature(p1.getNickname(), movement);
         try {
             action.performMove(game, gameManager.getRules());

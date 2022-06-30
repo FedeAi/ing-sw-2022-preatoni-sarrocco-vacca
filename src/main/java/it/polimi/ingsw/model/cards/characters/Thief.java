@@ -21,8 +21,8 @@ public class Thief extends CharacterCard {
     /**
      * Constructor Thief sets the correct Character enum type and the correct price to the card.
      */
-    public Thief(String imagePath) {
-        super(imagePath);
+    public Thief() {
+        super();
         price = 3;
         character = Character.THIEF;
     }

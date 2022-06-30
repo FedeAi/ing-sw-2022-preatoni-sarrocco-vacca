@@ -54,7 +54,7 @@ public class PrincessMoveToHallTest {
         gameManager.initGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new Princess("", game.getBag());
+        card = new Princess(game.getBag());
         card.init();
         cardList = new ArrayList<>();
         cardList.add(card);

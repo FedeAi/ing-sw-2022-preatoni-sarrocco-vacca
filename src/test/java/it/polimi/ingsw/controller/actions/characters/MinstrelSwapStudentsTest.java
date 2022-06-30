@@ -55,7 +55,7 @@ class MinstrelSwapStudentsTest {
         gameManager.initGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new Minstrel("");
+        card = new Minstrel();
         card.init();
         cardList = new LinkedList<>();
         cardList.add(card);

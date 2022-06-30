@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * CharacterCard class represents the basic abstract of a character card.
  */
-public abstract class CharacterCard extends Card {
+public abstract class CharacterCard implements Card {
 
     protected int price;
     protected boolean activated;
@@ -23,8 +23,7 @@ public abstract class CharacterCard extends Card {
     /**
      * Constructor CharacterCard initializes the parameter of the character card instance to the initial value.
      */
-    public CharacterCard(String imagePath) {
-        super(imagePath);
+    public CharacterCard() {
         activated = false;
         isActive = false;
         activatingPlayer = "";
@@ -58,7 +57,6 @@ public abstract class CharacterCard extends Card {
      */
     public void deactivate(Rules rules, Game game) {
         isActive = false;
-        // TODO PROBLEM: A PLAYER CAN ACTIVATED A CARD ONCE PER TURN!! THIS IS NOT SORTED activatingPlayer = "";
     }
 
     /**

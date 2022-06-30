@@ -112,9 +112,9 @@ public class GameManager implements PropertyChangeListener {
 //        characters.add(new Mushroom(""));
 //        characters.add(new Postman(""));
 //        characters.add(new Thief(""));
-        characters.add(new Princess("", game.getBag()));
-        characters.add(new Minstrel(""));
-        characters.add(new Monk("", game.getBag()));
+        characters.add(new Princess(game.getBag()));
+        characters.add(new Minstrel());
+        characters.add(new Monk(game.getBag()));
 //        characters.add(new Grandma(""));
 
         Collections.shuffle(characters);

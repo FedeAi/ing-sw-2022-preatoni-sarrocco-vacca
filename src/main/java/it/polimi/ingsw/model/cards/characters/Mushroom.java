@@ -24,8 +24,8 @@ public class Mushroom extends CharacterCard {
     /**
      * Constructor Mushroom sets the correct Character enum type and the correct price to the card.
      */
-    public Mushroom(String imagePath) {
-        super(imagePath);
+    public Mushroom() {
+        super();
         price = 3;
         character = Character.MUSHROOM;
     }

@@ -29,7 +29,7 @@ class KnightTest {
      */
     @BeforeEach
      void init() {
-        card = new Knight("");
+        card = new Knight();
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
         game = gameManager.getGame();
         game.createPlayer(0, "Ale");

@@ -29,7 +29,7 @@ class PostmanTest {
      */
     @BeforeEach
     void init() {
-        card = new Postman("");
+        card = new Postman();
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
         game = gameManager.getGame();
         game.createPlayer(0, "Ale");

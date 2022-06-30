@@ -17,8 +17,8 @@ public class Herald extends CharacterCard {
     /**
      * Constructor Herald sets the correct Character enum type and the correct price to the card.
      */
-    public Herald(String imagePath) {
-        super(imagePath);
+    public Herald() {
+        super();
         price = 3;
         character = Character.HERALD;
     }

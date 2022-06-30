@@ -54,7 +54,7 @@ class JokerSwapStudentsTest {
         gameManager.initGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new Joker("", game.getBag());
+        card = new Joker(game.getBag());
         card.init();
         cardList = new LinkedList<>();
         studentCard = Color.BLUE;
@@ -111,7 +111,7 @@ class JokerSwapStudentsTest {
         // We now have a card present, but not the JOKER
         // It's important also to not have a card that changes the game state
         card.activate(gameManager.getRules(), game);
-        CharacterCard tempCard = new Knight("");
+        CharacterCard tempCard = new Knight();
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);

@@ -58,7 +58,7 @@ class MushroomChooseColorTest {
         gameManager.initGame();
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         game.setRoundOwner(p1);
-        card = new Mushroom("");
+        card = new Mushroom();
         cardList = new ArrayList<>();
         cardList.add(card);
         game.initCharacterCards(cardList);
@@ -89,7 +89,7 @@ class MushroomChooseColorTest {
         // We now have a card present, but not the MUSHROOM
         // It's important also to not have a card that changes the game state
         card.activate(gameManager.getRules(), game);
-        CharacterCard tempCard = new Knight("");
+        CharacterCard tempCard = new Knight();
         tempCard.activate(gameManager.getRules(), game);
         cardList = new ArrayList<>();
         cardList.add(tempCard);
@@ -107,7 +107,7 @@ class MushroomChooseColorTest {
     void noActives() {
         // No cards present check
         cardList = new ArrayList<>();
-        cardList.add(new Mushroom(""));
+        cardList.add(new Mushroom());
         game.initCharacterCards(cardList);
         card.activate(gameManager.getRules(), game);
         assertThrows(GameException.class, () -> {
@@ -137,7 +137,7 @@ class MushroomChooseColorTest {
             fail(e.getMessage());
         }
         game.setGameState(GameState.ACTION_MOVE_MOTHER);
-        p1.setAndRemovePlayedCard(new AssistantCard("", 10));
+        p1.setAndRemovePlayedCard(new AssistantCard(10));
         action = new MoveMotherNature(p1.getNickname(), 1);
         try {
             action.performMove(game, gameManager.getRules());

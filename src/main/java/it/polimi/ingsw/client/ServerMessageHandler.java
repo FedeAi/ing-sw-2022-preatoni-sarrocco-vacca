@@ -2,7 +2,6 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.cli.CLI;
 import it.polimi.ingsw.client.gui.GUI;
-import it.polimi.ingsw.client.messages.turn.GameStartedMessage;
 import it.polimi.ingsw.constants.GameState;
 import it.polimi.ingsw.server.answers.*;
 import it.polimi.ingsw.server.answers.model.*;
@@ -166,8 +165,6 @@ public class ServerMessageHandler {
             view.firePropertyChange(GAME_SETUP_LISTENER, null, "ReqPlayers");  // ((ReqPlayersMessage)answer).getClass().getSimpleName() TODO this should also work
         } else if (answer instanceof ReqMagicianMessage) {
             view.firePropertyChange(GAME_SETUP_LISTENER, null, "ReqMagician");
-        } else if (answer instanceof GameStartedMessage) {
-            view.firePropertyChange("gameStarted", null, null);
         }
     }
 }

@@ -53,7 +53,7 @@ class ThiefChooseColorTest {
         gameManager.initGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new Thief("");
+        card = new Thief();
         cardList = new ArrayList<>();
         cardList.add(card);
         game.initCharacterCards(cardList);

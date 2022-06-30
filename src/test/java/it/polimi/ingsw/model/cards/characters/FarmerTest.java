@@ -29,7 +29,7 @@ class FarmerTest {
      */
     @BeforeEach
      void init() {
-        card = new Farmer("");
+        card = new Farmer();
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
         game = gameManager.getGame();
         game.createPlayer(0, "Ale");

@@ -19,8 +19,8 @@ public class Minstrel extends CharacterCard {
     /**
      * Constructor Minstrel sets the correct Character enum type and the correct price to the card.
      */
-    public Minstrel(String imagePath) {
-        super(imagePath);
+    public Minstrel() {
+        super();
         price = 1;
         character = Character.MINSTREL;
     }

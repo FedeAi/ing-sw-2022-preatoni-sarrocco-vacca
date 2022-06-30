@@ -215,7 +215,7 @@ public class Player implements PropertyChangeListener {
     private void createHand() {
         cards = new ArrayList<>();
         for (int i = 1; i <= Constants.NUM_ASSISTANT_CARDS; i++) {
-            cards.add(new AssistantCard("", i));
+            cards.add(new AssistantCard(i));
         }
         listeners.firePropertyChange(HAND_LISTENER, null, cards);
     }

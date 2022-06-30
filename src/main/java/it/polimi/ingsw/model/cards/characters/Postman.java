@@ -16,8 +16,8 @@ public class Postman extends CharacterCard {
     /**
      * Constructor Postman sets the correct Character enum type and the correct price to the card.
      */
-    public Postman(String imagePath) {
-        super(imagePath);
+    public Postman() {
+        super();
         price = 1;
         character = Character.POSTMAN;
     }

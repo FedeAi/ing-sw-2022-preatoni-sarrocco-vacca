@@ -29,7 +29,7 @@ public class MinstrelTest {
      */
     @BeforeEach
     void init() {
-        card = new Minstrel("");
+        card = new Minstrel();
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
         game = gameManager.getGame();
         game.createPlayer(0, "Ale");

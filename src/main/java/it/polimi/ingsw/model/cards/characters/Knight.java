@@ -16,8 +16,8 @@ public class Knight extends CharacterCard {
     /**
      * Constructor Knight sets the correct Character enum type and the correct price to the card.
      */
-    public Knight(String imagePath) {
-        super(imagePath);
+    public Knight() {
+        super();
         price = 2;
         character = Character.KNIGHT;
     }

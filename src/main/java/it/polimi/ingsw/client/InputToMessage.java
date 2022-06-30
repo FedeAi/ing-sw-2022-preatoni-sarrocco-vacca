@@ -4,7 +4,6 @@ import it.polimi.ingsw.client.messages.Action;
 import it.polimi.ingsw.client.messages.Message;
 import it.polimi.ingsw.client.messages.MessageBuilder;
 import it.polimi.ingsw.client.messages.PongMessage;
-import it.polimi.ingsw.client.messages.turn.EndTurnMessage;
 import it.polimi.ingsw.constants.CLIColors;
 
 import java.beans.PropertyChangeEvent;
@@ -93,7 +92,6 @@ public class InputToMessage implements PropertyChangeListener {
                 case "PRINCESS" -> actionToSend = messageBuilder.princessMove(in);
                 case "THIEF" -> actionToSend = messageBuilder.thiefChoose(in);
                 case "PONG" -> messageToSend = new PongMessage();
-                case "END" -> messageToSend = new EndTurnMessage();
                 case "QUIT" -> {
                     connectionSocket.send(messageBuilder.quit());
                     System.exit(0);

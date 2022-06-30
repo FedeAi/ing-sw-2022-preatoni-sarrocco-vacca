@@ -25,8 +25,8 @@ public class Monk extends CharacterCard {
     /**
      * Constructor Monk sets the correct Character enum type and the correct price to the card.
      */
-    public Monk(String imagePath, Bag bag) {
-        super(imagePath);
+    public Monk(Bag bag) {
+        super();
         price = 1;
         this.bag = bag;
         students = new EnumMap<>(Color.class);

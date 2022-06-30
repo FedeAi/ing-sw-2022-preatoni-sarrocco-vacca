@@ -28,8 +28,8 @@ public class Princess extends CharacterCard {
      *
      * @param bag this is the game bag reference, needed to maintain the card's student inventory.
      */
-    public Princess(String imagePath, Bag bag) {
-        super(imagePath);
+    public Princess(Bag bag) {
+        super();
         price = 2;
         this.bag = bag;
         students = new EnumMap<>(Color.class);

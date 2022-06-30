@@ -27,8 +27,8 @@ public class Joker extends CharacterCard {
     /**
      * Constructor Joker sets the correct Character enum type and the correct price to the card.
      */
-    public Joker(String imagePath, Bag bag) {
-        super(imagePath);
+    public Joker(Bag bag) {
+        super();
         price = 1;
         swappedStudents = 0;
         this.bag = bag;

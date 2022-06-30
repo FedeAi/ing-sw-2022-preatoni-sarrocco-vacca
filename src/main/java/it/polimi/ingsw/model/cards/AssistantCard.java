@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * AssistantCard class represent the game's assistant cards, that determine the playing order of the game.
  */
-public class AssistantCard extends Card {
+public class AssistantCard implements Card {
 
     private int maxMoves;
     private int value;
@@ -15,8 +15,7 @@ public class AssistantCard extends Card {
      *
      * @param value the value of the card to create.
      */
-    public AssistantCard(String imagePath, int value) {
-        super(imagePath);
+    public AssistantCard(int value) {
         this.value = value;
         switch (this.value) {
             case 1, 2 -> maxMoves = 1;

@@ -57,7 +57,7 @@ class MonkMoveToIslandTest {
         gameManager.initGame();
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
-        card = new Monk("", game.getBag());
+        card = new Monk(game.getBag());
         card.init();
         cardList = new ArrayList<>();
         r = new Random();
@@ -115,7 +115,7 @@ class MonkMoveToIslandTest {
     @Test
     void noMonks() {
         // Now we're going to have some cards in the list, but not of the MONK type
-        Knight tempCard = new Knight("");
+        Knight tempCard = new Knight();
         tempCard.activate(gameManager.getRules(), game);
         cardList.add(tempCard);
         game.initCharacterCards(cardList);

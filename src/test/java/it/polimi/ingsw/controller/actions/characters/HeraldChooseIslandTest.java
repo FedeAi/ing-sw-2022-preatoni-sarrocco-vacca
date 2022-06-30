@@ -53,7 +53,7 @@ class HeraldChooseIslandTest {
         game.setRoundOwner(p1);
         game.setGameState(GameState.ACTION_MOVE_STUDENTS);
         index = 1;
-        card = new Herald("");
+        card = new Herald();
         cardList = new LinkedList<>();
         action = new HeraldChooseIsland(p1.getNickname(), index);
     }

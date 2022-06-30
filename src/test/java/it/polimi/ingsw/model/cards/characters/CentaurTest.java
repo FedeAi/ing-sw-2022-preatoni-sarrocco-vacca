@@ -29,7 +29,7 @@ class CentaurTest {
      */
     @BeforeEach
     void init() {
-        card = new Centaur("");
+        card = new Centaur();
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
         game = gameManager.getGame();
         game.createPlayer(0, "Ale");

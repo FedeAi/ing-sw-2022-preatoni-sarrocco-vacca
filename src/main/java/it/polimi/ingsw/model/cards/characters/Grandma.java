@@ -18,8 +18,8 @@ public class Grandma extends CharacterCard {
     /**
      * Constructor Grandma sets the correct Character enum type and the correct price to the card.
      */
-    public Grandma(String imagePath) {
-        super(imagePath);
+    public Grandma() {
+        super();
         price = 2;
         blockingCards = 4;
         character = Character.GRANDMA;

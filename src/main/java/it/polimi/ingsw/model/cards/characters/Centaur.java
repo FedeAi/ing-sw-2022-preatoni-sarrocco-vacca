@@ -16,8 +16,8 @@ public class Centaur extends CharacterCard {
     /**
      * Constructor Centaur sets the correct Character enum type and the correct price to the card.
      */
-    public Centaur(String imagePath) {
-        super(imagePath);
+    public Centaur() {
+        super();
         price = 3;
         character = Character.CENTAUR;
     }

@@ -16,8 +16,8 @@ public class Farmer extends CharacterCard {
     /**
      * Constructor Farmer sets the correct Character enum type and the correct price to the card.
      */
-    public Farmer(String imagePath) {
-        super(imagePath);
+    public Farmer() {
+        super();
         price = 2;
         character = Character.FARMER;
     }
