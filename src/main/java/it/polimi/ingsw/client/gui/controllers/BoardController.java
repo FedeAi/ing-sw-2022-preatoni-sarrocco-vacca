@@ -160,7 +160,10 @@ public class BoardController extends GUIController implements PropertyChangeList
         hallLanes.put(Color.PINK, pinkLane);
         hallLanes.put(Color.BLUE, blueLane);
         for (Color c : Color.values()) {
-            hallLanes.get(c).setOnMouseReleased((e) -> changeSupport.firePropertyChange(SCHOOL_HALL_LISTENER, null, c));
+            hallLanes.get(c).setOnMouseReleased((e) -> {
+                changeSupport.firePropertyChange(SCHOOL_HALL_LISTENER, null, c);
+                e.consume();
+            });
         }
         //fill cloudToStudents
         cloudStudents.add(List.of(studentCloud1, studentCloud2, studentCloud3, studentCloud4));
@@ -302,6 +305,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             int index = i;
             cloudsPane.get(i).setOnMouseReleased((e) -> {
                 changeSupport.firePropertyChange(CLOUD_LISTENER, null, index);
+                e.consume();
             });
             cloudsPane.get(i).getChildren().add(0, backCloud);
         }
@@ -553,7 +557,10 @@ public class BoardController extends GUIController implements PropertyChangeList
             pane.getChildren().add(blockedImgV);
         }
         pane.getChildren().add(hContainer);
-        pane.setOnMouseReleased((e) -> changeSupport.firePropertyChange(SELECT_ISLAND_LISTENER, null, index));
+        pane.setOnMouseReleased((e) -> {
+            changeSupport.firePropertyChange(SELECT_ISLAND_LISTENER, null, index);
+            e.consume();
+        });
         pane.setOnMouseEntered(this::onSelectScaleColor);
         pane.setOnMouseExited(this::onSelectScaleColor);
         return pane;
@@ -757,7 +764,10 @@ public class BoardController extends GUIController implements PropertyChangeList
             s.getChildren().add(content);
 
             int finalI = i;
-            s.setOnMouseReleased((e) -> changeSupport.firePropertyChange(CHARACTER_LISTENER, null, finalI));
+            s.setOnMouseReleased((e) -> {
+                changeSupport.firePropertyChange(CHARACTER_LISTENER, null, finalI);
+                e.consume();
+            });
 
             characterContainer.getChildren().add(s);
 
