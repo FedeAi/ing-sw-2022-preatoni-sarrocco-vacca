@@ -55,11 +55,9 @@ public class LoginController extends GUIController {
             sleepAndExec(() -> error.setText(""));
         } else if (!Constants.validateNickname(username.getText())) {
             error.setText("Error: username must be alphanumeric and contain between 3 and 15 characters.");
-            sleepAndExec(() -> username.setText(""));
             sleepAndExec(() -> error.setText(""));
         } else if (!(Constants.validatePort(port.getText()) > 1023 || Constants.validatePort(port.getText()) < 65355)) {
             error.setText("Error: port should be above 1023 and under 65355");
-            sleepAndExec(() -> port.setText(""));
             sleepAndExec(() -> error.setText(""));
         } else {
             gui.getModelView().setPlayerName(username.getText());
@@ -74,7 +72,6 @@ public class LoginController extends GUIController {
                 ConnectionSocket connectionSocket = new ConnectionSocket();
                 if (!connectionSocket.setup(username.getText(), gui.getModelView(), gui.getServerMessageHandler())) {
                     error.setText("Server not reachable, try another IP");
-                    sleepAndExec(() -> ip.setText(""));
                     sleepAndExec(() -> error.setText(""));
                     return;
                 }

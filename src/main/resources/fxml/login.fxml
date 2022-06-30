@@ -54,7 +54,7 @@
             </GridPane>
             <HBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="30.0">
                <children>
-                  <Button id="button" fx:id="clean" mnemonicParsing="false" onAction="#clean" prefHeight="62.0" prefWidth="159.0" text="Clean">
+                  <Button id="button" fx:id="clean" mnemonicParsing="false" onAction="#clean" prefHeight="62.0" prefWidth="159.0" text="Clear">
                      <stylesheets>
                         <URL value="@../css/setup.css" />
                         <URL value="@../css/menu.css" />
