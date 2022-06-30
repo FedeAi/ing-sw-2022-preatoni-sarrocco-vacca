@@ -538,7 +538,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         hContainer.getChildren().add(secondColumn);
 
         // blocked island
-        if(island.isBlocked()){
+        if (island.isBlocked()) {
             blockedImgV = new ImageView();
             blockedImgV.setImage(blockImg);
             blockedImgV.fitWidthProperty().bind(islandPanes.get(index).widthProperty());
@@ -549,7 +549,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
         // Add elements to the pane
         pane.getChildren().add(background);
-        if(blockedImgV != null){
+        if (blockedImgV != null) {
             pane.getChildren().add(blockedImgV);
         }
         pane.getChildren().add(hContainer);
@@ -643,11 +643,13 @@ public class BoardController extends GUIController implements PropertyChangeList
      * Method showBalance creates the GUI element for showing the player's balance.
      */
     private void showBalance() {
-        ImageView coin = new ImageView(coinImg);
-        coin.setCache(true);
-        coin.setFitHeight(50);
-        coin.setFitWidth(50);
-        balanceContainer.getChildren().add(0, coin);
+        if (balanceContainer.getChildren().size() == 1) {
+            ImageView coin = new ImageView(coinImg);
+            coin.setCache(true);
+            coin.setFitHeight(50);
+            coin.setFitWidth(50);
+            balanceContainer.getChildren().add(0, coin);
+        }
         updateBalance();
     }
 
@@ -726,8 +728,8 @@ public class BoardController extends GUIController implements PropertyChangeList
             blockingCards.setVgap(4);
             blockingCards.setHgap(4);
             blockingCards.setAlignment(Pos.CENTER);
-            if(c.blockingCards >0){
-                for(int j = 0; j< c.blockingCards; j ++){
+            if (c.blockingCards > 0) {
+                for (int j = 0; j < c.blockingCards; j++) {
                     ImageView blockImgV = new ImageView(blockImg);
                     blockImgV.setFitWidth(40);
                     blockImgV.setFitHeight(40);
@@ -737,7 +739,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             }
 
             // Active
-            if(c.isActive){
+            if (c.isActive) {
                 character.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8)));  // Shadow
                 character.setScaleX(1.25);
                 character.setScaleY(1.25);
@@ -762,15 +764,13 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
     }
 
-    private void updateProgressBar(){
-        if((gui.getModelView().getConnectedPlayers().size() == 1) ||
-            (!gui.getModelView().getConnectedPlayers().contains(gui.getModelView().getPlayerName())))
-        {
+    private void updateProgressBar() {
+        if ((gui.getModelView().getConnectedPlayers().size() == 1) ||
+                (!gui.getModelView().getConnectedPlayers().contains(gui.getModelView().getPlayerName()))) {
             progressBar.setVisible(true);
             islandGridPane.setOpacity(0.5);
             schoolPane.setOpacity(0.5);
-        }
-        else{
+        } else {
             progressBar.setVisible(false);
             islandGridPane.setOpacity(1);
             schoolPane.setOpacity(1);
