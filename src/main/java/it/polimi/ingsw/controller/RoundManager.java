@@ -94,9 +94,11 @@ public class RoundManager {
             gameInstance.removePlayedCards();
             // handle the disconnected players now re-connected
             gameManager.getGameHandler().reEnterWaitingPlayers();
+            // fire new round
+            gameInstance.setGameState(GameState.NEW_ROUND);
             nextPlayer = gameInstance.setPlanningOrder();
         }
-        // if next round is going to start
+        // if next round (for the next player) is going to start
         if (gameInstance.getGameState() == GameState.ACTION_CHOOSE_CLOUD && nextState == GameState.PLANNING_CHOOSE_CARD) {
             // deactivate Character effects if there is an active card TODO not here
             IntStream.range(0, gameInstance.getCharacterCards().size()).filter(i -> gameInstance.getCharacterCards().get(i).isActive()).forEach(i -> gameInstance.deactivateCharacterCard(i, gameManager.getRules()));

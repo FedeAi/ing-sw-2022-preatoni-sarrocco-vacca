@@ -19,6 +19,7 @@ public enum GameState {
     ACTION_MOVE_STUDENTS,
     ACTION_MOVE_MOTHER,
     ACTION_CHOOSE_CLOUD,
+    NEW_ROUND,
 
     /* Character cards states (accessibile only by activating the homonym character card) */
     HERALD_ACTIVE,

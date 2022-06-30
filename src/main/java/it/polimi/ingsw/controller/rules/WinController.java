@@ -26,7 +26,7 @@ public class WinController {
                 return p.getNickname();
             }
             //another way to win has finished the cards but I should wait the end of the turn
-            if (p.getCards().isEmpty() && game.getGameState() == GameState.PLANNING_CHOOSE_CARD) {
+            if (p.getCards().isEmpty() && game.getGameState() == GameState.NEW_ROUND) {
                 return winner(game);
             }
         }
