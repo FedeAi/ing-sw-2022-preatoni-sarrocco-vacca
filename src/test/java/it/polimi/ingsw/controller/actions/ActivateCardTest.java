@@ -10,12 +10,17 @@ import it.polimi.ingsw.server.GameHandler;
 import it.polimi.ingsw.server.Server;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * ActivateCardTest tests the ActivateCard action.
+ *
+ * @see ActivateCard
+ */
 class ActivateCardTest {
+
     GameManager gameManager;
     Player p1, p2, p3;
     Game game;
@@ -23,7 +28,7 @@ class ActivateCardTest {
     int selection;
 
     /**
-     * Method init: initializes values.
+     * Method init initializes the values needed for the test.
      */
     @BeforeEach
     void init() {
@@ -43,6 +48,9 @@ class ActivateCardTest {
         action = new ActivateCard(p3.getNickname(), selection);
     }
 
+    /**
+     * Method wrongNickname tests if an action is created with a wrong player nickname.
+     */
     @DisplayName("Wrong nickname test")
     @Test
     void wrongNickname() {
@@ -53,6 +61,9 @@ class ActivateCardTest {
         });
     }
 
+    /**
+     * Method wrongRoundOwner tests if an action is created with a player which is not the current round owner.
+     */
     @DisplayName("Wrong roundOwner test")
     @Test
     void wrongRoundOwner() {
@@ -62,6 +73,9 @@ class ActivateCardTest {
         });
     }
 
+    /**
+     * Method wrongState tests if an action is created the wrong state set.
+     */
     @DisplayName("Wrong state test")
     @Test
     void wrongState() {
@@ -71,6 +85,9 @@ class ActivateCardTest {
         });
     }
 
+    /**
+     * Method normalMode tests if an action is created the wrong game mode set.
+     */
     @DisplayName("Wrong game mode test")
     @Test
     void normalMode() {
@@ -80,6 +97,9 @@ class ActivateCardTest {
         });
     }
 
+    /**
+     * Method invalidSelection tests if an action is created with an invalid index.
+     */
     @DisplayName("Wrong card selection test")
     @Test
     void invalidSelection() {
@@ -95,6 +115,9 @@ class ActivateCardTest {
         });
     }
 
+    /**
+     * Method noMoney tests if a player has not enough money to perform an ActivateCard action on a certain CharacterCard.
+     */
     @DisplayName("Not enough money test")
     @Test
     void noMoney() {
@@ -104,6 +127,9 @@ class ActivateCardTest {
         });
     }
 
+    /**
+     * Method alreadyActive tests if a player tries to activate a card which has been already activated.
+     */
     @DisplayName("Card already active test")
     @Test
     void alreadyActive() {
@@ -125,6 +151,9 @@ class ActivateCardTest {
         });
     }
 
+    /**
+     * Method cardPerTurn tests that only a card per turn is to be activated.
+     */
     @DisplayName("Max one card per turn test")
     @Test
     void cardPerTurn() {
@@ -147,8 +176,10 @@ class ActivateCardTest {
         });
     }
 
+    /**
+     * Method activateCard tests the activation of a card.
+     */
     @DisplayName("Card activation test")
-    @RepeatedTest(30)
     void activateCard() {
         CharacterCard card = game.getCharacterCards().get(selection);
         for (int i = 0; i < card.getPrice() + 1; i++) {
@@ -171,19 +202,9 @@ class ActivateCardTest {
         for (int i = 0; i < card.getPrice() + 1; i++) {
             game.incrementPlayerBalance(p3.getNickname());
         }
-        /* check that in the second activation price is manged correctly */
-        previousPlayerBalance = p3.getBalance();
-        previousGameBalance = game.getBalance();
-        previousCardPrice = card.getPrice();
-        /* FIXME
-            try {
+        // Check that a card can be activated once per turn
+        assertThrows(GameException.class, () -> {
             action.performMove(game, gameManager.getRules());
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-        assertEquals(previousPlayerBalance - previousCardPrice, p3.getBalance(), "money are removed correctly");
-        assertEquals(previousGameBalance + previousCardPrice, game.getBalance(), "second activation of the card, game get back full price");
-        assertEquals(previousCardPrice, card.getPrice(), "no cost increment on card is right");
-         */
+        });
     }
 }

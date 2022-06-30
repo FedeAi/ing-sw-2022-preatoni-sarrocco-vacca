@@ -20,6 +20,12 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Class HeraldChooseIslandTest tests the HeraldChooseIsland action.
+ *
+ * @author Alessandro Vacca
+ * @see HeraldChooseIsland
+ */
 class HeraldChooseIslandTest {
 
     Performable action;
@@ -30,6 +36,9 @@ class HeraldChooseIslandTest {
     CharacterCard card;
     LinkedList<CharacterCard> cardList;
 
+    /**
+     * Method init initializes values.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -49,6 +58,10 @@ class HeraldChooseIslandTest {
         action = new HeraldChooseIsland(p1.getNickname(), index);
     }
 
+    /**
+     * Method wrongState tests if an action is created with the wrong state set.
+     * HeraldChooseIsland action can only be performed in the Herald state.
+     */
     @DisplayName("Wrong state test")
     @Test
     void wrongState() {
@@ -58,6 +71,9 @@ class HeraldChooseIslandTest {
         });
     }
 
+    /**
+     * Method noActives tests if there are no active cards in the current Game.
+     */
     @DisplayName("No active cards test")
     @Test
     void noActives() {
@@ -67,6 +83,9 @@ class HeraldChooseIslandTest {
         });
     }
 
+    /**
+     * Method wrongIndex tests if an action is created with an invalid index.
+     */
     @DisplayName("Wrong island index test")
     @Test
     void wrongIndex() {
@@ -85,6 +104,10 @@ class HeraldChooseIslandTest {
         });
     }
 
+    /**
+     * Method heraldCard tests a valid HeraldChooseIsland action,
+     * checking if the island is conquered after the action.
+     */
     @DisplayName("Herald conquer island test")
     @Test
     void heraldCard() {

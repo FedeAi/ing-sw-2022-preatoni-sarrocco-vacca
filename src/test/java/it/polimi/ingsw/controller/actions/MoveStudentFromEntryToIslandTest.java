@@ -18,6 +18,11 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * MoveStudentFromEntryToIslandTest class tests the MoveStudentFromEntryToIsland action.
+ *
+ * @see MoveStudentFromEntryToIsland
+ */
 class MoveStudentFromEntryToIslandTest {
 
     GameManager gameManager;
@@ -29,6 +34,9 @@ class MoveStudentFromEntryToIslandTest {
     Color student;
     int index;
 
+    /**
+     * Method init initializes the values needed for the test.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -46,6 +54,9 @@ class MoveStudentFromEntryToIslandTest {
         action = new MoveStudentFromEntryToIsland(p2.getNickname(), student, index);
     }
 
+    /**
+     * Method wrongIndex tests if an action is created with an invalid index.
+     */
     @DisplayName("Wrong island index test")
     @Test
     void wrongIndex() {
@@ -61,6 +72,10 @@ class MoveStudentFromEntryToIslandTest {
         });
     }
 
+    /**
+     * Method moveToIsland tests a basic MoveStudentFromEntryToIsland action,
+     * checking if a student is moved from the entry to the selected island.
+     */
     @DisplayName("Move student to island test")
     @Test
     void moveToIsland() {
@@ -91,6 +106,12 @@ class MoveStudentFromEntryToIslandTest {
         }
     }
 
+    /**
+     * Method getStudentFromEntry returns the first student of the player's entry.
+     *
+     * @param p the Player reference.
+     * @return The first student of the entry.
+     */
     private Color getStudentFromEntry(Player p) {
         return p.getSchool().getStudentsEntry().entrySet().stream().filter((s) -> s.getValue() > 0).findFirst().get().getKey();
     }

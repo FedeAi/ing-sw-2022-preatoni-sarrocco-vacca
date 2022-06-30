@@ -21,7 +21,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Class ThiefChooseColorTest tests the ThiefChooseColor action.
+ *
+ * @author Alessandro Vacca
+ * @see ThiefChooseColor
+ */
 class ThiefChooseColorTest {
+
     private Performable action;
     private Game game;
     private GameManager gameManager;
@@ -30,6 +37,9 @@ class ThiefChooseColorTest {
     private List<CharacterCard> cardList;
     private Color color;
 
+    /**
+     * Method init initializes values.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -60,6 +70,10 @@ class ThiefChooseColorTest {
         p2.getSchool().addStudentHall(color);
     }
 
+    /**
+     * Method wrongState tests if an action is created with the wrong state set.
+     * ThiefChooseColor action can only be performed in the Thief state.
+     */
     @Test
     @DisplayName("Wrong state test")
     void wrongState() {
@@ -70,6 +84,9 @@ class ThiefChooseColorTest {
         });
     }
 
+    /**
+     * Method noThieves checks if there are no Thieves in the current game.
+     */
     @DisplayName("No thieves in the game test")
     @Test
     void noThieves() {
@@ -79,9 +96,12 @@ class ThiefChooseColorTest {
         });
     }
 
-    @DisplayName("No active princesses test")
+    /**
+     * Method noActives checks if there are no active character cards.
+     */
+    @DisplayName("No active thieves test")
     @Test
-    void notActive() {
+    void noActives() {
         card.deactivate(gameManager.getRules(), game);
         game.setGameState(GameState.THIEF_CHOOSE_COLOR);
         assertThrows(GameException.class, () -> {
@@ -89,6 +109,9 @@ class ThiefChooseColorTest {
         });
     }
 
+    /**
+     * Method noColor tests if a user tries to perform a Thief action with no chosen color.
+     */
     @DisplayName("Wrong color test")
     @Test
     void noColor() {
@@ -100,6 +123,10 @@ class ThiefChooseColorTest {
         });
     }
 
+    /**
+     * Method thiefCard tests a valid ThiefChooseColor action,
+     * checking if the selected color is removed from all the player's halls.
+     */
     @DisplayName("Thief remove from hall test")
     @Test
     void thiefCard() {

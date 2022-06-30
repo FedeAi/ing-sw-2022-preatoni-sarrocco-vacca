@@ -22,6 +22,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Class PrincessMoveToHallTest tests the PrincessMoveToHall action.
+ *
+ * @see PrincessMoveToHall
+ */
 public class PrincessMoveToHallTest {
 
     private Performable action;
@@ -33,6 +38,9 @@ public class PrincessMoveToHallTest {
     private Color selectionColor;
     private int selectionValue;
 
+    /**
+     * Method init initializes values.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -64,6 +72,10 @@ public class PrincessMoveToHallTest {
         card.activate(gameManager.getRules(), game);
     }
 
+    /**
+     * Method wrongState tests if an action is created with the wrong state set.
+     * PrincessMoveToHall action can only be performed in the Princess state.
+     */
     @Test
     @DisplayName("Wrong state test")
     void wrongState() {
@@ -74,6 +86,9 @@ public class PrincessMoveToHallTest {
         });
     }
 
+    /**
+     * Method noPrincesses checks if there are no Princesses in the current game.
+     */
     @DisplayName("No princesses in the game test")
     @Test
     void noPrincesses() {
@@ -83,9 +98,12 @@ public class PrincessMoveToHallTest {
         });
     }
 
+    /**
+     * Method noActives checks if there are no active character cards.
+     */
     @DisplayName("No active princesses test")
     @Test
-    void notActive() {
+    void noActives() {
         card.deactivate(gameManager.getRules(), game);
         game.setGameState(GameState.PRINCESS_MOVE_STUDENT);
         assertThrows(GameException.class, () -> {
@@ -93,6 +111,9 @@ public class PrincessMoveToHallTest {
         });
     }
 
+    /**
+     * Method maxHall checks if the player tries to move a student to a full hall.
+     */
     @DisplayName("Max color in the hall test")
     @Test
     void maxHall() {
@@ -104,6 +125,10 @@ public class PrincessMoveToHallTest {
         });
     }
 
+    /**
+     * Method princessCard tests a valid PrincessMoveToHall action,
+     * checking if the selected student is moved to the hall after the action.
+     */
     @DisplayName("Princess move to entry test")
     @Test
     void princessCard() {

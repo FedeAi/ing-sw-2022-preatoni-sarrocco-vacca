@@ -6,16 +6,23 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.server.GameHandler;
 import it.polimi.ingsw.server.Server;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * CharacterCardTest class tests a generic CharacterCard instance.
+ */
 class CharacterCardTest {
     private Postman card;
     private Game game;
     private GameManager gameManager;
     private Player p1, p2;
 
+    /**
+     * Method init initializes the values needed for the test.
+     */
     @BeforeEach
     void init() {
         card = new Postman("");
@@ -29,7 +36,11 @@ class CharacterCardTest {
     }
 
 
+    /**
+     * Method active tests a generic CharacterCard activation.
+     */
     @Test
+    @DisplayName("Generic CharacterCard activation test")
     void active() {
         assertFalse(card.isActive(), "check that the card is not randomly active");
         card.activate(gameManager.getRules(), game);
@@ -38,7 +49,11 @@ class CharacterCardTest {
         assertFalse(card.isActive(), "check active");
     }
 
+    /**
+     * Method priceUpdate tests a generic CharacterCard price increment.
+     */
     @Test
+    @DisplayName("CharacterCard price increment test")
     void priceUpdate() {
         assertNotNull(card.getPrice(), "check CardPrice");
         assertTrue(card.getPrice() > 0, "check CardPrice");

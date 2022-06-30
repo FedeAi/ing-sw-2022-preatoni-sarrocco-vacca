@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.server.GameHandler;
 import it.polimi.ingsw.server.Server;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
@@ -18,13 +19,21 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * BaseRulesTest class tests the BaseRules class.
+ *
+ * @see BaseRules
+ */
 class BaseRulesTest {
+
     Player p1, p2;
     Game game;
     GameManager gameManager;
     BaseRules baseRules;
 
+    /**
+     * Method init initializes the values needed for the test.
+     */
     @BeforeEach
     void init() {
         gameManager = new GameManager(new Game(), new GameHandler(new Server()));
@@ -38,8 +47,12 @@ class BaseRulesTest {
         baseRules = new BaseRules();
     }
 
+    /**
+     * Method checkProfessorInfluence tests the player's normal professor influence.
+     */
     @Test
-    void getProfessorInfluenceBaseCase() {
+    @DisplayName("Professor influence test")
+    void checkProfessorInfluence() {
         for (String owner : game.getProfessors().values()) {
             assertNull(owner, "init of professors, all profs must not have an owner");
         }
@@ -47,11 +60,7 @@ class BaseRulesTest {
         for (String owner : baseRules.getProfessorInfluence(game).values()) {
             assertNull(owner, "any player has a student in the all -> all professors must not have an owner");
         }
-    }
-
-    @Test
-    void getProfessorInfluenceNormalUsage() {
-        // add students to players
+        // Add students to players
         p1.getSchool().addStudentsHall(Map.of(Color.BLUE, 4, Color.YELLOW, 2));
         p2.getSchool().addStudentsHall(Map.of(Color.BLUE, 3, Color.YELLOW, 1));
 
@@ -65,14 +74,22 @@ class BaseRulesTest {
         assertEquals(professorInfluence.get(Color.YELLOW), p1.getNickname(), "p1 has more prof of that color in hall");
     }
 
+    /**
+     * Method computeMotherMaxMoves tests the correct calculation of MotherNature's maximum movement.
+     */
     @Test
+    @DisplayName("MotherNature maxMoves test")
     void computeMotherMaxMoves() {
         AssistantCard card = new AssistantCard("sss", 8);
         assertEquals(baseRules.computeMotherMaxMoves(card), card.getMaxMoves());
     }
 
+    /**
+     * Method checkIslandInfluence tests the calculation of an island's influence.
+     */
     @Test
-    void computeIslandInfluenceNormalUsage() {
+    @DisplayName("Island influence test")
+    void checkIslandInfluence() {
         Island island = new BaseIsland();
         Optional<String> player = baseRules.computeIslandInfluence(game, island);
         assertTrue(player.isEmpty(), "no students on that island -> no owners");

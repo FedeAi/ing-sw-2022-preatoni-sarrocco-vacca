@@ -7,17 +7,26 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.server.GameHandler;
 import it.polimi.ingsw.server.Server;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Method CentaurTest tests the Centaur class.
+ *
+ * @see Centaur
+ */
 class CentaurTest {
 
     private Centaur card;
     private Game game;
     private GameManager gameManager;
-    private Player p1, p2, p3;
+    private Player p1, p2;
 
+    /**
+     * Method init initializes the values needed for the test.
+     */
     @BeforeEach
     void init() {
         card = new Centaur("");
@@ -25,21 +34,27 @@ class CentaurTest {
         game = gameManager.getGame();
         game.createPlayer(0, "Ale");
         game.createPlayer(1, "Davide");
-        game.createPlayer(2, "Davide");
         p1 = game.getPlayers().get(0);
         p2 = game.getPlayers().get(1);
-        p3 = game.getPlayers().get(1);
         gameManager.initGame();
     }
 
+    /**
+     * Method activate tests the activation of the Centaur Character card.
+     */
     @Test
+    @DisplayName("Centaur activation test")
     void activate() {
         card.activate(gameManager.getRules(), game);
         assertTrue(card.isActive(), "Checks if the active flag has been set to true");
         assertTrue(gameManager.getRules().getDynamicRules() instanceof CentaurRules, "Checks if rules have been updated");
     }
 
+    /**
+     * Method deactivate tests the deactivation of the Centaur Character card.
+     */
     @Test
+    @DisplayName("Centaur deactivation test")
     void deactivate() {
         activate();
         card.deactivate(gameManager.getRules(), game);

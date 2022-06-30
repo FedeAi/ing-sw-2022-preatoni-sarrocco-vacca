@@ -115,7 +115,7 @@ public class Constants {
     /**
      * Method validatePort checks for the correctness of a given port with a regular expression.
      *
-     * @returns the chosen port if valid, -1 otherwise.
+     * @return the chosen port if valid, -1 otherwise.
      */
     public static int validatePort(String Port) {
         // REGEX pattern for input port validation.
