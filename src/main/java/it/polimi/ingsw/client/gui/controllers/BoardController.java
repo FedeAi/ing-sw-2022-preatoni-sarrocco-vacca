@@ -139,6 +139,9 @@ public class BoardController extends GUIController implements PropertyChangeList
     String playerSchool = ""; // player's school name
     boolean initCompleted = false;
 
+    DropShadow blueShadow = new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8));
+    DropShadow redShadow = new DropShadow(20, javafx.scene.paint.Color.rgb(222, 40, 40, 0.8));
+    Node prevClickedNode;
     /**
      * Method initialize creates all the GUI elements list and maps and loads the assets.
      */
@@ -300,6 +303,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             backCloud.setFitWidth(100);
             cloudsPane.get(i).setOnMouseEntered(this::onSelectScaleColor);
             cloudsPane.get(i).setOnMouseExited(this::onSelectScaleColor);
+            cloudsPane.get(i).setOnMouseClicked(this::onSelectScaleColor);
             backCloud.setSmooth(true);
             backCloud.setCache(true);
             int index = i;
@@ -563,6 +567,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         });
         pane.setOnMouseEntered(this::onSelectScaleColor);
         pane.setOnMouseExited(this::onSelectScaleColor);
+        pane.setOnMouseClicked(this::onSelectScaleColor);
         return pane;
     }
 
@@ -588,6 +593,7 @@ public class BoardController extends GUIController implements PropertyChangeList
                 Pane pane = studentEntryPanes.get(i);
                 pane.setOnMouseEntered(this::onSelectScaleColor);
                 pane.setOnMouseExited(this::onSelectScaleColor);
+                pane.setOnMouseClicked(this::onSelectScaleColor);
                 pane.setOnMouseClicked((e) -> changeSupport.firePropertyChange(ENTRY_STUDENT_LISTENER, null, studentC));
                 pane.getChildren().add(student);
             }
@@ -623,7 +629,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         tower.setCache(true);
         tower.setFitHeight(50);
         tower.setFitWidth(50);
-        tower.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8)));  // Shadow
+        tower.setEffect(blueShadow);  // Shadow
         towers.getChildren().add(0, tower);
         towers.getChildren().add(1, numTowers);
         towers.setAlignment(Pos.CENTER);
@@ -747,7 +753,7 @@ public class BoardController extends GUIController implements PropertyChangeList
 
             // Active
             if (c.isActive) {
-                character.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8)));  // Shadow
+                character.setEffect(blueShadow);  // Shadow
                 character.setScaleX(1.25);
                 character.setScaleY(1.25);
             }
@@ -883,30 +889,41 @@ public class BoardController extends GUIController implements PropertyChangeList
      * @param evt the MouseEvent instance.
      */
     public void onSelectScaleColor(MouseEvent evt) {
-        if (evt.getSource() instanceof Pane) {
-            Pane pane = (Pane) evt.getSource();
-            if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                pane.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8)));  // Shadow
-                pane.setScaleX(1.25);
-                pane.setScaleY(1.25);
-            } else {
-                pane.setEffect(null);
-                pane.setScaleX(1);
-                pane.setScaleY(1);
+        if (evt.getSource() instanceof Node node) {
+            if (node.getEffect() != redShadow) {
+                if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
+                    node.setEffect(blueShadow);  // Shadow
+                    node.setScaleX(1.25);
+                    node.setScaleY(1.25);
+                } else if (evt.getEventType() == MouseEvent.MOUSE_EXITED){
+                    node.setEffect(null);
+                    node.setScaleX(1);
+                    node.setScaleY(1);
+                }
+            }
+            if (evt.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                if(prevClickedNode != null && prevClickedNode.getEffect() == redShadow) {
+                    prevClickedNode.setEffect(null);
+                    prevClickedNode.setScaleX(1);
+                    prevClickedNode.setScaleY(1);
+                }
+                node.setEffect(redShadow);  // Shadow
+                node.setScaleX(1.25);
+                node.setScaleY(1.25);
+                prevClickedNode = node;
+
             }
 
-        } else if (evt.getSource() instanceof ImageView) {
-            ImageView view = (ImageView) evt.getSource();
-            if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
+        }
+    }
 
-                view.setEffect(new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8)));  // Shadow
-                view.setScaleX(1.25);
-                view.setScaleY(1.25);
-            } else {
-                view.setEffect(null);
-                view.setScaleX(1);
-                view.setScaleY(1);
-            }
+    /**
+     *
+     * @param evt
+     */
+    public void onClickScaleColor(MouseEvent evt) {
+        if (evt.getSource() instanceof Node node) {
+
         }
     }
 
