@@ -104,18 +104,18 @@ public class GameManager implements PropertyChangeListener {
      */
     private void initCharacters() {
         List<CharacterCard> characters = new ArrayList<>();
-//        characters.add(new Centaur(""));
-//        characters.add(new Farmer(""));
-//        characters.add(new Herald(""));
-//        characters.add(new Joker("", game.getBag()));
-//        characters.add(new Knight(""));
-//        characters.add(new Mushroom(""));
-//        characters.add(new Postman(""));
-//        characters.add(new Thief(""));
+        characters.add(new Centaur());
+        characters.add(new Farmer());
+        characters.add(new Herald());
+        characters.add(new Joker( game.getBag()));
+        characters.add(new Knight());
+        characters.add(new Mushroom());
+        characters.add(new Postman());
+        characters.add(new Thief());
         characters.add(new Princess(game.getBag()));
         characters.add(new Minstrel());
         characters.add(new Monk(game.getBag()));
-//        characters.add(new Grandma(""));
+        characters.add(new Grandma());
 
         Collections.shuffle(characters);
         List<CharacterCard> extractedCharacters = characters.subList(0, 3);
