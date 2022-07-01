@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.controllers;
 
+import it.polimi.ingsw.client.ModelView;
 import it.polimi.ingsw.client.ServerMessageHandler;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.constants.Color;
@@ -37,6 +38,7 @@ import java.beans.PropertyChangeSupport;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * BoardController class represents the Board scene logic.
@@ -788,22 +790,23 @@ public class BoardController extends GUIController implements PropertyChangeList
     }
 
     public void updateStatus() {
-        GameState currentState = gui.getModelView().getGameState();
+        ModelView modelView = gui.getModelView();
+        GameState currentState = modelView.getGameState();
         String s = "";
-        String nickname = gui.getModelView().getPlayerName();
-        if (gui.getModelView().amIRoundOwner()) {
+        String nickname = modelView.getPlayerName();
+        if (modelView.amIRoundOwner()) {
             switch (currentState) {
                 case PLANNING_CHOOSE_CARD -> s = "Please select a card.";
                 case ACTION_MOVE_STUDENTS -> {
-                    int currentEntry = gui.getModelView().getPlayerMapSchool().get(nickname).getStudentsEntryList().size();
-                    int maxStudents = Rules.getStudentsPerTurn(gui.getModelView().getPlayers().size());
-                    int diff = Rules.getEntrySize(gui.getModelView().getPlayers().size()) - currentEntry;
+                    int currentEntry = modelView.getPlayerMapSchool().get(nickname).getStudentsEntryList().size();
+                    int maxStudents = Rules.getStudentsPerTurn(modelView.getPlayers().size());
+                    int diff = Rules.getEntrySize(modelView.getPlayers().size()) - currentEntry;
                     s = "Please move your students. You have moved "
                             + diff + " out of " + maxStudents + " students this turn.";
                 }
                 case ACTION_MOVE_MOTHER ->
                         s = "Please select and island to move mother nature to. Available movement is from 1 to " +
-                                gui.getModelView().getPlayedCards().get(nickname).getMaxMoves();
+                                modelView.getPlayedCards().get(nickname).getMaxMoves();
                 case ACTION_CHOOSE_CLOUD -> s = "Please select a cloud.";
                 case GRANDMA_BLOCK_ISLAND -> s = "Please select an island to block.";
                 case HERALD_ACTIVE -> s = "Please select an island to calculate the influence on.";
@@ -818,7 +821,7 @@ public class BoardController extends GUIController implements PropertyChangeList
                 case THIEF_CHOOSE_COLOR -> s = "Please select a color to steal a maximum of 3 from each player's hall.";
             }
         } else {
-            nickname = gui.getModelView().getRoundOwner();
+            nickname = modelView.getRoundOwner();
             s = "Player " + nickname;
             switch (currentState) {
                 case PLANNING_CHOOSE_CARD -> s = s + " is selecting his card.";
@@ -827,6 +830,17 @@ public class BoardController extends GUIController implements PropertyChangeList
                 case ACTION_CHOOSE_CLOUD -> s = s + " is selecting a cloud.";
                 default -> s = s + " is playing.";
             }
+        }
+
+        // In case of disconnection override s
+        if(modelView.getConnectedPlayers().size() == 1){
+            List <String > notConnectedPlayers = modelView.getPlayers();
+            notConnectedPlayers.remove(modelView.getPlayerName());
+            s = "Waiting " + notConnectedPlayers.stream().collect(Collectors.joining(", ", "", " ")) +
+             "to reconnect";
+        }
+        if(!modelView.getConnectedPlayers().contains(modelView.getPlayerName())){
+           s = "Waiting for the next round to resume the game";
         }
         status.setFont(font);
         status.setText(s);
@@ -916,10 +930,11 @@ public class BoardController extends GUIController implements PropertyChangeList
                 case ServerMessageHandler.ISLAND_LISTENER, ServerMessageHandler.MOTHER_LISTENER -> updateIslands();
                 case ServerMessageHandler.SCHOOL_LISTENER -> updateSchool();
                 case ServerMessageHandler.PROFS_LISTENER -> updateProfessors();
-                case ServerMessageHandler.PLAYED_CARD_LISTENER -> updatePlayedCards();
+                case ServerMessageHandler.PLAYED_CARD_LISTENER -> updatePlayedCards(); // FIXME
                 case ServerMessageHandler.CHARACTERS_LISTENER -> updateCharacters();
                 case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER, ServerMessageHandler.PLAYERS_STATUS_LISTENER -> {
                     updatePlayers();
+                    updateStatus();
                 }
             }
             updateProgressBar();
