@@ -100,5 +100,6 @@ public class PrincessMoveToHall extends Performable {
         player.getSchool().addStudentHall(student);
         // Update the professor owner list
         game.setProfessors(rules.getDynamicRules().getProfessorInfluence(game));
+        game.deactivateCharacterCard(game.getCharacterCards().indexOf(princess), rules);
     }
 }
