@@ -31,10 +31,10 @@ public abstract class GUIController implements Initializable, PropertyChangeList
      *
      * @param func the Runnable instance to be executed.
      */
-    public void sleepAndExec(Runnable func) {
+    public static void sleepAndExec(Runnable func, int time) {
         Thread thread = new Thread(() -> {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(time);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
