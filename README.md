@@ -43,7 +43,7 @@ On Windows, if don't plan on using the Windows Terminal app, in order to properl
 In this section you will find all the documentation regarding the project:
 
 ### UML diagrams
-- [Initial diagram](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/initial/)
+- [Initial MVC diagram](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/initial/)
 - [Final - Model](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/model)
 - [Final - Controller](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/controller)
 - [Final - Listeners](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/listeners)
@@ -51,7 +51,7 @@ In this section you will find all the documentation regarding the project:
 - [Initial Sequence Diagram](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/Sequence%20Diagram/SequenceDiagram_Initial.pdf)
 
 ### JavaDoc
-[Link](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/docs)
+You can find our JavaDocs in the following [link](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/docs)
 ### Peer Reviews
 - [Model and Controller](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/PeerReview/Peer_Review_UML.pdf)
 - [Network](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/PeerReview/Peer_Review_2_Network.pdf)
@@ -74,6 +74,7 @@ In this section you will find all the documentation regarding the project:
 |__junit__|Unit testing framework for the Java programming language|
 |__JavaFx__|Java set of graphics and media packages|
 |__UML-Generator__|Usefull plugin for autogenerate UML by the source code|
+|__Lucidchart__|UML drowing tool|
 -------------------------------
 
 
