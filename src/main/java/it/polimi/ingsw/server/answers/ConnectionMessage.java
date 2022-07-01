@@ -14,7 +14,7 @@ public class ConnectionMessage implements Answer {
      * Constructor ConnectionMessage creates a new ConnectionMessage instance.
      *
      * @param message the message to be printed on the client's terminal.
-     * @param validity the status of the player (connection/disconnection). TODO
+     * @param validity the status of the player connection. True if open, false if closed.
      */
     public ConnectionMessage(String message, boolean validity) {
         this.message = message;

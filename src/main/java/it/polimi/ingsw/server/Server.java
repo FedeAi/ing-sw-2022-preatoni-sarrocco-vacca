@@ -289,7 +289,7 @@ public class Server {
      *
      * @param nickname            the nickname of the player that has reconnected.
      * @param socketClientHandler the player's SocketClientConnection instance.
-     * @return
+     * @return The client's clientID if successful, null otherwise.
      */
     public Integer recoverConnection(String nickname, SocketClientConnection socketClientHandler) {
         Integer clientID = nameMapId.get(nickname);

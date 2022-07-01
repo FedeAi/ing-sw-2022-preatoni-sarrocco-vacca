@@ -93,7 +93,6 @@ public class Game {
      * @see Player#fireInitialState()
      */
     public void fireInitialState() {
-        // FIXME ( the first fire when the client is connected is not received) IS THIS FIXED OR NOT?
         listeners.firePropertyChange(MAGICIANS_LISTENER, null, mapMagicianToPlayer);
         listeners.firePropertyChange(MAGICIANS_LISTENER, null, mapMagicianToPlayer);
         listeners.firePropertyChange(MODE_LISTENER, null, expertMode);
@@ -625,18 +624,20 @@ public class Game {
 
     /**
      * Method addBlockingCardsToGrandma increase the number of blocking cards in the grandma character
-     * @param grandma
+     *
+     * @param grandma the reference to the grandma card.
      */
-    public void addBlockingCardsToGrandma(Grandma grandma){
+    public void addBlockingCardsToGrandma(Grandma grandma) {
         grandma.addBlockingCard();
         listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
     }
 
     /**
      * Method addBlockingCardsToGrandma increase the number of blocking cards in the grandma character
-     * @param grandma
+     *
+     * @param grandma the reference to the grandma card.
      */
-    public void removeBlockingCardToGrandma(Grandma grandma){
+    public void removeBlockingCardToGrandma(Grandma grandma) {
         grandma.removeBlockingCard();
         listeners.firePropertyChange(CHARACTERS_LISTENER, null, characterCards);
     }

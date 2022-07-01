@@ -103,7 +103,7 @@ public abstract class Island implements Serializable {
         return 1;
     }
 
-//    // FIXME
+
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;

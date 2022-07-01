@@ -47,7 +47,7 @@ public class ModelView implements Serializable {
     private GameState gameState, prevGameState;
     private boolean expert = false;
 
-    private boolean isInputActive = true; // TODO FIXME this must be set not true forever
+    private boolean isInputActive = true;
 
     /**
      * Constructor ModelView creates a new ModelView instance.

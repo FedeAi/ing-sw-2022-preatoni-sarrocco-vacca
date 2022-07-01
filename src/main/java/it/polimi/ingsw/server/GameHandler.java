@@ -200,7 +200,7 @@ public class GameHandler {
      * @param leftNickname the name of the player that has left.
      * @see GameHandler#reEnterPlayer(String)
      */
-    public synchronized void endGame(String leftNickname) { // TODO check synchronized
+    public synchronized void endGame(String leftNickname) {
         stopWinningTimer();
         sendAll(new ConnectionMessage(PLAYER + " " + leftNickname + " left the game, the match will now end." +
                 "\nThanks for playing!", false));

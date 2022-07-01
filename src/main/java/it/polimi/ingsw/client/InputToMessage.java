@@ -51,8 +51,7 @@ public class InputToMessage implements PropertyChangeListener {
             if (messageToSend != null) {
                 connectionSocket.send(messageToSend);
             }
-            //  modelView.deactivateInput(); ///TODO attivare ogni voltza che riceviamo un messaggio dal server (feedback)
-            //commentanto perché testing
+            //modelView.deactivateInput(); // TODO check this
         } else {
             modelView.activateInput();
         }

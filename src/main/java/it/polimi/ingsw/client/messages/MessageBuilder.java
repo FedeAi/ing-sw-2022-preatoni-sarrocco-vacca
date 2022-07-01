@@ -51,7 +51,7 @@ public class MessageBuilder {
         try {
             return new Action(ActionType.PLAY_CARD, Integer.parseInt(in[1]));
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            System.out.println(CLIColors.ANSI_RED + PLAY_CARD_ERROR + CLIColors.RESET); // TODO fire error listener no print
+            System.out.println(CLIColors.ANSI_RED + PLAY_CARD_ERROR + CLIColors.RESET);
             return null;
         }
     }
@@ -145,7 +145,7 @@ public class MessageBuilder {
     public Action activateCard(String[] in) {
         try {
             Action actionToSend;
-            actionToSend = new Action(ActionType.ACTIVATE_CARD, Integer.parseInt(in[1]));  // TODO LIKE MAGICIAN name not index
+            actionToSend = new Action(ActionType.ACTIVATE_CARD, Integer.parseInt(in[1]));
             return actionToSend;
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             System.out.println(CLIColors.ANSI_RED + ACTIVATE_CARD_ERROR + CLIColors.RESET);
@@ -223,7 +223,7 @@ public class MessageBuilder {
      * @param in is the user written action in the terminal.
      * @return The created Action if successful, null otherwise.
      */
-    public Action jokerSwap(String[] in) { //FIXME ??
+    public Action jokerSwap(String[] in) {
         try {
             return new Action(ActionType.JOKER_SWAP, Color.parseColor(in[1]), Color.parseColor(in[2]));
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {

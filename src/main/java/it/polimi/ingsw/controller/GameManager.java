@@ -178,8 +178,7 @@ public class GameManager implements PropertyChangeListener {
      */
     private void initMotherNature() {
         Random rand = new Random();
-        // FIXME?
-        int motherNaturePosition = rand.nextInt(1, Constants.MAX_ISLANDS);
+        int motherNaturePosition = rand.nextInt(0, Constants.MAX_ISLANDS);
         MotherNature motherNature = new MotherNature(motherNaturePosition);
         game.initMotherNature(motherNature);
     }

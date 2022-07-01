@@ -122,7 +122,7 @@ public class ServerMessageHandler {
             view.firePropertyChange(MOTHER_LISTENER, null, message.getMessage());
         } else if (answer instanceof PlayedCardMessage message) {
             modelView.setPlayedCard(message.getPlayer(), message.getMessage());
-            view.firePropertyChange(PLAYED_CARD_LISTENER, null, message); // todo remove previousstate to trigger (also in game model)
+            view.firePropertyChange(PLAYED_CARD_LISTENER, null, message);
         } else if (answer instanceof ProfsMessage message) {
             modelView.setProfessors(message.getMessage());
             view.firePropertyChange(PROFS_LISTENER, null, message.getMessage());
@@ -137,10 +137,9 @@ public class ServerMessageHandler {
             modelView.setMagicians(message.getMessage());
             view.firePropertyChange(MAGICIANS_LISTENER, null, message.getMessage());
         } else if (answer instanceof GameStateMessage message) {
-            GameState previousState = modelView.getGameState();
             modelView.setGameState(message.getMessage());
             System.out.println("GAME STATE: " + modelView.getGameState());
-            view.firePropertyChange(GAME_STATE_LISTENER, null, message.getMessage()); // todo remove previousstate to trigger (also in game model)
+            view.firePropertyChange(GAME_STATE_LISTENER, null, message.getMessage());
         } else if (answer instanceof ModeMessage message) {
             modelView.setExpert(message.getMessage());
         } else if (answer instanceof CharactersMessage message) {
@@ -162,7 +161,7 @@ public class ServerMessageHandler {
      */
     public void setupMessageHandler(Answer answer) {
         if (answer instanceof ReqPlayersMessage) {
-            view.firePropertyChange(GAME_SETUP_LISTENER, null, "ReqPlayers");  // ((ReqPlayersMessage)answer).getClass().getSimpleName() TODO this should also work
+            view.firePropertyChange(GAME_SETUP_LISTENER, null, "ReqPlayers");
         } else if (answer instanceof ReqMagicianMessage) {
             view.firePropertyChange(GAME_SETUP_LISTENER, null, "ReqMagician");
         }

@@ -18,6 +18,7 @@ public class WinController {
      * Method check returns the nickname of the player that has won, and null otherwise.
      *
      * @param game the game model reference.
+     * @return The nickname of the winner if present, null otherwise.
      */
     public static String check(Game game) {
 
@@ -45,6 +46,7 @@ public class WinController {
      * Method winner checks for the player with the most islands owned or, in case of parity, the most professors.
      *
      * @param game the game model reference.
+     * @return The nickname of the winner if present, null otherwise.
      */
     private static String winner(Game game) {
         // ordering considering the number of towers

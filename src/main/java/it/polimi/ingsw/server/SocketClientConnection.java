@@ -82,7 +82,7 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * streams, then invoking the server method called "unregisterClient", which will remove the
      * active virtual client from the list.
      *
-     * @see it.polimi.ingsw.server.Server#unregisterClient for more details. FIXME
+     * @see it.polimi.ingsw.server.Server#unregisterClient for more details.
      */
     public synchronized void close() {
         active = false;
@@ -266,7 +266,6 @@ public class SocketClientConnection implements ClientConnection, Runnable {
                         server.getClientByID(this.clientID).send(new CustomMessage("Success: player number " + "set to " + playerNumber + ", game mode: " + (expertMode ? "expert" : "normal")));
                         server.getClientByID(this.clientID).send(new CustomMessage("Waiting for the other players..."));
                         break;
-                        // FIXME custom exception
                     } catch (Exception e) {
                         server.getClientByID(this.clientID).send(new CustomMessage("Error: not a valid " + "input! Please provide a value of 2 or 3."));
                         server.getClientByID(this.clientID).send(new ReqPlayersMessage("Choose the number" + " of players!\n setup [2/3] [?expert]"));

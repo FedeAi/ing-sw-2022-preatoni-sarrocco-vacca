@@ -97,7 +97,6 @@ public class ChooseMagician extends Performable {
      */
     @Override
     public Player nextPlayer(Game game, Rules rules) {
-        // TODO HANDLE NEXT PLAYER NOT CONNECTED -> END GAME
         int currentPlayer = game.getPlayers().indexOf(getPlayer(game));
         if (currentPlayer == game.getPlayers().size() - 1) {
             // If it is the last player, meaning a change of state is necessary.

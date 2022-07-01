@@ -122,15 +122,14 @@ public class CLI implements UI {
                 System.out.print(">");
                 nickname = input.nextLine();
             } while (!validateNickname(nickname));
-//            System.out.println(">You chose: " + nickname);
-//            System.out.println(">Is it ok? [y/n] ");
-//            System.out.print(">");
-//            if (input.nextLine().equalsIgnoreCase("y")) {
-//                confirmation = true;
-//            } else {
-//                nickname = null;
-//            }
-            confirmation = true; // FIXME REMOVE JUST TEMP
+            System.out.println(">You chose: " + nickname);
+            System.out.println(">Is it ok? [y/n] ");
+            System.out.print(">");
+            if (input.nextLine().equalsIgnoreCase("y")) {
+                confirmation = true;
+            } else {
+                nickname = null;
+            }
         }
         connectionSocket = new ConnectionSocket();
         modelView.setPlayerName(nickname);
@@ -194,7 +193,6 @@ public class CLI implements UI {
                     "\n\n\n\t" + "#############################################"
                     + CLIColors.RESET);
         }
-        // TODO BIND THIS TO QUIT
     }
 
     /**
@@ -365,8 +363,8 @@ public class CLI implements UI {
             }
             if (modelView.getExpert()) {
                 if (modelView.getGameState() != GameState.SETUP_CHOOSE_MAGICIAN) {
-                    String characters = modelView.getCharacterCards().stream().map(c -> c.type).toList().toString(); // todo in teoria dal codice del activate si può attivare solo in movestudent e altro stato e basta
-                    String activeCharacters = modelView.getCharacterCards().stream().filter(c -> c.isActive).map(c -> c.type).toList().toString(); // todo in teoria dal codice del activate si può attivare solo in movestudent e altro stato e basta
+                    String characters = modelView.getCharacterCards().stream().map(c -> c.type).toList().toString();
+                    String activeCharacters = modelView.getCharacterCards().stream().filter(c -> c.isActive).map(c -> c.type).toList().toString();
                     System.out.println(CLIColors.ANSI_BLUE + "\t activate " + characters + CLIColors.RESET);
                     System.out.println(CLIColors.ANSI_BLUE + "\t deactivate " + activeCharacters + CLIColors.RESET);
                 }

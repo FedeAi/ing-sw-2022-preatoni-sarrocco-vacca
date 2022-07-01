@@ -62,7 +62,7 @@ public class Player implements PropertyChangeListener {
         listeners.addPropertyChangeListener(HAND_LISTENER, createdListeners.get(0));
 
         createdListeners.add(0, new SchoolListener(client, SCHOOL_LISTENER));
-        listeners.addPropertyChangeListener(SCHOOL_LISTENER, createdListeners.get(0));   // TODO ricordarsi di fare sendall
+        listeners.addPropertyChangeListener(SCHOOL_LISTENER, createdListeners.get(0));
 
         createdListeners.add(0, new BalanceListener(client, BALANCE_LISTENER));
         listeners.addPropertyChangeListener(BALANCE_LISTENER, createdListeners.get(0));
@@ -175,7 +175,6 @@ public class Player implements PropertyChangeListener {
      */
     public void setMagician(Magician magician) {
         this.magician = magician;
-        //TODO add listener
     }
 
     /**
@@ -242,7 +241,7 @@ public class Player implements PropertyChangeListener {
      *
      * @param playedCard the selected card to be played.
      */
-    public void setAndRemovePlayedCard(AssistantCard playedCard) {  // TODO make protect
+    public void setAndRemovePlayedCard(AssistantCard playedCard) {
         ArrayList<AssistantCard> oldCards = new ArrayList<>(cards);
         this.playedCard = playedCard;
         cards.remove(playedCard);
@@ -280,8 +279,6 @@ public class Player implements PropertyChangeListener {
     public int hashCode() {
         return Objects.hash(nickname);
     }
-
-    // TODO FIXME THIS IS NOT bello, il propertyChange è triggerato dalla scuola
 
     /**
      * Method propertyChange forwards the School's updates to be sent to the Client.

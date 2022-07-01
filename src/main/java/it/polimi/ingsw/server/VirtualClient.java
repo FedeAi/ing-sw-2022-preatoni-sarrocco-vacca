@@ -14,7 +14,7 @@ import java.beans.PropertyChangeListener;
  * @author Federico Sarrocco, Alessandro Vacca
  * @see PropertyChangeListener
  */
-public class VirtualClient implements PropertyChangeListener {
+public class VirtualClient {
     private int clientID;
     private String nickname;
     private SocketClientConnection socketClientConnection;
@@ -65,12 +65,6 @@ public class VirtualClient implements PropertyChangeListener {
         gameHandler.sendAll(serverAnswer);
     }
 
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        //FIXME
-    }
-
     /**
      * Method getConnection returns the VirtualClient's SocketClientConnection instance.
      */
@@ -98,9 +92,7 @@ public class VirtualClient implements PropertyChangeListener {
      * @return true if the client is connected at the moment, false otherwise.
      */
     public boolean isConnected() {
-//        socketClientConnection.ping();
-//        send(0);
-        return socketClientConnection.isActive();      // TODO check the correctness
+        return socketClientConnection.isActive();
     }
 
     /**

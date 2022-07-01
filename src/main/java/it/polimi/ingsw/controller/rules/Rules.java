@@ -90,6 +90,7 @@ public class Rules {
     /**
      * Method setDynamicRules sets the current instance of DynamicRules to a new one (character cards related).
      *
+     * @param dynamicRules the DynamicRules instance to be set.
      * @see DynamicRules
      */
     public void setDynamicRules(DynamicRules dynamicRules) {
