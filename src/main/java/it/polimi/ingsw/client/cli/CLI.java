@@ -167,8 +167,13 @@ public class CLI implements UI {
             case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER ->
                     roundPrinter((String) evt.getOldValue(), (String) evt.getNewValue());
             case ServerMessageHandler.PLAYED_CARD_LISTENER -> {
-                PlayedCardMessage msg = (PlayedCardMessage) evt.getNewValue();
-                System.out.println(CLIColors.ANSI_GREEN + "\t" + msg.getPlayer() + " played: " + msg.getMessage() + CLIColors.RESET);
+                if(!GameState.getSetupStates().contains(modelView.getGameState())){
+                    PlayedCardMessage msg = (PlayedCardMessage) evt.getNewValue();
+                    System.out.println(CLIColors.ANSI_GREEN + "\t" + msg.getPlayer() + " played: " + msg.getMessage() + CLIColors.RESET);
+                }
+            }
+            case ServerMessageHandler.PLAYERS_STATUS_LISTENER -> {
+                // TODO
             }
             case ServerMessageHandler.WIN_MESSAGE_LISTENER -> {
                 WinMessage msg = (WinMessage) evt.getNewValue();

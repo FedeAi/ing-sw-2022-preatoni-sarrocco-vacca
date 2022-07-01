@@ -72,6 +72,7 @@ public class InputToMessage implements PropertyChangeListener {
         messageToSend = null;
         try {
             switch (command.toUpperCase()) {
+                case "PONG" -> messageToSend = new PongMessage();
                 case "MAGICIAN" -> actionToSend = messageBuilder.chooseMagician(in);
                 case "PLAYCARD" -> actionToSend = messageBuilder.playCard(in);
                 case "CLOUD" -> actionToSend = messageBuilder.chooseCloud(in);
@@ -89,7 +90,6 @@ public class InputToMessage implements PropertyChangeListener {
                 case "MUSHROOM" -> actionToSend = messageBuilder.mushroomChoose(in);
                 case "PRINCESS" -> actionToSend = messageBuilder.princessMove(in);
                 case "THIEF" -> actionToSend = messageBuilder.thiefChoose(in);
-                case "PONG" -> messageToSend = new PongMessage();
                 case "QUIT" -> {
                     connectionSocket.send(messageBuilder.quit());
                     System.exit(0);

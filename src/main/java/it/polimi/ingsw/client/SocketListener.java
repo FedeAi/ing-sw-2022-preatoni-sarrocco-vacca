@@ -102,8 +102,8 @@ public class SocketListener implements Runnable {
                     .propertyChange(
                             new PropertyChangeEvent(
                                     this, CONNECTION_CLOSE_LISTENER, null, modelView.getServerAnswer().getMessage()));
-
         } else {
+            System.out.println("Connection closed");
             System.exit(0);
         }
     }
