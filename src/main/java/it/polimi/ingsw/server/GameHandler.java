@@ -252,7 +252,7 @@ public class GameHandler {
                 public void run() {
                     if (game.getActivePlayers().size() > 0) {
                         sendAll(new CustomMessage("You WON, you are the only player and are passed " + Constants.DELAY_WINNING_TIMER + " seconds"));
-                        sendAll(new WinMessage(game.getPlayers().stream().filter(Player::isConnected).findFirst().get().getNickname()));
+                        sendAll(new WinMessage(game.getPlayers().stream().filter(Player::isActive).findFirst().get().getNickname()));
                         endGame();
                     }
                 }

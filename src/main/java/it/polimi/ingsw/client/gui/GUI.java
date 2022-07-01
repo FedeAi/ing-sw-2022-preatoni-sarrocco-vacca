@@ -146,9 +146,11 @@ public class GUI extends Application implements UI {
     public void changeScene(String newScene) {
         nameMapController.get(newScene).init();
         currentScene = nameMapScene.get(newScene);
-        stage.setScene(currentScene);
-        stage.centerOnScreen();
-        stage.show();
+        Platform.runLater(()->{
+            stage.setScene(currentScene);
+            stage.centerOnScreen();
+            stage.show();
+        });
     }
 
     /**
@@ -220,20 +222,14 @@ public class GUI extends Application implements UI {
         });
         switch (evt.getPropertyName()) {
             // Setup scene
-            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> Platform.runLater(() -> {
-                changeScene(SETUP);
-            });
+            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> changeScene(SETUP);
             // Magician selection scene
-            case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> Platform.runLater(() -> {
-                changeScene(MAGIs);
-            });
+            case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> changeScene(MAGIs);
 
             // Magician selection scene
             case ServerMessageHandler.GAME_STATE_LISTENER -> {
                 if (modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()) {
-                    Platform.runLater(() -> {
-                        changeScene(MAGIs);
-                    });
+                    changeScene(MAGIs);
                 }
 
                 // Starts the main game board
@@ -241,27 +237,25 @@ public class GUI extends Application implements UI {
                 if (!GameState.getSetupStates().contains(modelView.getGameState()) && !modelView.getGameState().equals(GameState.GAME_ENDED)) {
                     // if not in BOARD scene --> we are in waiting to be re-admitted
                     if (currentScene != nameMapScene.get(BOARD) && currentScene != nameMapScene.get(END)) {
-                        Platform.runLater(() -> {
-                            changeScene(BOARD);
-                        });
+                        changeScene(BOARD);
                     }
                 }
             }
             case ServerMessageHandler.WIN_MESSAGE_LISTENER -> {
                 Platform.runLater(() -> {
-                    changeScene(END);
                     String winner = ((WinMessage) evt.getNewValue()).getMessage();
                     ((WinnerController) getControllerFromName(END)).printWinner(winner);
                 });
+                changeScene(END);
 
             }
             case SocketListener.CONNECTION_CLOSE_LISTENER -> {
                 if (!modelView.getGameState().equals(GameState.GAME_ENDED)) {
                     Platform.runLater(() -> {
-                        String msg = "Connection closed, network not stable.";
+                        String msg = "Connection closed";
                         ((WinnerController) getControllerFromName(END)).printMsg(msg);
-                        changeScene(END);
                     });
+                    changeScene(END);
                 }
             }
         }

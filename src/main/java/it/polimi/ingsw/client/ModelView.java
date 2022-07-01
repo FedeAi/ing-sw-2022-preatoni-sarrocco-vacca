@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import it.polimi.ingsw.client.cli.CLI;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.constants.Color;
-import it.polimi.ingsw.constants.Constants;
 import it.polimi.ingsw.constants.GameState;
 import it.polimi.ingsw.constants.Magician;
 import it.polimi.ingsw.model.cards.AssistantCard;
@@ -31,7 +30,7 @@ public class ModelView implements Serializable {
     /**
      * Model data
      **/
-    private List<String> connectedPlayers;
+    private List<String> activePlayers;
     private List<String> players;
     private Map<Color, String> professors;
     private int balance;
@@ -59,7 +58,7 @@ public class ModelView implements Serializable {
         gui = null;
         this.playedCards = new HashMap<String, AssistantCard>();
         this.playerMapSchool = new HashMap<String, School>();
-        this.connectedPlayers = new ArrayList<>();
+        this.activePlayers = new ArrayList<>();
         gameState = GameState.GAME_ROOM;
     }
 
@@ -73,7 +72,7 @@ public class ModelView implements Serializable {
         this.cli = null;
         this.playedCards = new HashMap<String, AssistantCard>();
         this.playerMapSchool = new HashMap<String, School>();
-        this.connectedPlayers = new ArrayList<>();
+        this.activePlayers = new ArrayList<>();
         gameState = GameState.GAME_ROOM;
     }
 
@@ -133,7 +132,7 @@ public class ModelView implements Serializable {
      * @return a map of professors and names.
      */
     public Map<Color, String> getProfessors() {
-        return professors;
+        return new HashMap<>(professors);
     }
 
     /**
@@ -165,14 +164,14 @@ public class ModelView implements Serializable {
      * Method getPlayerMapMagician returns a map of player nicknames to magicians.
      */
     public Map<String, Magician> getPlayerMapMagician() {
-        return playerMapMagician;
+        return new HashMap<>(playerMapMagician);
     }
 
     /**
      * Method getPlayerMapMagician returns a map of player nicknames to school.
      */
     public Map<String, School> getPlayerMapSchool() {
-        return playerMapSchool;
+        return new HashMap<>(playerMapSchool);
     }
 
     /**
@@ -189,7 +188,7 @@ public class ModelView implements Serializable {
      * Method getHand returns the current player's hand.
      */
     public List<AssistantCard> getHand() {
-        return hand;
+        return new ArrayList<>(hand);
     }
 
     /**
@@ -223,7 +222,7 @@ public class ModelView implements Serializable {
      * @return the current List of clouds.
      */
     public List<Cloud> getClouds() {
-        return clouds;
+        return new ArrayList<>(clouds);
     }
 
     /**
@@ -282,7 +281,7 @@ public class ModelView implements Serializable {
      * @return The current game's character cards.
      */
     public List<ReducedCharacterCard> getCharacterCards() {
-        return characterCards;
+        return  new ArrayList<>(characterCards);
     }
 
     /**
@@ -300,7 +299,7 @@ public class ModelView implements Serializable {
      * @return The nickname - card Map, that represents the currently played cards and who has played them.
      */
     public Map<String, AssistantCard> getPlayedCards() {
-        return playedCards;
+        return new HashMap<>(playedCards);
     }
 
     /**
@@ -327,12 +326,12 @@ public class ModelView implements Serializable {
     }
 
     /**
-     * Method setConnectedPlayers sets the updated list of currently connected players.
+     * Method setActivePlayers sets the updated list of currently connected players.
      *
-     * @param connectedPlayers the updated list of connected players.
+     * @param activePlayers the updated list of connected players.
      */
-    public void setConnectedPlayers(List<String> connectedPlayers) {
-        this.connectedPlayers = connectedPlayers;
+    public void setActivePlayers(List<String> activePlayers) {
+        this.activePlayers = activePlayers;
     }
 
     /**
@@ -350,16 +349,16 @@ public class ModelView implements Serializable {
      * @return The list of the current game's players.
      */
     public List<String> getPlayers() {
-        return players;
+        return new ArrayList<>(players);
     }
 
     /**
-     * Method getConnectedPlayers returns the currently connected players.
+     * Method getActivePlayers returns the currently connected players.
      *
      * @return The list of the currently connected players.
      */
-    public List<String> getConnectedPlayers() {
-        return connectedPlayers;
+    public List<String> getActivePlayers() {
+        return new ArrayList<>(activePlayers);
     }
 
     /**

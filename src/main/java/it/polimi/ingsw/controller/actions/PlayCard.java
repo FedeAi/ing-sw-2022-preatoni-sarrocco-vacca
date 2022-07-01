@@ -106,7 +106,7 @@ public class PlayCard extends Performable {
             } else {
                 nextPlayer = null;
             }
-        } while (nextPlayer != null && !nextPlayer.isConnected());
+        } while (nextPlayer != null && !nextPlayer.isActive());
         return nextPlayer;
     }
 }
