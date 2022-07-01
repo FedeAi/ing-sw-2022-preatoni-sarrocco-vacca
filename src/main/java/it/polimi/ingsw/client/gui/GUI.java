@@ -20,10 +20,7 @@ import javafx.stage.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -143,9 +140,9 @@ public class GUI extends Application implements UI {
      * @param newScene the scene to be set.
      */
     public void changeScene(String newScene) {
-        nameMapController.get(newScene).init();
         currentScene = nameMapScene.get(newScene);
         Platform.runLater(()->{
+            nameMapController.get(newScene).init();
             stage.setScene(currentScene);
             stage.centerOnScreen();
             stage.show();
@@ -221,13 +218,7 @@ public class GUI extends Application implements UI {
         });
         switch (evt.getPropertyName()) {
             // Setup scene
-            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> Platform.runLater(() -> {
-                nameMapController.get(SETUP).init();
-                currentScene = nameMapScene.get(SETUP);
-                stage.setScene(currentScene);
-                stage.centerOnScreen();
-                stage.show();
-            });
+            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> changeScene(SETUP);
             // Magician selection scene
             case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> changeScene(MAGIs);
 
