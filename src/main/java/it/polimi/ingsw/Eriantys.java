@@ -15,6 +15,7 @@ public class Eriantys {
      * @param args of type String[]
      */
     public static void main(String[] args) {
+        CLI.clearScreen();
         System.out.println("Welcome to Eriantys! What type of instance do you want to launch?");
         System.out.println("0 - Server");
         System.out.println("1 - Client with CLI interface");

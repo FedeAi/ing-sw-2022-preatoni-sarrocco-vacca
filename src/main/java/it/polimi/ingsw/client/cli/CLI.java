@@ -94,6 +94,7 @@ public class CLI implements UI {
      */
     public void run() {
         setup();
+        clearScreen();
         while (isActiveGame()) {
             input.reset();
             String cmd;
