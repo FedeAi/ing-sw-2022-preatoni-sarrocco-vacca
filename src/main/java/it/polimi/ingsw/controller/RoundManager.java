@@ -100,17 +100,20 @@ public class RoundManager {
             gameInstance.removePlayedCards();
             // handle the disconnected players now re-connected
             gameManager.getGameHandler().reEnterWaitingPlayers();
+            gameInstance.getCharacterCards().forEach(c -> c.resetActivatingPlayer());
+            
+            // Deactivate Character effects if there is an active card
+            IntStream.range(0, gameInstance.getCharacterCards().size()).filter(
+                    i -> gameInstance.getCharacterCards().get(i).isActive()).forEach(
+                            i -> gameInstance.deactivateCharacterCard(i, gameManager.getRules()));
+
             // fire new round
             gameInstance.setGameState(GameState.NEW_ROUND);
+
             checkWin();
             nextPlayer = gameInstance.setPlanningOrder();
         }
-        // if next round (for the next player) is going to start
-        if (gameInstance.getGameState() == GameState.ACTION_CHOOSE_CLOUD && nextState == GameState.PLANNING_CHOOSE_CARD) {
-            // Deactivate Character effects if there is an active card
-            IntStream.range(0, gameInstance.getCharacterCards().size()).filter(i -> gameInstance.getCharacterCards().get(i).isActive()).forEach(i -> gameInstance.deactivateCharacterCard(i, gameManager.getRules()));
-            gameInstance.getCharacterCards().forEach(c -> c.resetActivatingPlayer());
-        }
+
         gameInstance.setRoundOwner(nextPlayer);
         gameInstance.setGameState(nextState);
     }
