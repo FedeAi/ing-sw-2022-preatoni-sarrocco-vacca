@@ -297,10 +297,10 @@ public class Game {
      * Method buildMapPlayers creates and returns a map with all the players and only the connected players.
      */
     private Map<String, List<String>> buildMapPlayers() {
-        List<String> connectedPlayers = players.stream().filter(Player::isConnected).map(Player::getNickname).toList();
+        List<String> activePlayers = players.stream().filter(Player::isActive).map(Player::getNickname).toList();
         List<String> allPlayers = players.stream().map(Player::getNickname).toList();
         Map<String, List<String>> map = new HashMap<>();
-        map.put(PlayersStatusMessage.CONNECTED_PLAYERS, connectedPlayers);
+        map.put(PlayersStatusMessage.CONNECTED_PLAYERS, activePlayers);
         map.put(PlayersStatusMessage.PLAYERS, allPlayers);
         return map;
     }
@@ -391,7 +391,7 @@ public class Game {
         ArrayList<AssistantCard> playedCards = new ArrayList<AssistantCard>();
         for (Player p : getOrderedPlanningPlayers()) {
             if (!p.equals(roundOwner)) {
-                if (p.getPlayedCard() != null && p.isConnected()) {    // disconnected player
+                if (p.getPlayedCard() != null && p.isActive()) {    // disconnected player
                     playedCards.add(p.getPlayedCard());
                 }
 
@@ -435,11 +435,11 @@ public class Game {
         // compare by cards value
         Comparator<Player> compareByCardValue = (Player p1, Player p2) -> {
             int value = 0;
-            if (p1.isConnected() && p2.isConnected()) {
+            if (p1.isActive() && p2.isActive()) {
                 value = p1.getPlayedCard().getValue() - p2.getPlayedCard().getValue();
-            } else if (!p1.isConnected() && p2.isConnected()) {
+            } else if (!p1.isActive() && p2.isActive()) {
                 value = 1;
-            } else if (p1.isConnected() && !p2.isConnected()) {
+            } else if (p1.isActive() && !p2.isActive()) {
                 value = -1;
             }
             return value;
@@ -460,7 +460,7 @@ public class Game {
         int playerIndex = players.indexOf(playersActionPhase.get(0));
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get((playerIndex + i) % players.size());
-            if (p.isConnected()) {
+            if (p.isActive()) {
                 playersPlanningPhase.add(p);
             }
 
@@ -521,7 +521,7 @@ public class Game {
      * @return The list of the connected players.
      */
     public List<Player> getActivePlayers() {
-        return players.stream().filter(Player::isConnected).collect(Collectors.toList());
+        return players.stream().filter(Player::isActive).collect(Collectors.toList());
     }
 
     /**
@@ -673,7 +673,7 @@ public class Game {
      * Method numActivePlayers returns the number of connected players in the game.
      */
     public int numActivePlayers() {
-        return players.stream().filter(Player::isConnected).toList().size();
+        return players.stream().filter(Player::isActive).toList().size();
     }
 
     /**

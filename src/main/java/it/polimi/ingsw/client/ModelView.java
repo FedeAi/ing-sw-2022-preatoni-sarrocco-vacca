@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import it.polimi.ingsw.client.cli.CLI;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.constants.Color;
-import it.polimi.ingsw.constants.Constants;
 import it.polimi.ingsw.constants.GameState;
 import it.polimi.ingsw.constants.Magician;
 import it.polimi.ingsw.model.cards.AssistantCard;
@@ -31,7 +30,7 @@ public class ModelView implements Serializable {
     /**
      * Model data
      **/
-    private List<String> connectedPlayers;
+    private List<String> activePlayers;
     private List<String> players;
     private Map<Color, String> professors;
     private int balance;
@@ -59,7 +58,7 @@ public class ModelView implements Serializable {
         gui = null;
         this.playedCards = new HashMap<String, AssistantCard>();
         this.playerMapSchool = new HashMap<String, School>();
-        this.connectedPlayers = new ArrayList<>();
+        this.activePlayers = new ArrayList<>();
         gameState = GameState.GAME_ROOM;
     }
 
@@ -73,7 +72,7 @@ public class ModelView implements Serializable {
         this.cli = null;
         this.playedCards = new HashMap<String, AssistantCard>();
         this.playerMapSchool = new HashMap<String, School>();
-        this.connectedPlayers = new ArrayList<>();
+        this.activePlayers = new ArrayList<>();
         gameState = GameState.GAME_ROOM;
     }
 
@@ -327,12 +326,12 @@ public class ModelView implements Serializable {
     }
 
     /**
-     * Method setConnectedPlayers sets the updated list of currently connected players.
+     * Method setActivePlayers sets the updated list of currently connected players.
      *
-     * @param connectedPlayers the updated list of connected players.
+     * @param activePlayers the updated list of connected players.
      */
-    public void setConnectedPlayers(List<String> connectedPlayers) {
-        this.connectedPlayers = connectedPlayers;
+    public void setActivePlayers(List<String> activePlayers) {
+        this.activePlayers = activePlayers;
     }
 
     /**
@@ -354,12 +353,12 @@ public class ModelView implements Serializable {
     }
 
     /**
-     * Method getConnectedPlayers returns the currently connected players.
+     * Method getActivePlayers returns the currently connected players.
      *
      * @return The list of the currently connected players.
      */
-    public List<String> getConnectedPlayers() {
-        return new ArrayList<>(connectedPlayers);
+    public List<String> getActivePlayers() {
+        return new ArrayList<>(activePlayers);
     }
 
     /**

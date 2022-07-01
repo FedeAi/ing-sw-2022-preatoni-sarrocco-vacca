@@ -16,28 +16,30 @@ public class PlayersStatusMessage implements ModelMessage {
     public static final String PLAYERS = "players";
     public static final String REJOINING_PLAYERS = "rejoining";
     private final List<String> players;
-    private List<String> connectedPlayers;
+    private List<String> activePlayers;
     private List<String> rejoiningPlayers;
 
     /**
      * Constructor PlayersStatusMessage creates a new PlayersStatusMessage instance.
      *
-     * @param message map that specifies the current connection status.
+     * @param message map that specifies the current connection status. Allowed keys are
+     *                PlayersStatusMessage.CONNECTED_PLAYERS, PlayersStatusMessage.PLAYERS ,
+     *                PlayersStatusMessage.REJOINING_PLAYERS
      * @see PlayersStatusMessage
      */
     public PlayersStatusMessage(Map<String, List<String>> message) {
         players = message.getOrDefault(PLAYERS, new ArrayList<>());
-        connectedPlayers = message.getOrDefault(CONNECTED_PLAYERS, new ArrayList<>());
+        activePlayers = message.getOrDefault(CONNECTED_PLAYERS, new ArrayList<>());
         rejoiningPlayers = message.getOrDefault(REJOINING_PLAYERS, new ArrayList<>());
     }
 
     /**
-     * Method getConnectedPlayers returns the current connected players.
+     * Method getActivePlayers returns the current connected players.
      *
      * @return A list of connected players.
      */
-    public List<String> getConnectedPlayers() {
-        return connectedPlayers;
+    public List<String> getActivePlayers() {
+        return activePlayers;
     }
 
     /**

@@ -106,7 +106,7 @@ public class ChooseCloud extends Performable {
         Player nextPlayer;
         int i = 1;
 
-        while (nextActionPlayer.isPresent() && !game.getPlayerByNickname(nextActionPlayer.get()).get().isConnected()) {
+        while (nextActionPlayer.isPresent() && !game.getPlayerByNickname(nextActionPlayer.get()).get().isActive()) {
             i++;
             nextActionPlayer = game.getNextPlayerActionPhase(i);
         }

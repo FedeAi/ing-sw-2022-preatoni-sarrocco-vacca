@@ -132,11 +132,12 @@ public class Player implements PropertyChangeListener {
     }
 
     /**
-     * Method isConnected returns if a Player is connected.
+     * Method isActive returns if a Player is active.
      *
-     * @return true if then player is connected, false otherwise.
+     * @return true if then player is active, so if is playing, false if not connected or waiting to be re-admited
+     * in the game.
      */
-    public synchronized boolean isConnected() {
+    public synchronized boolean isActive() {
         return connected;
     }
 

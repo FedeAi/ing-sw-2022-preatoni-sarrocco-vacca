@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.ModelView;
 import it.polimi.ingsw.client.ServerMessageHandler;
-import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.constants.Color;
 import it.polimi.ingsw.constants.Character;
 import it.polimi.ingsw.constants.GameState;
@@ -16,7 +15,6 @@ import it.polimi.ingsw.model.islands.Island;
 import it.polimi.ingsw.model.islands.SuperIsland;
 import it.polimi.ingsw.model.School;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
@@ -394,7 +392,7 @@ public class BoardController extends GUIController implements PropertyChangeList
             magician.setImage(avatarImgs.get(map.get(username)));
             magician.setFitWidth(55);
             magician.setFitHeight(55);
-            if (!gui.getModelView().getConnectedPlayers().contains(username)) {
+            if (!gui.getModelView().getActivePlayers().contains(username)) {
                 // Avatar to grayScale
                 ColorAdjust monochrome = new ColorAdjust();
                 monochrome.setSaturation(-1);
@@ -777,8 +775,8 @@ public class BoardController extends GUIController implements PropertyChangeList
     }
 
     private void updateProgressBar() {
-        if ((gui.getModelView().getConnectedPlayers().size() == 1) ||
-                (!gui.getModelView().getConnectedPlayers().contains(gui.getModelView().getPlayerName()))) {
+        if ((gui.getModelView().getActivePlayers().size() == 1) ||
+                (!gui.getModelView().getActivePlayers().contains(gui.getModelView().getPlayerName()))) {
             progressBar.setVisible(true);
             islandGridPane.setOpacity(0.5);
             schoolPane.setOpacity(0.5);
@@ -833,13 +831,13 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
 
         // In case of disconnection override s
-        if(modelView.getConnectedPlayers().size() == 1){
+        if(modelView.getActivePlayers().size() == 1){
             List <String > notConnectedPlayers = modelView.getPlayers();
             notConnectedPlayers.remove(modelView.getPlayerName());
             s = "Waiting " + notConnectedPlayers.stream().collect(Collectors.joining(", ", "", " ")) +
              "to reconnect";
         }
-        if(!modelView.getConnectedPlayers().contains(modelView.getPlayerName())){
+        if(!modelView.getActivePlayers().contains(modelView.getPlayerName())){
            s = "Waiting for the next round to resume the game";
         }
         status.setFont(font);

@@ -147,7 +147,7 @@ public class ServerMessageHandler {
             modelView.setCharacterCards(message.getMessage());
             view.firePropertyChange(CHARACTERS_LISTENER, null, message.getMessage());
         } else if (answer instanceof PlayersStatusMessage message) {
-            modelView.setConnectedPlayers(message.getConnectedPlayers());
+            modelView.setActivePlayers(message.getActivePlayers());
             modelView.setPlayers(message.getPlayers());
             if (message.getRejoiningPlayers().size() > 0){
                 view.firePropertyChange(PLAYERS_REJOIN_LISTENER, null, message.getRejoiningPlayers());
