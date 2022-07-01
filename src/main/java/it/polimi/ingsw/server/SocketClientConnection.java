@@ -42,7 +42,6 @@ public class SocketClientConnection implements Runnable {
      */
     public boolean isActive() {
         return !getSocket().isClosed();
-//        return active;
     }
 
     /**

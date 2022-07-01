@@ -19,7 +19,7 @@ public class MessageBuilder {
     private final String MOVE_MOTHER_ERROR = "Wrong MoveMotherNature syntax!\nValid syntax: movemother #island (e.g. movemother 2)";
     private final String CHOOSE_CLOUD_ERROR = "Wrong ChooseCloud syntax!\nValid syntax: cloud #index (ex: cloud 2)";
     private final String MOVE_STUDENT_ISLAND_ERROR = "Wrong MoveStudentToIsland syntax!\nValid syntax: studentisland color #island (e.g. studentisland red 3)";
-    private final String MOVE_STUDENT_HALL_ERROR = "Wrong MoveStudentToHall syntax!\nValid syntax: studenthall color (e.g. studentshall blue)";
+    private final String MOVE_STUDENT_HALL_ERROR = "Wrong MoveStudentToHall syntax!\nValid syntax: studenthall color (e.g. studenthall blue)";
     private final String ACTIVATE_CARD_ERROR = "Wrong ActivateCard syntax!\nValid syntax: activate #card (e.g. activate 1)";
     private final String DEACTIVATE_CARD_ERROR = "Wrong DeactivateCard syntax!\nValid syntax: deactivate #card (e.g. deactivate 2)";
     private final String GRANDMA_ERROR = "Wrong GrandmaBlockIsland syntax!\nValid syntax: grandma #island (e.g. grandma 2)";
