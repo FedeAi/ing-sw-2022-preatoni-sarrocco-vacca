@@ -225,5 +225,7 @@ class RoundManagerTest {
         game.getWaitingPlayersReconnected();
         game.reEnterWaitingPlayers();
         game.getPlayerByID(0);
+        game.fireInitialState();
+
     }
 }

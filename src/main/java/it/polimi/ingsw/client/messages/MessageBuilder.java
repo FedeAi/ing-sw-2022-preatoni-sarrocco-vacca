@@ -68,7 +68,7 @@ public class MessageBuilder {
             Action actionToSend;
             int magicianIndex = modelView.getAvailableMagicians().indexOf(Magician.parseMagician(in[1].toUpperCase()));
             if (magicianIndex == -1)
-                throw new IllegalArgumentException();
+                throw new ArrayIndexOutOfBoundsException();
             actionToSend = new Action(ActionType.CHOOSE_MAGICIAN, magicianIndex);
             return actionToSend;
         } catch (IllegalArgumentException e) {

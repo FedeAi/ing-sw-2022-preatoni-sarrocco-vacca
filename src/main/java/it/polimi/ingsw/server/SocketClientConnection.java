@@ -89,7 +89,8 @@ public class SocketClientConnection implements Runnable {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
-        server.getGameByID(clientID).unregisterPlayer(clientID);
+        if(server.getGameByID(clientID) != null)
+            server.getGameByID(clientID).unregisterPlayer(clientID);
     }
 
     /**

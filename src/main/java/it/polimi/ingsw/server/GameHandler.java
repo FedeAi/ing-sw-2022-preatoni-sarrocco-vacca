@@ -228,6 +228,7 @@ public class GameHandler {
         if (isGameEnded) {
             endGame(server.getNicknameByID(id));
         } else {
+            reEnterWaitingPlayers();
             controller.handleNewRoundOwnerOnDisconnect(server.getNicknameByID(id));
             startWinningTimer();
         }

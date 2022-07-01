@@ -169,7 +169,8 @@ public class CLI implements UI {
             case ServerMessageHandler.PLAYED_CARD_LISTENER -> {
                 if(!GameState.getSetupStates().contains(modelView.getGameState())){
                     PlayedCardMessage msg = (PlayedCardMessage) evt.getNewValue();
-                    System.out.println(CLIColors.ANSI_GREEN + "\t" + msg.getPlayer() + " played: " + msg.getMessage() + CLIColors.RESET);
+                    if(msg.getMessage()  != null)
+                        System.out.println(CLIColors.ANSI_GREEN + "\t" + msg.getPlayer() + " played: " + msg.getMessage() + CLIColors.RESET);
                 }
             }
             case ServerMessageHandler.PLAYERS_STATUS_LISTENER -> {
@@ -391,8 +392,8 @@ public class CLI implements UI {
      */
     private void showCharacters() {
         modelView.getCharacterCards().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c.type + "\t" +
-                ", price: " + c.price + "\t" +
-                ", state: " + (c.isActive ? "active" : "no-active" + "\t" +
+                "price: " + c.price + "\t" +
+                "state: " + (c.isActive ? "active" : "no-active" + "\t" +
                 (c.students.size() > 0 ?  " students:" + c.students : "") + "\t" +
                 (c.blockingCards > 0 ?  " blocking cards:" + c.blockingCards :"") + "\t" +
                  CLIColors.RESET)).forEach(System.out::println);
