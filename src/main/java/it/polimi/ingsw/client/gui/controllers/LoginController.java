@@ -52,13 +52,13 @@ public class LoginController extends GUIController {
         //port.setText("8081");
         if (username.getText().equals("") || ip.getText().equals("") || port.getText().equals("")) {
             error.setText("Error: missing parameters!");
-            sleepAndExec(() -> error.setText(""));
+            sleepAndExec(() -> error.setText(""),3000);
         } else if (!Constants.validateNickname(username.getText())) {
             error.setText("Error: username must be alphanumeric and contain between 3 and 15 characters.");
-            sleepAndExec(() -> error.setText(""));
+            sleepAndExec(() -> error.setText(""),3000);
         } else if (!(Constants.validatePort(port.getText()) > 1023 || Constants.validatePort(port.getText()) < 65355)) {
             error.setText("Error: port should be above 1023 and under 65355");
-            sleepAndExec(() -> error.setText(""));
+            sleepAndExec(() -> error.setText(""),3000);
         } else {
             gui.getModelView().setPlayerName(username.getText());
             try {
@@ -66,27 +66,27 @@ public class LoginController extends GUIController {
                 Constants.setPort(Integer.parseInt(port.getText()));
             } catch (NumberFormatException e) {
                 error.setText(e.getMessage());
-                sleepAndExec(() -> error.setText(""));
+                sleepAndExec(() -> error.setText(""),3000);
             }
             try {
                 ConnectionSocket connectionSocket = new ConnectionSocket();
                 if (!connectionSocket.setup(username.getText(), gui.getModelView(), gui.getServerMessageHandler())) {
                     error.setText("Server not reachable, try another IP");
-                    sleepAndExec(() -> error.setText(""));
+                    sleepAndExec(() -> error.setText(""),3000);
                     return;
                 }
                 gui.setConnectionSocket(connectionSocket);
                 gui.getListeners().addPropertyChangeListener("action", new InputToMessage(gui.getModelView(), connectionSocket));
 
                 error.setText("SOCKET CONNECTION \nSETUP COMPLETED!");
-                sleepAndExec(() -> error.setText(""));
+                sleepAndExec(() -> error.setText(""),3000);
                 gui.changeScene(GUI.LOADER, false);
             } catch (DuplicateNicknameException e) {
                 error.setText("This nickname is already in use! Please choose another one.");
-                sleepAndExec(() -> error.setText(""));
+                sleepAndExec(() -> error.setText(""),3000);
             } catch (InvalidNicknameException e) {
                 error.setText("Server ERROR: Invalid character nickname");
-                sleepAndExec(() -> error.setText(""));
+                sleepAndExec(() -> error.setText(""),3000);
             }
         }
     }
