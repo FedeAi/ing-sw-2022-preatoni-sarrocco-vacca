@@ -299,7 +299,7 @@ public class Game {
         List<String> activePlayers = players.stream().filter(Player::isActive).map(Player::getNickname).toList();
         List<String> allPlayers = players.stream().map(Player::getNickname).toList();
         Map<String, List<String>> map = new HashMap<>();
-        map.put(PlayersStatusMessage.CONNECTED_PLAYERS, activePlayers);
+        map.put(PlayersStatusMessage.ACTIVE_PLAYERS, activePlayers);
         map.put(PlayersStatusMessage.PLAYERS, allPlayers);
         return map;
     }
