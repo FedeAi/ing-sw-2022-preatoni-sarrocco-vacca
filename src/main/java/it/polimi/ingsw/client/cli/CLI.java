@@ -207,7 +207,7 @@ public class CLI implements UI {
      *
      */
     public void statePrinter(GameState oldState, GameState newState) {
-        if(oldState != newState){
+        if(oldState != newState && !GameState.getSetupStates().contains(newState)){
             String message = UI.statePrinter(modelView);
             if(modelView.amIRoundOwner()){
                 System.out.println(CLIColors.ANSI_GREEN + message + CLIColors.RESET);
