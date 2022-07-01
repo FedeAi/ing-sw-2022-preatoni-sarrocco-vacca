@@ -76,7 +76,7 @@ public class ServerMessageHandler {
      */
     public void answerHandler() {
         Answer answer = modelView.getServerAnswer();
-        if(!(answer instanceof PingMessage))
+        if(!(answer instanceof PingMessage) && (cli != null))
             System.out.println(answer.getClass().getSimpleName());
         if (answer instanceof ConnectionMessage connectionMessage) {
             System.out.println(connectionMessage.getMessage());
@@ -89,7 +89,6 @@ public class ServerMessageHandler {
             view.firePropertyChange(GENERERIC_MODEL_UPDATE_LISTENER, null, answer);
         } else if (answer instanceof GameError) {
             view.firePropertyChange(GAME_ERROR_LISTENER, null, answer);
-            System.out.println(((GameError) answer).getMessage());
         } else if (answer instanceof CustomMessage) {
             view.firePropertyChange(CUSTOM_MESSAGE_LISTENER, null, answer);
         } else if (answer instanceof WinMessage) {
@@ -138,7 +137,6 @@ public class ServerMessageHandler {
             view.firePropertyChange(MAGICIANS_LISTENER, null, message.getMessage());
         } else if (answer instanceof GameStateMessage message) {
             modelView.setGameState(message.getMessage());
-            System.out.println("GAME STATE: " + modelView.getGameState());
             view.firePropertyChange(GAME_STATE_LISTENER, null, message.getMessage());
         } else if (answer instanceof ModeMessage message) {
             modelView.setExpert(message.getMessage());

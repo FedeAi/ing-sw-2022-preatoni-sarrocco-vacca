@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.*;
 import it.polimi.ingsw.constants.CLIColors;
 import it.polimi.ingsw.constants.Constants;
+import it.polimi.ingsw.controller.rules.Rules;
 import it.polimi.ingsw.exceptions.DuplicateNicknameException;
 import it.polimi.ingsw.exceptions.InvalidNicknameException;
 import it.polimi.ingsw.constants.GameState;
@@ -26,6 +27,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static it.polimi.ingsw.constants.Constants.validateNickname;
@@ -161,7 +163,7 @@ public class CLI implements UI {
             case ServerMessageHandler.CUSTOM_MESSAGE_LISTENER ->
                     System.out.println(((CustomMessage) evt.getNewValue()).getMessage());
             case ServerMessageHandler.GAME_STATE_LISTENER ->
-                    statePrinter((GameState) evt.getOldValue(), (GameState) evt.getNewValue());
+                    statePrinter();
             case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER ->
                     roundPrinter((String) evt.getOldValue(), (String) evt.getNewValue());
             case ServerMessageHandler.PLAYED_CARD_LISTENER -> {
@@ -181,6 +183,7 @@ public class CLI implements UI {
      * @param player the winner's nickname.
      */
     private void printWinner(String player) {
+        clearScreen();
         if (player.equals(modelView.getPlayerName())) {
             System.out.println(CLIColors.ANSI_GREEN + "\n\n\n\t" + "#############################################"
                     + "\n\n\n\t" + "YOU WON   :))))" +
@@ -197,24 +200,13 @@ public class CLI implements UI {
     /**
      * Method statePrinter prints the current game state and the current round owner.
      *
-     * @param oldState the old state of the game.
-     * @param newState the new state of the game.
      */
-    public void statePrinter(GameState oldState, GameState newState) {
-        String owner = modelView.getRoundOwner();
-        String player = modelView.getPlayerName();
-        if (player.equals(owner)) {
-            if (oldState != newState) {
-                System.out.println(CLIColors.ANSI_GREEN + "You are in " + newState + " state, please make your choice" + CLIColors.RESET);
-            } else {
-                System.out.println(CLIColors.ANSI_GREEN + "It is still your turn, check the possibile moves with the 'help' command" + CLIColors.RESET);
-            }
-        } else {
-            if (oldState != newState) {
-                System.out.println(CLIColors.ANSI_CYAN + "Player " + owner + " is in " + newState + CLIColors.RESET);
-            } else {
-                System.out.println(CLIColors.ANSI_CYAN + "Player " + owner + " is still the owner, wait for your turn" + CLIColors.RESET);
-            }
+    public void statePrinter() {
+        String message = UI.statePrinter(modelView);
+        if(modelView.amIRoundOwner()){
+            System.out.println(CLIColors.ANSI_GREEN + message + CLIColors.RESET);
+        }else{
+            System.out.println(CLIColors.ANSI_CYAN + message + CLIColors.RESET);
         }
     }
 
@@ -391,8 +383,12 @@ public class CLI implements UI {
      * Method showCharacters prints the character cards present in the current game.
      */
     private void showCharacters() {
-        modelView.getCharacterCards().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c.type + ", price: " + c.price +
-                ", state: " + (c.isActive ? "active" : "no-active") + CLIColors.RESET).forEach(System.out::println);
+        modelView.getCharacterCards().stream().map(c -> CLIColors.ANSI_BLUE + "\t" + c.type + "\t" +
+                ", price: " + c.price + "\t" +
+                ", state: " + (c.isActive ? "active" : "no-active" + "\t" +
+                (c.students.size() > 0 ?  " students:" + c.students : "") + "\t" +
+                (c.blockingCards > 0 ?  " blocking cards:" + c.blockingCards :"") + "\t" +
+                 CLIColors.RESET)).forEach(System.out::println);
     }
 
     /**

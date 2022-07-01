@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.controllers;
 
+import it.polimi.ingsw.client.ServerMessageHandler;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.constants.Character;
 import it.polimi.ingsw.constants.GameState;
@@ -46,6 +47,7 @@ public class EventsToActions implements PropertyChangeListener {
      * Method onEventReceived processes the GUI action into the actual CLI commands.
      */
     private void onEventReceived() {
+
         System.out.println(currEvt.getPropertyName());
         String action = "";
         GameState currentState = gui.getModelView().getGameState();
