@@ -8,6 +8,7 @@ import it.polimi.ingsw.exceptions.InvalidPlayerException;
 import it.polimi.ingsw.exceptions.RoundOwnerException;
 import it.polimi.ingsw.exceptions.WrongStateException;
 import it.polimi.ingsw.model.cards.characters.CharacterCard;
+import it.polimi.ingsw.model.cards.characters.Joker;
 import it.polimi.ingsw.model.cards.characters.Minstrel;
 import it.polimi.ingsw.constants.Color;
 import it.polimi.ingsw.constants.GameState;
@@ -114,6 +115,9 @@ public class MinstrelSwapStudents extends Performable {
         if (Rules.checkCoin(hallPosition)) {
             game.incrementPlayerBalance(player.getNickname());
         }
-        //TODO ADD AUTOMATIC DEACTIVATION
+        // card deactivate
+        if (minstrel.getSwappedStudents() >= Minstrel.maxSwaps) {
+            game.deactivateCharacterCard(game.getCharacterCards().indexOf(minstrel), rules);
+        }
     }
 }

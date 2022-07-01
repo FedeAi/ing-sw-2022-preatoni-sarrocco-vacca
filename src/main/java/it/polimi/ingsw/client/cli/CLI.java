@@ -171,7 +171,6 @@ public class CLI implements UI {
                 WinMessage msg = (WinMessage) evt.getNewValue();
                 printWinner(msg.getMessage());
             }
-            // TODO case activate card ...
         }
     }
 

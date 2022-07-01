@@ -9,11 +9,6 @@ import java.util.Map;
  * Island class is an abstract specification to be extended either with a BaseIsland or a SuperIsland.
  */
 public abstract class Island implements Serializable {
-    /*
-        TODO I HAVEN'T SORTED THE SUPERISLAND BLOCKED CASE YET
-        If we join an island with an adjacent one which is blocked,
-        is the SuperIsland blocked or not?
-    */
 
     protected boolean isBlocked;
     protected String owner;
