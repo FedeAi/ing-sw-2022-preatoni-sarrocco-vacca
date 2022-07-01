@@ -32,11 +32,11 @@ public class WinController {
             }
         }
         //another way to win has finished the cards but I should wait the end of the turn
-        if (game.getIslandContainer().size() <= 3 && game.getGameState() == GameState.PLANNING_CHOOSE_CARD) {
+        if (game.getIslandContainer().size() <= 3 ) {
             return winner(game);
         }
         //the last fpr the win is has finished the available student in the bag
-        if (game.getBag().getStudents().isEmpty()) {
+        if (game.getBag().getStudents().isEmpty() && game.getGameState() == GameState.NEW_ROUND) {
             return winner(game);
         }
         return null;
