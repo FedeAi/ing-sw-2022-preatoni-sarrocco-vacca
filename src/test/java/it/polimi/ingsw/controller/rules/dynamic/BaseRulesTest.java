@@ -110,8 +110,6 @@ class BaseRulesTest {
         assertEquals(player.get(), p1.getNickname(), "the winner should be p1 (2 students blue)");
 
         island.addStudent(Color.PINK);
-        player = baseRules.computeIslandInfluence(game, island);
-        assertTrue(player.isEmpty(), "Same number of students on island");
 
         // add a tower
         island.setOwner(p1.getNickname());
