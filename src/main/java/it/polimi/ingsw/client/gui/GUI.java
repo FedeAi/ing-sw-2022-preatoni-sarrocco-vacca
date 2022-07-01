@@ -24,8 +24,6 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-//--module-path /home/federico/libs/javafx-sdk-18.0.1/lib  --add-modules javafx.controls,javafx.fxml
-
 /**
  * GUI is the main class for everything regarding the GUI client.
  * It instances the various JavaFX scenes and switches between them.
@@ -121,8 +119,7 @@ public class GUI extends Application implements UI {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        changeScene(LOGIN, false);
-        //currentScene = nameMapScene.get(LOADER);
+        changeScene(MENU, false);
     }
 
     /**

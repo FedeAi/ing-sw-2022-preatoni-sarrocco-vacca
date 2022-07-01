@@ -341,7 +341,6 @@ public class CLI implements UI {
 
         // ACTIONS AVAILABLE COMMANDS
         if (Objects.equals(modelView.getRoundOwner(), modelView.getPlayerName())) {  // actions are available only if it's my turn
-            // modelView.getPlayedCards().getOrDefault(modelView.getRoundOwner()); bho poi spiego
             System.out.println(CLIColors.ANSI_GREEN + "These are all the possible actions available at this moment: " + CLIColors.RESET);
             List<Integer> availableClouds = IntStream.range(0, modelView.getClouds().size())
                     .filter(i -> !modelView.getClouds().get(i)

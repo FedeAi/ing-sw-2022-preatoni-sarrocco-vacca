@@ -36,7 +36,6 @@ public class RoundManager {
     public RoundManager(GameManager gameManager) {
         this.gameManager = gameManager;
         this.gameInstance = gameManager.getGame();
-        //listeners.addPropertyChangeListener(RoundOwnerListener());
     }
 
     /**
