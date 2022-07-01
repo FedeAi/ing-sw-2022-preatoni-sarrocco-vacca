@@ -9,7 +9,6 @@ import java.beans.PropertyChangeEvent;
 /**
  * SchoolListener class is a AbsListener used for notifying the client after a player's school update.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
 public class SchoolListener extends AbsListener {

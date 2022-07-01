@@ -10,7 +10,6 @@ import java.util.ArrayList;
 /**
  * HandListener class is a AbsListener used for notifying the client after a player's hand update.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
 public class HandListener extends AbsListener {

@@ -8,7 +8,6 @@ import java.beans.PropertyChangeEvent;
 /**
  * BalanceListener class is a AbsListener used for notifying the client after a player's balance change.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
 public class BalanceListener extends AbsListener {

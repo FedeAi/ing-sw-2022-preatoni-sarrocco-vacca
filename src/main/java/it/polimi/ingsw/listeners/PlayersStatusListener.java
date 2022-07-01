@@ -11,7 +11,6 @@ import java.util.Map;
  * PlayersStatusListener class is a AbsListener used for notifying the client after an update of the player list
  * (disconnection or reconnection).
  *
- * @author Alessandro Vacca
  * @see AbsListener
  */
 public class PlayersStatusListener extends AbsListener {

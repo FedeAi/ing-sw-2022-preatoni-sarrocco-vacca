@@ -8,7 +8,6 @@ import java.beans.PropertyChangeEvent;
 /**
  * ModeListener class is a AbsListener used for notifying the client after the game mode selection.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
 public class ModeListener extends AbsListener {

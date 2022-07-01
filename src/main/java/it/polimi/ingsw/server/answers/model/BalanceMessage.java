@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.answers.model;
 /**
  * BalanceMessage class is type of ModelMessage used for sending updates of the player's balance.
  *
- * @author Alessandro Vacca
  * @see ModelMessage
  */
 public class BalanceMessage implements ModelMessage {

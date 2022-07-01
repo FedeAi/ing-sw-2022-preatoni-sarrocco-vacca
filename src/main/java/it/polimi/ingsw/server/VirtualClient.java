@@ -11,7 +11,6 @@ import java.beans.PropertyChangeListener;
  * is connected through server socket. It's used for preparing the answer to be sent and for general
  * operations on the client too.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see PropertyChangeListener
  */
 public class VirtualClient {

@@ -7,7 +7,6 @@ import java.util.Map;
 /**
  * MagicianMessage class is type of ModelMessage used for sending updates of the game's magicians.
  *
- * @author Davide Preatoni, Federico Sarrocco
  * @see ModelMessage
  */
 public class MagicianMessage implements ModelMessage {

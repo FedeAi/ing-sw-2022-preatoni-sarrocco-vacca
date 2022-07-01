@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * CloudsListener class is a AbsListener used for notifying the client after a clouds update.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
 public class CloudsListener extends AbsListener {

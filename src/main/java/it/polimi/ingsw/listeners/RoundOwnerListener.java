@@ -8,7 +8,6 @@ import java.beans.PropertyChangeEvent;
 /**
  * RoundOwnerListener class is a AbsListener used for notifying the client after a round owner change.
  *
- * @author Federico Sarrocco
  * @see AbsListener
  */
 public class RoundOwnerListener extends AbsListener {

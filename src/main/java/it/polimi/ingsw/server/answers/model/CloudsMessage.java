@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * CloudsMessage class is type of ModelMessage used for sending updates of game's clouds.
  *
- * @author Alessandro Vacca
  * @see ModelMessage
  */
 public class CloudsMessage implements ModelMessage {

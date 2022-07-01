@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * Class SerializedAnswer is an Answer that can be serialized.
  *
- * @author Federico Sarrocco
  * @see Serializable
  */
 public class SerializedAnswer implements Serializable {

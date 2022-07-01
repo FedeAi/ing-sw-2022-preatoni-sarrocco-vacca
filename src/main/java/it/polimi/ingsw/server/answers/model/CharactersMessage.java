@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * CharactersMessage class is type of ModelMessage used for sending updates of game's character cards.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see ModelMessage
  */
 public class CharactersMessage implements ModelMessage {

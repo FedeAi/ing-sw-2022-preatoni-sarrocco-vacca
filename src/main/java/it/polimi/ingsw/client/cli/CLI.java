@@ -34,7 +34,6 @@ import static it.polimi.ingsw.constants.Constants.validateNickname;
  * CLI is the main class for everything regarding the CLI client.
  * It parses the user input and prints all that's needed to play the game.
  *
- * @author Davide Preatoni, Federico Sarrocco, Alessandro Vacca
  */
 public class CLI implements UI {
 

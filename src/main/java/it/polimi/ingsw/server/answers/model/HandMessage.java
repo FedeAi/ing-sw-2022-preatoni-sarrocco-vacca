@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * HandMessage class is type of ModelMessage used for sending updates of player's hand.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see ModelMessage
  */
 public class HandMessage implements ModelMessage {

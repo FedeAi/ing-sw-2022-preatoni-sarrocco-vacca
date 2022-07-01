@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.School;
 /**
  * SchoolMessage class is a ModelMessage used for sending updates of the players' School.
  *
- * @author Alessandro Vacca
  * @see ModelMessage
  */
 public class SchoolMessage implements ModelMessage {

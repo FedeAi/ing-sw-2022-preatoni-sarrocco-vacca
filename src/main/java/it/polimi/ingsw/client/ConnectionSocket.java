@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 /**
  * ConnectionSocket class handles the connection between the client and the server.
  *
- * @author Federico Sarrocco, Davide Preatoni
  */
 public class ConnectionSocket {
 

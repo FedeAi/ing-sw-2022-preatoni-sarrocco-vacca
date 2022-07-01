@@ -7,7 +7,6 @@ import java.util.EnumMap;
 /**
  * ProfsMessage class is a ModelMessage used for sending updates of the game's professors.
  *
- * @author Alessandro Vacca
  * @see ModelMessage
  */
 public class ProfsMessage implements ModelMessage {

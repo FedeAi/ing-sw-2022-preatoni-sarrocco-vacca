@@ -9,7 +9,6 @@ import java.beans.PropertyChangeEvent;
 /**
  * GameStateListener class is a AbsListener used for notifying the client after game state change.
  *
- * @author Federico Sarrocco, Davide Preatoni
  * @see AbsListener
  */
 public class GameStateListener extends AbsListener {

@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.answers.model;
 /**
  * MotherMessage class is type of ModelMessage used for sending updates of motherNature's current position.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see ModelMessage
  */
 public class MotherMessage implements ModelMessage {

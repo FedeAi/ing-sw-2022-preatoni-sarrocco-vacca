@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.answers.model;
 /**
  * RoundOwnerMessage class is a ModelMessage used for sending updates of the current round owner.
  *
- * @author Federico Sarrocco, Alessandro Vacca.
  * @see ModelMessage
  */
 public class RoundOwnerMessage implements ModelMessage {

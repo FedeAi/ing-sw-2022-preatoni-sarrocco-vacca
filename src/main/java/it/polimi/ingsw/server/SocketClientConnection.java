@@ -21,7 +21,6 @@ import it.polimi.ingsw.exceptions.RoundOwnerException;
  * SocketClientConnection handles a connection between client and server, permitting sending and
  * receiving messages and doing other class-useful operations too.
  *
- * @author Davide Preatoni, Federico Sarrocco, Alessandro Vacca
  * @see Runnable
  * @see ClientConnection
  */

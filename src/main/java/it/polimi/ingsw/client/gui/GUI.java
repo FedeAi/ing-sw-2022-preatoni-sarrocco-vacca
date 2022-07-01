@@ -34,7 +34,6 @@ import java.util.logging.Level;
  * It instances the various JavaFX scenes and switches between them.
  * Scene logic is handles by various controllers.
  *
- * @author Davide Preatoni, Federico Sarrocco, Alessandro Vacca
  */
 public class GUI extends Application implements UI {
 

@@ -10,7 +10,6 @@ import java.util.Map;
 /**
  * MagicianListener class is a AbsListener used for notifying the client after a magician selection.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
 public class MagicianListener extends AbsListener {

@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.islands.IslandContainer;
 /**
  * IslandsMessage class is type of ModelMessage used for sending updates of the game's islands.
  *
- * @author Federico Sarrocco
  * @see ModelMessage
  */
 public class IslandsMessage implements ModelMessage {

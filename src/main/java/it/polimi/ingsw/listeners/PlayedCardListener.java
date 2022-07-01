@@ -9,7 +9,6 @@ import java.beans.PropertyChangeEvent;
 /**
  * PlayedCardListener class is a AbsListener used for notifying the client after a PlayCard action.
  *
- * @author Federico Sarrocco Alessandro Vacca
  * @see AbsListener
  */
 public class PlayedCardListener extends AbsListener {

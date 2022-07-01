@@ -10,7 +10,6 @@ import java.util.EnumMap;
 /**
  * ProfsListener class is a AbsListener used for notifying the client after change in professor ownership.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
 public class ProfsListener extends AbsListener {

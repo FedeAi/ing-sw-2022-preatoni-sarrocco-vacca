@@ -5,7 +5,6 @@ import it.polimi.ingsw.constants.GameState;
 /**
  * GameStateMessage class is type of ModelMessage used for sending updates of game's state.
  *
- * @author Federico Sarrocco
  * @see ModelMessage
  */
 public class GameStateMessage implements ModelMessage {

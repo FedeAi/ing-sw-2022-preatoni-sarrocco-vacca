@@ -10,7 +10,6 @@ import java.util.ArrayList;
 /**
  * CharactersListener class is a AbsListener used for notifying the client after a change in character cards.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see AbsListener
  */
 public class CharactersListener extends AbsListener {

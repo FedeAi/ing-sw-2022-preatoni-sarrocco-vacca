@@ -7,7 +7,6 @@ import java.beans.PropertyChangeListener;
 /**
  * AbsListener class defines an interface used to communicate to View from Model.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see PropertyChangeListener
  */
 public abstract class AbsListener implements PropertyChangeListener {

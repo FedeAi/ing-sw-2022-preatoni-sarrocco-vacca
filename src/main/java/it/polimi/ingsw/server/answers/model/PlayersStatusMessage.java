@@ -7,7 +7,6 @@ import java.util.Map;
 /**
  * PlayersStatusMessage class is a ModelMessage used for sending updates of the players' connection status.
  *
- * @author Alessandro Vacca
  * @see ModelMessage
  */
 public class PlayersStatusMessage implements ModelMessage {

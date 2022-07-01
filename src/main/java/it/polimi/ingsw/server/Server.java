@@ -13,7 +13,6 @@ import java.util.concurrent.Executors;
  * Server class is the main one of the server side, it allows clients to connect, play together and
  * also starts the match.
  *
- * @author Davide Preatoni, Federico Sarrocco, Alessandro Vacca
  */
 public class Server {
     private final SocketServer socketServer;

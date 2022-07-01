@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * GameHandler class handles a single match, instantiating a Game and a main GameManager.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  */
 public class GameHandler {
 

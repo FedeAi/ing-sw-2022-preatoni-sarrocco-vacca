@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.cards.AssistantCard;
 /**
  * PlayedCardMessage class is type of ModelMessage used for sending updates of the current cards that have been played.
  *
- * @author Federico Sarrocco, Alessandro Vacca
  * @see ModelMessage
  */
 public class PlayedCardMessage implements ModelMessage {

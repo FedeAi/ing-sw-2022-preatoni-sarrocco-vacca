@@ -8,7 +8,6 @@ import java.beans.PropertyChangeEvent;
 /**
  * MoveMotherListener class is a AbsListener used for notifying the client after the change of MotherNature's position.
  *
- * @author Federico Sarrocco Alessandro Vacca
  * @see AbsListener
  */
 public class MoveMotherListener extends AbsListener {
