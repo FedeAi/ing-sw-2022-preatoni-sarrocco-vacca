@@ -30,7 +30,8 @@ public class MessageBuilder {
     private final String MUSHROOM_ERROR = "Wrong MushroomChooseColor syntax!\nValid syntax: mushroom color (e.g. mushroom blue)";
     private final String PRINCESS_ERROR = "Wrong PrincessMoveToEntry syntax!\nValid syntax: princess color (e.g. princess yellow)";
     private final String THIEF_ERROR = "Wrong ThiefChooseColor syntax!\nValid syntax: thief color (e.g. thief green)";
-    private final String MAGICIAN_ERROR = "Wrong ChooseMagician syntax!\nValid syntax: magician type (e.g. magician king)";
+    private final String MAGICIAN_ERROR_WRONG_SINTAX = "Wrong ChooseMagician syntax!\nValid syntax: magician type (e.g. magician king)";
+    private final String MAGICIAN_ERROR_WRONG_SELECT = "Wrong ChooseMagician syntax!\n choose an available magician";
 
     /**
      * Constructor MessageBuilder creates a new MessageBuilder instance.
@@ -70,8 +71,11 @@ public class MessageBuilder {
                 throw new IllegalArgumentException();
             actionToSend = new Action(ActionType.CHOOSE_MAGICIAN, magicianIndex);
             return actionToSend;
-        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            System.out.println(CLIColors.ANSI_RED + MAGICIAN_ERROR + CLIColors.RESET);
+        } catch (IllegalArgumentException e) {
+            System.out.println(CLIColors.ANSI_RED + MAGICIAN_ERROR_WRONG_SINTAX + CLIColors.RESET);
+            return null;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(CLIColors.ANSI_RED + MAGICIAN_ERROR_WRONG_SELECT + CLIColors.RESET);
             return null;
         }
     }
