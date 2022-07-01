@@ -58,7 +58,7 @@ public class WinController {
             return tempOrdered.get(0).getNickname();
         } else {
             //ordering considering number of prof
-            Stream<Player> playersOrderedP = game.getPlayers().stream().sorted((p1, p2) -> Integer.compare(countProfs(game, p1), countProfs(game, p2)));
+            Stream<Player> playersOrderedP = game.getPlayers().stream().sorted((p1, p2) -> Integer.compare(countProfs(game, p2), countProfs(game, p1)));
             Optional<Player> winningPlayer = playersOrderedP.findFirst();
             if (winningPlayer.isPresent()) {
                 return winningPlayer.get().getNickname();
