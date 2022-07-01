@@ -226,7 +226,17 @@ public class GUI extends Application implements UI {
         });
         switch (evt.getPropertyName()) {
             // Setup scene
-            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> changeScene(SETUP, true);
+
+            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> Platform.runLater(()->{
+                //fixed for M1
+            //    GUIController.sleepAndExec(()-> {
+                    currentScene = nameMapScene.get(SETUP);
+                    nameMapController.get(SETUP).init();
+                    stage.setScene(currentScene);
+                    stage.centerOnScreen();
+                    stage.show();
+           //    },1);
+                });
             // Magician selection scene
             case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> changeScene(MAGIs, true);
 

@@ -7,25 +7,42 @@ The aim of this project is the design and realization of a distributed client-se
 
 More information about the game can be found [here](https://www.craniocreations.it/prodotto/eriantys)
 
-## Prerequisites
-The game requires [Java 17](https://www.oracle.com/java/technologies/downloads/#java17) to run.
-
+## Requirements
+* The game requires [Java 17](https://www.oracle.com/java/technologies/downloads/#java17) to run.
+* In order to properly display the CLI client an UTF-8 and ANSI colors compatible console is needed.
+* To build the project, Maven is required.
 ## Features
 The features we have realised are listed in the following section:
 ### Features developed
-* Regole Base ☑️
-* Regole Complete ☑️
+* Base rules ☑️
+* Complete rules ☑️
 * Socket ☑️
 * CLI ☑️
 * GUI ☑️
-* Carte Personaggio ☑️
-* Partite Multiple ☑️
-* Resilienza alle disconnessioni ☑️
+* Character cards ☑️
+* Multiple games ☑️
+* Disconnection recovery ☑️
+## Building the project
+* The project is build as an Uber-jar that is comprehensive of CLI, GUI and Server.
+* The executable provides a small launcher with all the options, no arguments are needed to run it.
+After cloning the repo, build the project by running:
+```
+cd ing-sw-2022-preatoni-sarrocco-vacca
+mvn clean package
+```
+You will find the output jar in the newly created target folder with the name GC30-1.0-SNAPSHOT-jar-with-dependencies.jar.
+## Running the executable
+To run the jar executable just issue this command in the console:
+```
+java -jar GC30-1.0-SNAPSHOT-jar-with-dependencies.jar
+```
+## Sidenote
+
 
 ## Docs
-In this section you will find all the documents we produced during the development of the project:
+In this section you will find all the documentation regarding the project:
 
-### UML high-evel & dettailled approach
+### UML diagrams
 - [Model](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/model)
 - [Controller](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/controller)
 - [Listeners](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/listeners)
@@ -33,8 +50,8 @@ In this section you will find all the documents we produced during the developme
 - [Initial Sequence Diagram](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/Sequence%20Diagram/SequenceDiagram_Initial.pdf)
 
 ### JavaDoc
-
-### Peer Review
+[Link](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/docs)
+### Peer Reviews
 - [Model and Controller](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/PeerReview/Peer_Review_UML.pdf)
 - [Network](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/PeerReview/Peer_Review_2_Network.pdf)
 

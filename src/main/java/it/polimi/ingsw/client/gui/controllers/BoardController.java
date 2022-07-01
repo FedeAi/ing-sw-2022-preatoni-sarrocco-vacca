@@ -855,7 +855,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         labelError.setText(error);
         sleepAndExec(()->{
             labelError.setText("");
-        });
+        },3000);
     }
 
     /**

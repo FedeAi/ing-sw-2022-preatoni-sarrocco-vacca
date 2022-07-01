@@ -54,7 +54,7 @@ public class SetupController extends GUIController {
             });
         } else {
             error.setText("Select a mode before starting!");
-            sleepAndExec(() -> error.setText(""));
+            sleepAndExec(() -> error.setText(""),3000);
         }
     }
 

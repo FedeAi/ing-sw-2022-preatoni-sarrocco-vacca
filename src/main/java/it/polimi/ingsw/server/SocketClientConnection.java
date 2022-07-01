@@ -42,7 +42,6 @@ public class SocketClientConnection implements Runnable {
      */
     public boolean isActive() {
         return !getSocket().isClosed();
-//        return active;
     }
 
     /**
@@ -89,8 +88,9 @@ public class SocketClientConnection implements Runnable {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
-        if(server.getGameByID(clientID) != null)
-            server.getGameByID(clientID).unregisterPlayer(clientID);
+
+        server.getGameByID(clientID).unregisterPlayer(clientID);
+
     }
 
     /**
