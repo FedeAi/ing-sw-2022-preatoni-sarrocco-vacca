@@ -31,12 +31,12 @@ mvn clean package
 ```
 You will find the output jar in the newly created "target" folder with the name GC30-1.0-SNAPSHOT-jar-with-dependencies.jar.
 ## Running the executable
-To run the jar executable just issue this command in the console:
+To run the [jar](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/jars) executable just issue this command in the console:
 ```
 java -jar GC30-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
 ## Sidenote for Apple Silicon macOS users
-For AArch64-based Macs we have provided a specific [jar](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/jars). This is due to a JavaFX dependency conflict, as explained [here](https://www.reddit.com/r/JavaFX/comments/twye9j/javafx_on_m1_and_intel_macs/).
+For AArch64-based Macs we have provided a specific [jar](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/jars/arm64). This is due to a JavaFX dependency conflict, as explained [here](https://www.reddit.com/r/JavaFX/comments/twye9j/javafx_on_m1_and_intel_macs/).
 ## Sidenote for Windows users
 On Windows, if don't plan on using the Windows Terminal app, in order to properly display the CLI client you should enable the console UTF-8 character encoding beta feature.
 ## Docs
