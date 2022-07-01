@@ -121,7 +121,7 @@ public class GUI extends Application implements UI {
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
-        changeScene(LOGIN);
+        changeScene(LOGIN, false);
         //currentScene = nameMapScene.get(LOADER);
     }
 
@@ -138,15 +138,23 @@ public class GUI extends Application implements UI {
      * Method changeScene changes the stage to a new scene.
      *
      * @param newScene the scene to be set.
+     * @param runLater
      */
-    public void changeScene(String newScene) {
+    public void changeScene(String newScene, boolean runLater) {
         currentScene = nameMapScene.get(newScene);
-        Platform.runLater(()->{
+        if(runLater)
+            Platform.runLater(()->{
+                nameMapController.get(newScene).init();
+                stage.setScene(currentScene);
+                stage.centerOnScreen();
+                stage.show();
+            });
+        else{
             nameMapController.get(newScene).init();
             stage.setScene(currentScene);
             stage.centerOnScreen();
             stage.show();
-        });
+        }
     }
 
     /**
@@ -218,14 +226,14 @@ public class GUI extends Application implements UI {
         });
         switch (evt.getPropertyName()) {
             // Setup scene
-            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> changeScene(SETUP);
+            case ServerMessageHandler.REQ_PLAYERS_LISTENER -> changeScene(SETUP, true);
             // Magician selection scene
-            case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> changeScene(MAGIs);
+            case ServerMessageHandler.REQ_MAGICIAN_LISTENER -> changeScene(MAGIs, true);
 
             // Magician selection scene
             case ServerMessageHandler.GAME_STATE_LISTENER -> {
                 if (modelView.getGameState() == GameState.SETUP_CHOOSE_MAGICIAN && modelView.amIRoundOwner()) {
-                    changeScene(MAGIs);
+                    changeScene(MAGIs, true);
                 }
 
                 // Starts the main game board
@@ -233,7 +241,7 @@ public class GUI extends Application implements UI {
                 if (!GameState.getSetupStates().contains(modelView.getGameState()) && !modelView.getGameState().equals(GameState.GAME_ENDED)) {
                     // if not in BOARD scene --> we are in waiting to be re-admitted
                     if (currentScene != nameMapScene.get(BOARD) && currentScene != nameMapScene.get(END)) {
-                        changeScene(BOARD);
+                        changeScene(BOARD, true);
                     }
                 }
             }
@@ -242,7 +250,7 @@ public class GUI extends Application implements UI {
                     String winner = ((WinMessage) evt.getNewValue()).getMessage();
                     ((WinnerController) getControllerFromName(END)).printWinner(winner);
                 });
-                changeScene(END);
+                changeScene(END, true);
 
             }
             case SocketListener.CONNECTION_CLOSE_LISTENER -> {
@@ -251,7 +259,7 @@ public class GUI extends Application implements UI {
                         String msg = "Connection closed";
                         ((WinnerController) getControllerFromName(END)).printMsg(msg);
                     });
-                    changeScene(END);
+                    changeScene(END,true);
                 }
             }
         }
