@@ -158,9 +158,6 @@ public class SocketClientConnection implements Runnable {
      *                in order to perform an action.
      */
     public void actionHandler(Message command) {
-        if(!(command instanceof PongMessage))
-
-            System.out.println("Debug: MESSAGE RECEIVED: " + command.getClass().getName());
         if (command instanceof LoginMessage) {
             setupConnection((LoginMessage) command);
         }
@@ -175,7 +172,6 @@ public class SocketClientConnection implements Runnable {
      * @param action the generic action to be executed.
      */
     public void actionHandler(Action action) {
-        System.out.println("Debug: ACTION RECEIVED: " + action.actionType.name());
         Performable move;
         /*if (command instanceof LoginMessage) {
             setupConnection((LoginMessage) command);
@@ -287,8 +283,6 @@ public class SocketClientConnection implements Runnable {
     public void sendSocketMessage(SerializedAnswer serverAnswer) {
         synchronized(outputStreamLock) {
             try {
-                if (!(serverAnswer.getServerAnswer() instanceof PingMessage))
-                    System.out.println(serverAnswer.getServerAnswer().getClass());
                 outputStream.reset();
                 outputStream.writeObject(serverAnswer);
                 outputStream.flush();

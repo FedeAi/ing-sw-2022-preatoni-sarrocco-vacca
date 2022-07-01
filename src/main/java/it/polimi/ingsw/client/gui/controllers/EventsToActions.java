@@ -48,7 +48,6 @@ public class EventsToActions implements PropertyChangeListener {
      */
     private void onEventReceived() {
 
-        System.out.println(currEvt.getPropertyName());
         String action = "";
         GameState currentState = gui.getModelView().getGameState();
         if (gui.getModelView().amIRoundOwner()) {

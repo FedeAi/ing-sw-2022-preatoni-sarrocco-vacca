@@ -76,8 +76,6 @@ public class ServerMessageHandler {
      */
     public void answerHandler() {
         Answer answer = modelView.getServerAnswer();
-        if(!(answer instanceof PingMessage) && cli == null)
-            System.out.println(answer.getClass().getSimpleName());
         if (answer instanceof ConnectionMessage connectionMessage) {
             System.out.println(connectionMessage.getMessage());
         } else if (answer instanceof ReqPlayersMessage) {
