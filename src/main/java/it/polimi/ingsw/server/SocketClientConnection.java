@@ -87,7 +87,7 @@ public class SocketClientConnection implements Runnable {
         try {
             socket.close();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage());
         }
         server.getGameByID(clientID).unregisterPlayer(clientID);
     }
@@ -158,6 +158,7 @@ public class SocketClientConnection implements Runnable {
      */
     public void actionHandler(Message command) {
         if(!(command instanceof PongMessage))
+
             System.out.println("Debug: MESSAGE RECEIVED: " + command.getClass().getName());
         if (command instanceof LoginMessage) {
             setupConnection((LoginMessage) command);
@@ -313,7 +314,7 @@ public class SocketClientConnection implements Runnable {
         if(pongReceived)
             pongReceived = false;
         else{
-            System.out.println("PONG not received from " + server.getClientByID(clientID).getNickname());
+            logger.log(Level.SEVERE, "PONG not received from clientID" + clientID);
             close();
         }
     }
