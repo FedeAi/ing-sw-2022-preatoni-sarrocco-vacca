@@ -52,10 +52,12 @@ public class Bag {
         Map<Color, Integer> out = new EnumMap<Color, Integer>(Color.class);
         Random rand = new Random();
         for (int i = 0; i < numStudent; i++) {
-            int randomIndex = rand.nextInt(students.size());
-            Color randomElement = students.get(randomIndex);
-            students.remove(randomIndex);
-            out.put(randomElement, out.getOrDefault(randomElement, 0) + 1);
+            if(students.size() > 0) {
+                int randomIndex = rand.nextInt(students.size());
+                Color randomElement = students.get(randomIndex);
+                students.remove(randomIndex);
+                out.put(randomElement, out.getOrDefault(randomElement, 0) + 1);
+            }
         }
         return out;
     }
