@@ -141,7 +141,7 @@ public class BoardController extends GUIController implements PropertyChangeList
 
     DropShadow blueShadow = new DropShadow(20, javafx.scene.paint.Color.rgb(59, 52, 218, 0.8));
     DropShadow redShadow = new DropShadow(20, javafx.scene.paint.Color.rgb(222, 40, 40, 0.8));
-    Node prevClickedNode;
+
     /**
      * Method initialize creates all the GUI elements list and maps and loads the assets.
      */
@@ -303,7 +303,6 @@ public class BoardController extends GUIController implements PropertyChangeList
             backCloud.setFitWidth(100);
             cloudsPane.get(i).setOnMouseEntered(this::onSelectScaleColor);
             cloudsPane.get(i).setOnMouseExited(this::onSelectScaleColor);
-            cloudsPane.get(i).setOnMouseClicked(this::onSelectScaleColor);
             backCloud.setSmooth(true);
             backCloud.setCache(true);
             int index = i;
@@ -567,7 +566,6 @@ public class BoardController extends GUIController implements PropertyChangeList
         });
         pane.setOnMouseEntered(this::onSelectScaleColor);
         pane.setOnMouseExited(this::onSelectScaleColor);
-        pane.setOnMouseClicked(this::onSelectScaleColor);
         return pane;
     }
 
@@ -593,8 +591,10 @@ public class BoardController extends GUIController implements PropertyChangeList
                 Pane pane = studentEntryPanes.get(i);
                 pane.setOnMouseEntered(this::onSelectScaleColor);
                 pane.setOnMouseExited(this::onSelectScaleColor);
-                pane.setOnMouseClicked(this::onSelectScaleColor);
-                pane.setOnMouseClicked((e) -> changeSupport.firePropertyChange(ENTRY_STUDENT_LISTENER, null, studentC));
+                pane.setOnMouseReleased((e) -> {
+                    changeSupport.firePropertyChange(ENTRY_STUDENT_LISTENER, null, studentC);
+                    e.consume();
+                });
                 pane.getChildren().add(student);
             }
         }
@@ -709,6 +709,8 @@ public class BoardController extends GUIController implements PropertyChangeList
         for (int i = 0; i < reducedCards.size(); i++) {
             ReducedCharacterCard c = reducedCards.get(i);
             StackPane s = new StackPane();
+            s.setOnMouseEntered(this::onSelectScaleColor);
+            s.setOnMouseExited(this::onSelectScaleColor);
             s.setAlignment(Pos.CENTER);
 
             // Background character
@@ -727,10 +729,14 @@ public class BoardController extends GUIController implements PropertyChangeList
                 student.setImage(studentImgs.get(color));
                 student.setFitWidth(22);
                 student.setFitHeight(22);
+
+                student.setOnMouseEntered(this::onSelectScaleColor);
+                student.setOnMouseExited(this::onSelectScaleColor);
                 student.setOnMouseReleased((e) -> {
                     changeSupport.firePropertyChange(CHARACTER_STUDENT_LISTENER, null, color);
                     e.consume();
                 });
+
                 students.getChildren().add(student);
             });
             content.getChildren().add(students);
@@ -746,6 +752,10 @@ public class BoardController extends GUIController implements PropertyChangeList
                     ImageView blockImgV = new ImageView(blockImg);
                     blockImgV.setFitWidth(40);
                     blockImgV.setFitHeight(40);
+
+                    blockImgV.setOnMouseEntered(this::onSelectScaleColor);
+                    blockImgV.setOnMouseExited(this::onSelectScaleColor);
+
                     blockingCards.getChildren().add(blockImgV);
                 }
                 content.getChildren().add(blockingCards);
@@ -889,7 +899,8 @@ public class BoardController extends GUIController implements PropertyChangeList
      * @param evt the MouseEvent instance.
      */
     public void onSelectScaleColor(MouseEvent evt) {
-        if (evt.getSource() instanceof Node node) {
+        if (evt != null && evt.getSource() instanceof Node node) {
+
             if (node.getEffect() != redShadow) {
                 if (evt.getEventType() == MouseEvent.MOUSE_ENTERED) {
                     node.setEffect(blueShadow);  // Shadow
@@ -901,29 +912,6 @@ public class BoardController extends GUIController implements PropertyChangeList
                     node.setScaleY(1);
                 }
             }
-            if (evt.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                if(prevClickedNode != null && prevClickedNode.getEffect() == redShadow) {
-                    prevClickedNode.setEffect(null);
-                    prevClickedNode.setScaleX(1);
-                    prevClickedNode.setScaleY(1);
-                }
-                node.setEffect(redShadow);  // Shadow
-                node.setScaleX(1.25);
-                node.setScaleY(1.25);
-                prevClickedNode = node;
-
-            }
-
-        }
-    }
-
-    /**
-     *
-     * @param evt
-     */
-    public void onClickScaleColor(MouseEvent evt) {
-        if (evt.getSource() instanceof Node node) {
-
         }
     }
 
