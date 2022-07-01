@@ -71,6 +71,14 @@ public class PrincessMoveToHall extends Performable {
         if (p.getSchool().getStudentsHall().getOrDefault(student, 0) >= Constants.SCHOOL_LANE_SIZE) {
             throw new GameException("You already have the maximum amount (" + Constants.SCHOOL_LANE_SIZE + ") of " + student + " students in your school's hall!");
         }
+
+        // Now it's safe to cast the activated card
+        Princess princess = (Princess) card.get();
+
+        // Verify that the MONK card has a student of the specified COLOR
+        if (princess.getStudentsMap().getOrDefault(student, 0) <= 0) {
+            throw new GameException("There isn't any student of the specified color (" + student.toString() + ") on the princess card.");
+        }
     }
 
     /**
