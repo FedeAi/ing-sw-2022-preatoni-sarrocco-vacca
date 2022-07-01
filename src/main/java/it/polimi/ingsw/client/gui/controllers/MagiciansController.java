@@ -66,7 +66,7 @@ public class MagiciansController extends GUIController {
         Platform.runLater(() -> {
             gui.getListeners().firePropertyChange("action", null, message);
         });
-        gui.changeScene(GUI.LOADER);
+        gui.changeScene(GUI.LOADER, false);
     }
 
     /**

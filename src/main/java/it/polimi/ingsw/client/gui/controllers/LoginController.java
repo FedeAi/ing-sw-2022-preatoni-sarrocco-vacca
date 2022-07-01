@@ -80,7 +80,7 @@ public class LoginController extends GUIController {
 
                 error.setText("SOCKET CONNECTION \nSETUP COMPLETED!");
                 sleepAndExec(() -> error.setText(""));
-                gui.changeScene(GUI.LOADER);
+                gui.changeScene(GUI.LOADER, false);
             } catch (DuplicateNicknameException e) {
                 error.setText("This nickname is already in use! Please choose another one.");
                 sleepAndExec(() -> error.setText(""));

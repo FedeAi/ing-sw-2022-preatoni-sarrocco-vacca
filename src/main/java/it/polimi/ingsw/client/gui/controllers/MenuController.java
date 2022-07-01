@@ -22,7 +22,7 @@ public class MenuController extends GUIController {
      */
     @FXML
     public void play() {
-        gui.changeScene(GUI.LOGIN);
+        gui.changeScene(GUI.LOGIN, false);
     }
 
     /**

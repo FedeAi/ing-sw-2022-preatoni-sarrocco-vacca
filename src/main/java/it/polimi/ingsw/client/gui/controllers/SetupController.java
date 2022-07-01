@@ -45,7 +45,7 @@ public class SetupController extends GUIController {
             if (id.equalsIgnoreCase("button3")) {
                 numPlayer = " 3";
             }
-            gui.changeScene(GUI.LOADER);
+            gui.changeScene(GUI.LOADER, false);
             // If normal mode string must be empty
             String message = "SETUP" + numPlayer + expert;
             // Send setup option
