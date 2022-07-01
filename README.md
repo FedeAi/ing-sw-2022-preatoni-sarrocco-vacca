@@ -13,24 +13,24 @@ The game requires [Java 17] to run and you can find the link below on the built 
 ## Features
 The features we have realised are listed in the following section:
 ### Features developed
-* 12 character cards
-* Multiple games
-* Resilience to disconnections
+* Regole Base
+* Regole Complete
+* Socket
 * CLI
 * GUI
+* Carte Personaggio
+* Partite Multiple
+* Resilienza alle disconnessioni
 
 ## Docs
 In this section you will find all the documents we produced during the development of the project:
 
-### UML
-
-- [Initial UML]
-- [Final UML]
-- [UML Model]
-- [UML Controller]
-- [UML View]
-- [UML Network]
-- [Sequence Diagram - Network]
+### UML high-evel & dettailled approach
+- [Model](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/model)
+- [Controller](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/controller)
+- [Listeners](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/listeners)
+- [Client-Server](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/client-server)
+- [Initial Sequence Diagram](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/Sequence%20Diagram/SequenceDiagram_Initial.pdf)
 
 ### JavaDoc
 
@@ -39,7 +39,7 @@ In this section you will find all the documents we produced during the developme
 - [Network](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/PeerReview/Peer_Review_2_Network.pdf)
 
 ### Tests with Coverage
-Link al report sulla coverage: [Report Coverage]
+![picture](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/Test%20Coverage/Coverage.pdf)
 
 <a name="built"></a>
 ## Built with
@@ -55,6 +55,7 @@ Link al report sulla coverage: [Report Coverage]
 |__maven__|Project management tool that is based on POM (project object model)|
 |__junit__|Unit testing framework for the Java programming language|
 |__JavaFx__|Java set of graphics and media packages|
+|__UML-Generatore|Usefull plugin for autogenerate UML by the source code|
 
 
 ## List of Authors:
