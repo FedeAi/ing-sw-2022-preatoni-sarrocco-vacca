@@ -14,6 +14,7 @@ import it.polimi.ingsw.model.Cloud;
 import it.polimi.ingsw.model.islands.Island;
 import it.polimi.ingsw.model.islands.SuperIsland;
 import it.polimi.ingsw.model.School;
+import it.polimi.ingsw.server.answers.GameError;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -103,7 +104,7 @@ public class BoardController extends GUIController implements PropertyChangeList
     @FXML
     HBox balanceContainer;
     @FXML
-    Label status;
+    Label statusLabel, labelError;
     @FXML
     HBox towers;
 
@@ -186,7 +187,7 @@ public class BoardController extends GUIController implements PropertyChangeList
         playerRoundOwners.addAll(List.of(roundOwner0, roundOwner1, roundOwner2));
 
         loadAssets();
-        status.setFont(font);
+        statusLabel.setFont(font);
     }
 
     /**
@@ -856,8 +857,8 @@ public class BoardController extends GUIController implements PropertyChangeList
         if(!modelView.getActivePlayers().contains(modelView.getPlayerName())){
            s = "Waiting for the next round to resume the game";
         }
-        status.setFont(font);
-        status.setText(s);
+        statusLabel.setFont(font);
+        statusLabel.setText(s);
     }
 
     /**
@@ -891,6 +892,19 @@ public class BoardController extends GUIController implements PropertyChangeList
         }
         updateSchool();
         updateProfessors();
+    }
+
+    /**
+     * showError method displays error msg
+     * @param error string error
+     */
+    private void showError(String error){
+        labelError.setTextFill(javafx.scene.paint.Color.rgb(222,40,40));
+        labelError.setFont(font);
+        labelError.setText(error);
+        sleepAndExec(()->{
+            labelError.setText("");
+        });
     }
 
     /**
@@ -939,6 +953,7 @@ public class BoardController extends GUIController implements PropertyChangeList
                     updatePlayers();
                     updateStatus();
                 }
+                case ServerMessageHandler.GAME_ERROR_LISTENER -> showError(((GameError) evt.getNewValue()).getMessage());
             }
             updateProgressBar();
         }

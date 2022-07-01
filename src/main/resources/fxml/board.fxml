@@ -364,7 +364,7 @@
                </children>
             </HBox>
             <ProgressBar fx:id="progressBar" prefHeight="50.0" prefWidth="674.0" style="-fx-padding: 8;" visible="false" />
-            <Label fx:id="status" alignment="CENTER" prefHeight="96.0" prefWidth="251.0" text="Player ale is choosing his Color this choice is very hard" textAlignment="CENTER" textOverrun="CLIP" translateY="-150.0" wrapText="true" StackPane.alignment="CENTER" />
+            <Label fx:id="statusLabel" alignment="CENTER" prefHeight="144.0" prefWidth="251.0" text="Player ale is choosing his Color this choice is very hard" textAlignment="CENTER" textOverrun="CLIP" translateY="-150.0" wrapText="true" StackPane.alignment="CENTER" />
          </children>
       </StackPane>
    </center>
@@ -444,7 +444,6 @@
                               </Label>
                            </children>
                         </GridPane>
-                        <Label fx:id="labelError" alignment="CENTER" contentDisplay="TOP" layoutX="19.0" layoutY="387.0" prefHeight="22.0" prefWidth="205.0" text="error" textAlignment="CENTER" textFill="#f20000" />
                      </children>
                   </Pane>
                   <VBox maxHeight="-Infinity" prefHeight="300.0" StackPane.alignment="BOTTOM_CENTER">
@@ -453,6 +452,7 @@
                         <HBox fx:id="characterContainer" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" spacing="5.0" />
                      </children>
                   </VBox>
+                  <Label fx:id="labelError" alignment="CENTER" contentDisplay="TOP" ellipsisString="" prefHeight="117.0" prefWidth="300.0" textAlignment="CENTER" textFill="#f20000" wrapText="true" />
                </children>
             </StackPane>
          </children>
