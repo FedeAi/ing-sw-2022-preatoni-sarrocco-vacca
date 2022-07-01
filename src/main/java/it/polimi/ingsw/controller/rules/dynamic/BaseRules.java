@@ -37,24 +37,25 @@ public class BaseRules implements DynamicRules {
         EnumMap<Color, String> outProfessorsInfluence = new EnumMap<>(Color.class);
         EnumMap<Color, String> initialProfessorInfluence = game.getProfessors();
         for (Color prof : Color.values()) {
-            // Find who has the most students in the hall of that color
-            Stream<Player> playersWithStudentsInHall = game.getPlayers().stream().filter(player -> player.getSchool().getStudentsHall().get(prof) != null);
-            Optional<Player> tempOwner = playersWithStudentsInHall.max((p1, p2) -> Integer.compare(p1.getSchool().getStudentsHall().getOrDefault(prof, 0), p2.getSchool().getStudentsHall().getOrDefault(prof, 0)));
-            if (tempOwner.isPresent()) {
+
+            Player tempOwner = game.getRoundOwner();
+            // if the current round owner has at least a student
+            if (tempOwner.getSchool().getStudentsHall().getOrDefault(prof, 0) > 0) {
                 // Compare against the influence comparator for current owner
                 String currentOwner = initialProfessorInfluence.get(prof);
                 if (currentOwner == null) {
-                    outProfessorsInfluence.put(prof, tempOwner.get().getNickname());
+                    outProfessorsInfluence.put(prof, tempOwner.getNickname());
                 } else {
                     School currentOwnerSchool = game.getPlayerByNickname(currentOwner).get().getSchool();
-                    if (influenceComparator(tempOwner.get().getSchool().getStudentsHall().getOrDefault(prof, 0), currentOwnerSchool.getStudentsHall().getOrDefault(prof, 0))) {
-                        outProfessorsInfluence.put(prof, tempOwner.get().getNickname());
+                    if (influenceComparator(tempOwner.getSchool().getStudentsHall().getOrDefault(prof, 0), currentOwnerSchool.getStudentsHall().getOrDefault(prof, 0))) {
+                        outProfessorsInfluence.put(prof, tempOwner.getNickname());
                     } else {
                         outProfessorsInfluence.put(prof, currentOwner);
                     }
                 }
             } else {
-                outProfessorsInfluence.put(prof, null);
+                String currentOwner = initialProfessorInfluence.get(prof);
+                outProfessorsInfluence.put(prof, currentOwner);
             }
         }
         return outProfessorsInfluence;
