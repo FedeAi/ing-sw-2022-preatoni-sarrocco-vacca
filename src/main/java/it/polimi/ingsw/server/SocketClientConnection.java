@@ -313,6 +313,7 @@ public class SocketClientConnection implements Runnable {
         if(pongReceived)
             pongReceived = false;
         else{
+            System.out.println("PONG not received from " + server.getClientByID(clientID).getNickname());
             close();
         }
     }
