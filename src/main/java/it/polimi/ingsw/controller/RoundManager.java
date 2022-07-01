@@ -65,12 +65,18 @@ public class RoundManager {
         /* this line is reached only if the action is performable  */
         updateRoundOwnerAndGameState(action);
 
+        checkWin();
+    }
+
+    /**
+     * Method checkWin, send victory in case of victory
+     */
+    private void checkWin(){
         String winner = WinController.check(gameInstance);
         if (winner != null) {
             gameManager.getGameHandler().sendVictory(winner);
         }
     }
-
     /**
      * Method updateRoundOwnerAndGameState handles the selection of the next game state and round owner
      * based on the action's output.
@@ -96,6 +102,7 @@ public class RoundManager {
             gameManager.getGameHandler().reEnterWaitingPlayers();
             // fire new round
             gameInstance.setGameState(GameState.NEW_ROUND);
+            checkWin();
             nextPlayer = gameInstance.setPlanningOrder();
         }
         // if next round (for the next player) is going to start
