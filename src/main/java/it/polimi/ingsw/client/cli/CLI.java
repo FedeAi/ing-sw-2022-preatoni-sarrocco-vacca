@@ -163,7 +163,7 @@ public class CLI implements UI {
             case ServerMessageHandler.CUSTOM_MESSAGE_LISTENER ->
                     System.out.println(((CustomMessage) evt.getNewValue()).getMessage());
             case ServerMessageHandler.GAME_STATE_LISTENER ->
-                    statePrinter();
+                    statePrinter((GameState) evt.getOldValue(), (GameState) evt.getNewValue());
             case ServerMessageHandler.NEXT_ROUNDOWNER_LISTENER ->
                     roundPrinter((String) evt.getOldValue(), (String) evt.getNewValue());
             case ServerMessageHandler.PLAYED_CARD_LISTENER -> {
@@ -206,12 +206,14 @@ public class CLI implements UI {
      * Method statePrinter prints the current game state and the current round owner.
      *
      */
-    public void statePrinter() {
-        String message = UI.statePrinter(modelView);
-        if(modelView.amIRoundOwner()){
-            System.out.println(CLIColors.ANSI_GREEN + message + CLIColors.RESET);
-        }else{
-            System.out.println(CLIColors.ANSI_CYAN + message + CLIColors.RESET);
+    public void statePrinter(GameState oldState, GameState newState) {
+        if(oldState != newState){
+            String message = UI.statePrinter(modelView);
+            if(modelView.amIRoundOwner()){
+                System.out.println(CLIColors.ANSI_GREEN + message + CLIColors.RESET);
+            }else{
+                System.out.println(CLIColors.ANSI_CYAN + message + CLIColors.RESET);
+            }
         }
     }
 
