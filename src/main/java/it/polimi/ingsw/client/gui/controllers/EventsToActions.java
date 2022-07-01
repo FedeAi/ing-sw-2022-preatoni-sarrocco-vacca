@@ -137,12 +137,6 @@ public class EventsToActions implements PropertyChangeListener {
                     return "MONK " + prevEvt.getNewValue().toString() + " " + currEvt.getNewValue().toString();
                 }
             }
-            if (Objects.equals(prevEvt.getPropertyName(), BoardController.CHARACTER_LISTENER)
-                    && Objects.equals(currEvt.getPropertyName(), BoardController.SELECT_ISLAND_LISTENER)) {
-                if (activeCards.contains(Character.HERALD)) {
-                    return "HERALD " + currEvt.getNewValue().toString();
-                }
-            }
         }
 
         if (Objects.equals(currEvt.getPropertyName(), BoardController.CHARACTER_STUDENT_LISTENER)) {
@@ -160,6 +154,9 @@ public class EventsToActions implements PropertyChangeListener {
         if (Objects.equals(currEvt.getPropertyName(), BoardController.SELECT_ISLAND_LISTENER)) {
             if (activeCards.contains(Character.GRANDMA)) {
                 return "GRANDMA " + currEvt.getNewValue().toString();
+            }
+            if (activeCards.contains(Character.HERALD)) {
+                return "HERALD " + currEvt.getNewValue().toString();
             }
         }
         return "";
