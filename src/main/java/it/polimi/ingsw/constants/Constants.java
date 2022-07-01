@@ -17,8 +17,8 @@ public class Constants {
     public static final int BAG_SIZE = 130;
     public static final int NUM_CHARACTER_CARDS = 3;
     public static final int NUM_ASSISTANT_CARDS = 10;
-    public static final int NUM_COINS = 200; // TODO MUST BE 20 ALSO THE PLAYERBALANCE
-    public static final int INITIAL_PLAYER_BALANCE = 10;
+    public static final int NUM_COINS = 20;
+    public static final int INITIAL_PLAYER_BALANCE = 1;
     public static final int SCHOOL_LANE_SIZE = 10;
     public static final int DELAY_WINNING_TIMER = 120;
     public static final int PING_TIMEOUT_MS = 5000;
