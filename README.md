@@ -8,19 +8,19 @@ The aim of this project is the design and realization of a distributed client-se
 More information about the game can be found [here](https://www.craniocreations.it/prodotto/eriantys)
 
 ## Prerequisites
-The game requires [Java 17] to run and you can find the link below on the built section. 
+The game requires [Java 17](https://www.oracle.com/java/technologies/downloads/#java17) to run.
 
 ## Features
 The features we have realised are listed in the following section:
 ### Features developed
-* Regole Base
-* Regole Complete
-* Socket
-* CLI
-* GUI
-* Carte Personaggio
-* Partite Multiple
-* Resilienza alle disconnessioni
+* Regole Base ☑️
+* Regole Complete ☑️
+* Socket ☑️
+* CLI ☑️
+* GUI ☑️
+* Carte Personaggio ☑️
+* Partite Multiple ☑️
+* Resilienza alle disconnessioni ☑️
 
 ## Docs
 In this section you will find all the documents we produced during the development of the project:
@@ -39,10 +39,10 @@ In this section you will find all the documents we produced during the developme
 - [Network](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/PeerReview/Peer_Review_2_Network.pdf)
 
 ### Tests with Coverage
-![picture](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/Test%20Coverage/Test.png)
+![This is an image](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/TestCoverage/Test.png)
 
 <a name="built"></a>
-## Built with
+### Built with
 * [Java 17](https://www.oracle.com/java/technologies/downloads/#java17)
 * [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 * [JavaFx](https://openjfx.io)
@@ -55,7 +55,8 @@ In this section you will find all the documents we produced during the developme
 |__maven__|Project management tool that is based on POM (project object model)|
 |__junit__|Unit testing framework for the Java programming language|
 |__JavaFx__|Java set of graphics and media packages|
-|__UML-Generator|Usefull plugin for autogenerate UML by the source code|
+|__UML-Generator__|Usefull plugin for autogenerate UML by the source code|
+-------------------------------
 
 
 ## List of Authors:
