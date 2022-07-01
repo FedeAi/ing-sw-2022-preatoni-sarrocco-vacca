@@ -43,7 +43,7 @@ On Windows, if don't plan on using the Windows Terminal app, in order to properl
 In this section you will find all the documentation regarding the project:
 
 ### UML diagrams
-- [Initial diagram](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/initial/)
+- [Initial MVC diagram](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/initial/)
 - [Final - Model](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/model)
 - [Final - Controller](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/controller)
 - [Final - Listeners](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/listeners)
