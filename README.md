@@ -12,16 +12,15 @@ More information about the game can be found [here](https://www.craniocreations.
 * In order to properly display the CLI client an UTF-8 and ANSI colors compatible console is needed.
 * To build the project, Maven is required.
 ## Features
-The features we have realised are listed in the following section:
-### Features developed
+The features we have realized are listed as follows:
 * Base rules ☑️
 * Complete rules ☑️
 * Socket ☑️
 * CLI ☑️
 * GUI ☑️
-* Character cards ☑️
-* Multiple games ☑️
-* Disconnection recovery ☑️
+* Additional feature - 12 character cards ☑️
+* Additional feature - Multiple games ☑️
+* Additional feature - Disconnection recovery ☑️
 ## Building the project
 * The project is build as an Uber-jar that is comprehensive of CLI, GUI and Server.
 * The executable provides a small launcher with all the options, no arguments are needed to run it.
@@ -30,23 +29,25 @@ After cloning the repo, build the project by running:
 cd ing-sw-2022-preatoni-sarrocco-vacca
 mvn clean package
 ```
-You will find the output jar in the newly created target folder with the name GC30-1.0-SNAPSHOT-jar-with-dependencies.jar.
+You will find the output jar in the newly created "target" folder with the name GC30-1.0-SNAPSHOT-jar-with-dependencies.jar.
 ## Running the executable
 To run the jar executable just issue this command in the console:
 ```
 java -jar GC30-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
-## Sidenote
-
-
+## Sidenote for Apple Silicon macOS users
+For AArch64-based Macs we have provided a specific [jar](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/jars). This is due to a JavaFX dependency conflict, as explained [here](https://www.reddit.com/r/JavaFX/comments/twye9j/javafx_on_m1_and_intel_macs/).
+## Sidenote for Windows users
+On Windows, if don't plan on using the Windows Terminal app, in order to properly display the CLI client you should enable the console UTF-8 character encoding beta feature.
 ## Docs
 In this section you will find all the documentation regarding the project:
 
 ### UML diagrams
-- [Model](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/model)
-- [Controller](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/controller)
-- [Listeners](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/listeners)
-- [Client-Server](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/client-server)
+- [Initial diagram](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/initial/)
+- [Final - Model](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/model)
+- [Final - Controller](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/controller)
+- [Final - Listeners](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/listeners)
+- [Final - Client and Server](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/tree/main/deliveries/UML/final/client-server)
 - [Initial Sequence Diagram](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/Sequence%20Diagram/SequenceDiagram_Initial.pdf)
 
 ### JavaDoc
