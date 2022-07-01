@@ -21,7 +21,7 @@ public enum GameState {
     ACTION_CHOOSE_CLOUD,
     NEW_ROUND,
 
-    /* Character cards states (accessibile only by activating the homonym character card) */
+    /* Character cards states (accessible only by activating the homonym character card) */
     HERALD_ACTIVE,
     MUSHROOM_CHOOSE_COLOR,
     JOKER_SWAP_STUDENTS,
