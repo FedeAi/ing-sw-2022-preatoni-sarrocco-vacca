@@ -24,7 +24,7 @@ import it.polimi.ingsw.exceptions.RoundOwnerException;
  * @see Runnable
  * @see ClientConnection
  */
-public class SocketClientConnection implements ClientConnection, Runnable {
+public class SocketClientConnection implements Runnable {
     private final Socket socket;
     private final Server server;
     private ObjectInputStream inputStream;

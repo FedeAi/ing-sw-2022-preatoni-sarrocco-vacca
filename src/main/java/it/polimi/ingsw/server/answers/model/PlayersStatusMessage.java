@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class PlayersStatusMessage implements ModelMessage {
 
-    public static final String CONNECTED_PLAYERS = "connected";
+    public static final String ACTIVE_PLAYERS = "active";
     public static final String PLAYERS = "players";
     public static final String REJOINING_PLAYERS = "rejoining";
     private final List<String> players;
@@ -28,7 +28,7 @@ public class PlayersStatusMessage implements ModelMessage {
      */
     public PlayersStatusMessage(Map<String, List<String>> message) {
         players = message.getOrDefault(PLAYERS, new ArrayList<>());
-        activePlayers = message.getOrDefault(CONNECTED_PLAYERS, new ArrayList<>());
+        activePlayers = message.getOrDefault(ACTIVE_PLAYERS, new ArrayList<>());
         rejoiningPlayers = message.getOrDefault(REJOINING_PLAYERS, new ArrayList<>());
     }
 
