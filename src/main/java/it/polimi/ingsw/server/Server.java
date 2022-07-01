@@ -257,7 +257,6 @@ public class Server {
             VirtualClient client =
                     new VirtualClient(clientID, nickname, socketClientHandler, currentGame);
             if (totalPlayers != -1 && waiting.size() >= totalPlayers) {
-                // FIXME client.send(new GameError(ErrorType.FULLSERVER));
                 return null;
             }
 

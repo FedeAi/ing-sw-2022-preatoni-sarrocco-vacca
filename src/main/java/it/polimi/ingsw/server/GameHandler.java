@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * GameHandler class handles a single match, instantiating a Game and a main GameManager.
- *
  */
 public class GameHandler {
 
@@ -150,8 +149,12 @@ public class GameHandler {
         return GameState.SETUP_CHOOSE_MAGICIAN.equals(game.getGameState());
     }
 
-    // TODO
-    public List<Player> getActivePlayers(){
+    /**
+     * Method getActivePlayers returns the list of players currently connected to the game.
+     *
+     * @return The list of players connected to the game.
+     */
+    public List<Player> getActivePlayers() {
         return game.getActivePlayers();
     }
 
@@ -207,7 +210,7 @@ public class GameHandler {
         while (!game.getActivePlayers().isEmpty()) {
             server.getClientByID(game.getActivePlayers().get(0).getID()).getConnection().close();
         }
-        for(Player p : game.getPlayers()){
+        for (Player p : game.getPlayers()) {
             server.unregisterClient(p.getID());
         }
     }
@@ -215,7 +218,7 @@ public class GameHandler {
     /**
      * Method unregisterPlayer lets a player leave the game. If the game is set to the setup phase, the game then ends.
      *
-     * @param id          the ID of the player that is leaving.
+     * @param id the ID of the player that is leaving.
      */
     public synchronized void unregisterPlayer(int id) {
         game.setPlayerConnected(id, false);
@@ -268,17 +271,6 @@ public class GameHandler {
         timer.cancel();
         timer = new Timer("winningTimer");
     }
-
-
-//    public void magicianSetup() {
-//        isStarted = true;
-//
-//        String nickname = game.getActivePlayers().get(Magician.values().length - game.getAvailableMagicians().size()).getNickname();
-//        ReqMagicianMessage req = new ReqMagicianMessage("Please choose your magician", game.getAvailableMagicians());
-//
-//        server.getClientByID(server.getIDByNickname(nickname)).send(req);
-//        sendAllExcept(new CustomMessage("User " + nickname + " is choosing his magician!"), server.getIDByNickname(nickname));
-//    }
 
     /**
      * Method performAction calls the homonym method on the controller and executes a given action on the controller.

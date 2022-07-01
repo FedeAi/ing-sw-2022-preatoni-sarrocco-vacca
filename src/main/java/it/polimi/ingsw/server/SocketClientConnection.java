@@ -100,9 +100,9 @@ public class SocketClientConnection implements ClientConnection, Runnable {
      * @throws IOException            when the client is not online anymore.
      * @throws ClassNotFoundException when the serializable object is not part of any class.
      */
-    public void readFromStream() throws IOException, ClassNotFoundException {    // TODO
+    public void readFromStream() throws IOException, ClassNotFoundException {
         SerializedMessage input = (SerializedMessage) inputStream.readObject();
-        synchronized (this){
+        synchronized (this) {
             if (input.message != null) {
                 Message command = input.message;
                 actionHandler(command);
@@ -111,7 +111,6 @@ public class SocketClientConnection implements ClientConnection, Runnable {
                 actionHandler(action);
             }
         }
-
     }
 
     /**

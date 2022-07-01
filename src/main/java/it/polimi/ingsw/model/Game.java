@@ -788,7 +788,6 @@ public class Game {
      * @return the player reference if present, null otherwise.
      */
     public Player getPlayerByID(int id) {
-        // TODO make it like getPlayerByNickname
         for (Player player : players) {
             if (player.getID() == id) {
                 return player;
