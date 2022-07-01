@@ -173,9 +173,7 @@ public class CLI implements UI {
                         System.out.println(CLIColors.ANSI_GREEN + "\t" + msg.getPlayer() + " played: " + msg.getMessage() + CLIColors.RESET);
                 }
             }
-            case ServerMessageHandler.PLAYERS_STATUS_LISTENER -> {
-                // TODO
-            }
+
             case ServerMessageHandler.WIN_MESSAGE_LISTENER -> {
                 WinMessage msg = (WinMessage) evt.getNewValue();
                 printWinner(msg.getMessage());
