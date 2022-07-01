@@ -22,7 +22,6 @@ import it.polimi.ingsw.exceptions.RoundOwnerException;
  * receiving messages and doing other class-useful operations too.
  *
  * @see Runnable
- * @see ClientConnection
  */
 public class SocketClientConnection implements Runnable {
     private final Socket socket;
