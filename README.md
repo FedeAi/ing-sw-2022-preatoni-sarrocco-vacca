@@ -39,7 +39,7 @@ In this section you will find all the documents we produced during the developme
 - [Network](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/PeerReview/Peer_Review_2_Network.pdf)
 
 ### Tests with Coverage
-![picture](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/Test%20Coverage/Coverage.pdf)
+![picture](https://github.com/PSV-polimi-2022/ing-sw-2022-preatoni-sarrocco-vacca/blob/main/deliveries/Test%20Coverage/Test.png)
 
 <a name="built"></a>
 ## Built with
@@ -55,7 +55,7 @@ In this section you will find all the documents we produced during the developme
 |__maven__|Project management tool that is based on POM (project object model)|
 |__junit__|Unit testing framework for the Java programming language|
 |__JavaFx__|Java set of graphics and media packages|
-|__UML-Generatore|Usefull plugin for autogenerate UML by the source code|
+|__UML-Generator|Usefull plugin for autogenerate UML by the source code|
 
 
 ## List of Authors:
